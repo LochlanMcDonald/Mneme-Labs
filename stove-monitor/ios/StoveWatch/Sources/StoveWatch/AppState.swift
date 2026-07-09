@@ -76,8 +76,11 @@ final class AppState: ObservableObject {
     }
 
     /// "You're incorrect" — dispute whatever the server currently believes.
+    /// Disputing "changed" (something on the stove, no heat) means the stove
+    /// is actually on, which the backend treats like a disputed "off".
     func reportIncorrect() async {
-        guard let current = status?.state, current == "on" || current == "off" else { return }
+        guard var current = status?.state, current != "unknown" else { return }
+        if current == "changed" { current = "off" }
         do {
             _ = try await api.reportIncorrect(currentState: current)
             await refresh()

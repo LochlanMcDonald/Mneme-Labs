@@ -16,6 +16,11 @@ class Settings:
         # 0 disables re-alerts.
         self.realert_minutes = int(os.environ.get("STOVE_REALERT_MINUTES", "30"))
 
+        # A scene that differs from all off-references but shows no glow (a
+        # parked pot, a cutting board) is auto-learned as a new off-reference
+        # after staying static for this many consecutive snapshots. 0 disables.
+        self.autolearn_snapshots = int(os.environ.get("STOVE_AUTOLEARN_SNAPSHOTS", "3"))
+
         # APNs (token-based auth). If unset, notifications are logged instead.
         self.apns_key_path = os.environ.get("APNS_KEY_PATH")
         self.apns_key_id = os.environ.get("APNS_KEY_ID")

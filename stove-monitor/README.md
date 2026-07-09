@@ -15,10 +15,19 @@ oven looks like it's in use — and again if it's been left on.
 
 During setup the camera photographs the stove **in its OFF state** — that
 baseline is the first *known-off reference*. Every few minutes the camera
-posts a new snapshot; the backend compares it (small, blurred, grayscale,
-brightness-normalized frames) against every known-off image. A frame that
-matches none of them means something changed on the cooktop — a flame, a
-glowing burner, a pot — and the stove is flagged **ON**.
+posts a new snapshot; the backend compares it (small, blurred,
+brightness-normalized frames) against every known-off image and lands on one
+of three states:
+
+- **off** — the frame matches a known-off reference.
+- **on** — the frame matches nothing *and* shows **glow**: a localized
+  brightness jump with warm flame/burner color. This is what pushes an alert.
+- **changed** — the frame matches nothing but shows no glow. A cold pot
+  parked on a burner or a cutting board left on the cooktop lands here: the
+  app shows it, but it never triggers a notification. If a changed scene
+  holds perfectly still for 3 consecutive checks (`STOVE_AUTOLEARN_SNAPSHOTS`,
+  0 to disable), it's automatically learned as a new off-reference — the
+  parked pot becomes part of "normal".
 
 The reference set grows over time:
 
@@ -40,7 +49,7 @@ away, so only local changes on the cooktop trigger alerts.
 |------------|------------|---------|
 | `backend/` | FastAPI server: image comparison, state machine, snooze, feedback, oven models, APNs push | Any host (Docker/VPS/the same Pi) |
 | `device/`  | `stovecam` capture agent: snapshots every 5 min via picamera2, an MJPEG stream, or a stills command | Raspberry Pi (Zero 2 W is plenty) |
-| `ios/`     | SwiftUI app: live status, latest snapshot, snooze (30m/1h/2h), "you're incorrect", oven model setup | iPhone, iOS 17+ |
+| `ios/`     | SwiftUI app: live status, latest snapshot, snooze (30m/1h/2h presets or any custom duration up to 24h), "you're incorrect", oven model setup | iPhone, iOS 17+ |
 
 ## Quick start
 

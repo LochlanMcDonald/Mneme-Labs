@@ -30,6 +30,10 @@ notifier = build_notifier()
 MIN_THRESHOLD = 0.01
 FEEDBACK_TIGHTEN_FACTOR = 0.8  # applied when the user says a reading of OFF was wrong
 
+# Two consecutive frames closer than this are considered a static scene
+# (used to decide when a "changed" scene is safe to auto-learn as off).
+STATIC_FRACTION = 0.01
+
 
 @app.on_event("startup")
 def startup() -> None:
@@ -164,19 +168,49 @@ def ingest_snapshot(device_id: str, image: UploadFile = File(...), device: dict 
         raise HTTPException(409, "no baseline set — run setup first")
 
     result = vision.classify(frame, refs, threshold=device["threshold"])
+
+    # Is the scene static? Compare against the previous frame before we
+    # overwrite it — a parked pot is still; steam and flames flicker.
+    latest_path = settings.images_dir / f"{device_id}-latest.jpg"
+    static = False
+    if latest_path.exists():
+        try:
+            previous_frame = vision.preprocess(latest_path.read_bytes())
+            static = vision.changed_fraction(frame, previous_frame) <= STATIC_FRACTION
+        except (OSError, ValueError):
+            pass
+
     path = _save_image(data, f"{device_id}-latest.jpg")
     snap = db.add_snapshot(device_id, path, result.state, result.score)
 
+    # A changed-but-not-glowing scene that holds still for several checks is
+    # a new "normal" (pot parked on the stove): learn it and treat it as off.
+    auto_learned = False
+    final_state = result.state
+    if result.state == "changed":
+        streak = (device["changed_streak"] + 1) if static else 1
+        if settings.autolearn_snapshots and streak >= settings.autolearn_snapshots:
+            import shutil
+            ref_path = settings.images_dir / f"{device_id}-auto-{snap['id']}.jpg"
+            shutil.copyfile(path, ref_path)
+            db.add_off_reference(str(ref_path), label="auto", device_id=device_id)
+            log.info("device %s: learned static changed scene as off-reference", device_id)
+            auto_learned = True
+            final_state = "off"
+            streak = 0
+    else:
+        streak = 0
+
     previous_state = device["state"]
-    updates = {"last_seen_at": db.now(), "state": result.state}
-    if result.state != previous_state:
+    updates = {"last_seen_at": db.now(), "state": final_state, "changed_streak": streak}
+    if final_state != previous_state:
         updates["state_changed_at"] = db.now()
     db.update_device(device_id, **updates)
     device.update(updates)
 
     snoozed = bool(device["snooze_until"] and device["snooze_until"] > db.now())
     notified = False
-    if result.state == "on" and not snoozed:
+    if final_state == "on" and not snoozed:
         turned_on = previous_state != "on"
         first_alert = device["last_alert_at"]
         long_running = (
@@ -196,11 +230,13 @@ def ingest_snapshot(device_id: str, image: UploadFile = File(...), device: dict 
             notified = True
 
     return {
-        "state": result.state,
+        "state": final_state,
         "score": round(result.score, 4),
+        "glow": round(result.glow, 4),
         "threshold": device["threshold"],
         "matched_reference": result.matched_reference,
         "notified": notified,
+        "auto_learned": auto_learned,
         "snapshot_id": snap["id"],
     }
 

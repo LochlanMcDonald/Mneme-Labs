@@ -95,9 +95,10 @@ def test_incorrect_on_learns_scene(client, device):
     """Disputing a false ON turns the offending frame into an off-reference,
     so the same scene stops alarming."""
     setup_device(client, device)
-    pot_frame = make_stove_image(pot=True, seed=5)
+    # a glowing scene (e.g. low sun hitting the cooktop) misread as ON
+    glare_frame = make_stove_image(burner_on=True, seed=5)
 
-    first = upload(client, device, "/api/devices/{id}/snapshots", pot_frame).json()
+    first = upload(client, device, "/api/devices/{id}/snapshots", glare_frame).json()
     assert first["state"] == "on"
 
     resp = client.post(
@@ -110,7 +111,7 @@ def test_incorrect_on_learns_scene(client, device):
     assert resp.json()["learned"] is True
 
     again = upload(
-        client, device, "/api/devices/{id}/snapshots", make_stove_image(pot=True, seed=9)
+        client, device, "/api/devices/{id}/snapshots", make_stove_image(burner_on=True, seed=9)
     ).json()
     assert again["state"] == "off"
 
@@ -145,11 +146,11 @@ def test_oven_model_references_apply_to_device(client, device):
     )
     assert resp.status_code == 200
 
-    # before assignment the pot scene alarms; after, the model ref covers it
+    # before assignment the pot scene reads changed; after, the model ref covers it
     assert (
         upload(client, device, "/api/devices/{id}/snapshots", make_stove_image(pot=True, seed=4))
         .json()["state"]
-        == "on"
+        == "changed"
     )
     client.post(
         f"/api/devices/{device['device_id']}/oven-model",
@@ -164,6 +165,74 @@ def test_oven_model_references_apply_to_device(client, device):
 
     found = client.get("/api/oven-models", params={"query": "JB645"}).json()
     assert any(m["id"] == model["id"] for m in found)
+
+
+def test_pot_alone_never_notifies(client, device):
+    """A cold pot parked on the stove reads 'changed' — no push, ever."""
+    setup_device(client, device)
+    client.post(
+        f"/api/devices/{device['device_id']}/push-token",
+        json={"token": "c" * 64},
+        headers=device["headers"],
+    )
+    result = upload(
+        client, device, "/api/devices/{id}/snapshots", make_stove_image(pot=True, seed=5)
+    ).json()
+    assert result["state"] == "changed"
+    assert result["notified"] is False
+    assert client.notifier.sent == []
+
+    status = client.get(
+        f"/api/devices/{device['device_id']}/status", headers=device["headers"]
+    ).json()
+    assert status["state"] == "changed"
+
+
+def test_static_changed_scene_is_auto_learned(client, device):
+    """A changed scene that holds still for 3 consecutive snapshots becomes a
+    new off-reference and the state settles back to off."""
+    setup_device(client, device)
+
+    states = [
+        upload(
+            client, device, "/api/devices/{id}/snapshots", make_stove_image(pot=True, seed=s)
+        ).json()
+        for s in (5, 6, 7)
+    ]
+    assert [r["state"] for r in states] == ["changed", "changed", "off"]
+    assert states[-1]["auto_learned"] is True
+
+    # the pot scene is now known-off; a lit burner must still alarm
+    again = upload(
+        client, device, "/api/devices/{id}/snapshots", make_stove_image(pot=True, seed=8)
+    ).json()
+    assert again["state"] == "off"
+    assert again["auto_learned"] is False
+
+    lit = upload(
+        client, device, "/api/devices/{id}/snapshots",
+        make_stove_image(pot=True, burner_on=True, seed=9),
+    ).json()
+    assert lit["state"] == "on"
+
+
+def test_snooze_accepts_arbitrary_minutes(client, device):
+    setup_device(client, device)
+    for minutes in (1, 45, 90, 24 * 60):
+        resp = client.post(
+            f"/api/devices/{device['device_id']}/snooze",
+            json={"minutes": minutes},
+            headers=device["headers"],
+        )
+        assert resp.status_code == 200, minutes
+    # out of range is rejected
+    for minutes in (0, -5, 24 * 60 + 1):
+        resp = client.post(
+            f"/api/devices/{device['device_id']}/snooze",
+            json={"minutes": minutes},
+            headers=device["headers"],
+        )
+        assert resp.status_code == 422, minutes
 
 
 def test_latest_snapshot_image_served(client, device):

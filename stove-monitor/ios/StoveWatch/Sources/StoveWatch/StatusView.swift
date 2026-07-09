@@ -6,6 +6,7 @@ struct StatusView: View {
     @EnvironmentObject var state: AppState
     @State private var showSettings = false
     @State private var confirmIncorrect = false
+    @State private var showCustomSnooze = false
 
     var body: some View {
         NavigationStack {
@@ -50,6 +51,7 @@ struct StatusView: View {
             switch state.status?.state {
             case "on": return ("STOVE IS ON", .orange, "flame.fill")
             case "off": return ("Stove is off", .green, "checkmark.circle.fill")
+            case "changed": return ("Something's on the stove — no heat", .blue, "frying.pan")
             default: return ("Waiting for camera…", .gray, "clock")
             }
         }()
@@ -116,12 +118,25 @@ struct StatusView: View {
                         .buttonStyle(.bordered)
                         .frame(maxWidth: .infinity)
                     }
+                    Button {
+                        showCustomSnooze = true
+                    } label: {
+                        Image(systemName: "slider.horizontal.3")
+                            .accessibilityLabel("Custom snooze duration")
+                    }
+                    .buttonStyle(.bordered)
                 }
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding()
         .background(.quaternary.opacity(0.5), in: RoundedRectangle(cornerRadius: 16))
+        .sheet(isPresented: $showCustomSnooze) {
+            CustomSnoozeSheet { minutes in
+                Task { await state.snooze(minutes: minutes) }
+            }
+            .presentationDetents([.height(340)])
+        }
     }
 
     private func incorrectButton(status: DeviceStatus) -> some View {
@@ -142,6 +157,57 @@ struct StatusView: View {
         ) {
             Button("Yes, it's wrong", role: .destructive) {
                 Task { await state.reportIncorrect() }
+            }
+        }
+    }
+}
+
+/// Wheel picker for an arbitrary snooze duration (up to 24 hours).
+struct CustomSnoozeSheet: View {
+    @Environment(\.dismiss) private var dismiss
+    @State private var hours = 1
+    @State private var minutes = 0
+    let onSnooze: (Int) -> Void
+
+    private var totalMinutes: Int { hours * 60 + minutes }
+
+    var body: some View {
+        NavigationStack {
+            VStack(spacing: 8) {
+                HStack(spacing: 0) {
+                    Picker("Hours", selection: $hours) {
+                        ForEach(0..<24, id: \.self) { Text("\($0) hr").tag($0) }
+                    }
+                    .pickerStyle(.wheel)
+                    Picker("Minutes", selection: $minutes) {
+                        ForEach(Array(stride(from: 0, through: 55, by: 5)), id: \.self) {
+                            Text("\($0) min").tag($0)
+                        }
+                    }
+                    .pickerStyle(.wheel)
+                }
+                .frame(height: 160)
+
+                Button {
+                    onSnooze(totalMinutes)
+                    dismiss()
+                } label: {
+                    Text(totalMinutes == 0
+                        ? "Pick a duration"
+                        : "Snooze for \(hours > 0 ? "\(hours)h " : "")\(minutes > 0 ? "\(minutes)m" : "")"
+                            .trimmingCharacters(in: .whitespaces))
+                        .frame(maxWidth: .infinity)
+                }
+                .buttonStyle(.borderedProminent)
+                .disabled(totalMinutes == 0)
+                .padding(.horizontal)
+            }
+            .navigationTitle("Custom snooze")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Cancel") { dismiss() }
+                }
             }
         }
     }
