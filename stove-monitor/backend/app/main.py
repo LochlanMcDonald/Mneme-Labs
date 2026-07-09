@@ -68,6 +68,10 @@ class FeedbackRequest(BaseModel):
     disputed_state: str = Field(pattern="^(on|off)$")
 
 
+class StoveTypeRequest(BaseModel):
+    stove_type: str = Field(pattern="^(gas|electric|induction)$")
+
+
 class PushTokenRequest(BaseModel):
     token: str = Field(min_length=8, max_length=200)
     platform: str = "ios"
@@ -118,6 +122,7 @@ def _status_payload(device: dict) -> dict:
         "snoozed": bool(device["snooze_until"] and device["snooze_until"] > db.now()),
         "snooze_until": _iso(device["snooze_until"]) if device["snooze_until"] and device["snooze_until"] > db.now() else None,
         "threshold": device["threshold"],
+        "stove_type": device["stove_type"],
         "oven_model_id": device["oven_model_id"],
         "last_snapshot": {
             "id": snap["id"],
@@ -172,10 +177,12 @@ def ingest_snapshot(device_id: str, image: UploadFile = File(...), device: dict 
     # Is the scene static? Compare against the previous frame before we
     # overwrite it — a parked pot is still; steam and flames flicker.
     latest_path = settings.images_dir / f"{device_id}-latest.jpg"
+    has_previous = False
     static = False
     if latest_path.exists():
         try:
             previous_frame = vision.preprocess(latest_path.read_bytes())
+            has_previous = True
             static = vision.changed_fraction(frame, previous_frame) <= STATIC_FRACTION
         except (OSError, ValueError):
             pass
@@ -183,23 +190,31 @@ def ingest_snapshot(device_id: str, image: UploadFile = File(...), device: dict 
     path = _save_image(data, f"{device_id}-latest.jpg")
     snap = db.add_snapshot(device_id, path, result.state, result.score)
 
-    # A changed-but-not-glowing scene that holds still for several checks is
-    # a new "normal" (pot parked on the stove): learn it and treat it as off.
+    # Resolve "changed" (differs from every off-reference, no glow) by stove
+    # type. Induction never glows, so there, sustained motion — steam,
+    # stirring, shimmer between checks — is the ON signal. A changed scene
+    # that instead holds still for several checks is a new "normal" (a pot
+    # parked on the stove): learn it and treat it as off. Induction waits
+    # twice as long before learning, since a heating pot can look still.
     auto_learned = False
     final_state = result.state
+    streak = 0
     if result.state == "changed":
-        streak = (device["changed_streak"] + 1) if static else 1
-        if settings.autolearn_snapshots and streak >= settings.autolearn_snapshots:
-            import shutil
-            ref_path = settings.images_dir / f"{device_id}-auto-{snap['id']}.jpg"
-            shutil.copyfile(path, ref_path)
-            db.add_off_reference(str(ref_path), label="auto", device_id=device_id)
-            log.info("device %s: learned static changed scene as off-reference", device_id)
-            auto_learned = True
-            final_state = "off"
-            streak = 0
-    else:
-        streak = 0
+        induction = device["stove_type"] == "induction"
+        if induction and has_previous and not static:
+            final_state = "on"
+        else:
+            streak = (device["changed_streak"] + 1) if static else 1
+            learn_after = settings.autolearn_snapshots * (2 if induction else 1)
+            if settings.autolearn_snapshots and streak >= learn_after:
+                import shutil
+                ref_path = settings.images_dir / f"{device_id}-auto-{snap['id']}.jpg"
+                shutil.copyfile(path, ref_path)
+                db.add_off_reference(str(ref_path), label="auto", device_id=device_id)
+                log.info("device %s: learned static changed scene as off-reference", device_id)
+                auto_learned = True
+                final_state = "off"
+                streak = 0
 
     previous_state = device["state"]
     updates = {"last_seen_at": db.now(), "state": final_state, "changed_streak": streak}
@@ -295,6 +310,14 @@ def feedback(device_id: str, req: FeedbackRequest, device: dict = Depends(authed
     new_threshold = max(MIN_THRESHOLD, device["threshold"] * FEEDBACK_TIGHTEN_FACTOR)
     db.update_device(device_id, state="on", state_changed_at=db.now(), threshold=new_threshold)
     return {"ok": True, "state": "on", "threshold": new_threshold}
+
+
+@app.post("/api/devices/{device_id}/stove-type")
+def set_stove_type(device_id: str, req: StoveTypeRequest, device: dict = Depends(authed_device)):
+    """gas | electric | induction. Gas and electric detect ON by burner/flame
+    glow; induction (which never glows) detects ON by motion between checks."""
+    db.update_device(device_id, stove_type=req.stove_type, changed_streak=0)
+    return {"ok": True, "stove_type": req.stove_type}
 
 
 @app.post("/api/devices/{device_id}/push-token")

@@ -20,14 +20,19 @@ brightness-normalized frames) against every known-off image and lands on one
 of three states:
 
 - **off** — the frame matches a known-off reference.
-- **on** — the frame matches nothing *and* shows **glow**: a localized
-  brightness jump with warm flame/burner color. This is what pushes an alert.
-- **changed** — the frame matches nothing but shows no glow. A cold pot
+- **on** — the frame matches nothing *and* shows the ON signal for your
+  stove type (set in the app's settings):
+  - **gas / electric**: **glow** — a localized brightness jump with warm
+    flame/burner color.
+  - **induction** (which never glows): **motion** — the changed scene is
+    itself moving between checks (steam, stirring, a shifted pot).
+- **changed** — the frame matches nothing but shows no ON signal. A cold pot
   parked on a burner or a cutting board left on the cooktop lands here: the
   app shows it, but it never triggers a notification. If a changed scene
   holds perfectly still for 3 consecutive checks (`STOVE_AUTOLEARN_SNAPSHOTS`,
-  0 to disable), it's automatically learned as a new off-reference — the
-  parked pot becomes part of "normal".
+  0 to disable; induction waits twice as long since a heating pot can look
+  still), it's automatically learned as a new off-reference — the parked pot
+  becomes part of "normal".
 
 The reference set grows over time:
 
@@ -49,7 +54,7 @@ away, so only local changes on the cooktop trigger alerts.
 |------------|------------|---------|
 | `backend/` | FastAPI server: image comparison, state machine, snooze, feedback, oven models, APNs push | Any host (Docker/VPS/the same Pi) |
 | `device/`  | `stovecam` capture agent: snapshots every 5 min via picamera2, an MJPEG stream, or a stills command | Raspberry Pi (Zero 2 W is plenty) |
-| `ios/`     | SwiftUI app: live status, latest snapshot, snooze (30m/1h/2h presets or any custom duration up to 24h), "you're incorrect", oven model setup | iPhone, iOS 17+ |
+| `ios/`     | SwiftUI app: live status, latest snapshot, snooze (30m/1h/2h presets or any custom duration up to 24h), "you're incorrect", stove type (gas/electric/induction), oven model setup | iPhone, iOS 17+ |
 
 ## Quick start
 
@@ -123,6 +128,7 @@ on the Pi. Grant notification permission when prompted.
 - `GET  /api/devices/{id}/snapshots/latest.jpg` — most recent frame
 - `POST /api/devices/{id}/snooze {minutes}` / `DELETE …/snooze`
 - `POST /api/devices/{id}/feedback {disputed_state}` — "you're incorrect"
+- `POST /api/devices/{id}/stove-type {stove_type}` — gas | electric | induction
 - `POST /api/devices/{id}/push-token` — APNs token registration
 - `POST /api/oven-models`, `GET /api/oven-models?query=`,
   `POST /api/oven-models/{id}/references`, `POST /api/devices/{id}/oven-model`

@@ -97,6 +97,12 @@ final class APIClient {
         return try Self.decoder.decode(FeedbackResponse.self, from: data)
     }
 
+    func setStoveType(_ stoveType: String) async throws {
+        _ = try await request(
+            path: "\(devicePath)/stove-type", method: "POST",
+            json: ["stove_type": stoveType])
+    }
+
     func registerPushToken(_ token: String) async throws {
         _ = try await request(
             path: "\(devicePath)/push-token", method: "POST",

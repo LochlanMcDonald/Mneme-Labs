@@ -216,6 +216,82 @@ def test_static_changed_scene_is_auto_learned(client, device):
     assert lit["state"] == "on"
 
 
+def set_stove_type(client, device, stove_type):
+    return client.post(
+        f"/api/devices/{device['device_id']}/stove-type",
+        json={"stove_type": stove_type},
+        headers=device["headers"],
+    )
+
+
+def test_stove_type_endpoint(client, device):
+    setup_device(client, device)
+    assert set_stove_type(client, device, "induction").status_code == 200
+    status = client.get(
+        f"/api/devices/{device['device_id']}/status", headers=device["headers"]
+    ).json()
+    assert status["stove_type"] == "induction"
+    assert set_stove_type(client, device, "microwave").status_code == 422
+
+
+def test_induction_motion_reads_on(client, device):
+    """On induction nothing glows, so a changed scene that MOVES between
+    checks (steam, stirring, a shifted pot) is the ON signal."""
+    setup_device(client, device)
+    set_stove_type(client, device, "induction")
+    client.post(
+        f"/api/devices/{device['device_id']}/push-token",
+        json={"token": "d" * 64},
+        headers=device["headers"],
+    )
+
+    # pot appears: no previous changed frame to compare motion against yet
+    first = upload(
+        client, device, "/api/devices/{id}/snapshots", make_stove_image(pot=True, seed=5)
+    ).json()
+    assert first["state"] == "changed"
+    assert first["notified"] is False
+
+    # pot shifts to another burner between checks: motion → on → push
+    second = upload(
+        client, device, "/api/devices/{id}/snapshots",
+        make_stove_image(pot=True, pot_burner=2, seed=6),
+    ).json()
+    assert second["state"] == "on"
+    assert second["notified"] is True
+    assert len(client.notifier.sent) == 1
+
+
+def test_gas_ignores_motion_without_glow(client, device):
+    """The same moving-pot sequence on a gas stove stays 'changed' — glow is
+    the ON signal there, and a shuffled cold pot has none."""
+    setup_device(client, device)
+
+    upload(client, device, "/api/devices/{id}/snapshots", make_stove_image(pot=True, seed=5))
+    second = upload(
+        client, device, "/api/devices/{id}/snapshots",
+        make_stove_image(pot=True, pot_burner=2, seed=6),
+    ).json()
+    assert second["state"] == "changed"
+    assert client.notifier.sent == []
+
+
+def test_induction_static_scene_learns_slower(client, device):
+    """Auto-learn needs twice as many static checks on induction, because a
+    heating pot can look perfectly still."""
+    setup_device(client, device)
+    set_stove_type(client, device, "induction")
+
+    states = [
+        upload(
+            client, device, "/api/devices/{id}/snapshots", make_stove_image(pot=True, seed=s)
+        ).json()
+        for s in (5, 6, 7, 8, 9, 10)
+    ]
+    assert [r["state"] for r in states] == ["changed"] * 5 + ["off"]
+    assert states[-1]["auto_learned"] is True
+
+
 def test_snooze_accepts_arbitrary_minutes(client, device):
     setup_device(client, device)
     for minutes in (1, 45, 90, 24 * 60):

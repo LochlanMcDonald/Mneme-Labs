@@ -4,10 +4,26 @@ struct SettingsView: View {
     @EnvironmentObject var state: AppState
     @Environment(\.dismiss) private var dismiss
     @State private var confirmUnpair = false
+    @State private var stoveType: StoveType = .gas
 
     var body: some View {
         NavigationStack {
             Form {
+                Section("Stove type") {
+                    Picker("Stove type", selection: $stoveType) {
+                        ForEach(StoveType.allCases) { type in
+                            Text(type.label).tag(type)
+                        }
+                    }
+                    .pickerStyle(.menu)
+                    .onChange(of: stoveType) { _, newType in
+                        guard newType.rawValue != state.status?.stoveType else { return }
+                        Task { await state.setStoveType(newType) }
+                    }
+                } footer: {
+                    Text(stoveType.detectionSummary)
+                }
+
                 Section("Oven") {
                     NavigationLink {
                         OvenModelView()
@@ -42,6 +58,11 @@ struct SettingsView: View {
             }
             .navigationTitle("Settings")
             .navigationBarTitleDisplayMode(.inline)
+            .onAppear {
+                if let current = state.status.flatMap({ StoveType(rawValue: $0.stoveType) }) {
+                    stoveType = current
+                }
+            }
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Done") { dismiss() }

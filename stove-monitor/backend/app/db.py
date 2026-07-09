@@ -20,6 +20,7 @@ CREATE TABLE IF NOT EXISTS devices (
     name TEXT NOT NULL,
     oven_model_id TEXT,
     state TEXT NOT NULL DEFAULT 'unknown',        -- unknown | off | on | changed
+    stove_type TEXT NOT NULL DEFAULT 'gas',       -- gas | electric | induction
     threshold REAL NOT NULL,
     changed_streak INTEGER NOT NULL DEFAULT 0,    -- consecutive static "changed" frames
     snooze_until REAL,                            -- unix ts; NULL = not snoozed
@@ -85,13 +86,15 @@ def init_db() -> None:
     settings.ensure_dirs()
     with connect() as conn:
         conn.executescript(SCHEMA)
-        # migration for databases created before the changed-state feature
-        try:
-            conn.execute(
-                "ALTER TABLE devices ADD COLUMN changed_streak INTEGER NOT NULL DEFAULT 0"
-            )
-        except sqlite3.OperationalError:
-            pass  # column already exists
+        # migrations for databases created before newer features
+        for migration in (
+            "ALTER TABLE devices ADD COLUMN changed_streak INTEGER NOT NULL DEFAULT 0",
+            "ALTER TABLE devices ADD COLUMN stove_type TEXT NOT NULL DEFAULT 'gas'",
+        ):
+            try:
+                conn.execute(migration)
+            except sqlite3.OperationalError:
+                pass  # column already exists
 
 
 def new_id() -> str:

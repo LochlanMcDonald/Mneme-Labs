@@ -11,12 +11,14 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 def make_stove_image(
     burner_on: bool = False,
     pot: bool = False,
+    pot_burner: int = 1,
     brightness: int = 60,
     seed: int = 0,
 ) -> bytes:
     """Synthetic top-down stove photo: dark cooktop with four burner rings.
     burner_on paints one burner glowing red-orange; pot draws a big gray
-    circle over a burner; brightness shifts ambient light."""
+    circle over the pot_burner-th burner (move it to simulate motion);
+    brightness shifts ambient light."""
     import random
 
     rng = random.Random(seed)
@@ -36,7 +38,7 @@ def make_stove_image(
         d.ellipse([cx - 60, cy - 60, cx + 60, cy + 60], fill=(255, 90, 20))
         d.ellipse([cx - 35, cy - 35, cx + 35, cy + 35], fill=(255, 180, 60))
     if pot:
-        cx, cy = burners[1]
+        cx, cy = burners[pot_burner]
         d.ellipse([cx - 85, cy - 85, cx + 85, cy + 85], fill=(140, 140, 150))
     buf = io.BytesIO()
     img.save(buf, format="JPEG", quality=85)

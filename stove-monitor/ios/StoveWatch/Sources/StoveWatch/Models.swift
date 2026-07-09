@@ -9,6 +9,7 @@ struct DeviceStatus: Codable {
     let snoozed: Bool
     let snoozeUntil: Date?
     let threshold: Double
+    let stoveType: String
     let ovenModelId: String?
     let lastSnapshot: SnapshotSummary?
 
@@ -20,8 +21,32 @@ struct DeviceStatus: Codable {
         case stateChangedAt = "state_changed_at"
         case lastSeenAt = "last_seen_at"
         case snoozeUntil = "snooze_until"
+        case stoveType = "stove_type"
         case ovenModelId = "oven_model_id"
         case lastSnapshot = "last_snapshot"
+    }
+}
+
+enum StoveType: String, CaseIterable, Identifiable {
+    case gas, electric, induction
+
+    var id: String { rawValue }
+
+    var label: String {
+        switch self {
+        case .gas: return "Gas"
+        case .electric: return "Electric coil / radiant"
+        case .induction: return "Induction"
+        }
+    }
+
+    var detectionSummary: String {
+        switch self {
+        case .gas, .electric:
+            return "Detects use by flame or burner glow."
+        case .induction:
+            return "Induction never glows, so StoveWatch watches for motion — steam, stirring, a moved pot — between checks."
+        }
     }
 }
 
