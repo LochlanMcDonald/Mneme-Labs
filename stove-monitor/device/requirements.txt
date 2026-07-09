@@ -1,0 +1,3 @@
+requests>=2.31
+# On the Pi itself, install the camera stack from apt instead of pip:
+#   sudo apt install -y python3-picamera2

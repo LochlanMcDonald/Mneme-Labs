@@ -1,0 +1,35 @@
+# Generate StoveWatch.xcodeproj with XcodeGen:
+#   brew install xcodegen
+#   cd ios/StoveWatch && xcodegen generate
+name: StoveWatch
+options:
+  bundleIdPrefix: com.mnemelabs
+  deploymentTarget:
+    iOS: "17.0"
+targets:
+  StoveWatch:
+    type: application
+    platform: iOS
+    sources:
+      - Sources/StoveWatch
+    info:
+      path: Sources/StoveWatch/Info.plist
+      properties:
+        CFBundleDisplayName: StoveWatch
+        UILaunchScreen: {}
+        UIApplicationSceneManifest:
+          UIApplicationSupportsMultipleScenes: false
+        NSAppTransportSecurity:
+          # Allows plain-HTTP backends during development (e.g. a Pi on the
+          # LAN). Remove for production builds that use HTTPS.
+          NSAllowsLocalNetworking: true
+    entitlements:
+      path: StoveWatch.entitlements
+      properties:
+        aps-environment: development
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.mnemelabs.stovewatch
+        DEVELOPMENT_TEAM: ""  # set your Apple team ID
+        TARGETED_DEVICE_FAMILY: "1"
+        SWIFT_VERSION: "5.9"
