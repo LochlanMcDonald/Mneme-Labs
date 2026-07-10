@@ -139,3 +139,9 @@ All device endpoints require `Authorization: Bearer <device_key>`.
 
 StoveWatch is a convenience reminder, not a safety device. It can miss
 activity or misread scenes and must not be relied on to prevent fires.
+
+## License
+
+Proprietary — Copyright © 2026 MNEME Labs, all rights reserved. See the
+repository root LICENSE file. Not licensed for use, copying, modification,
+or distribution without written permission.
