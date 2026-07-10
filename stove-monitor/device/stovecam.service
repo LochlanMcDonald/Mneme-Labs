@@ -1,0 +1,18 @@
+[Unit]
+Description=StoveWatch camera agent
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=pi
+WorkingDirectory=/home/pi/stove-monitor/device
+Environment=STOVECAM_SERVER=https://stove.example.com
+Environment=STOVECAM_CAPTURE=picamera2
+Environment=STOVECAM_INTERVAL=300
+ExecStart=/usr/bin/python3 -m stovecam.agent run
+Restart=on-failure
+RestartSec=30
+
+[Install]
+WantedBy=multi-user.target
