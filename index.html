@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>MNEME LABS — TALOS, the general-purpose humanoid</title>
-  <meta name="description" content="MNEME Labs builds TALOS, a full-scale general-purpose humanoid robot engineered for the work people shouldn't have to do." />
+  <meta name="description" content="MNEME Labs builds TALOS, a general-purpose humanoid engineered from the bolts up — custom actuators, custom compute, and ICHOR, a deterministic robotics stack with no ROS 2 anywhere in it." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -15,9 +15,7 @@
       --ink: #101112;
       --ink-soft: #55584e;
       --line: #c9c8bf;
-      --line-strong: #101112;
       --volt: #cdff2f;
-      --volt-deep: #9dc900;
       --display: 'Archivo Black', 'Archivo', sans-serif;
       --body: 'Archivo', system-ui, sans-serif;
       --mono: 'IBM Plex Mono', ui-monospace, monospace;
@@ -131,7 +129,7 @@
 
     .hero-grid {
       display: grid;
-      grid-template-columns: 1.05fr 0.95fr;
+      grid-template-columns: 1fr 1fr;
       min-height: calc(100vh - 66px);
     }
 
@@ -148,8 +146,8 @@
 
     h1.headline {
       font-family: var(--display);
-      font-size: clamp(3.4rem, 9vw, 7.8rem);
-      line-height: 0.92;
+      font-size: clamp(3rem, 7.4vw, 6.4rem);
+      line-height: 0.94;
       letter-spacing: -0.015em;
       text-transform: uppercase;
       margin-bottom: 30px;
@@ -158,13 +156,12 @@
     h1.headline .accent {
       color: transparent;
       -webkit-text-stroke: 2.5px var(--ink);
-      position: relative;
     }
 
     .hero-copy p.sub {
-      font-size: 1.14rem;
+      font-size: 1.12rem;
       color: var(--ink-soft);
-      max-width: 32rem;
+      max-width: 33rem;
       margin-bottom: 40px;
     }
 
@@ -172,7 +169,7 @@
 
     .hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; }
 
-    /* figure panel */
+    /* schematic panel */
     .figure-panel {
       position: relative;
       background:
@@ -182,7 +179,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 46px 24px;
+      padding: 64px 26px 70px;
       overflow: hidden;
     }
 
@@ -218,7 +215,13 @@
     .figure-panel .plate span:first-child { border-right: 1.5px solid var(--ink); color: var(--ink-soft); min-width: 82px; }
     .figure-panel .plate span:last-child { font-weight: 600; }
 
-    .figure-panel svg { width: min(420px, 88%); height: auto; }
+    .figure-panel svg { width: min(480px, 94%); height: auto; }
+
+    .flow { stroke-dasharray: 6 5; animation: flow 1.6s linear infinite; }
+    @keyframes flow { to { stroke-dashoffset: -22; } }
+
+    .dim-pulse { animation: dim-blink 3.2s ease-in-out infinite; }
+    @keyframes dim-blink { 50% { opacity: 0.35; } }
 
     /* ================= marquee ================= */
     .marquee {
@@ -231,9 +234,8 @@
 
     .marquee-track {
       display: flex;
-      gap: 0;
       white-space: nowrap;
-      animation: slide 26s linear infinite;
+      animation: slide 28s linear infinite;
       width: max-content;
     }
 
@@ -279,10 +281,12 @@
 
     .sec-head p.deck {
       margin-top: 18px;
-      max-width: 40rem;
+      max-width: 42rem;
       color: var(--ink-soft);
       font-size: 1.06rem;
     }
+
+    .sec-head p.deck strong { color: var(--ink); }
 
     /* ================= stats ================= */
     .stat-band {
@@ -291,16 +295,12 @@
       border-top: 2px solid var(--ink);
     }
 
-    .stat-cell {
-      padding: 34px 28px 30px;
-      border-right: 2px solid var(--ink);
-    }
-
+    .stat-cell { padding: 34px 28px 30px; border-right: 2px solid var(--ink); }
     .stat-cell:last-child { border-right: 0; }
 
     .stat-cell .value {
       font-family: var(--display);
-      font-size: clamp(2.2rem, 4.4vw, 3.6rem);
+      font-size: clamp(2rem, 4vw, 3.2rem);
       line-height: 1;
       letter-spacing: -0.01em;
     }
@@ -323,25 +323,27 @@
       color: var(--ink-soft);
     }
 
-    /* ================= work cards ================= */
-    .work-grid {
+    /* ================= hardware panels ================= */
+    .hw-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(2, 1fr);
       border-top: 2px solid var(--ink);
     }
 
-    .work-card {
+    .hw-card {
       border-right: 2px solid var(--ink);
-      padding: 40px 30px 44px;
-      position: relative;
-      transition: background 0.2s;
+      border-bottom: 2px solid var(--ink);
+      padding: 40px 34px 44px;
+      display: grid;
+      grid-template-columns: 1fr 150px;
+      gap: 28px;
+      align-items: start;
     }
 
-    .work-card:last-child { border-right: 0; }
+    .hw-card:nth-child(2n) { border-right: 0; }
+    .hw-card:nth-child(n+3) { border-bottom: 0; }
 
-    .work-card:hover { background: var(--volt); }
-
-    .work-card .idx {
+    .hw-card .idx {
       font-family: var(--mono);
       font-size: 0.7rem;
       font-weight: 600;
@@ -349,65 +351,179 @@
       display: inline-block;
       border: 1.5px solid var(--ink);
       padding: 4px 10px;
-      margin-bottom: 26px;
+      margin-bottom: 24px;
     }
 
-    .work-card h3 {
+    .hw-card h3 {
       font-family: var(--display);
-      font-size: 1.5rem;
+      font-size: 1.45rem;
       text-transform: uppercase;
       line-height: 1.05;
       margin-bottom: 14px;
     }
 
-    .work-card p { color: var(--ink-soft); font-size: 0.95rem; }
+    .hw-card p { color: var(--ink-soft); font-size: 0.95rem; margin-bottom: 16px; }
 
-    .work-card:hover p { color: var(--ink); }
+    .hw-card p strong { color: var(--ink); }
 
-    .work-card .arrow {
-      position: absolute;
-      top: 40px;
-      right: 28px;
+    .hw-card ul { list-style: none; }
+
+    .hw-card li {
       font-family: var(--mono);
-      font-size: 1.1rem;
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      padding: 7px 0;
+      border-top: 1px solid var(--line);
+      color: var(--ink);
     }
 
-    /* ================= trials (dark) ================= */
+    .hw-card li::before { content: "— "; color: var(--ink-soft); }
+
+    .hw-fig {
+      border: 1.5px solid var(--ink);
+      background: var(--paper-dim);
+      padding: 12px 10px 6px;
+    }
+
+    .hw-fig svg { width: 100%; height: auto; display: block; }
+
+    .hw-fig figcaption {
+      font-family: var(--mono);
+      font-size: 0.56rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      text-align: center;
+      padding: 6px 0 4px;
+    }
+
+    /* ================= software (dark) ================= */
     .dark { background: var(--ink); color: var(--paper); }
 
     .dark .sec-head .num { color: #8b8f83; border-top-color: var(--volt); }
     .dark .sec-head p.deck { color: #a3a79b; }
+    .dark .sec-head p.deck strong { color: var(--paper); }
 
-    .trial-list { border-top: 2px solid var(--paper); }
+    .layer-list { border-top: 2px solid var(--paper); margin-bottom: 72px; }
 
-    .trial {
+    .layer {
       display: grid;
-      grid-template-columns: 170px 1fr 220px;
-      gap: 28px;
-      align-items: baseline;
-      padding: 26px 0;
+      grid-template-columns: 150px 1fr 230px;
+      gap: 30px;
+      padding: 32px 0;
       border-bottom: 1px solid #34362f;
-      font-family: var(--mono);
     }
 
-    .trial:last-child { border-bottom: 0; }
+    .layer:last-child { border-bottom: 0; }
 
-    .trial .t-id { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.16em; color: var(--volt); }
+    .layer .l-id {
+      font-family: var(--mono);
+      font-size: 0.74rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      color: var(--volt);
+      padding-top: 5px;
+    }
 
-    .trial .t-desc { font-family: var(--body); font-size: 1.05rem; color: var(--paper); }
+    .layer h3 {
+      font-family: var(--display);
+      font-size: 1.3rem;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
 
-    .trial .t-desc em { font-style: normal; color: #a3a79b; }
+    .layer p { color: #a3a79b; font-size: 0.97rem; max-width: 40rem; }
 
-    .trial .t-result {
-      font-size: 0.7rem;
+    .layer p strong { color: var(--paper); }
+
+    .layer .l-metric {
+      font-family: var(--mono);
+      text-align: right;
+    }
+
+    .layer .l-metric b {
+      display: block;
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--volt);
+    }
+
+    .layer .l-metric span {
+      font-size: 0.62rem;
       font-weight: 600;
       letter-spacing: 0.16em;
       text-transform: uppercase;
-      text-align: right;
-      color: #a3a79b;
+      color: #8b8f83;
     }
 
-    .trial .t-result b { color: var(--volt); }
+    /* ================= no-ros comparison ================= */
+    .vs-note {
+      max-width: 46rem;
+      color: var(--ink-soft);
+      font-size: 1.05rem;
+      padding-bottom: 48px;
+    }
+
+    .vs-note p { margin-bottom: 16px; }
+    .vs-note p strong { color: var(--ink); }
+
+    .vs-table { border-top: 2px solid var(--ink); }
+
+    .vs-row {
+      display: grid;
+      grid-template-columns: 190px 1fr 1fr;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .vs-row.head { border-bottom: 2px solid var(--ink); background: var(--paper-dim); }
+
+    .vs-row > div { padding: 20px 24px; }
+
+    .vs-row > div:nth-child(2) { border-left: 1px solid var(--line); border-right: 1px solid var(--line); }
+
+    .vs-row.head > div:nth-child(2) { border-left: 2px solid var(--ink); border-right: 2px solid var(--ink); }
+
+    .vs-row .crit {
+      font-family: var(--mono);
+      font-size: 0.66rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      padding-top: 24px;
+    }
+
+    .vs-row.head .col-title {
+      font-family: var(--display);
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      padding-top: 20px;
+    }
+
+    .vs-row.head .col-title small {
+      display: block;
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      color: var(--ink-soft);
+      margin-top: 4px;
+    }
+
+    .vs-row .them { font-size: 0.92rem; color: var(--ink-soft); }
+
+    .vs-row .us { font-size: 0.92rem; color: var(--ink); }
+
+    .vs-row .us b { font-weight: 700; }
+
+    .vs-row .us::before {
+      content: "▸";
+      color: var(--volt-deep, #86ac00);
+      margin-right: 8px;
+    }
 
     /* ================= spec sheet ================= */
     .spec-wrap {
@@ -506,9 +622,7 @@
     }
 
     .form-row input::placeholder { color: #8d9077; }
-
     .form-row input:focus { outline: none; }
-
     .form-row .btn { border: 0; border-left: 2px solid var(--ink); }
 
     .form-note {
@@ -556,34 +670,29 @@
       color: #8b8f83;
     }
 
-    /* ================= svg figure motion ================= */
-    .dim-pulse { animation: dim-blink 3.2s ease-in-out infinite; }
-    @keyframes dim-blink { 50% { opacity: 0.35; } }
-
-    .visor-sweep { animation: visor 3.6s ease-in-out infinite; }
-    @keyframes visor {
-      0%, 100% { transform: translateX(0); }
-      50% { transform: translateX(26px); }
-    }
-
     /* ================= responsive ================= */
     @media (max-width: 980px) {
       .hero-grid { grid-template-columns: 1fr; min-height: unset; }
       .hero-copy { border-right: 0; border-bottom: 2px solid var(--ink); padding: 60px 28px 52px; }
-      .figure-panel { min-height: 460px; }
+      .figure-panel { min-height: 440px; }
       .stat-band { grid-template-columns: 1fr 1fr; }
       .stat-cell:nth-child(2) { border-right: 0; }
       .stat-cell:nth-child(-n+2) { border-bottom: 2px solid var(--ink); }
-      .work-grid { grid-template-columns: 1fr; }
-      .work-card { border-right: 0; border-bottom: 2px solid var(--ink); }
-      .work-card:last-child { border-bottom: 0; }
+      .hw-grid { grid-template-columns: 1fr; }
+      .hw-card { border-right: 0 !important; border-bottom: 2px solid var(--ink) !important; grid-template-columns: 1fr; }
+      .hw-card:last-child { border-bottom: 0 !important; }
+      .hw-fig { max-width: 220px; }
       .sec-head { grid-template-columns: 1fr; gap: 18px; }
       .sec-head .num { padding-top: 8px; }
+      .layer { grid-template-columns: 1fr; gap: 10px; }
+      .layer .l-metric { text-align: left; }
+      .vs-row { grid-template-columns: 1fr; }
+      .vs-row > div:nth-child(2) { border-left: 0; border-right: 0; border-top: 1px dashed var(--line); }
+      .vs-row.head > div:nth-child(2) { border-left: 0; border-right: 0; }
+      .vs-row .crit { padding-bottom: 0; }
       .spec-wrap { grid-template-columns: 1fr; }
       .spec-col { border-right: 0; }
       .spec-col:first-child .spec-line:last-child { border-bottom: 1px solid var(--line); }
-      .trial { grid-template-columns: 1fr; gap: 6px; }
-      .trial .t-result { text-align: left; }
       .manifesto .row { grid-template-columns: 1fr; }
       .reserve-inner { grid-template-columns: 1fr; }
       .form-block { justify-self: start; }
@@ -599,7 +708,7 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
-      .marquee-track, .dim-pulse, .visor-sweep { animation: none; }
+      .marquee-track, .dim-pulse, .flow { animation: none; }
     }
   </style>
 </head>
@@ -609,10 +718,10 @@
     <div class="bar">
       <div class="brand">MNEME&nbsp;LABS <span class="chip">ROBOTICS</span></div>
       <nav class="links">
-        <a href="#work">The Work</a>
-        <a href="#trials">Field Trials</a>
+        <a href="#hardware">Hardware</a>
+        <a href="#software">Software</a>
+        <a href="#no-ros">No ROS 2</a>
         <a href="#spec">Spec Sheet</a>
-        <a href="#why">Why We Build</a>
         <a href="#reserve" class="btn">Reserve a Unit</a>
       </nav>
     </div>
@@ -624,124 +733,101 @@
       <div class="hero-grid">
         <div class="hero-copy">
           <span class="tag">MNEME LABS · GENERAL-PURPOSE HUMANOID · <b>PROGRAM TALOS</b></span>
-          <h1 class="headline">Hard work,<br /><span class="accent">handed</span> over.</h1>
+          <h1 class="headline">Built from<br />the <span class="accent">bolts</span> up.</h1>
           <p class="sub">
-            <strong>TALOS</strong> is a full-scale humanoid built for the jobs that break
-            backs and burn people out — lifting, hauling, inspecting, repeating.
-            It walks into the workplace you already have. No retrofit. No rails. No excuses.
+            <strong>TALOS</strong> is a general-purpose humanoid for dull, heavy, and dangerous
+            work — and every layer of it is ours. The actuators, the compute, and an
+            operating stack written from scratch for determinism.
+            <strong>There is no ROS 2 anywhere in this machine.</strong>
           </p>
           <div class="hero-ctas">
-            <a href="#reserve" class="btn">Reserve a unit</a>
-            <a href="#work" class="btn outline">See what it does</a>
+            <a href="#software" class="btn">Read the architecture</a>
+            <a href="#reserve" class="btn outline">Reserve a unit</a>
           </div>
         </div>
 
-        <div class="figure-panel" aria-label="Engineering drawing of the TALOS humanoid">
-          <div class="stamp">Fig. 01<b>TALOS — Front Elevation</b></div>
+        <div class="figure-panel" aria-label="System topology schematic of TALOS">
+          <div class="stamp">Fig. 01<b>TALOS — System Topology</b></div>
 
-          <svg viewBox="0 0 460 560" role="img" aria-label="Blueprint-style engineering drawing of TALOS, a humanoid robot, with dimension lines">
+          <svg viewBox="0 0 500 430" role="img" aria-label="Block schematic: sensor array feeding the ICHOR runtime, which drives the actuator bus; a battery power rail feeds all blocks and an independent hard e-stop path runs from the safety kernel to the actuators">
             <defs>
-              <marker id="arr" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
                 <path d="M0,0 L10,5 L0,10 z" fill="#101112"/>
               </marker>
             </defs>
 
-            <!-- centerline -->
-            <line x1="200" y1="16" x2="200" y2="544" stroke="#c9c8bf" stroke-width="1" stroke-dasharray="10 6"/>
+            <!-- SENSOR ARRAY block -->
+            <rect x="40" y="24" width="270" height="58" fill="#f2f1ec" stroke="#101112" stroke-width="2.5"/>
+            <text x="58" y="49" font-family="IBM Plex Mono, monospace" font-size="12" font-weight="600" letter-spacing="2" fill="#101112">SENSOR ARRAY</text>
+            <text x="58" y="67" font-family="IBM Plex Mono, monospace" font-size="8.5" letter-spacing="1" fill="#55584e">STEREO VISION · LIDAR · IMU · TACTILE</text>
 
-            <g stroke="#101112" stroke-width="2.5" fill="#f2f1ec">
-              <!-- head -->
-              <rect x="172" y="30" width="56" height="46" rx="10"/>
-              <!-- neck -->
-              <rect x="190" y="76" width="20" height="14" fill="#101112"/>
-              <!-- torso -->
-              <path d="M148 90 L252 90 L262 150 L250 232 L150 232 L138 150 Z"/>
-              <!-- pelvis -->
-              <path d="M158 232 L242 232 L236 272 L164 272 Z"/>
-              <!-- left arm -->
-              <rect x="106" y="96" width="34" height="72" rx="12"/>
-              <rect x="110" y="176" width="26" height="66" rx="10"/>
-              <!-- right arm -->
-              <rect x="260" y="96" width="34" height="72" rx="12"/>
-              <rect x="264" y="176" width="26" height="66" rx="10"/>
-              <!-- hands -->
-              <path d="M112 242 L134 242 L132 268 L114 268 Z"/>
-              <path d="M266 242 L288 242 L286 268 L268 268 Z"/>
-              <!-- left leg -->
-              <rect x="160" y="272" width="34" height="106" rx="12"/>
-              <rect x="163" y="388" width="28" height="104" rx="10"/>
-              <!-- right leg -->
-              <rect x="206" y="272" width="34" height="106" rx="12"/>
-              <rect x="209" y="388" width="28" height="104" rx="10"/>
-              <!-- feet -->
-              <path d="M150 492 L194 492 L198 516 L142 516 Z"/>
-              <path d="M206 492 L250 492 L258 516 L202 516 Z"/>
+            <!-- data bus: sensors -> runtime -->
+            <line class="flow" x1="175" y1="82" x2="175" y2="122" stroke="#101112" stroke-width="2" marker-end="url(#arr)"/>
+            <text x="186" y="106" font-family="IBM Plex Mono, monospace" font-size="8.5" letter-spacing="1" fill="#55584e">ZERO-COPY FRAMES</text>
+
+            <!-- ICHOR RUNTIME block -->
+            <rect x="40" y="126" width="270" height="168" fill="#f2f1ec" stroke="#101112" stroke-width="2.5"/>
+            <text x="58" y="151" font-family="IBM Plex Mono, monospace" font-size="12" font-weight="600" letter-spacing="2" fill="#101112">ICHOR RUNTIME</text>
+            <text x="58" y="167" font-family="IBM Plex Mono, monospace" font-size="8.5" letter-spacing="1" fill="#55584e">ONE PROCESS · ONE MEMORY SPACE</text>
+
+            <!-- inner layer blocks -->
+            <g font-family="IBM Plex Mono, monospace" font-size="8.5" letter-spacing="1">
+              <rect x="58" y="178" width="234" height="24" fill="none" stroke="#101112" stroke-width="1.5"/>
+              <text x="68" y="194" fill="#101112">L3 · AUTONOMY / TASK PLANNING</text>
+              <rect x="58" y="208" width="234" height="24" fill="none" stroke="#101112" stroke-width="1.5"/>
+              <text x="68" y="224" fill="#101112">L2 · WHOLE-BODY CONTROL @ 1 KHZ</text>
+              <rect x="58" y="238" width="234" height="24" fill="none" stroke="#101112" stroke-width="1.5"/>
+              <text x="68" y="254" fill="#101112">L1 · SHARED-MEMORY DATAPLANE</text>
+              <rect x="58" y="268" width="234" height="20" fill="#101112"/>
+              <text x="68" y="282" fill="#cdff2f">L0 · VERIFIED SAFETY KERNEL</text>
             </g>
 
-            <!-- visor -->
-            <g>
-              <rect x="180" y="44" width="40" height="12" rx="6" fill="#101112"/>
-              <rect class="visor-sweep" x="182" y="46" width="10" height="8" rx="4" fill="#cdff2f"/>
+            <!-- torque bus: runtime -> actuators -->
+            <line class="flow" x1="175" y1="294" x2="175" y2="334" stroke="#101112" stroke-width="2" marker-end="url(#arr)"/>
+            <text x="186" y="318" font-family="IBM Plex Mono, monospace" font-size="8.5" letter-spacing="1" fill="#55584e">TORQUE @ 1 KHZ</text>
+
+            <!-- ACTUATOR BUS block -->
+            <rect x="40" y="338" width="270" height="58" fill="#f2f1ec" stroke="#101112" stroke-width="2.5"/>
+            <text x="58" y="363" font-family="IBM Plex Mono, monospace" font-size="12" font-weight="600" letter-spacing="2" fill="#101112">ACTUATOR BUS</text>
+            <text x="58" y="381" font-family="IBM Plex Mono, monospace" font-size="8.5" letter-spacing="1" fill="#55584e">28 × QDD MODULES · FORCE-SENSING HANDS</text>
+
+            <!-- POWER block -->
+            <rect x="368" y="24" width="106" height="90" fill="#f2f1ec" stroke="#101112" stroke-width="2.5"/>
+            <text x="384" y="49" font-family="IBM Plex Mono, monospace" font-size="11" font-weight="600" letter-spacing="1.5" fill="#101112">POWER</text>
+            <text x="384" y="66" font-family="IBM Plex Mono, monospace" font-size="8.5" letter-spacing="1" fill="#55584e">2.1 KWH</text>
+            <text x="384" y="80" font-family="IBM Plex Mono, monospace" font-size="8.5" letter-spacing="1" fill="#55584e">HOT-SWAP</text>
+            <!-- battery symbol -->
+            <g stroke="#101112" stroke-width="2">
+              <line x1="426" y1="92" x2="426" y2="104"/>
+              <line x1="420" y1="95" x2="432" y2="95" stroke-width="3"/>
+              <line x1="423" y1="101" x2="429" y2="101"/>
             </g>
 
-            <!-- chest port -->
-            <circle cx="200" cy="128" r="14" fill="none" stroke="#101112" stroke-width="2.5"/>
-            <circle cx="200" cy="128" r="5" fill="#cdff2f" stroke="#101112" stroke-width="1.5"/>
-            <text x="200" y="188" font-family="IBM Plex Mono, monospace" font-size="12" letter-spacing="3" fill="#101112" text-anchor="middle">TALOS</text>
-            <text x="200" y="206" font-family="IBM Plex Mono, monospace" font-size="9" letter-spacing="2" fill="#55584e" text-anchor="middle">MNEME LABS</text>
+            <!-- power rail (dashed) -->
+            <g stroke="#55584e" stroke-width="1.5" stroke-dasharray="3 4" fill="none">
+              <path d="M421 114 L421 210 L310 210"/>
+              <path d="M421 210 L421 367 L310 367"/>
+              <path d="M421 53 L340 53 L310 53"/>
+            </g>
+            <text x="358" y="204" font-family="IBM Plex Mono, monospace" font-size="8" letter-spacing="1" fill="#55584e">96 V RAIL</text>
 
-            <!-- joint markers -->
-            <g fill="none" stroke="#101112" stroke-width="1.8">
-              <circle cx="123" cy="104" r="7"/><circle cx="277" cy="104" r="7"/>
-              <circle cx="123" cy="172" r="7"/><circle cx="277" cy="172" r="7"/>
-              <circle cx="177" cy="280" r="7"/><circle cx="223" cy="280" r="7"/>
-              <circle cx="177" cy="384" r="7"/><circle cx="223" cy="384" r="7"/>
-            </g>
-            <g stroke="#101112" stroke-width="1.4">
-              <line x1="118" y1="104" x2="128" y2="104"/><line x1="123" y1="99" x2="123" y2="109"/>
-              <line x1="272" y1="104" x2="282" y2="104"/><line x1="277" y1="99" x2="277" y2="109"/>
-              <line x1="118" y1="172" x2="128" y2="172"/><line x1="123" y1="167" x2="123" y2="177"/>
-              <line x1="272" y1="172" x2="282" y2="172"/><line x1="277" y1="167" x2="277" y2="177"/>
-              <line x1="172" y1="280" x2="182" y2="280"/><line x1="177" y1="275" x2="177" y2="285"/>
-              <line x1="218" y1="280" x2="228" y2="280"/><line x1="223" y1="275" x2="223" y2="285"/>
-              <line x1="172" y1="384" x2="182" y2="384"/><line x1="177" y1="379" x2="177" y2="389"/>
-              <line x1="218" y1="384" x2="228" y2="384"/><line x1="223" y1="379" x2="223" y2="389"/>
-            </g>
+            <!-- SAFETY block + hard e-stop path -->
+            <rect x="368" y="252" width="106" height="66" fill="#101112" stroke="#101112" stroke-width="2.5"/>
+            <text x="382" y="277" font-family="IBM Plex Mono, monospace" font-size="10.5" font-weight="600" letter-spacing="1.5" fill="#cdff2f">E-STOP</text>
+            <text x="382" y="293" font-family="IBM Plex Mono, monospace" font-size="8.5" letter-spacing="1" fill="#8b8f83">HARDWARE</text>
+            <text x="382" y="306" font-family="IBM Plex Mono, monospace" font-size="8.5" letter-spacing="1" fill="#8b8f83">CHAIN</text>
 
-            <!-- height dimension -->
-            <g class="dim-pulse" stroke="#101112" stroke-width="1.5">
-              <line x1="330" y1="30" x2="330" y2="516" marker-start="url(#arr)" marker-end="url(#arr)"/>
-              <line x1="232" y1="30" x2="338" y2="30" stroke-dasharray="4 4" stroke-width="1"/>
-              <line x1="262" y1="516" x2="338" y2="516" stroke-dasharray="4 4" stroke-width="1"/>
+            <!-- L0 -> e-stop -> actuators, drawn heavy -->
+            <g class="dim-pulse">
+              <line x1="292" y1="278" x2="368" y2="284" stroke="#101112" stroke-width="3"/>
+              <path d="M421 318 L421 400 L310 400 L310 384" fill="none" stroke="#101112" stroke-width="3" marker-end="url(#arr)"/>
             </g>
-            <g transform="translate(344, 268)">
-              <text font-family="IBM Plex Mono, monospace" font-size="13" font-weight="600" fill="#101112" transform="rotate(90)" text-anchor="middle">1880 MM</text>
-            </g>
-
-            <!-- reach dimension -->
-            <g class="dim-pulse" stroke="#101112" stroke-width="1.5">
-              <line x1="106" y1="546" x2="294" y2="546" marker-start="url(#arr)" marker-end="url(#arr)"/>
-            </g>
-            <text x="200" y="538" font-family="IBM Plex Mono, monospace" font-size="12" font-weight="600" fill="#101112" text-anchor="middle">SHOULDER SPAN 620 MM</text>
-
-            <!-- callouts -->
-            <g stroke="#101112" stroke-width="1.2" fill="none">
-              <path d="M228 50 L300 50 L316 40"/>
-              <circle cx="228" cy="50" r="2.6" fill="#101112"/>
-              <path d="M136 210 L74 210 L58 222"/>
-              <circle cx="136" cy="210" r="2.6" fill="#101112"/>
-              <path d="M214 128 L96 128 L80 116"/>
-              <circle cx="214" cy="128" r="2.6" fill="#101112"/>
-            </g>
-            <text x="318" y="36" font-family="IBM Plex Mono, monospace" font-size="9.5" letter-spacing="1" fill="#101112">SENSOR VISOR</text>
-            <text x="10" y="112" font-family="IBM Plex Mono, monospace" font-size="9.5" letter-spacing="1" fill="#101112">E-STOP PORT</text>
-            <text x="10" y="238" font-family="IBM Plex Mono, monospace" font-size="9.5" letter-spacing="1" fill="#101112">FORCE-SENSING</text>
-            <text x="10" y="250" font-family="IBM Plex Mono, monospace" font-size="9.5" letter-spacing="1" fill="#101112">GRIPPERS</text>
+            <text x="332" y="424" font-family="IBM Plex Mono, monospace" font-size="8.5" font-weight="600" letter-spacing="1" fill="#101112">MECHANICAL HOLD 0.19 S</text>
           </svg>
 
           <div class="plate">
-            <div><span>DWG NO.</span><span>ML-T-001</span></div>
-            <div><span>SCALE</span><span>1 : 12</span></div>
+            <div><span>DWG NO.</span><span>ML-T-002</span></div>
+            <div><span>SHEET</span><span>TOPOLOGY</span></div>
             <div><span>STATUS</span><span>FIELD TRIALS</span></div>
           </div>
         </div>
@@ -751,8 +837,8 @@
     <!-- ============ MARQUEE ============ -->
     <div class="marquee" aria-hidden="true">
       <div class="marquee-track">
-        <span>TALOS BY MNEME LABS</span><span>40 DEGREES OF FREEDOM</span><span>25 KG PAYLOAD</span><span>16 HR SHIFT ENDURANCE</span><span>ZERO RETROFIT REQUIRED</span>
-        <span>TALOS BY MNEME LABS</span><span>40 DEGREES OF FREEDOM</span><span>25 KG PAYLOAD</span><span>16 HR SHIFT ENDURANCE</span><span>ZERO RETROFIT REQUIRED</span>
+        <span>NO ROS 2</span><span>NO MIDDLEWARE</span><span>ONE STATIC BINARY</span><span>1 KHZ WHOLE-BODY CONTROL</span><span>BIT-EXACT REPLAY</span><span>TALOS BY MNEME LABS</span>
+        <span>NO ROS 2</span><span>NO MIDDLEWARE</span><span>ONE STATIC BINARY</span><span>1 KHZ WHOLE-BODY CONTROL</span><span>BIT-EXACT REPLAY</span><span>TALOS BY MNEME LABS</span>
       </div>
     </div>
 
@@ -762,86 +848,255 @@
         <div class="sec-head">
           <span class="num">SEC. 01</span>
           <div>
-            <h2>Built like a worker.<br />Rated like a machine.</h2>
+            <h2>The numbers that matter<br />are timing numbers.</h2>
+            <p class="deck">A humanoid is a control problem before it is anything else. Every architectural decision in TALOS — hardware and software — exists to protect four figures.</p>
           </div>
         </div>
       </div>
       <div class="stat-band">
-        <div class="stat-cell"><div class="value">40<small>DOF</small></div><div class="label">Degrees of freedom</div></div>
-        <div class="stat-cell"><div class="value">25<small>KG</small></div><div class="label">Sustained payload</div></div>
+        <div class="stat-cell"><div class="value">1<small>KHZ</small></div><div class="label">Whole-body control tick</div></div>
+        <div class="stat-cell"><div class="value">&lt;50<small>µS</small></div><div class="label">Worst-case loop jitter</div></div>
+        <div class="stat-cell"><div class="value">0.19<small>S</small></div><div class="label">E-stop to mechanical hold</div></div>
         <div class="stat-cell"><div class="value">16<small>HRS</small></div><div class="label">Shift endurance</div></div>
-        <div class="stat-cell"><div class="value">2.1<small>M/S</small></div><div class="label">Working gait speed</div></div>
       </div>
     </section>
 
-    <!-- ============ THE WORK ============ -->
-    <section id="work">
+    <!-- ============ HARDWARE ============ -->
+    <section id="hardware">
       <div class="shell">
         <div class="sec-head">
           <span class="num">SEC. 02</span>
           <div>
-            <h2>The work it takes off your hands</h2>
-            <p class="deck">TALOS is not a demo platform. It is deployed against three categories of labor — the dull, the heavy, and the dangerous.</p>
+            <h2>Hardware</h2>
+            <p class="deck">Four subsystems, all designed in-house. Not because we enjoy reinventing parts — because <strong>you cannot write deterministic software on top of nondeterministic hardware</strong>, and the catalog parts weren't deterministic.</p>
           </div>
         </div>
       </div>
-      <div class="work-grid">
-        <div class="work-card">
-          <span class="idx">A — THE DULL</span>
-          <span class="arrow">↗</span>
-          <h3>Repetitive material handling</h3>
-          <p>Tote moves, kitting, machine tending, palletizing. TALOS runs the same task ten thousand times with the same precision as the first — and never checks its phone.</p>
+      <div class="hw-grid">
+        <div class="hw-card">
+          <div>
+            <span class="idx">HW-01 · ACTUATION</span>
+            <h3>Quasi-direct-drive modules</h3>
+            <p>Twenty-eight identical actuator modules in three frame sizes, each with a low-ratio planetary stage. Low gearing keeps them <strong>backdrivable</strong>: the joint feels contact through the motor windings instead of crushing through it, and torque is estimated from current — no strain gauges to drift.</p>
+            <ul>
+              <li>3 frame sizes, 1 electrical interface</li>
+              <li>Backdrivable · torque from current</li>
+              <li>Field-swappable in under 10 min</li>
+            </ul>
+          </div>
+          <figure class="hw-fig">
+            <svg viewBox="0 0 120 96" aria-hidden="true">
+              <circle cx="44" cy="48" r="26" fill="none" stroke="#101112" stroke-width="2"/>
+              <circle cx="44" cy="48" r="15" fill="none" stroke="#101112" stroke-width="1.5"/>
+              <circle cx="44" cy="48" r="4" fill="#101112"/>
+              <circle cx="44" cy="27" r="4.5" fill="none" stroke="#101112" stroke-width="1.5"/>
+              <circle cx="62" cy="59" r="4.5" fill="none" stroke="#101112" stroke-width="1.5"/>
+              <circle cx="26" cy="59" r="4.5" fill="none" stroke="#101112" stroke-width="1.5"/>
+              <line x1="70" y1="48" x2="102" y2="48" stroke="#101112" stroke-width="2"/>
+              <line x1="102" y1="34" x2="102" y2="62" stroke="#101112" stroke-width="3"/>
+              <text x="10" y="90" font-family="IBM Plex Mono, monospace" font-size="7.5" letter-spacing="1" fill="#55584e">PLANETARY · LOW RATIO</text>
+            </svg>
+            <figcaption>Fig. HW-01</figcaption>
+          </figure>
         </div>
-        <div class="work-card">
-          <span class="idx">B — THE HEAVY</span>
-          <span class="arrow">↗</span>
-          <h3>Lifting past human limits</h3>
-          <p>A 25&nbsp;kg sustained payload with full-body dynamic balance. TALOS lifts from the floor, carries over uneven ground, and stacks overhead — shift after shift, injury-free by design.</p>
+
+        <div class="hw-card">
+          <div>
+            <span class="idx">HW-02 · POWER</span>
+            <h3>Hot-swap energy pack</h3>
+            <p>A 2.1 kWh pack on a 96 V rail, swapped in seconds without powering down — a supercap bridge carries the machine through the exchange. The battery-management firmware is ours too, on the same audited toolchain as everything else. <strong>A robot that must dock to charge isn't working a shift.</strong></p>
+            <ul>
+              <li>2.1 kWh · 96 V distribution</li>
+              <li>Zero-downtime pack exchange</li>
+              <li>Per-cell telemetry on the dataplane</li>
+            </ul>
+          </div>
+          <figure class="hw-fig">
+            <svg viewBox="0 0 120 96" aria-hidden="true">
+              <rect x="14" y="26" width="58" height="44" fill="none" stroke="#101112" stroke-width="2"/>
+              <line x1="22" y1="26" x2="22" y2="70" stroke="#101112" stroke-width="1"/>
+              <line x1="36" y1="26" x2="36" y2="70" stroke="#101112" stroke-width="1"/>
+              <line x1="50" y1="26" x2="50" y2="70" stroke="#101112" stroke-width="1"/>
+              <line x1="64" y1="26" x2="64" y2="70" stroke="#101112" stroke-width="1"/>
+              <line x1="72" y1="48" x2="88" y2="48" stroke="#101112" stroke-width="2"/>
+              <line x1="88" y1="38" x2="88" y2="58" stroke="#101112" stroke-width="3"/>
+              <line x1="95" y1="43" x2="95" y2="53" stroke="#101112" stroke-width="2"/>
+              <line x1="102" y1="38" x2="102" y2="58" stroke="#101112" stroke-width="3"/>
+              <text x="14" y="90" font-family="IBM Plex Mono, monospace" font-size="7.5" letter-spacing="1" fill="#55584e">2.1 KWH · HOT-SWAP</text>
+            </svg>
+            <figcaption>Fig. HW-02</figcaption>
+          </figure>
         </div>
-        <div class="work-card">
-          <span class="idx">C — THE DANGEROUS</span>
-          <span class="arrow">↗</span>
-          <h3>Going where people shouldn't</h3>
-          <p>Confined spaces, live equipment rooms, extreme heat and cold. Send the machine in first, keep the humans on the safe side of the door.</p>
+
+        <div class="hw-card">
+          <div>
+            <span class="idx">HW-03 · COMPUTE</span>
+            <h3>One board, two brains</h3>
+            <p>A single carrier board holds a real-time core cluster for control and a neural accelerator for perception, sharing one memory fabric. No laptop bolted to the chest, no USB hubs, no network switch inside the torso. <strong>If a wire can be a memory bus instead, it is.</strong></p>
+            <ul>
+              <li>Real-time cores + NPU, one fabric</li>
+              <li>All inference on-board, no cloud</li>
+              <li>Single supply, single failure domain</li>
+            </ul>
+          </div>
+          <figure class="hw-fig">
+            <svg viewBox="0 0 120 96" aria-hidden="true">
+              <rect x="28" y="20" width="64" height="56" fill="none" stroke="#101112" stroke-width="2"/>
+              <rect x="38" y="30" width="20" height="16" fill="#101112"/>
+              <rect x="64" y="30" width="20" height="16" fill="none" stroke="#101112" stroke-width="1.5"/>
+              <rect x="38" y="52" width="46" height="14" fill="none" stroke="#101112" stroke-width="1.5"/>
+              <g stroke="#101112" stroke-width="1.5">
+                <line x1="34" y1="20" x2="34" y2="12"/><line x1="46" y1="20" x2="46" y2="12"/>
+                <line x1="58" y1="20" x2="58" y2="12"/><line x1="70" y1="20" x2="70" y2="12"/>
+                <line x1="82" y1="20" x2="82" y2="12"/>
+                <line x1="34" y1="76" x2="34" y2="84"/><line x1="46" y1="76" x2="46" y2="84"/>
+                <line x1="58" y1="76" x2="58" y2="84"/><line x1="70" y1="76" x2="70" y2="84"/>
+                <line x1="82" y1="76" x2="82" y2="84"/>
+              </g>
+              <text x="20" y="94" font-family="IBM Plex Mono, monospace" font-size="7.5" letter-spacing="1" fill="#55584e">RT CORES + NPU</text>
+            </svg>
+            <figcaption>Fig. HW-03</figcaption>
+          </figure>
+        </div>
+
+        <div class="hw-card">
+          <div>
+            <span class="idx">HW-04 · SAFETY CHAIN</span>
+            <h3>A stop that needs no software</h3>
+            <p>The e-stop is a hardware chain: relay logic and brake actuation that fire whether or not any processor is alive. Software can request a stop; <strong>only hardware can guarantee one</strong>. Worst-case from button to mechanical hold: 0.19 seconds, measured, not simulated.</p>
+            <ul>
+              <li>Relay chain independent of compute</li>
+              <li>Spring-applied joint brakes</li>
+              <li>0.19 s to mechanical hold</li>
+            </ul>
+          </div>
+          <figure class="hw-fig">
+            <svg viewBox="0 0 120 96" aria-hidden="true">
+              <line x1="10" y1="48" x2="34" y2="48" stroke="#101112" stroke-width="2"/>
+              <line x1="34" y1="48" x2="52" y2="34" stroke="#101112" stroke-width="2"/>
+              <circle cx="34" cy="48" r="3" fill="#101112"/>
+              <circle cx="56" cy="48" r="3" fill="none" stroke="#101112" stroke-width="1.5"/>
+              <line x1="59" y1="48" x2="82" y2="48" stroke="#101112" stroke-width="2"/>
+              <rect x="82" y="36" width="26" height="24" fill="none" stroke="#101112" stroke-width="2"/>
+              <text x="87" y="52" font-family="IBM Plex Mono, monospace" font-size="8" fill="#101112">BRK</text>
+              <line x1="44" y1="18" x2="44" y2="30" stroke="#101112" stroke-width="2"/>
+              <circle cx="44" cy="14" r="5" fill="#101112"/>
+              <text x="12" y="90" font-family="IBM Plex Mono, monospace" font-size="7.5" letter-spacing="1" fill="#55584e">RELAY CHAIN · NO CPU</text>
+            </svg>
+            <figcaption>Fig. HW-04</figcaption>
+          </figure>
         </div>
       </div>
     </section>
 
-    <!-- ============ FIELD TRIALS ============ -->
-    <section id="trials" class="dark">
+    <!-- ============ SOFTWARE ============ -->
+    <section id="software" class="dark">
       <div class="shell">
         <div class="sec-head">
           <span class="num">SEC. 03</span>
           <div>
-            <h2>Field trial log</h2>
-            <p class="deck">Selected entries from the current TALOS trial program. Every claim on this page traces back to a logged, witnessed trial.</p>
+            <h2>Software: the ICHOR runtime</h2>
+            <p class="deck">In the myth, Talos ran on ichor — a single sealed vein. So does ours. <strong>ICHOR is the entire robot in one statically-linked, real-time process</strong>: one memory space, one compile-time task graph, one clock. Written from scratch, because determinism can't be bolted on afterward.</p>
           </div>
         </div>
-        <div class="trial-list">
-          <div class="trial">
-            <span class="t-id">TRIAL-0117</span>
-            <span class="t-desc">Continuous tote transfer, 14&nbsp;kg average load <em>· 9,412 cycles</em></span>
-            <span class="t-result"><b>PASS</b> · 0 DROPS</span>
+
+        <div class="layer-list">
+          <div class="layer">
+            <span class="l-id">L0 · KERNEL</span>
+            <div>
+              <h3>Verified safety kernel</h3>
+              <p>A few thousand lines that own the watchdog, the brake request line, and power gating — small enough to formally verify, and it is. Every layer above L0 is allowed to crash. <strong>L0 is not.</strong> If the rest of the stack disappears mid-stride, L0 still walks the joints down to a safe hold.</p>
+            </div>
+            <div class="l-metric"><b>PROVEN</b><span>Formally verified core</span></div>
           </div>
-          <div class="trial">
-            <span class="t-id">TRIAL-0128</span>
-            <span class="t-desc">Recovery from lateral shove at full walking speed <em>· 200 impacts</em></span>
-            <span class="t-result"><b>PASS</b> · 0 FALLS</span>
+
+          <div class="layer">
+            <span class="l-id">L1 · DATAPLANE</span>
+            <div>
+              <h3>Shared-memory transport</h3>
+              <p>Sensor frames and torque commands live in lock-free ring buffers in one address space. <strong>No serialization, no sockets, no discovery protocol, no QoS matrix</strong> — a camera frame is handed to the controller as a pointer, not a packet. Publishing a message costs nanoseconds and, critically, always costs the <em>same</em> nanoseconds.</p>
+            </div>
+            <div class="l-metric"><b>0 COPIES</b><span>Sensor to controller</span></div>
           </div>
-          <div class="trial">
-            <span class="t-id">TRIAL-0134</span>
-            <span class="t-desc">Sixteen-hour unsupervised shift, mixed task queue <em>· 3 sites</em></span>
-            <span class="t-result"><b>PASS</b> · 98.7% TASK RATE</span>
+
+          <div class="layer">
+            <span class="l-id">L2 · MOTION</span>
+            <div>
+              <h3>Whole-body control at 1 kHz</h3>
+              <p>A model-predictive controller fused with learned balance policies, executing on a time-triggered schedule. Every task on the 1 kHz tick has an audited worst-case execution time; the schedule is proven to fit before a release ships. Miss your budget in CI and <strong>the build fails — the robot never finds out.</strong></p>
+            </div>
+            <div class="l-metric"><b>&lt;50 µS</b><span>Worst-case jitter</span></div>
           </div>
-          <div class="trial">
-            <span class="t-id">TRIAL-0141</span>
-            <span class="t-desc">Stair ascent carrying 20&nbsp;kg, degraded lighting <em>· 500 flights</em></span>
-            <span class="t-result"><b>PASS</b> · 0 FAULTS</span>
+
+          <div class="layer">
+            <span class="l-id">L3 · AUTONOMY</span>
+            <div>
+              <h3>Planning that can only suggest</h3>
+              <p>Task planning, manipulation, and navigation — the only probabilistic layer in the machine. L3 proposes; L2 and L0 dispose. A plan is just a suggestion until the deterministic layers below prove it's dynamically feasible and safe. <strong>The neural network never touches a motor directly.</strong></p>
+            </div>
+            <div class="l-metric"><b>SANDBOXED</b><span>No direct motor access</span></div>
           </div>
-          <div class="trial">
-            <span class="t-id">TRIAL-0152</span>
-            <span class="t-desc">Emergency stop to full mechanical hold <em>· worst case</em></span>
-            <span class="t-result"><b>0.19 S</b> · CERTIFIED</span>
+
+          <div class="layer">
+            <span class="l-id">REPLAY</span>
+            <div>
+              <h3>Bit-exact incident replay</h3>
+              <p>Because the whole system is one deterministic process, logging its inputs is logging <em>everything</em>. Any anomaly from the field replays on a desk, bit-for-bit — same branches, same torques, same failure. <strong>We don't reproduce bugs. We re-run them.</strong></p>
+            </div>
+            <div class="l-metric"><b>1 : 1</b><span>Field to desk fidelity</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ NO ROS 2 ============ -->
+    <section id="no-ros">
+      <div class="shell">
+        <div class="sec-head">
+          <span class="num">SEC. 04</span>
+          <div>
+            <h2>Why there's no ROS 2 in TALOS</h2>
+          </div>
+        </div>
+        <div class="vs-note">
+          <p>To be clear: ROS 2 is a remarkable way to build a research robot. It is also, in our judgment, the wrong foundation for a machine that works an unsupervised sixteen-hour shift next to people. <strong>Its flexibility is exactly the property you have to remove</strong> — a dynamic graph of nodes discovering each other over DDS middleware cannot give you a worst-case timing bound, and a worst-case timing bound is the entire product.</p>
+          <p>TALOS never ran ROS 2 and was never ported off it. ICHOR was designed first, before the first actuator spun.</p>
+        </div>
+        <div class="vs-table">
+          <div class="vs-row head">
+            <div class="crit" aria-hidden="true"></div>
+            <div class="col-title">The conventional stack<small>ROS 2 / DDS</small></div>
+            <div class="col-title">TALOS<small>ICHOR runtime</small></div>
+          </div>
+          <div class="vs-row">
+            <div class="crit">Transport</div>
+            <div class="them">DDS pub/sub across processes — serialize, copy, deserialize at every hop.</div>
+            <div class="us"><b>Shared memory, zero copies.</b> One address space; messages are pointers.</div>
+          </div>
+          <div class="vs-row">
+            <div class="crit">Timing</div>
+            <div class="them">Best-effort executors; latency varies with load, graph shape, and QoS settings.</div>
+            <div class="us"><b>Time-triggered schedule</b> with audited WCET. Jitter is a shipped spec, not a hope.</div>
+          </div>
+          <div class="vs-row">
+            <div class="crit">Architecture</div>
+            <div class="them">Dozens of nodes discovered at runtime; the system's shape emerges when it boots.</div>
+            <div class="us"><b>One static binary.</b> The task graph is fixed at compile time and reviewed like code.</div>
+          </div>
+          <div class="vs-row">
+            <div class="crit">Failure model</div>
+            <div class="them">A node can die while its peers keep publishing into the void — partial states are normal.</div>
+            <div class="us"><b>All-or-nothing above L0.</b> A verified kernel guarantees safe stop with zero software alive.</div>
+          </div>
+          <div class="vs-row">
+            <div class="crit">Debugging</div>
+            <div class="them">Bag-file replay is approximate — timing and ordering differ from the incident.</div>
+            <div class="us"><b>Bit-exact deterministic replay.</b> The field failure re-runs identically on a desk.</div>
+          </div>
+          <div class="vs-row">
+            <div class="crit">Updates</div>
+            <div class="them">Per-package versioning across a node graph; combinatorial compatibility surface.</div>
+            <div class="us"><b>Atomic A/B image swap.</b> The robot runs exactly one auditable software version.</div>
           </div>
         </div>
       </div>
@@ -851,27 +1106,29 @@
     <section id="spec">
       <div class="shell">
         <div class="sec-head">
-          <span class="num">SEC. 04</span>
+          <span class="num">SEC. 05</span>
           <div>
             <h2>Spec sheet</h2>
-            <p class="deck">Document ML-T-001, revision D. Figures are production targets validated in the current trial fleet.</p>
+            <p class="deck">Document ML-T-002, revision E. Figures are production targets validated in the current trial fleet.</p>
           </div>
         </div>
       </div>
       <div class="spec-wrap">
         <div class="spec-col">
           <div class="spec-line"><span>Designation</span><b>TALOS, Model 1</b></div>
-          <div class="spec-line"><span>Form factor</span><b>Bipedal humanoid</b></div>
-          <div class="spec-line"><span>Height / mass</span><b>1.88 m / 71 kg</b></div>
-          <div class="spec-line"><span>Actuation</span><b>Electric, quasi-direct drive</b></div>
-          <div class="spec-line"><span>Hands</span><b>Force-sensing, tool-capable grippers</b></div>
+          <div class="spec-line"><span>Form factor</span><b>Bipedal humanoid, 1.88 m / 71 kg</b></div>
+          <div class="spec-line"><span>Actuation</span><b>28 × QDD modules, 3 frame sizes</b></div>
+          <div class="spec-line"><span>Payload</span><b>25 kg sustained</b></div>
+          <div class="spec-line"><span>Power</span><b>2.1 kWh hot-swap · 16 h shift</b></div>
+          <div class="spec-line"><span>Safety</span><b>Hardware e-stop chain · 0.19 s hold</b></div>
         </div>
         <div class="spec-col">
-          <div class="spec-line"><span>Perception</span><b>Stereo vision · lidar · tactile array</b></div>
-          <div class="spec-line"><span>Compute</span><b>On-board, no cloud dependency</b></div>
-          <div class="spec-line"><span>Power</span><b>Hot-swappable battery, 16 h shift</b></div>
-          <div class="spec-line"><span>Safety</span><b>Hardware e-stop · 0.19 s hold</b></div>
-          <div class="spec-line"><span>Environment</span><b>-10 °C to 45 °C, IP54</b></div>
+          <div class="spec-line"><span>Runtime</span><b>ICHOR — single static binary</b></div>
+          <div class="spec-line"><span>Middleware</span><b>None. No ROS 2, no DDS</b></div>
+          <div class="spec-line"><span>Control</span><b>1 kHz whole-body MPC, WCET-audited</b></div>
+          <div class="spec-line"><span>Safety core</span><b>Formally verified kernel (L0)</b></div>
+          <div class="spec-line"><span>Diagnostics</span><b>Bit-exact deterministic replay</b></div>
+          <div class="spec-line"><span>Updates</span><b>Atomic A/B image swap, on-board only</b></div>
         </div>
       </div>
     </section>
@@ -886,8 +1143,8 @@
           </p>
           <div class="row">
             <span class="tag">Why we build</span>
-            <p><strong>TALOS is named for the bronze giant of Greek myth</strong> — the first machine humanity ever imagined, built to walk the perimeter and keep people safe. Twenty-eight centuries later, MNEME Labs is building it for real.</p>
-            <p>There are millions of jobs that injure the people who do them. Our position is simple: <strong>if a task is dull, heavy, or dangerous, it is a robot's job.</strong> We will keep shipping hardware until that sentence sounds obvious.</p>
+            <p><strong>TALOS is named for the bronze giant of Greek myth</strong> — the first machine humanity ever imagined, animated by a single vein of ichor. We took the hint: one body, one vein, nothing inside it we didn't design and can't explain.</p>
+            <p>There are millions of jobs that injure the people who do them. Our position is simple: <strong>if a task is dull, heavy, or dangerous, it is a robot's job</strong> — and a robot working next to people must be deterministic all the way down. We build the whole stack because that's the only way to promise it.</p>
           </div>
         </div>
       </div>
@@ -899,7 +1156,7 @@
         <div class="reserve-inner">
           <div>
             <h2>Put TALOS on your floor.</h2>
-            <p class="deck">The first production allocation is limited and assigned in order of reservation. Leave your email for the reservation packet, trial footage, and delivery timeline.</p>
+            <p class="deck">The first production allocation is limited and assigned in order of reservation. Leave your email for the reservation packet, the full architecture whitepaper, and the delivery timeline.</p>
           </div>
           <div class="form-block">
             <div class="form-row">
