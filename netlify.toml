@@ -1,0 +1,10 @@
+# Netlify build configuration.
+# Serves the existing root site as-is and mounts the built Groundwork app
+# at /groundwork/. Applies to production deploys and PR deploy previews.
+
+[build]
+  command = "bash scripts/netlify-build.sh"
+  publish = "_site"
+
+[build.environment]
+  NODE_VERSION = "22"
