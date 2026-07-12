@@ -39,9 +39,6 @@ export function Landing({ onStart }: Props) {
         <button className="btn btn-primary btn-lg" onClick={onStart}>
           Build my security plan
         </button>
-        <p className="privacy-note">
-          Everything stays in your browser. Nothing you enter leaves this page.
-        </p>
       </header>
 
       <section className="landing-steps">
@@ -55,8 +52,8 @@ export function Landing({ onStart }: Props) {
       </section>
 
       <footer className="landing-footer">
-        Built for founders, not CISOs. Framework mappings included for when
-        SOC 2 or ISO 27001 come knocking.
+        We're dedicated to helping startups get their security footing —
+        clear priorities, concrete steps, and a plan that grows with you.
       </footer>
     </div>
   );
