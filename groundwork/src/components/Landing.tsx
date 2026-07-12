@@ -1,5 +1,6 @@
 interface Props {
   onStart: () => void;
+  onHelp: () => void;
 }
 
 const STEPS = [
@@ -17,7 +18,7 @@ const STEPS = [
   },
 ];
 
-export function Landing({ onStart }: Props) {
+export function Landing({ onStart, onHelp }: Props) {
   return (
     <div className="landing">
       <header className="landing-hero">
@@ -49,6 +50,36 @@ export function Landing({ onStart }: Props) {
             <p>{step.body}</p>
           </div>
         ))}
+      </section>
+
+      <section className="landing-beyond">
+        <h2>More than a checklist</h2>
+        <p className="landing-beyond-sub">
+          Getting set up is half the story. We're also there for the messy
+          moments and the questions in between.
+        </p>
+        <div className="beyond-grid">
+          <div className="step-card">
+            <h3>Help after an incident</h3>
+            <p>
+              Phished account, leaked key, lost laptop, exposed data:
+              step-by-step first-aid playbooks for the moments when something
+              has already gone wrong, including who to call and what to do
+              first.
+            </p>
+          </div>
+          <div className="step-card">
+            <h3>Answers along the way</h3>
+            <p>
+              Straight answers to the questions founders actually ask: what
+              to spend, who should own security, when SOC 2 makes sense, and
+              how to handle customer security questionnaires.
+            </p>
+          </div>
+        </div>
+        <button className="btn btn-lg" onClick={onHelp}>
+          Browse incident help &amp; FAQs
+        </button>
       </section>
 
       <footer className="landing-footer">
