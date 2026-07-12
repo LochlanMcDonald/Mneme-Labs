@@ -1,10 +1,10 @@
 # Groundwork
 
-**Startup security, sorted — without the hassle.**
+**Startup security, sorted. Without the hassle.**
 
 Groundwork gives early-stage companies a tailored, prioritized cybersecurity
 roadmap. Answer a short questionnaire about what your company does, what data
-it handles, and what systems it runs — Groundwork matches your answers against
+it handles, and what systems it runs. Groundwork matches your answers against
 a knowledge base of ~50 startup-sized security controls and produces a phased
 plan: what to do this week, in the first 30 days, the first 90 days, and as
 ongoing habits.
@@ -30,7 +30,7 @@ ongoing habits.
    `promote` rules pull controls into earlier phases when the stakes are
    higher (e.g. encryption at rest moves to "this week" for health data).
    Measures you already have are pre-marked done.
-3. **Dashboard**: phased checklist with per-control guidance — the risk in
+3. **Dashboard**: phased checklist with per-control guidance: the risk in
    plain language, concrete steps, suggested tools, effort/cost estimates,
    and mappings to SOC 2 / ISO 27001 / CIS / GDPR / HIPAA / PCI for when
    auditors or enterprise questionnaires come knocking. Track status

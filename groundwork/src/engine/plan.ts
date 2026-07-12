@@ -63,7 +63,7 @@ export function initialItemStates(profile: CompanyProfile, plan: Plan): Record<s
       profile.existing.includes(item.control.satisfiedBy);
     states[item.control.id] = {
       status: covered ? 'done' : 'todo',
-      note: covered ? 'Marked done from your onboarding answers — worth double-checking coverage.' : '',
+      note: covered ? 'Marked done from your onboarding answers. Worth double-checking coverage.' : '',
     };
   }
   return states;

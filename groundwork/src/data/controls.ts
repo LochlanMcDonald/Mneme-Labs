@@ -48,7 +48,7 @@ export const CONTROLS: Control[] = [
     category: 'identity',
     why: 'MFA blocks the vast majority of account-takeover attacks, including ones where the password has already leaked.',
     how: [
-      'Enable MFA on email first — it is the master key to everything else.',
+      'Enable MFA on email first, since it is the master key to everything else.',
       'Then cover your cloud provider, code hosting, password manager, banking, DNS registrar, and payment processors.',
       'Prefer app-based codes or hardware keys over SMS, which can be SIM-swapped.',
       'Store backup codes in the password manager.',
@@ -68,7 +68,7 @@ export const CONTROLS: Control[] = [
     why: 'When day-to-day accounts double as admin accounts, one phished teammate hands over the keys to everything.',
     how: [
       'Inventory who has admin/owner rights on each critical system (email, cloud, code hosting, DNS, billing).',
-      'Reduce every account to the minimum role it needs — most people need "member", not "admin".',
+      'Reduce every account to the minimum role it needs. Most people need "member", not "admin".',
       'Ensure at least two people (or a break-glass account with credentials in the vault) hold owner access so you are not locked out.',
       'Require hardware-key or app MFA on all remaining admin accounts.',
     ],
@@ -103,7 +103,7 @@ export const CONTROLS: Control[] = [
     how: [
       'Standardize on Google Workspace or Microsoft 365 as your identity provider.',
       'Turn on "Sign in with Google/Microsoft" in every SaaS tool that supports it.',
-      'For tools without SSO support, note them in your vendor list — revoking access to those is a manual offboarding step.',
+      'For tools without SSO support, note them in your vendor list, because revoking access to those is a manual offboarding step.',
       'As you grow past ~20 people, consider a dedicated IdP (Okta, JumpCloud) and SCIM provisioning.',
     ],
     tools: ['Google Workspace', 'Microsoft Entra ID', 'Okta', 'JumpCloud'],
@@ -113,7 +113,7 @@ export const CONTROLS: Control[] = [
     satisfiedBy: 'sso',
     when: (p) =>
       p.teamSize === 'medium' || p.teamSize === 'large'
-        ? 'At your team size, per-app passwords stop scaling — SSO keeps access manageable.'
+        ? 'At your team size, per-app passwords stop scaling. SSO keeps access manageable.'
         : notSolo(p)
           ? 'Even a small team benefits from centralizing logins behind one identity provider.'
           : null,
@@ -170,7 +170,7 @@ export const CONTROLS: Control[] = [
     how: [
       'Turn on automatic updates for the operating system on every device.',
       'Set browsers to update automatically and relaunch regularly.',
-      'Delete software you no longer use — every installed app is attack surface.',
+      'Delete software you no longer use. Every installed app is attack surface.',
     ],
     effort: 'minutes',
     cost: 'free',
@@ -238,7 +238,7 @@ export const CONTROLS: Control[] = [
     id: 'edr',
     title: 'Install endpoint protection (EDR/antivirus)',
     category: 'devices',
-    why: 'Modern endpoint protection catches malware and flags suspicious behavior that built-in defenses miss — and enterprise customers will ask about it.',
+    why: 'Modern endpoint protection catches malware and flags suspicious behavior that built-in defenses miss, and enterprise customers will ask about it.',
     how: [
       'Start with the built-ins turned on everywhere: Microsoft Defender on Windows, XProtect/Gatekeeper on macOS.',
       'When budget allows or a customer questionnaire demands it, deploy a managed EDR agent to all endpoints.',
@@ -262,12 +262,12 @@ export const CONTROLS: Control[] = [
     id: 'data-inventory',
     title: 'Map what data you hold and where it lives',
     category: 'data',
-    why: 'You cannot protect what you have not named. A one-page data map drives every other decision — what to encrypt, back up, delete, and disclose if breached.',
+    why: 'You cannot protect what you have not named. A one-page data map drives every other decision: what to encrypt, back up, delete, and disclose if breached.',
     how: [
       'List each kind of data you handle (customer PII, payment records, credentials, analytics…).',
       'For each: where it is stored, who can access it, and how sensitive it is.',
-      'Mark the systems holding your most sensitive data — those get controls first.',
-      'Delete data you are storing "just in case" — data you do not hold cannot leak.',
+      'Mark the systems holding your most sensitive data. Those get controls first.',
+      'Delete data you are storing "just in case". Data you do not hold cannot leak.',
     ],
     effort: 'hours',
     cost: 'free',
@@ -284,7 +284,7 @@ export const CONTROLS: Control[] = [
       'Identify the data whose loss would hurt most (production database, file storage, key documents).',
       'Turn on automated backups: managed database snapshots, cloud storage versioning, and workspace backup for documents.',
       'Keep at least one copy outside the primary system or account, so one compromised credential cannot delete both.',
-      'Actually restore something once a quarter — an untested backup is a hope, not a plan.',
+      'Actually restore something once a quarter. An untested backup is a hope, not a plan.',
     ],
     effort: 'hours',
     cost: 'low',
@@ -300,9 +300,9 @@ export const CONTROLS: Control[] = [
     why: 'API keys and database credentials scattered through code and Slack are the fastest route from a small leak to a full compromise.',
     how: [
       'Store application secrets in your platform\'s secret manager, injected at deploy time.',
-      'Never commit secrets — add .env to .gitignore and use example files with placeholders.',
+      'Never commit secrets: add .env to .gitignore and use example files with placeholders.',
       'Share human credentials only through the password manager.',
-      'Rotate any secret that has ever been committed or pasted into chat — assume it is burned.',
+      'Rotate any secret that has ever been committed or pasted into chat. Assume it is burned.',
     ],
     tools: ['AWS Secrets Manager', 'GCP Secret Manager', 'Doppler', '1Password'],
     effort: 'hours',
@@ -316,7 +316,7 @@ export const CONTROLS: Control[] = [
     id: 'encryption-in-transit',
     title: 'Enforce encryption in transit (HTTPS/TLS everywhere)',
     category: 'data',
-    why: 'Unencrypted traffic can be read or modified by anyone on the path — and browsers and customers treat non-HTTPS products as broken.',
+    why: 'Unencrypted traffic can be read or modified by anyone on the path, and browsers and customers treat non-HTTPS products as broken.',
     how: [
       'Serve every public endpoint over HTTPS with certificates that auto-renew.',
       'Redirect HTTP to HTTPS and enable HSTS once you are confident.',
@@ -357,7 +357,7 @@ export const CONTROLS: Control[] = [
     how: [
       'For each data type in your inventory, decide how long you actually need it.',
       'Automate deletion where possible (log retention settings, database TTLs, scheduled jobs).',
-      'Document the schedule in a page — this doubles as evidence for GDPR and SOC 2.',
+      'Document the schedule in a page. This doubles as evidence for GDPR and SOC 2.',
       'Handle deletion requests: know how you would erase one customer\'s data end to end.',
     ],
     effort: 'hours',
@@ -375,7 +375,7 @@ export const CONTROLS: Control[] = [
     id: 'cloud-root-lockdown',
     title: 'Lock down your cloud root/owner account',
     category: 'cloud',
-    why: 'The root account can do — and destroy — everything, including deleting backups and the audit trail. It should be almost never used.',
+    why: 'The root account can do and destroy everything, including deleting backups and the audit trail. It should be almost never used.',
     how: [
       'Set a long unique password on the root/owner account and add hardware-key MFA.',
       'Remove root API keys entirely.',
@@ -395,7 +395,7 @@ export const CONTROLS: Control[] = [
     why: 'Over-broad cloud permissions turn one leaked key or phished developer into a total compromise.',
     how: [
       'Give humans SSO-backed roles, not long-lived access keys.',
-      'Scope service roles to the specific actions and resources they need — avoid wildcard-everything policies.',
+      'Scope service roles to the specific actions and resources they need, and avoid wildcard-everything policies.',
       'Rotate or eliminate long-lived access keys; prefer short-lived credentials.',
       'Review IAM users, roles, and keys quarterly and delete the unused ones.',
     ],
@@ -427,7 +427,7 @@ export const CONTROLS: Control[] = [
     category: 'cloud',
     why: 'Databases and admin panels exposed to the internet get found by scanners within hours, not days.',
     how: [
-      'Put databases, caches, and internal services on private networks — nothing but the app should be public.',
+      'Put databases, caches, and internal services on private networks. Nothing but the app should be public.',
       'Restrict SSH/RDP to a VPN or identity-aware proxy instead of 0.0.0.0/0.',
       'Scan your own perimeter (e.g. with an online port scanner) and justify every open port.',
       'On PaaS platforms, review which preview/staging deployments are publicly reachable.',
@@ -444,7 +444,7 @@ export const CONTROLS: Control[] = [
     id: 'email-auth',
     title: 'Set up SPF, DKIM, and DMARC on your domain',
     category: 'cloud',
-    why: 'Without email authentication, anyone can send mail as you — phishing your customers and investors from your own domain.',
+    why: 'Without email authentication, anyone can send mail as you, phishing your customers and investors from your own domain.',
     how: [
       'Publish an SPF record listing the services allowed to send as your domain.',
       'Enable DKIM signing in your email provider and any sending services (marketing, transactional).',
@@ -484,7 +484,7 @@ export const CONTROLS: Control[] = [
       'Enable branch protection on main: require pull requests and at least one approval.',
       'Require status checks (tests, linters) to pass before merge.',
       'Disable force-pushes to main and limit who can bypass the rules.',
-      'Solo founders: still use PRs — future-you reviewing calmer than present-you is worth it, and the habit scales.',
+      'Solo founders: still use PRs. Future-you reviewing calmer than present-you is worth it, and the habit scales.',
     ],
     effort: 'minutes',
     cost: 'free',
@@ -500,7 +500,7 @@ export const CONTROLS: Control[] = [
     how: [
       'Enable Dependabot (GitHub) or the equivalent for your platform on every repo.',
       'Turn on security alerts and automatic update PRs.',
-      'Actually merge the updates — schedule a weekly slot so they do not pile up.',
+      'Actually merge the updates. Schedule a weekly slot so they do not pile up.',
       'Pin dependencies with a lockfile so builds are reproducible.',
     ],
     tools: ['Dependabot', 'Renovate', 'Snyk'],
@@ -515,7 +515,7 @@ export const CONTROLS: Control[] = [
     id: 'secret-scanning',
     title: 'Enable secret scanning and push protection',
     category: 'appsec',
-    why: 'Committed credentials are harvested by bots within minutes of a repo going public — and they lurk in private repo history too.',
+    why: 'Committed credentials are harvested by bots within minutes of a repo going public, and they lurk in private repo history too.',
     how: [
       'Enable secret scanning with push protection on your code host.',
       'Scan existing history for leaked secrets and rotate anything found.',
@@ -535,7 +535,7 @@ export const CONTROLS: Control[] = [
     why: 'When staging shares credentials or data with production, every experiment risks customer data and every dev laptop is a production key.',
     how: [
       'Use separate cloud accounts/projects (or at minimum separate credentials) for production vs. development.',
-      'Never use real customer data in development — generate fake data or scrub exports.',
+      'Never use real customer data in development. Generate fake data or scrub exports.',
       'Restrict production access to the few people who operate it.',
     ],
     effort: 'days',
@@ -550,10 +550,10 @@ export const CONTROLS: Control[] = [
     id: 'appsec-basics',
     title: 'Cover the OWASP-style application basics',
     category: 'appsec',
-    why: 'Injection, broken auth, and missing access checks are decades old and still behind most web breaches — attackers use scanners, so the basics are the whole game early on.',
+    why: 'Injection, broken auth, and missing access checks are decades old and still behind most web breaches. Attackers use scanners, so the basics are the whole game early on.',
     how: [
       'Use your framework\'s built-ins: parameterized queries/ORM, template escaping, CSRF protection.',
-      'Never roll your own auth or crypto — use a battle-tested library or managed auth.',
+      'Never roll your own auth or crypto. Use a battle-tested library or managed auth.',
       'Enforce authorization on the server for every request; never trust client-side checks.',
       'Validate and limit all input (size, type, format), including file uploads.',
       'Set security headers (CSP, HSTS, X-Content-Type-Options) and secure cookie flags.',
@@ -605,11 +605,11 @@ export const CONTROLS: Control[] = [
     id: 'pentest',
     title: 'Get a penetration test of your product',
     category: 'appsec',
-    why: 'A good pentest finds the issues your team is too close to see — and enterprise buyers increasingly require a recent report before signing.',
+    why: 'A good pentest finds the issues your team is too close to see, and enterprise buyers increasingly require a recent report before signing.',
     how: [
       'Wait until the obvious basics (this plan\'s earlier items) are done, or you will pay to be told what you already know.',
       'Scope it to your core product and its APIs; a 1–2 week engagement is typical for a startup.',
-      'Fix the highs and criticals, then request a retest letter — that is the artifact customers want.',
+      'Fix the highs and criticals, then request a retest letter. That is the artifact customers want.',
       'Repeat annually or after major architectural changes.',
     ],
     tools: ['Cobalt', 'Doyensec', 'Cure53', 'independent boutiques'],
@@ -621,7 +621,7 @@ export const CONTROLS: Control[] = [
       shipsProduct(p) && (has(p.customers, 'enterprise', 'government') || wantsAudit(p))
         ? 'Enterprise deals and audits will ask for a recent penetration test report.'
         : shipsProduct(p) && sensitiveData(p)
-          ? 'You ship a product handling sensitive data — independent testing is worth the spend once basics are done.'
+          ? 'You ship a product handling sensitive data, so independent testing is worth the spend once basics are done.'
           : null,
     frameworks: ['SOC 2 CC4.1', 'ISO 27001 A.8.29', 'PCI DSS 11.4'],
   },
@@ -668,7 +668,7 @@ export const CONTROLS: Control[] = [
     id: 'oauth-app-review',
     title: 'Review third-party OAuth grants quarterly',
     category: 'vendors',
-    why: 'Every "Sign in and grant access" click gives an outside app standing access to your email, files, or code — long after you stop using it.',
+    why: 'Every "Sign in and grant access" click gives an outside app standing access to your email, files, or code, long after you stop using it.',
     how: [
       'In Google Workspace/Microsoft 365 admin, review third-party app grants and revoke stale ones.',
       'Do the same for GitHub/GitLab OAuth apps and personal access tokens.',
@@ -690,7 +690,7 @@ export const CONTROLS: Control[] = [
     how: [
       'Run a 30-minute session covering: checking sender domains, hovering links, and never entering credentials from an emailed link.',
       'Agree on a verification norm: money movements and credential requests get confirmed on a second channel.',
-      'Make reporting easy and blame-free — "I clicked something weird" should be praised, not punished.',
+      'Make reporting easy and blame-free. "I clicked something weird" should be praised, not punished.',
       'Repeat briefly for every new joiner.',
     ],
     tools: ['Free: built-in Google/Microsoft phishing protections', 'Later: KnowBe4, Riot'],
@@ -709,7 +709,7 @@ export const CONTROLS: Control[] = [
     how: [
       'Pick one person (a founder is fine) to own security decisions and this checklist.',
       'Give them a recurring 30-minute slot each month to review progress and new risks.',
-      'They do not do all the work — they make sure it happens and gets unblocked.',
+      'They do not do all the work. They make sure it happens and gets unblocked.',
     ],
     effort: 'minutes',
     cost: 'free',
@@ -721,12 +721,12 @@ export const CONTROLS: Control[] = [
     id: 'acceptable-use',
     title: 'Write a short acceptable-use & security policy',
     category: 'people',
-    why: 'A one-page policy sets shared expectations — and it is the first document every compliance framework and enterprise questionnaire asks for.',
+    why: 'A one-page policy sets shared expectations, and it is the first document every compliance framework and enterprise questionnaire asks for.',
     how: [
       'Cover: password manager and MFA required, device rules (encryption, lock screens), data handling, and how to report incidents.',
       'Keep it to a page or two of plain language people will actually read.',
       'Have everyone acknowledge it (a form or signed doc) and include it in onboarding.',
-      'Revisit annually — date and version it.',
+      'Revisit annually, and date and version it.',
     ],
     effort: 'hours',
     cost: 'free',
@@ -751,7 +751,7 @@ export const CONTROLS: Control[] = [
       'List first moves: preserve evidence, contain (rotate credentials, isolate systems), then assess.',
       'Include a contact sheet: team, hosting provider, lawyer, insurer, and where to find customer comms templates.',
       'Note breach-notification duties for your data types and regions (e.g. GDPR\'s 72-hour rule).',
-      'Walk through one scenario as a team once a year — a 45-minute tabletop is plenty.',
+      'Walk through one scenario as a team once a year. A 45-minute tabletop is plenty.',
     ],
     effort: 'hours',
     cost: 'free',
@@ -786,7 +786,7 @@ export const CONTROLS: Control[] = [
     how: [
       'Get quotes once you hold meaningful customer data or sign contracts that require coverage.',
       'Read what the policy actually covers: incident response costs, business interruption, liability.',
-      'Expect the application to ask about MFA, backups, and training — completing this plan literally lowers your premium.',
+      'Expect the application to ask about MFA, backups, and training. Completing this plan literally lowers your premium.',
     ],
     effort: 'hours',
     cost: 'medium',
@@ -820,12 +820,12 @@ export const CONTROLS: Control[] = [
     id: 'privacy-policy',
     title: 'Publish an accurate privacy policy',
     category: 'compliance',
-    why: 'If you collect personal data, a privacy policy is legally required in most markets — and an inaccurate one is worse than none.',
+    why: 'If you collect personal data, a privacy policy is legally required in most markets, and an inaccurate one is worse than none.',
     how: [
       'Base it on your data inventory: what you collect, why, where it goes, how long you keep it, and user rights.',
       'Use a reputable generator or template as a start, then make it match reality.',
       'Have a lawyer review it once you are handling data at scale or in regulated categories.',
-      'Update it when your data practices change — it should track your data map.',
+      'Update it when your data practices change. It should track your data map.',
     ],
     effort: 'hours',
     cost: 'low',
@@ -840,7 +840,7 @@ export const CONTROLS: Control[] = [
     id: 'gdpr-basics',
     title: 'Cover the GDPR basics',
     category: 'compliance',
-    why: 'GDPR applies to anyone serving EU users, regardless of where the company sits — and its basics overlap heavily with good security anyway.',
+    why: 'GDPR applies to anyone serving EU users, regardless of where the company sits, and its basics overlap heavily with good security anyway.',
     how: [
       'Maintain your data inventory as a record of processing (Article 30).',
       'Establish a lawful basis for each processing purpose and collect consent where needed.',
@@ -858,10 +858,10 @@ export const CONTROLS: Control[] = [
     id: 'hipaa-basics',
     title: 'Meet HIPAA obligations for health data',
     category: 'compliance',
-    why: 'Handling US health data without HIPAA compliance risks fines and — more immediately — no healthcare customer will sign without it.',
+    why: 'Handling US health data without HIPAA compliance risks fines. More immediately, no healthcare customer will sign without it.',
     how: [
       'Confirm whether you are a covered entity or (more likely) a business associate.',
-      'Sign BAAs with every vendor touching PHI — including your cloud provider (AWS/GCP/Azure all offer them).',
+      'Sign BAAs with every vendor touching PHI, including your cloud provider (AWS/GCP/Azure all offer them).',
       'Encrypt PHI at rest and in transit; restrict and log all access to it.',
       'Run the required risk analysis and document policies; consider a HIPAA-focused compliance tool.',
       'Train everyone who touches PHI.',
@@ -884,7 +884,7 @@ export const CONTROLS: Control[] = [
     how: [
       'Use a processor\'s hosted fields/checkout (Stripe, Adyen, Braintree) so card numbers never hit your servers.',
       'Confirm your integration qualifies for SAQ A (the lightest PCI questionnaire) and complete it.',
-      'Never log, store, or email card numbers — even "temporarily".',
+      'Never log, store, or email card numbers, even "temporarily".',
     ],
     tools: ['Stripe', 'Adyen', 'Braintree'],
     effort: 'hours',
@@ -902,7 +902,7 @@ export const CONTROLS: Control[] = [
     category: 'compliance',
     why: 'Enterprise buyers use SOC 2 or ISO 27001 as a gate. Starting readiness early is dramatically cheaper than a panicked pre-deal scramble.',
     how: [
-      'Finish the foundational items in this plan first — they map directly onto the framework controls.',
+      'Finish the foundational items in this plan first. They map directly onto the framework controls.',
       'Pick a compliance automation platform to collect evidence continuously.',
       'Choose SOC 2 Type I (point in time) as a fast first milestone, then Type II (over a period).',
       'Budget realistically: platform plus auditor typically runs $20–50k and 3–6 months.',
@@ -928,7 +928,7 @@ export const CONTROLS: Control[] = [
       'Determine whether your product is directed at children or knowingly collects their data.',
       'Implement age screening and verifiable parental consent where required (COPPA in the US, GDPR-K in the EU).',
       'Minimize ruthlessly: collect nothing from children you can operate without.',
-      'Get specialist legal advice — this area is unforgiving.',
+      'Get specialist legal advice. This area is unforgiving.',
     ],
     effort: 'days',
     cost: 'medium',
@@ -947,7 +947,7 @@ export const CONTROLS: Control[] = [
     how: [
       'Store tokens in the platform keystore (Keychain/Keystore), never in plain files or prefs.',
       'Pin or at least strictly validate TLS; assume the API will be called by attackers directly, not just your app.',
-      'Keep signing keys in a secure account with MFA — losing them means losing your app identity.',
+      'Keep signing keys in a secure account with MFA. Losing them means losing your app identity.',
       'Review store privacy questionnaires (App Store privacy labels, Play data safety) so declarations match reality.',
     ],
     effort: 'days',
@@ -960,7 +960,7 @@ export const CONTROLS: Control[] = [
     id: 'hardware-device-security',
     title: 'Secure your hardware/IoT devices and updates',
     category: 'appsec',
-    why: 'Shipped devices cannot be patched by pushing a web deploy — insecure firmware in the field is a permanent, internet-connected liability.',
+    why: 'Shipped devices cannot be patched by pushing a web deploy. Insecure firmware in the field is a permanent, internet-connected liability.',
     how: [
       'Ship a secure over-the-air update mechanism with signed firmware from day one.',
       'No default or shared passwords across devices; unique per-device credentials.',
@@ -977,11 +977,11 @@ export const CONTROLS: Control[] = [
     id: 'client-data-handling',
     title: 'Set client data handling ground rules',
     category: 'data',
-    why: 'Agencies and consultancies hold the crown jewels of many clients at once — a single compromised laptop can breach every client contract you have.',
+    why: 'Agencies and consultancies hold the crown jewels of many clients at once. A single compromised laptop can breach every client contract you have.',
     how: [
       'Keep each client\'s data segregated (separate folders/workspaces with scoped access).',
       'Only pull client data you need, and delete it when the engagement ends.',
-      'Check contracts for security obligations you have already signed up to — many specify controls and breach notification windows.',
+      'Check contracts for security obligations you have already signed up to. Many specify controls and breach notification windows.',
       'Use client-provided accounts where possible so data stays in their systems.',
     ],
     effort: 'hours',
@@ -994,7 +994,7 @@ export const CONTROLS: Control[] = [
     id: 'payment-fraud-controls',
     title: 'Add payment fraud and chargeback controls',
     category: 'compliance',
-    why: 'Card fraud and chargebacks can freeze your payment processing entirely — for an e-commerce startup that is an extinction event.',
+    why: 'Card fraud and chargebacks can freeze your payment processing entirely. For an e-commerce startup that is an extinction event.',
     how: [
       'Turn on your processor\'s fraud tooling (e.g. Stripe Radar) and 3-D Secure for risky transactions.',
       'Set velocity limits and review rules for unusually large or rapid orders.',
@@ -1014,12 +1014,12 @@ export const CONTROLS: Control[] = [
     id: 'wire-fraud-controls',
     title: 'Protect the money: verify payment changes out-of-band',
     category: 'people',
-    why: 'Business email compromise — a fake "updated bank details" email — steals more from small companies than any malware does.',
+    why: 'Business email compromise, the classic fake "updated bank details" email, steals more from small companies than any malware does.',
     how: [
       'Rule: any new payee or changed bank details gets verified by phone/video on a known-good number before money moves.',
       'Require two people (or two steps) for payments above a threshold you choose.',
       'Enable notifications on all bank and payment accounts.',
-      'Brief whoever pays invoices — they are the target.',
+      'Brief whoever pays invoices. They are the target.',
     ],
     effort: 'minutes',
     cost: 'free',
@@ -1072,10 +1072,10 @@ export const CONTROLS: Control[] = [
     id: 'government-requirements',
     title: 'Scope government customer security requirements early',
     category: 'compliance',
-    why: 'Government contracts carry specific security regimes (FedRAMP, CMMC, StateRAMP, IRAP…) that can take a year or more — discovering this mid-procurement kills deals.',
+    why: 'Government contracts carry specific security regimes (FedRAMP, CMMC, StateRAMP, IRAP…) that can take a year or more. Discovering this mid-procurement kills deals.',
     how: [
       'Identify which regime applies to your target agencies and data (e.g. FedRAMP for US federal SaaS).',
-      'Ask your agency champion what they actually require — sometimes an agency ATO or lighter path exists.',
+      'Ask your agency champion what they actually require. Sometimes an agency ATO or lighter path exists.',
       'Factor certification cost and timeline into your sales plan before committing.',
       'Consider landing via an already-certified marketplace or prime contractor first.',
     ],

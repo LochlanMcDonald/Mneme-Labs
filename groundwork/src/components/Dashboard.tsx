@@ -69,7 +69,7 @@ function ItemCard({
       <div className="item-head">
         <button
           className={`status-btn status-${status}`}
-          title={`Status: ${STATUS_LABELS[status]} — click to change`}
+          title={`Status: ${STATUS_LABELS[status]} (click to change)`}
           onClick={() =>
             onStatus(STATUS_CYCLE[(STATUS_CYCLE.indexOf(status) + 1) % STATUS_CYCLE.length])
           }

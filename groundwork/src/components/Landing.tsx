@@ -9,7 +9,7 @@ const STEPS = [
   },
   {
     title: 'Get a tailored roadmap',
-    body: 'We match your answers against a knowledge base of startup-sized security controls — baseline essentials for everyone, plus the ones your specific setup demands.',
+    body: 'We match your answers against a knowledge base of startup-sized security controls: baseline essentials for everyone, plus the ones your specific setup demands.',
   },
   {
     title: 'Work through it, step by step',
@@ -28,13 +28,13 @@ export function Landing({ onStart }: Props) {
           Groundwork
         </div>
         <h1>
-          Startup security, sorted —<br />
-          without the hassle.
+          Startup security, sorted.<br />
+          Without the hassle.
         </h1>
         <p className="lede">
           Answer a few questions about your company and get a prioritized,
           plain-language security roadmap: what to do this week, this month,
-          this quarter — and why.
+          this quarter, and why.
         </p>
         <button className="btn btn-primary btn-lg" onClick={onStart}>
           Build my security plan
@@ -52,7 +52,7 @@ export function Landing({ onStart }: Props) {
       </section>
 
       <footer className="landing-footer">
-        We're dedicated to helping startups get their security footing —
+        We're dedicated to helping startups get their security footing:
         clear priorities, concrete steps, and a plan that grows with you.
       </footer>
     </div>
