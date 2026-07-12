@@ -206,15 +206,6 @@ h3 {
   color: var(--text-dim);
   margin: 0 0 16px;
 }
-.help-callout {
-  background: rgba(240, 180, 41, 0.09);
-  border: 1px solid rgba(240, 180, 41, 0.35);
-  border-radius: var(--radius);
-  padding: 14px 16px;
-  font-size: 14px;
-  color: var(--text);
-  margin-bottom: 16px;
-}
 
 /* ───────── Wizard ───────── */
 .wizard {
