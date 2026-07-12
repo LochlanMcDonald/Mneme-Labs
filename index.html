@@ -3,688 +3,1179 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>StoveWatch — Know your stove is off. Always.</title>
-  <meta name="description" content="StoveWatch is a clip-on camera by MNEME Labs that learns what your stove looks like when it's off and alerts your iPhone the moment it's in use — or left on." />
+  <title>MNEME LABS — TALOS, the general-purpose humanoid</title>
+  <meta name="description" content="MNEME Labs builds TALOS, a general-purpose humanoid engineered from the bolts up — custom actuators, custom compute, and ICHOR, a deterministic robotics stack with no ROS 2 anywhere in it." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg: #0b0e14;
-      --bg-soft: #11151f;
-      --card: #161b28;
-      --card-edge: #232b3d;
-      --text: #eef1f7;
-      --muted: #9aa3b5;
-      --flame: #ff7a1a;
-      --flame-soft: #ffb066;
-      --ember: #ff4d2e;
-      --safe: #3ddc97;
-      --radius: 18px;
+      --paper: #f2f1ec;
+      --paper-dim: #e9e8e1;
+      --ink: #101112;
+      --ink-soft: #55584e;
+      --line: #c9c8bf;
+      --volt: #cdff2f;
+      --display: 'Archivo Black', 'Archivo', sans-serif;
+      --body: 'Archivo', system-ui, sans-serif;
+      --mono: 'IBM Plex Mono', ui-monospace, monospace;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     html { scroll-behavior: smooth; }
-
-    html, body {
-      /* the hero glow is wider than small screens; never allow side-scroll */
-      overflow-x: hidden;
-      overflow-x: clip;
-    }
+    html, body { overflow-x: hidden; overflow-x: clip; }
 
     body {
-      font-family: 'Inter', system-ui, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
+      font-family: var(--body);
+      background: var(--paper);
+      color: var(--ink);
+      line-height: 1.55;
     }
 
-    h1, h2, h3 { font-family: 'Sora', 'Inter', sans-serif; line-height: 1.15; }
+    ::selection { background: var(--volt); color: var(--ink); }
 
-    a { color: var(--flame-soft); text-decoration: none; }
+    a { color: inherit; text-decoration: none; }
 
-    .wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+    .shell { max-width: 1240px; margin: 0 auto; padding: 0 28px; }
 
-    /* ---------- nav ---------- */
-    nav {
+    .tag {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+    }
+
+    /* ================= header ================= */
+    header {
       position: sticky;
       top: 0;
-      z-index: 50;
-      backdrop-filter: blur(14px);
-      background: rgba(11, 14, 20, 0.75);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      z-index: 90;
+      background: var(--paper);
+      border-bottom: 2px solid var(--ink);
     }
 
-    .nav-inner {
+    .bar {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0 28px;
+      height: 66px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 14px 24px;
-      max-width: 1080px;
-      margin: 0 auto;
+      gap: 24px;
     }
 
-    .logo {
+    .brand {
+      font-family: var(--display);
+      font-size: 1.02rem;
+      letter-spacing: 0.06em;
       display: flex;
       align-items: center;
-      gap: 10px;
-      font-family: 'Sora', sans-serif;
-      font-weight: 800;
-      font-size: 1.15rem;
-      color: var(--text);
+      gap: 12px;
+      white-space: nowrap;
     }
 
-    .logo .mark { font-size: 1.4rem; }
+    .brand .chip {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      background: var(--ink);
+      color: var(--volt);
+      padding: 3px 8px;
+    }
 
-    .logo small {
-      display: block;
-      font-weight: 400;
-      font-size: 0.65rem;
-      color: var(--muted);
+    nav.links { display: flex; gap: 28px; align-items: center; }
+
+    nav.links a {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      transition: color 0.15s;
+    }
+
+    nav.links a:hover { color: var(--ink); }
+
+    .btn {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 0.74rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      padding: 13px 26px;
+      background: var(--ink);
+      color: var(--paper);
+      border: 2px solid var(--ink);
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .btn:hover { background: var(--volt); color: var(--ink); }
+
+    .btn.outline { background: transparent; color: var(--ink); }
+    .btn.outline:hover { background: var(--ink); color: var(--paper); }
+
+    nav.links .btn { padding: 9px 18px; font-size: 0.66rem; }
+
+    /* ================= hero ================= */
+    .hero { border-bottom: 2px solid var(--ink); }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: calc(100vh - 66px);
+    }
+
+    .hero-copy {
+      padding: 72px 48px 64px 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      border-right: 2px solid var(--ink);
+    }
+
+    .hero-copy .tag { margin-bottom: 26px; }
+    .hero-copy .tag b { color: var(--ink); }
+
+    h1.headline {
+      font-family: var(--display);
+      font-size: clamp(3rem, 7.4vw, 6.4rem);
+      line-height: 0.94;
+      letter-spacing: -0.015em;
+      text-transform: uppercase;
+      margin-bottom: 30px;
+    }
+
+    h1.headline .accent {
+      color: transparent;
+      -webkit-text-stroke: 2.5px var(--ink);
+    }
+
+    .hero-copy p.sub {
+      font-size: 1.12rem;
+      color: var(--ink-soft);
+      max-width: 33rem;
+      margin-bottom: 40px;
+    }
+
+    .hero-copy p.sub strong { color: var(--ink); }
+
+    .hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; }
+
+    /* schematic panel */
+    .figure-panel {
+      position: relative;
+      background:
+        repeating-linear-gradient(0deg, transparent, transparent 39px, var(--line) 39px, var(--line) 40px),
+        repeating-linear-gradient(90deg, transparent, transparent 39px, var(--line) 39px, var(--line) 40px),
+        var(--paper-dim);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 64px 26px 70px;
+      overflow: hidden;
+    }
+
+    .figure-panel .stamp {
+      position: absolute;
+      top: 18px;
+      left: 22px;
+      font-family: var(--mono);
+      font-size: 0.64rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+    }
+
+    .figure-panel .stamp b { display: block; color: var(--ink); font-size: 0.78rem; }
+
+    .figure-panel .plate {
+      position: absolute;
+      bottom: 18px;
+      right: 22px;
+      border: 1.5px solid var(--ink);
+      background: var(--paper);
+      font-family: var(--mono);
+      font-size: 0.62rem;
       letter-spacing: 0.12em;
       text-transform: uppercase;
     }
 
-    .nav-links { display: flex; gap: 26px; align-items: center; }
+    .figure-panel .plate div { display: flex; }
+    .figure-panel .plate span { padding: 6px 12px; border-top: 1.5px solid var(--ink); }
+    .figure-panel .plate div:first-child span { border-top: 0; }
+    .figure-panel .plate span:first-child { border-right: 1.5px solid var(--ink); color: var(--ink-soft); min-width: 82px; }
+    .figure-panel .plate span:last-child { font-weight: 600; }
 
-    .nav-links a { color: var(--muted); font-size: 0.92rem; font-weight: 500; transition: color 0.2s; }
+    .figure-panel svg { width: min(480px, 94%); height: auto; }
 
-    .nav-links a:hover { color: var(--text); }
+    .flow { stroke-dasharray: 6 5; animation: flow 1.6s linear infinite; }
+    @keyframes flow { to { stroke-dashoffset: -22; } }
 
-    .btn {
-      display: inline-block;
-      padding: 12px 26px;
-      border-radius: 999px;
+    .dim-pulse { animation: dim-blink 3.2s ease-in-out infinite; }
+    @keyframes dim-blink { 50% { opacity: 0.35; } }
+
+    /* ================= marquee ================= */
+    .marquee {
+      background: var(--ink);
+      color: var(--volt);
+      border-bottom: 2px solid var(--ink);
+      overflow: hidden;
+      padding: 13px 0;
+    }
+
+    .marquee-track {
+      display: flex;
+      white-space: nowrap;
+      animation: slide 28s linear infinite;
+      width: max-content;
+    }
+
+    .marquee-track span {
+      font-family: var(--mono);
+      font-size: 0.74rem;
       font-weight: 600;
-      font-size: 0.95rem;
-      border: none;
-      cursor: pointer;
-      transition: transform 0.15s, box-shadow 0.2s, background 0.2s;
-      font-family: 'Inter', sans-serif;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      padding-right: 3.2em;
     }
 
-    .btn-flame {
-      background: linear-gradient(120deg, var(--ember), var(--flame));
-      color: #fff;
-      box-shadow: 0 6px 24px rgba(255, 122, 26, 0.35);
-    }
+    @keyframes slide { to { transform: translateX(-50%); } }
 
-    .btn-flame:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(255, 122, 26, 0.5); }
+    /* ================= section scaffolding ================= */
+    section { border-bottom: 2px solid var(--ink); }
 
-    .btn-ghost {
-      background: transparent;
-      color: var(--text);
-      border: 1px solid var(--card-edge);
-    }
-
-    .btn-ghost:hover { border-color: var(--flame); color: var(--flame-soft); }
-
-    .nav-links .btn { padding: 9px 20px; font-size: 0.88rem; }
-
-    /* ---------- hero ---------- */
-    .hero {
-      position: relative;
-      padding: 90px 0 70px;
+    .sec-head {
       display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
+      grid-template-columns: 200px 1fr;
+      gap: 32px;
+      padding: 68px 0 48px;
+      align-items: start;
+    }
+
+    .sec-head .num {
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      color: var(--ink-soft);
+      padding-top: 10px;
+      border-top: 3px solid var(--ink);
+    }
+
+    .sec-head h2 {
+      font-family: var(--display);
+      font-size: clamp(2rem, 4.6vw, 3.4rem);
+      line-height: 1.0;
+      text-transform: uppercase;
+      letter-spacing: -0.01em;
+    }
+
+    .sec-head p.deck {
+      margin-top: 18px;
+      max-width: 42rem;
+      color: var(--ink-soft);
+      font-size: 1.06rem;
+    }
+
+    .sec-head p.deck strong { color: var(--ink); }
+
+    /* ================= stats ================= */
+    .stat-band {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-top: 2px solid var(--ink);
+    }
+
+    .stat-cell { padding: 34px 28px 30px; border-right: 2px solid var(--ink); }
+    .stat-cell:last-child { border-right: 0; }
+
+    .stat-cell .value {
+      font-family: var(--display);
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      line-height: 1;
+      letter-spacing: -0.01em;
+    }
+
+    .stat-cell .value small {
+      font-family: var(--mono);
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-left: 4px;
+      color: var(--ink-soft);
+    }
+
+    .stat-cell .label {
+      margin-top: 10px;
+      font-family: var(--mono);
+      font-size: 0.66rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+    }
+
+    /* ================= hardware panels ================= */
+    .hw-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      border-top: 2px solid var(--ink);
+    }
+
+    .hw-card {
+      border-right: 2px solid var(--ink);
+      border-bottom: 2px solid var(--ink);
+      padding: 40px 34px 44px;
+      display: grid;
+      grid-template-columns: 1fr 150px;
+      gap: 28px;
+      align-items: start;
+    }
+
+    .hw-card:nth-child(2n) { border-right: 0; }
+    .hw-card:nth-child(n+3) { border-bottom: 0; }
+
+    .hw-card .idx {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      display: inline-block;
+      border: 1.5px solid var(--ink);
+      padding: 4px 10px;
+      margin-bottom: 24px;
+    }
+
+    .hw-card h3 {
+      font-family: var(--display);
+      font-size: 1.45rem;
+      text-transform: uppercase;
+      line-height: 1.05;
+      margin-bottom: 14px;
+    }
+
+    .hw-card p { color: var(--ink-soft); font-size: 0.95rem; margin-bottom: 16px; }
+
+    .hw-card p strong { color: var(--ink); }
+
+    .hw-card ul { list-style: none; }
+
+    .hw-card li {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      padding: 7px 0;
+      border-top: 1px solid var(--line);
+      color: var(--ink);
+    }
+
+    .hw-card li::before { content: "— "; color: var(--ink-soft); }
+
+    .hw-fig {
+      border: 1.5px solid var(--ink);
+      background: var(--paper-dim);
+      padding: 12px 10px 6px;
+    }
+
+    .hw-fig svg { width: 100%; height: auto; display: block; }
+
+    .hw-fig figcaption {
+      font-family: var(--mono);
+      font-size: 0.56rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      text-align: center;
+      padding: 6px 0 4px;
+    }
+
+    /* ================= software (dark) ================= */
+    .dark { background: var(--ink); color: var(--paper); }
+
+    .dark .sec-head .num { color: #8b8f83; border-top-color: var(--volt); }
+    .dark .sec-head p.deck { color: #a3a79b; }
+    .dark .sec-head p.deck strong { color: var(--paper); }
+
+    .layer-list { border-top: 2px solid var(--paper); margin-bottom: 72px; }
+
+    .layer {
+      display: grid;
+      grid-template-columns: 150px 1fr 230px;
+      gap: 30px;
+      padding: 32px 0;
+      border-bottom: 1px solid #34362f;
+    }
+
+    .layer:last-child { border-bottom: 0; }
+
+    .layer .l-id {
+      font-family: var(--mono);
+      font-size: 0.74rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      color: var(--volt);
+      padding-top: 5px;
+    }
+
+    .layer h3 {
+      font-family: var(--display);
+      font-size: 1.3rem;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .layer p { color: #a3a79b; font-size: 0.97rem; max-width: 40rem; }
+
+    .layer p strong { color: var(--paper); }
+
+    .layer .l-metric {
+      font-family: var(--mono);
+      text-align: right;
+    }
+
+    .layer .l-metric b {
+      display: block;
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--volt);
+    }
+
+    .layer .l-metric span {
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #8b8f83;
+    }
+
+    /* ================= no-ros comparison ================= */
+    .vs-note {
+      max-width: 46rem;
+      color: var(--ink-soft);
+      font-size: 1.05rem;
+      padding-bottom: 48px;
+    }
+
+    .vs-note p { margin-bottom: 16px; }
+    .vs-note p strong { color: var(--ink); }
+
+    .vs-table { border-top: 2px solid var(--ink); }
+
+    .vs-row {
+      display: grid;
+      grid-template-columns: 190px 1fr 1fr;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .vs-row.head { border-bottom: 2px solid var(--ink); background: var(--paper-dim); }
+
+    .vs-row > div { padding: 20px 24px; }
+
+    .vs-row > div:nth-child(2) { border-left: 1px solid var(--line); border-right: 1px solid var(--line); }
+
+    .vs-row.head > div:nth-child(2) { border-left: 2px solid var(--ink); border-right: 2px solid var(--ink); }
+
+    .vs-row .crit {
+      font-family: var(--mono);
+      font-size: 0.66rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      padding-top: 24px;
+    }
+
+    .vs-row.head .col-title {
+      font-family: var(--display);
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      padding-top: 20px;
+    }
+
+    .vs-row.head .col-title small {
+      display: block;
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      color: var(--ink-soft);
+      margin-top: 4px;
+    }
+
+    .vs-row .them { font-size: 0.92rem; color: var(--ink-soft); }
+
+    .vs-row .us { font-size: 0.92rem; color: var(--ink); }
+
+    .vs-row .us b { font-weight: 700; }
+
+    .vs-row .us::before {
+      content: "▸";
+      color: var(--volt-deep, #86ac00);
+      margin-right: 8px;
+    }
+
+    /* ================= spec sheet ================= */
+    .spec-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-top: 2px solid var(--ink);
+    }
+
+    .spec-col { border-right: 2px solid var(--ink); }
+    .spec-col:last-child { border-right: 0; }
+
+    .spec-line {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 24px;
+      padding: 19px 28px;
+      border-bottom: 1px solid var(--line);
+      font-family: var(--mono);
+    }
+
+    .spec-col .spec-line:last-child { border-bottom: 0; }
+
+    .spec-line span {
+      font-size: 0.66rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+    }
+
+    .spec-line b { font-size: 0.86rem; font-weight: 600; text-align: right; }
+
+    /* ================= manifesto ================= */
+    .manifesto { padding: 90px 0; }
+
+    .manifesto .big {
+      font-family: var(--display);
+      font-size: clamp(1.7rem, 3.8vw, 2.9rem);
+      line-height: 1.14;
+      text-transform: uppercase;
+      max-width: 62rem;
+    }
+
+    .manifesto .big .mark {
+      background: var(--volt);
+      padding: 0 0.14em;
+      box-decoration-break: clone;
+      -webkit-box-decoration-break: clone;
+    }
+
+    .manifesto .row {
+      margin-top: 44px;
+      display: grid;
+      grid-template-columns: 200px 1fr 1fr;
+      gap: 32px;
+      color: var(--ink-soft);
+      font-size: 0.98rem;
+    }
+
+    .manifesto .row p strong { color: var(--ink); }
+
+    /* ================= reserve ================= */
+    .reserve { background: var(--volt); }
+
+    .reserve-inner {
+      padding: 84px 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
       gap: 48px;
       align-items: center;
     }
 
-    .hero::before {
-      content: "";
-      position: absolute;
-      top: -180px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 900px;
-      height: 600px;
-      background: radial-gradient(ellipse at center, rgba(255, 122, 26, 0.16), transparent 65%);
-      pointer-events: none;
-    }
-
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 0.78rem;
-      font-weight: 600;
-      letter-spacing: 0.14em;
+    .reserve h2 {
+      font-family: var(--display);
+      font-size: clamp(2.2rem, 5vw, 3.8rem);
+      line-height: 0.96;
       text-transform: uppercase;
-      color: var(--flame-soft);
-      background: rgba(255, 122, 26, 0.1);
-      border: 1px solid rgba(255, 122, 26, 0.25);
-      padding: 6px 14px;
-      border-radius: 999px;
-      margin-bottom: 22px;
     }
 
-    .hero h1 {
-      font-size: clamp(2.3rem, 5vw, 3.6rem);
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      margin-bottom: 20px;
-    }
+    .reserve p.deck { margin-top: 18px; color: #3c4410; font-size: 1.04rem; max-width: 30rem; }
 
-    .hero h1 .glow {
-      background: linear-gradient(120deg, var(--flame-soft), var(--flame), var(--ember));
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
+    .form-block { max-width: 480px; justify-self: end; width: 100%; }
 
-    .hero p.lead {
-      color: var(--muted);
-      font-size: 1.12rem;
-      max-width: 30rem;
-      margin-bottom: 32px;
-    }
+    .form-row { display: flex; border: 2px solid var(--ink); background: var(--paper); }
 
-    .hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; }
-
-    .hero-stats { display: flex; gap: 34px; margin-top: 44px; }
-
-    .hero-stats .stat b {
-      display: block;
-      font-family: 'Sora', sans-serif;
-      font-size: 1.35rem;
-      color: var(--text);
-    }
-
-    .hero-stats .stat span { font-size: 0.82rem; color: var(--muted); }
-
-    /* ---------- phone mockup ---------- */
-    .phone-scene { display: flex; justify-content: center; position: relative; }
-
-    .phone {
-      width: 290px;
-      border-radius: 44px;
-      background: #05070c;
-      border: 3px solid #262e40;
-      padding: 14px;
-      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6), 0 0 60px rgba(255, 122, 26, 0.08);
-      position: relative;
-    }
-
-    .phone .notch {
-      width: 110px;
-      height: 26px;
-      background: #05070c;
-      border-radius: 999px;
-      margin: 4px auto 14px;
-      border: 1px solid #1a2030;
-    }
-
-    .screen {
-      background: linear-gradient(180deg, #121826, #0c1018);
-      border-radius: 30px;
-      padding: 18px 14px 22px;
-      min-height: 470px;
-    }
-
-    .push {
-      background: rgba(38, 46, 64, 0.85);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 16px;
-      padding: 12px 14px;
-      display: flex;
-      gap: 10px;
-      align-items: flex-start;
-      margin-bottom: 18px;
-      animation: drop-in 0.9s cubic-bezier(0.2, 0.9, 0.3, 1.2) both;
-      animation-delay: 0.5s;
-    }
-
-    @keyframes drop-in {
-      from { transform: translateY(-60px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
-    }
-
-    .push .app-icon {
-      width: 34px;
-      height: 34px;
-      border-radius: 9px;
-      background: linear-gradient(135deg, var(--ember), var(--flame));
-      display: grid;
-      place-items: center;
-      font-size: 1.05rem;
-      flex-shrink: 0;
-    }
-
-    .push b { font-size: 0.82rem; display: block; }
-
-    .push p { font-size: 0.78rem; color: var(--muted); }
-
-    .push time { font-size: 0.68rem; color: var(--muted); margin-left: auto; flex-shrink: 0; }
-
-    .status-card {
-      background: rgba(255, 122, 26, 0.09);
-      border: 1px solid rgba(255, 122, 26, 0.3);
-      border-radius: 20px;
-      text-align: center;
-      padding: 26px 16px 22px;
-      margin-bottom: 16px;
-    }
-
-    .status-card .flame-icon {
-      font-size: 2.6rem;
-      display: inline-block;
-      animation: flicker 1.6s ease-in-out infinite;
-    }
-
-    @keyframes flicker {
-      0%, 100% { transform: scale(1); filter: brightness(1); }
-      45% { transform: scale(1.08) rotate(-2deg); filter: brightness(1.25); }
-      70% { transform: scale(0.97) rotate(1.5deg); filter: brightness(0.95); }
-    }
-
-    .status-card h4 {
-      font-family: 'Sora', sans-serif;
-      color: var(--flame);
-      letter-spacing: 0.06em;
-      margin-top: 6px;
-      font-size: 1.05rem;
-    }
-
-    .status-card span { font-size: 0.75rem; color: var(--muted); }
-
-    .mock-row { display: flex; gap: 8px; margin-bottom: 12px; }
-
-    .mock-btn {
+    .form-row input {
       flex: 1;
-      text-align: center;
-      font-size: 0.78rem;
-      font-weight: 600;
-      color: var(--text);
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 12px;
-      padding: 10px 0;
-    }
-
-    .mock-wrong {
-      text-align: center;
-      font-size: 0.78rem;
-      font-weight: 600;
-      color: #ff8d7a;
-      background: rgba(255, 77, 46, 0.08);
-      border: 1px solid rgba(255, 77, 46, 0.25);
-      border-radius: 12px;
-      padding: 10px 0;
-    }
-
-    .clip-tag {
-      position: absolute;
-      bottom: -22px;
-      left: -30px;
-      background: var(--card);
-      border: 1px solid var(--card-edge);
-      border-radius: 14px;
-      padding: 10px 16px;
-      font-size: 0.78rem;
-      color: var(--muted);
-      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.45);
-    }
-
-    .clip-tag b { color: var(--text); display: block; font-size: 0.85rem; }
-
-    /* ---------- sections ---------- */
-    section { padding: 84px 0; }
-
-    section.alt { background: var(--bg-soft); }
-
-    .section-head { text-align: center; max-width: 620px; margin: 0 auto 54px; }
-
-    .section-head h2 {
-      font-size: clamp(1.7rem, 3.4vw, 2.4rem);
-      font-weight: 800;
-      letter-spacing: -0.01em;
-      margin-bottom: 14px;
-    }
-
-    .section-head p { color: var(--muted); font-size: 1.04rem; }
-
-    /* how it works */
-    .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
-
-    .step {
-      background: var(--card);
-      border: 1px solid var(--card-edge);
-      border-radius: var(--radius);
-      padding: 30px 26px;
-      position: relative;
-    }
-
-    .step .num {
-      font-family: 'Sora', sans-serif;
-      font-weight: 800;
-      font-size: 0.8rem;
-      color: var(--flame);
-      background: rgba(255, 122, 26, 0.12);
-      border-radius: 999px;
-      padding: 4px 12px;
-      display: inline-block;
-      margin-bottom: 16px;
-    }
-
-    .step .emoji { font-size: 1.9rem; display: block; margin-bottom: 12px; }
-
-    .step h3 { font-size: 1.12rem; margin-bottom: 8px; }
-
-    .step p { color: var(--muted); font-size: 0.93rem; }
-
-    /* features */
-    .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
-
-    .feature {
-      background: var(--card);
-      border: 1px solid var(--card-edge);
-      border-radius: var(--radius);
-      padding: 26px 24px;
-      transition: transform 0.2s, border-color 0.2s;
-    }
-
-    .feature:hover { transform: translateY(-4px); border-color: rgba(255, 122, 26, 0.45); }
-
-    .feature .emoji { font-size: 1.6rem; display: block; margin-bottom: 12px; }
-
-    .feature h3 { font-size: 1.02rem; margin-bottom: 7px; }
-
-    .feature p { color: var(--muted); font-size: 0.9rem; }
-
-    /* live feed */
-    .feed-frame {
-      max-width: 760px;
-      margin: 0 auto;
-      background: var(--card);
-      border: 1px solid var(--card-edge);
-      border-radius: var(--radius);
-      padding: 14px;
-    }
-
-    .feed-frame .bar {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 2px 6px 12px;
-      font-size: 0.82rem;
-      color: var(--muted);
-    }
-
-    .live-dot {
-      width: 9px;
-      height: 9px;
-      border-radius: 50%;
-      background: var(--ember);
-      animation: blink 1.4s infinite;
-    }
-
-    @keyframes blink { 50% { opacity: 0.25; } }
-
-    .feed-frame img { width: 100%; border-radius: 12px; display: block; background: #05070c; min-height: 200px; }
-
-    .feed-note { text-align: center; color: var(--muted); font-size: 0.85rem; margin-top: 14px; }
-
-    /* signup */
-    .signup-card {
-      max-width: 640px;
-      margin: 0 auto;
-      text-align: center;
-      background: linear-gradient(160deg, rgba(255, 122, 26, 0.12), rgba(255, 77, 46, 0.05)), var(--card);
-      border: 1px solid rgba(255, 122, 26, 0.3);
-      border-radius: 24px;
-      padding: 52px 34px;
-    }
-
-    .signup-card h2 { font-size: 1.8rem; margin-bottom: 10px; }
-
-    .signup-card > p { color: var(--muted); margin-bottom: 26px; }
-
-    .signup-row { display: flex; gap: 10px; max-width: 430px; margin: 0 auto; }
-
-    .signup-row input {
-      flex: 1;
-      padding: 14px 18px;
-      border-radius: 999px;
-      border: 1px solid var(--card-edge);
-      background: rgba(5, 7, 12, 0.6);
-      color: var(--text);
-      font-size: 0.95rem;
-      font-family: 'Inter', sans-serif;
+      border: 0;
+      background: transparent;
+      padding: 16px 18px;
+      font-family: var(--mono);
+      font-size: 0.9rem;
+      color: var(--ink);
       min-width: 0;
     }
 
-    .signup-row input:focus {
-      outline: none;
-      border-color: var(--flame);
-      box-shadow: 0 0 0 3px rgba(255, 122, 26, 0.2);
+    .form-row input::placeholder { color: #8d9077; }
+    .form-row input:focus { outline: none; }
+    .form-row .btn { border: 0; border-left: 2px solid var(--ink); }
+
+    .form-note {
+      margin-top: 12px;
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #3c4410;
     }
 
-    .cta-response { margin-top: 16px; font-weight: 600; font-size: 0.92rem; color: var(--safe); min-height: 1.4em; }
-
-    .cta-response.error { color: #ff8d7a; }
-
-    /* safety + footer */
-    .safety {
-      max-width: 720px;
-      margin: 60px auto 0;
-      text-align: center;
-      color: var(--muted);
-      font-size: 0.82rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.06);
-      padding-top: 26px;
+    .cta-response {
+      margin-top: 14px;
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      min-height: 1.4em;
+      color: var(--ink);
     }
 
-    footer {
-      padding: 40px 24px 50px;
-      text-align: center;
-      color: var(--muted);
-      font-size: 0.85rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.06);
+    .cta-response.error { color: #a52815; }
+
+    /* ================= footer ================= */
+    footer { background: var(--ink); color: var(--paper); }
+
+    .foot {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 40px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
     }
 
-    footer .foot-logo { font-family: 'Sora', sans-serif; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+    .foot .brand { color: var(--paper); }
 
-    /* ---------- responsive ---------- */
-    @media (max-width: 900px) {
-      .hero { grid-template-columns: 1fr; padding-top: 60px; text-align: center; }
-      .hero p.lead { margin: 0 auto 32px; }
-      .hero-ctas, .hero-stats { justify-content: center; }
-      .steps, .features { grid-template-columns: 1fr; }
-      .clip-tag { left: 4px; }
-      .nav-links a:not(.btn) { display: none; }
+    .foot p {
+      font-family: var(--mono);
+      font-size: 0.66rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #8b8f83;
     }
 
-    @media (max-width: 480px) {
-      .signup-row { flex-direction: column; }
-      .signup-row .btn { width: 100%; }
-      .hero-stats { gap: 20px; flex-wrap: wrap; }
+    /* ================= responsive ================= */
+    @media (max-width: 980px) {
+      .hero-grid { grid-template-columns: 1fr; min-height: unset; }
+      .hero-copy { border-right: 0; border-bottom: 2px solid var(--ink); padding: 60px 28px 52px; }
+      .figure-panel { min-height: 440px; }
+      .stat-band { grid-template-columns: 1fr 1fr; }
+      .stat-cell:nth-child(2) { border-right: 0; }
+      .stat-cell:nth-child(-n+2) { border-bottom: 2px solid var(--ink); }
+      .hw-grid { grid-template-columns: 1fr; }
+      .hw-card { border-right: 0 !important; border-bottom: 2px solid var(--ink) !important; grid-template-columns: 1fr; }
+      .hw-card:last-child { border-bottom: 0 !important; }
+      .hw-fig { max-width: 220px; }
+      .sec-head { grid-template-columns: 1fr; gap: 18px; }
+      .sec-head .num { padding-top: 8px; }
+      .layer { grid-template-columns: 1fr; gap: 10px; }
+      .layer .l-metric { text-align: left; }
+      .vs-row { grid-template-columns: 1fr; }
+      .vs-row > div:nth-child(2) { border-left: 0; border-right: 0; border-top: 1px dashed var(--line); }
+      .vs-row.head > div:nth-child(2) { border-left: 0; border-right: 0; }
+      .vs-row .crit { padding-bottom: 0; }
+      .spec-wrap { grid-template-columns: 1fr; }
+      .spec-col { border-right: 0; }
+      .spec-col:first-child .spec-line:last-child { border-bottom: 1px solid var(--line); }
+      .manifesto .row { grid-template-columns: 1fr; }
+      .reserve-inner { grid-template-columns: 1fr; }
+      .form-block { justify-self: start; }
+      nav.links a:not(.btn) { display: none; }
+    }
+
+    @media (max-width: 520px) {
+      .stat-band { grid-template-columns: 1fr; }
+      .stat-cell { border-right: 0 !important; border-bottom: 2px solid var(--ink); }
+      .stat-cell:last-child { border-bottom: 0; }
+      .form-row { flex-direction: column; }
+      .form-row .btn { border-left: 0; border-top: 2px solid var(--ink); }
     }
 
     @media (prefers-reduced-motion: reduce) {
-      .push, .status-card .flame-icon, .live-dot { animation: none; }
+      .marquee-track, .dim-pulse, .flow { animation: none; }
     }
   </style>
 </head>
 <body>
 
-  <nav>
-    <div class="nav-inner">
-      <div class="logo">
-        <span class="mark">🔥</span>
-        <span>StoveWatch<small>by MNEME Labs</small></span>
-      </div>
-      <div class="nav-links">
-        <a href="#how">How it works</a>
-        <a href="#features">Features</a>
-        <a href="#live">Live demo</a>
-        <a href="#signup" class="btn btn-flame">Get updates</a>
-      </div>
+  <header>
+    <div class="bar">
+      <div class="brand">MNEME&nbsp;LABS <span class="chip">ROBOTICS</span></div>
+      <nav class="links">
+        <a href="#hardware">Hardware</a>
+        <a href="#software">Software</a>
+        <a href="#no-ros">No ROS 2</a>
+        <a href="#spec">Spec Sheet</a>
+        <a href="#reserve" class="btn">Reserve a Unit</a>
+      </nav>
     </div>
-  </nav>
+  </header>
 
-  <div class="wrap">
-    <header class="hero">
-      <div>
-        <span class="eyebrow">🍳 Clip-on stove monitor · iOS</span>
-        <h1>Know your stove is off. <span class="glow">Always.</span></h1>
-        <p class="lead">
-          StoveWatch is a tiny camera that clips near your cooktop, learns exactly what
-          your stove looks like when it's off, and pings your iPhone the moment it's in
-          use — or left on longer than it should be.
-        </p>
-        <div class="hero-ctas">
-          <a href="#signup" class="btn btn-flame">Join the waitlist</a>
-          <a href="#how" class="btn btn-ghost">See how it works</a>
-        </div>
-        <div class="hero-stats">
-          <div class="stat"><b>5 min</b><span>check interval</span></div>
-          <div class="stat"><b>1 tap</b><span>to snooze alerts</span></div>
-          <div class="stat"><b>3 types</b><span>gas · electric · induction</span></div>
-        </div>
-      </div>
-
-      <div class="phone-scene">
-        <div class="phone" aria-hidden="true">
-          <div class="notch"></div>
-          <div class="screen">
-            <div class="push">
-              <div class="app-icon">🔥</div>
-              <div>
-                <b>Stove is on</b>
-                <p>Kitchen stove looks like it's in use.</p>
-              </div>
-              <time>now</time>
-            </div>
-            <div class="status-card">
-              <span class="flame-icon">🔥</span>
-              <h4>STOVE IS ON</h4>
-              <span>since 6:42 PM · last checked 1 min ago</span>
-            </div>
-            <div class="mock-row">
-              <div class="mock-btn">Snooze 30m</div>
-              <div class="mock-btn">1h</div>
-              <div class="mock-btn">2h</div>
-            </div>
-            <div class="mock-wrong">👎 You're incorrect</div>
+  <main>
+    <!-- ============ HERO ============ -->
+    <section class="hero">
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <span class="tag">MNEME LABS · GENERAL-PURPOSE HUMANOID · <b>PROGRAM TALOS</b></span>
+          <h1 class="headline">Built from<br />the <span class="accent">bolts</span> up.</h1>
+          <p class="sub">
+            <strong>TALOS</strong> is a general-purpose humanoid for dull, heavy, and dangerous
+            work — and every layer of it is ours. The actuators, the compute, and an
+            operating stack written from scratch for determinism.
+            <strong>There is no ROS 2 anywhere in this machine.</strong>
+          </p>
+          <div class="hero-ctas">
+            <a href="#software" class="btn">Read the architecture</a>
+            <a href="#reserve" class="btn outline">Reserve a unit</a>
           </div>
         </div>
-        <div class="clip-tag">
-          <b>📷 Clip-on camera</b>
-          fits under your range hood
-        </div>
-      </div>
-    </header>
-  </div>
 
-  <section id="how" class="alt">
-    <div class="wrap">
-      <div class="section-head">
-        <h2>How it works</h2>
-        <p>No smart appliance required. StoveWatch retrofits any stove or oven with one tiny camera and a little computer vision.</p>
+        <div class="figure-panel" aria-label="System topology schematic of TALOS">
+          <div class="stamp">Fig. 01<b>TALOS — System Topology</b></div>
+
+          <svg viewBox="0 0 500 430" role="img" aria-label="Block schematic: sensor array feeding the ICHOR runtime, which drives the actuator bus; a battery power rail feeds all blocks and an independent hard e-stop path runs from the safety kernel to the actuators">
+            <defs>
+              <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+                <path d="M0,0 L10,5 L0,10 z" fill="#101112"/>
+              </marker>
+            </defs>
+
+            <!-- SENSOR ARRAY block -->
+            <rect x="40" y="24" width="270" height="58" fill="#f2f1ec" stroke="#101112" stroke-width="2.5"/>
+            <text x="58" y="49" font-family="IBM Plex Mono, monospace" font-size="12" font-weight="600" letter-spacing="2" fill="#101112">SENSOR ARRAY</text>
+            <text x="58" y="67" font-family="IBM Plex Mono, monospace" font-size="8.5" letter-spacing="1" fill="#55584e">STEREO VISION · LIDAR · IMU · TACTILE</text>
+
+            <!-- data bus: sensors -> runtime -->
+            <line class="flow" x1="175" y1="82" x2="175" y2="122" stroke="#101112" stroke-width="2" marker-end="url(#arr)"/>
+            <text x="186" y="106" font-family="IBM Plex Mono, monospace" font-size="8.5" letter-spacing="1" fill="#55584e">ZERO-COPY FRAMES</text>
+
+            <!-- ICHOR RUNTIME block -->
+            <rect x="40" y="126" width="270" height="168" fill="#f2f1ec" stroke="#101112" stroke-width="2.5"/>
+            <text x="58" y="151" font-family="IBM Plex Mono, monospace" font-size="12" font-weight="600" letter-spacing="2" fill="#101112">ICHOR RUNTIME</text>
+            <text x="58" y="167" font-family="IBM Plex Mono, monospace" font-size="8.5" letter-spacing="1" fill="#55584e">ONE PROCESS · ONE MEMORY SPACE</text>
+
+            <!-- inner layer blocks -->
+            <g font-family="IBM Plex Mono, monospace" font-size="8.5" letter-spacing="1">
+              <rect x="58" y="178" width="234" height="24" fill="none" stroke="#101112" stroke-width="1.5"/>
+              <text x="68" y="194" fill="#101112">L3 · AUTONOMY / TASK PLANNING</text>
+              <rect x="58" y="208" width="234" height="24" fill="none" stroke="#101112" stroke-width="1.5"/>
+              <text x="68" y="224" fill="#101112">L2 · WHOLE-BODY CONTROL @ 1 KHZ</text>
+              <rect x="58" y="238" width="234" height="24" fill="none" stroke="#101112" stroke-width="1.5"/>
+              <text x="68" y="254" fill="#101112">L1 · SHARED-MEMORY DATAPLANE</text>
+              <rect x="58" y="268" width="234" height="20" fill="#101112"/>
+              <text x="68" y="282" fill="#cdff2f">L0 · VERIFIED SAFETY KERNEL</text>
+            </g>
+
+            <!-- torque bus: runtime -> actuators -->
+            <line class="flow" x1="175" y1="294" x2="175" y2="334" stroke="#101112" stroke-width="2" marker-end="url(#arr)"/>
+            <text x="186" y="318" font-family="IBM Plex Mono, monospace" font-size="8.5" letter-spacing="1" fill="#55584e">TORQUE @ 1 KHZ</text>
+
+            <!-- ACTUATOR BUS block -->
+            <rect x="40" y="338" width="270" height="58" fill="#f2f1ec" stroke="#101112" stroke-width="2.5"/>
+            <text x="58" y="363" font-family="IBM Plex Mono, monospace" font-size="12" font-weight="600" letter-spacing="2" fill="#101112">ACTUATOR BUS</text>
+            <text x="58" y="381" font-family="IBM Plex Mono, monospace" font-size="8.5" letter-spacing="1" fill="#55584e">28 × QDD MODULES · FORCE-SENSING HANDS</text>
+
+            <!-- POWER block -->
+            <rect x="368" y="24" width="106" height="90" fill="#f2f1ec" stroke="#101112" stroke-width="2.5"/>
+            <text x="384" y="49" font-family="IBM Plex Mono, monospace" font-size="11" font-weight="600" letter-spacing="1.5" fill="#101112">POWER</text>
+            <text x="384" y="66" font-family="IBM Plex Mono, monospace" font-size="8.5" letter-spacing="1" fill="#55584e">2.1 KWH</text>
+            <text x="384" y="80" font-family="IBM Plex Mono, monospace" font-size="8.5" letter-spacing="1" fill="#55584e">HOT-SWAP</text>
+            <!-- battery symbol -->
+            <g stroke="#101112" stroke-width="2">
+              <line x1="426" y1="92" x2="426" y2="104"/>
+              <line x1="420" y1="95" x2="432" y2="95" stroke-width="3"/>
+              <line x1="423" y1="101" x2="429" y2="101"/>
+            </g>
+
+            <!-- power rail (dashed) -->
+            <g stroke="#55584e" stroke-width="1.5" stroke-dasharray="3 4" fill="none">
+              <path d="M421 114 L421 210 L310 210"/>
+              <path d="M421 210 L421 367 L310 367"/>
+              <path d="M421 53 L340 53 L310 53"/>
+            </g>
+            <text x="358" y="204" font-family="IBM Plex Mono, monospace" font-size="8" letter-spacing="1" fill="#55584e">96 V RAIL</text>
+
+            <!-- SAFETY block + hard e-stop path -->
+            <rect x="368" y="252" width="106" height="66" fill="#101112" stroke="#101112" stroke-width="2.5"/>
+            <text x="382" y="277" font-family="IBM Plex Mono, monospace" font-size="10.5" font-weight="600" letter-spacing="1.5" fill="#cdff2f">E-STOP</text>
+            <text x="382" y="293" font-family="IBM Plex Mono, monospace" font-size="8.5" letter-spacing="1" fill="#8b8f83">HARDWARE</text>
+            <text x="382" y="306" font-family="IBM Plex Mono, monospace" font-size="8.5" letter-spacing="1" fill="#8b8f83">CHAIN</text>
+
+            <!-- L0 -> e-stop -> actuators, drawn heavy -->
+            <g class="dim-pulse">
+              <line x1="292" y1="278" x2="368" y2="284" stroke="#101112" stroke-width="3"/>
+              <path d="M421 318 L421 400 L310 400 L310 384" fill="none" stroke="#101112" stroke-width="3" marker-end="url(#arr)"/>
+            </g>
+            <text x="332" y="424" font-family="IBM Plex Mono, monospace" font-size="8.5" font-weight="600" letter-spacing="1" fill="#101112">MECHANICAL HOLD 0.19 S</text>
+          </svg>
+
+          <div class="plate">
+            <div><span>DWG NO.</span><span>ML-T-002</span></div>
+            <div><span>SHEET</span><span>TOPOLOGY</span></div>
+            <div><span>STATUS</span><span>FIELD TRIALS</span></div>
+          </div>
+        </div>
       </div>
-      <div class="steps">
-        <div class="step">
-          <span class="num">STEP 1</span>
-          <span class="emoji">📸</span>
-          <h3>Snap the baseline</h3>
-          <p>During setup, StoveWatch photographs your stove in its off state. That photo becomes its reference for what "everything's fine" looks like.</p>
-        </div>
-        <div class="step">
-          <span class="num">STEP 2</span>
-          <span class="emoji">🔍</span>
-          <h3>Compare every 5 minutes</h3>
-          <p>A fresh snapshot is compared against every known off-state image. Lighting changes are normalized away — only real changes on the cooktop count.</p>
-        </div>
-        <div class="step">
-          <span class="num">STEP 3</span>
-          <span class="emoji">📲</span>
-          <h3>Get notified</h3>
-          <p>A flame or glowing burner flips the state to ON and your iPhone gets a push — on induction, it watches for steam and motion instead. A cold pot parked on a burner won't fool it.</p>
-        </div>
+    </section>
+
+    <!-- ============ MARQUEE ============ -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track">
+        <span>NO ROS 2</span><span>NO MIDDLEWARE</span><span>ONE STATIC BINARY</span><span>1 KHZ WHOLE-BODY CONTROL</span><span>BIT-EXACT REPLAY</span><span>TALOS BY MNEME LABS</span>
+        <span>NO ROS 2</span><span>NO MIDDLEWARE</span><span>ONE STATIC BINARY</span><span>1 KHZ WHOLE-BODY CONTROL</span><span>BIT-EXACT REPLAY</span><span>TALOS BY MNEME LABS</span>
       </div>
     </div>
-  </section>
 
-  <section id="features">
-    <div class="wrap">
-      <div class="section-head">
-        <h2>Small device. Considered details.</h2>
-        <p>Everything you need for peace of mind, nothing you don't.</p>
-      </div>
-      <div class="features">
-        <div class="feature">
-          <span class="emoji">😴</span>
-          <h3>One-tap snooze</h3>
-          <p>Cooking a long braise? Snooze alerts for 30 minutes, 1 hour, 2 hours — or dial in any duration up to a day — and resume anytime.</p>
-        </div>
-        <div class="feature">
-          <span class="emoji">👎</span>
-          <h3>"You're incorrect" button</h3>
-          <p>False alarm from glare or a reflection? One tap teaches StoveWatch that scene so it never alarms on it again.</p>
-        </div>
-        <div class="feature">
-          <span class="emoji">🧠</span>
-          <h3>Knows your stove</h3>
-          <p>Gas, electric, or induction — pick your type in the app and detection adapts. Add your oven's make, model, and photos for extra context.</p>
-        </div>
-        <div class="feature">
-          <span class="emoji">⏰</span>
-          <h3>Left-on reminders</h3>
-          <p>Still on after 30 minutes? StoveWatch nudges you again, so a simmer never becomes a scorch.</p>
-        </div>
-        <div class="feature">
-          <span class="emoji">🔒</span>
-          <h3>Your kitchen, your data</h3>
-          <p>Self-hosted backend — snapshots go to your own server, not a stranger's cloud.</p>
-        </div>
-        <div class="feature">
-          <span class="emoji">👀</span>
-          <h3>Peek anytime</h3>
-          <p>Open the app to see the latest photo of your cooktop, refreshed with every check — from the couch or across town.</p>
+    <!-- ============ STATS ============ -->
+    <section aria-label="Key figures">
+      <div class="shell">
+        <div class="sec-head">
+          <span class="num">SEC. 01</span>
+          <div>
+            <h2>The numbers that matter<br />are timing numbers.</h2>
+            <p class="deck">A humanoid is a control problem before it is anything else. Every architectural decision in TALOS — hardware and software — exists to protect four figures.</p>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+      <div class="stat-band">
+        <div class="stat-cell"><div class="value">1<small>KHZ</small></div><div class="label">Whole-body control tick</div></div>
+        <div class="stat-cell"><div class="value">&lt;50<small>µS</small></div><div class="label">Worst-case loop jitter</div></div>
+        <div class="stat-cell"><div class="value">0.19<small>S</small></div><div class="label">E-stop to mechanical hold</div></div>
+        <div class="stat-cell"><div class="value">16<small>HRS</small></div><div class="label">Shift endurance</div></div>
+      </div>
+    </section>
 
-  <section id="live" class="alt">
-    <div class="wrap">
-      <div class="section-head">
-        <h2>Live from the lab</h2>
-        <p>The very camera stack StoveWatch runs on, streaming from MNEME Labs right now.</p>
-      </div>
-      <div class="feed-frame">
-        <div class="bar"><span class="live-dot"></span> LIVE · MNEME Labs test rig</div>
-        <img src="https://crawler.mnemelabs.com/mjpg" alt="Live stream from the MNEME Labs camera rig"
-             onerror="this.closest('.feed-frame').querySelector('.bar').innerHTML='📡 Feed offline — the lab rig isn\'t streaming right now.'; this.style.display='none';" />
-      </div>
-      <p class="feed-note">Feed availability depends on the lab rig being powered on.</p>
-    </div>
-  </section>
-
-  <section id="signup">
-    <div class="wrap">
-      <div class="signup-card">
-        <h2>Be first to the flame 🔥</h2>
-        <p>Join the MNEME Labs list for StoveWatch build logs, beta invites, and project updates.</p>
-        <div class="signup-row">
-          <input type="email" id="emailInput" placeholder="you@example.com" autocomplete="email" required />
-          <button class="btn btn-flame" onclick="submitEmail()">Sign up</button>
+    <!-- ============ HARDWARE ============ -->
+    <section id="hardware">
+      <div class="shell">
+        <div class="sec-head">
+          <span class="num">SEC. 02</span>
+          <div>
+            <h2>Hardware</h2>
+            <p class="deck">Four subsystems, all designed in-house. Not because we enjoy reinventing parts — because <strong>you cannot write deterministic software on top of nondeterministic hardware</strong>, and the catalog parts weren't deterministic.</p>
+          </div>
         </div>
-        <p id="responseMessage" class="cta-response"></p>
       </div>
+      <div class="hw-grid">
+        <div class="hw-card">
+          <div>
+            <span class="idx">HW-01 · ACTUATION</span>
+            <h3>Quasi-direct-drive modules</h3>
+            <p>Twenty-eight identical actuator modules in three frame sizes, each with a low-ratio planetary stage. Low gearing keeps them <strong>backdrivable</strong>: the joint feels contact through the motor windings instead of crushing through it, and torque is estimated from current — no strain gauges to drift.</p>
+            <ul>
+              <li>3 frame sizes, 1 electrical interface</li>
+              <li>Backdrivable · torque from current</li>
+              <li>Field-swappable in under 10 min</li>
+            </ul>
+          </div>
+          <figure class="hw-fig">
+            <svg viewBox="0 0 120 96" aria-hidden="true">
+              <circle cx="44" cy="48" r="26" fill="none" stroke="#101112" stroke-width="2"/>
+              <circle cx="44" cy="48" r="15" fill="none" stroke="#101112" stroke-width="1.5"/>
+              <circle cx="44" cy="48" r="4" fill="#101112"/>
+              <circle cx="44" cy="27" r="4.5" fill="none" stroke="#101112" stroke-width="1.5"/>
+              <circle cx="62" cy="59" r="4.5" fill="none" stroke="#101112" stroke-width="1.5"/>
+              <circle cx="26" cy="59" r="4.5" fill="none" stroke="#101112" stroke-width="1.5"/>
+              <line x1="70" y1="48" x2="102" y2="48" stroke="#101112" stroke-width="2"/>
+              <line x1="102" y1="34" x2="102" y2="62" stroke="#101112" stroke-width="3"/>
+              <text x="10" y="90" font-family="IBM Plex Mono, monospace" font-size="7.5" letter-spacing="1" fill="#55584e">PLANETARY · LOW RATIO</text>
+            </svg>
+            <figcaption>Fig. HW-01</figcaption>
+          </figure>
+        </div>
 
-      <p class="safety">
-        ⚠️ StoveWatch is a convenience reminder, not a safety device. It can miss activity or
-        misread scenes and must never be relied on to prevent fires.
-      </p>
-    </div>
-  </section>
+        <div class="hw-card">
+          <div>
+            <span class="idx">HW-02 · POWER</span>
+            <h3>Hot-swap energy pack</h3>
+            <p>A 2.1 kWh pack on a 96 V rail, swapped in seconds without powering down — a supercap bridge carries the machine through the exchange. The battery-management firmware is ours too, on the same audited toolchain as everything else. <strong>A robot that must dock to charge isn't working a shift.</strong></p>
+            <ul>
+              <li>2.1 kWh · 96 V distribution</li>
+              <li>Zero-downtime pack exchange</li>
+              <li>Per-cell telemetry on the dataplane</li>
+            </ul>
+          </div>
+          <figure class="hw-fig">
+            <svg viewBox="0 0 120 96" aria-hidden="true">
+              <rect x="14" y="26" width="58" height="44" fill="none" stroke="#101112" stroke-width="2"/>
+              <line x1="22" y1="26" x2="22" y2="70" stroke="#101112" stroke-width="1"/>
+              <line x1="36" y1="26" x2="36" y2="70" stroke="#101112" stroke-width="1"/>
+              <line x1="50" y1="26" x2="50" y2="70" stroke="#101112" stroke-width="1"/>
+              <line x1="64" y1="26" x2="64" y2="70" stroke="#101112" stroke-width="1"/>
+              <line x1="72" y1="48" x2="88" y2="48" stroke="#101112" stroke-width="2"/>
+              <line x1="88" y1="38" x2="88" y2="58" stroke="#101112" stroke-width="3"/>
+              <line x1="95" y1="43" x2="95" y2="53" stroke="#101112" stroke-width="2"/>
+              <line x1="102" y1="38" x2="102" y2="58" stroke="#101112" stroke-width="3"/>
+              <text x="14" y="90" font-family="IBM Plex Mono, monospace" font-size="7.5" letter-spacing="1" fill="#55584e">2.1 KWH · HOT-SWAP</text>
+            </svg>
+            <figcaption>Fig. HW-02</figcaption>
+          </figure>
+        </div>
+
+        <div class="hw-card">
+          <div>
+            <span class="idx">HW-03 · COMPUTE</span>
+            <h3>One board, two brains</h3>
+            <p>A single carrier board holds a real-time core cluster for control and a neural accelerator for perception, sharing one memory fabric. No laptop bolted to the chest, no USB hubs, no network switch inside the torso. <strong>If a wire can be a memory bus instead, it is.</strong></p>
+            <ul>
+              <li>Real-time cores + NPU, one fabric</li>
+              <li>All inference on-board, no cloud</li>
+              <li>Single supply, single failure domain</li>
+            </ul>
+          </div>
+          <figure class="hw-fig">
+            <svg viewBox="0 0 120 96" aria-hidden="true">
+              <rect x="28" y="20" width="64" height="56" fill="none" stroke="#101112" stroke-width="2"/>
+              <rect x="38" y="30" width="20" height="16" fill="#101112"/>
+              <rect x="64" y="30" width="20" height="16" fill="none" stroke="#101112" stroke-width="1.5"/>
+              <rect x="38" y="52" width="46" height="14" fill="none" stroke="#101112" stroke-width="1.5"/>
+              <g stroke="#101112" stroke-width="1.5">
+                <line x1="34" y1="20" x2="34" y2="12"/><line x1="46" y1="20" x2="46" y2="12"/>
+                <line x1="58" y1="20" x2="58" y2="12"/><line x1="70" y1="20" x2="70" y2="12"/>
+                <line x1="82" y1="20" x2="82" y2="12"/>
+                <line x1="34" y1="76" x2="34" y2="84"/><line x1="46" y1="76" x2="46" y2="84"/>
+                <line x1="58" y1="76" x2="58" y2="84"/><line x1="70" y1="76" x2="70" y2="84"/>
+                <line x1="82" y1="76" x2="82" y2="84"/>
+              </g>
+              <text x="20" y="94" font-family="IBM Plex Mono, monospace" font-size="7.5" letter-spacing="1" fill="#55584e">RT CORES + NPU</text>
+            </svg>
+            <figcaption>Fig. HW-03</figcaption>
+          </figure>
+        </div>
+
+        <div class="hw-card">
+          <div>
+            <span class="idx">HW-04 · SAFETY CHAIN</span>
+            <h3>A stop that needs no software</h3>
+            <p>The e-stop is a hardware chain: relay logic and brake actuation that fire whether or not any processor is alive. Software can request a stop; <strong>only hardware can guarantee one</strong>. Worst-case from button to mechanical hold: 0.19 seconds, measured, not simulated.</p>
+            <ul>
+              <li>Relay chain independent of compute</li>
+              <li>Spring-applied joint brakes</li>
+              <li>0.19 s to mechanical hold</li>
+            </ul>
+          </div>
+          <figure class="hw-fig">
+            <svg viewBox="0 0 120 96" aria-hidden="true">
+              <line x1="10" y1="48" x2="34" y2="48" stroke="#101112" stroke-width="2"/>
+              <line x1="34" y1="48" x2="52" y2="34" stroke="#101112" stroke-width="2"/>
+              <circle cx="34" cy="48" r="3" fill="#101112"/>
+              <circle cx="56" cy="48" r="3" fill="none" stroke="#101112" stroke-width="1.5"/>
+              <line x1="59" y1="48" x2="82" y2="48" stroke="#101112" stroke-width="2"/>
+              <rect x="82" y="36" width="26" height="24" fill="none" stroke="#101112" stroke-width="2"/>
+              <text x="87" y="52" font-family="IBM Plex Mono, monospace" font-size="8" fill="#101112">BRK</text>
+              <line x1="44" y1="18" x2="44" y2="30" stroke="#101112" stroke-width="2"/>
+              <circle cx="44" cy="14" r="5" fill="#101112"/>
+              <text x="12" y="90" font-family="IBM Plex Mono, monospace" font-size="7.5" letter-spacing="1" fill="#55584e">RELAY CHAIN · NO CPU</text>
+            </svg>
+            <figcaption>Fig. HW-04</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SOFTWARE ============ -->
+    <section id="software" class="dark">
+      <div class="shell">
+        <div class="sec-head">
+          <span class="num">SEC. 03</span>
+          <div>
+            <h2>Software: the ICHOR runtime</h2>
+            <p class="deck">In the myth, Talos ran on ichor — a single sealed vein. So does ours. <strong>ICHOR is the entire robot in one statically-linked, real-time process</strong>: one memory space, one compile-time task graph, one clock. Written from scratch, because determinism can't be bolted on afterward.</p>
+          </div>
+        </div>
+
+        <div class="layer-list">
+          <div class="layer">
+            <span class="l-id">L0 · KERNEL</span>
+            <div>
+              <h3>Verified safety kernel</h3>
+              <p>A few thousand lines that own the watchdog, the brake request line, and power gating — small enough to formally verify, and it is. Every layer above L0 is allowed to crash. <strong>L0 is not.</strong> If the rest of the stack disappears mid-stride, L0 still walks the joints down to a safe hold.</p>
+            </div>
+            <div class="l-metric"><b>PROVEN</b><span>Formally verified core</span></div>
+          </div>
+
+          <div class="layer">
+            <span class="l-id">L1 · DATAPLANE</span>
+            <div>
+              <h3>Shared-memory transport</h3>
+              <p>Sensor frames and torque commands live in lock-free ring buffers in one address space. <strong>No serialization, no sockets, no discovery protocol, no QoS matrix</strong> — a camera frame is handed to the controller as a pointer, not a packet. Publishing a message costs nanoseconds and, critically, always costs the <em>same</em> nanoseconds.</p>
+            </div>
+            <div class="l-metric"><b>0 COPIES</b><span>Sensor to controller</span></div>
+          </div>
+
+          <div class="layer">
+            <span class="l-id">L2 · MOTION</span>
+            <div>
+              <h3>Whole-body control at 1 kHz</h3>
+              <p>A model-predictive controller fused with learned balance policies, executing on a time-triggered schedule. Every task on the 1 kHz tick has an audited worst-case execution time; the schedule is proven to fit before a release ships. Miss your budget in CI and <strong>the build fails — the robot never finds out.</strong></p>
+            </div>
+            <div class="l-metric"><b>&lt;50 µS</b><span>Worst-case jitter</span></div>
+          </div>
+
+          <div class="layer">
+            <span class="l-id">L3 · AUTONOMY</span>
+            <div>
+              <h3>Planning that can only suggest</h3>
+              <p>Task planning, manipulation, and navigation — the only probabilistic layer in the machine. L3 proposes; L2 and L0 dispose. A plan is just a suggestion until the deterministic layers below prove it's dynamically feasible and safe. <strong>The neural network never touches a motor directly.</strong></p>
+            </div>
+            <div class="l-metric"><b>SANDBOXED</b><span>No direct motor access</span></div>
+          </div>
+
+          <div class="layer">
+            <span class="l-id">REPLAY</span>
+            <div>
+              <h3>Bit-exact incident replay</h3>
+              <p>Because the whole system is one deterministic process, logging its inputs is logging <em>everything</em>. Any anomaly from the field replays on a desk, bit-for-bit — same branches, same torques, same failure. <strong>We don't reproduce bugs. We re-run them.</strong></p>
+            </div>
+            <div class="l-metric"><b>1 : 1</b><span>Field to desk fidelity</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ NO ROS 2 ============ -->
+    <section id="no-ros">
+      <div class="shell">
+        <div class="sec-head">
+          <span class="num">SEC. 04</span>
+          <div>
+            <h2>Why there's no ROS 2 in TALOS</h2>
+          </div>
+        </div>
+        <div class="vs-note">
+          <p>To be clear: ROS 2 is a remarkable way to build a research robot. It is also, in our judgment, the wrong foundation for a machine that works an unsupervised sixteen-hour shift next to people. <strong>Its flexibility is exactly the property you have to remove</strong> — a dynamic graph of nodes discovering each other over DDS middleware cannot give you a worst-case timing bound, and a worst-case timing bound is the entire product.</p>
+          <p>TALOS never ran ROS 2 and was never ported off it. ICHOR was designed first, before the first actuator spun.</p>
+        </div>
+        <div class="vs-table">
+          <div class="vs-row head">
+            <div class="crit" aria-hidden="true"></div>
+            <div class="col-title">The conventional stack<small>ROS 2 / DDS</small></div>
+            <div class="col-title">TALOS<small>ICHOR runtime</small></div>
+          </div>
+          <div class="vs-row">
+            <div class="crit">Transport</div>
+            <div class="them">DDS pub/sub across processes — serialize, copy, deserialize at every hop.</div>
+            <div class="us"><b>Shared memory, zero copies.</b> One address space; messages are pointers.</div>
+          </div>
+          <div class="vs-row">
+            <div class="crit">Timing</div>
+            <div class="them">Best-effort executors; latency varies with load, graph shape, and QoS settings.</div>
+            <div class="us"><b>Time-triggered schedule</b> with audited WCET. Jitter is a shipped spec, not a hope.</div>
+          </div>
+          <div class="vs-row">
+            <div class="crit">Architecture</div>
+            <div class="them">Dozens of nodes discovered at runtime; the system's shape emerges when it boots.</div>
+            <div class="us"><b>One static binary.</b> The task graph is fixed at compile time and reviewed like code.</div>
+          </div>
+          <div class="vs-row">
+            <div class="crit">Failure model</div>
+            <div class="them">A node can die while its peers keep publishing into the void — partial states are normal.</div>
+            <div class="us"><b>All-or-nothing above L0.</b> A verified kernel guarantees safe stop with zero software alive.</div>
+          </div>
+          <div class="vs-row">
+            <div class="crit">Debugging</div>
+            <div class="them">Bag-file replay is approximate — timing and ordering differ from the incident.</div>
+            <div class="us"><b>Bit-exact deterministic replay.</b> The field failure re-runs identically on a desk.</div>
+          </div>
+          <div class="vs-row">
+            <div class="crit">Updates</div>
+            <div class="them">Per-package versioning across a node graph; combinatorial compatibility surface.</div>
+            <div class="us"><b>Atomic A/B image swap.</b> The robot runs exactly one auditable software version.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SPEC SHEET ============ -->
+    <section id="spec">
+      <div class="shell">
+        <div class="sec-head">
+          <span class="num">SEC. 05</span>
+          <div>
+            <h2>Spec sheet</h2>
+            <p class="deck">Document ML-T-002, revision E. Figures are production targets validated in the current trial fleet.</p>
+          </div>
+        </div>
+      </div>
+      <div class="spec-wrap">
+        <div class="spec-col">
+          <div class="spec-line"><span>Designation</span><b>TALOS, Model 1</b></div>
+          <div class="spec-line"><span>Form factor</span><b>Bipedal humanoid, 1.88 m / 71 kg</b></div>
+          <div class="spec-line"><span>Actuation</span><b>28 × QDD modules, 3 frame sizes</b></div>
+          <div class="spec-line"><span>Payload</span><b>25 kg sustained</b></div>
+          <div class="spec-line"><span>Power</span><b>2.1 kWh hot-swap · 16 h shift</b></div>
+          <div class="spec-line"><span>Safety</span><b>Hardware e-stop chain · 0.19 s hold</b></div>
+        </div>
+        <div class="spec-col">
+          <div class="spec-line"><span>Runtime</span><b>ICHOR — single static binary</b></div>
+          <div class="spec-line"><span>Middleware</span><b>None. No ROS 2, no DDS</b></div>
+          <div class="spec-line"><span>Control</span><b>1 kHz whole-body MPC, WCET-audited</b></div>
+          <div class="spec-line"><span>Safety core</span><b>Formally verified kernel (L0)</b></div>
+          <div class="spec-line"><span>Diagnostics</span><b>Bit-exact deterministic replay</b></div>
+          <div class="spec-line"><span>Updates</span><b>Atomic A/B image swap, on-board only</b></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ WHY WE BUILD ============ -->
+    <section id="why">
+      <div class="shell">
+        <div class="manifesto">
+          <p class="big">
+            History advances every time humanity hands another job to a machine.
+            <span class="mark">We build the machine.</span>
+          </p>
+          <div class="row">
+            <span class="tag">Why we build</span>
+            <p><strong>TALOS is named for the bronze giant of Greek myth</strong> — the first machine humanity ever imagined, animated by a single vein of ichor. We took the hint: one body, one vein, nothing inside it we didn't design and can't explain.</p>
+            <p>There are millions of jobs that injure the people who do them. Our position is simple: <strong>if a task is dull, heavy, or dangerous, it is a robot's job</strong> — and a robot working next to people must be deterministic all the way down. We build the whole stack because that's the only way to promise it.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ RESERVE ============ -->
+    <section id="reserve" class="reserve">
+      <div class="shell">
+        <div class="reserve-inner">
+          <div>
+            <h2>Put TALOS on your floor.</h2>
+            <p class="deck">The first production allocation is limited and assigned in order of reservation. Leave your email for the reservation packet, the full architecture whitepaper, and the delivery timeline.</p>
+          </div>
+          <div class="form-block">
+            <div class="form-row">
+              <input type="email" id="emailInput" placeholder="name@company.com" autocomplete="email" required />
+              <button class="btn" onclick="submitEmail()">Reserve</button>
+            </div>
+            <p class="form-note">No spam. Program updates only.</p>
+            <p id="responseMessage" class="cta-response"></p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
 
   <footer>
-    <div class="foot-logo">MNEME Labs</div>
-    <p>© 2026 MNEME Labs. All rights reserved.</p>
+    <div class="foot">
+      <div class="brand">MNEME&nbsp;LABS <span class="chip">ROBOTICS</span></div>
+      <p>© 2026 MNEME Labs · Program TALOS · All rights reserved</p>
+    </div>
   </footer>
 
   <script>
@@ -695,13 +1186,13 @@
       responseMessage.classList.remove('error');
 
       if (!email) {
-        responseMessage.textContent = "Please enter your email.";
+        responseMessage.textContent = "Enter your email to reserve.";
         responseMessage.classList.add('error');
         return;
       }
 
       if (!/^\S+@\S+\.\S+$/.test(email)) {
-        responseMessage.textContent = "Please enter a valid email address.";
+        responseMessage.textContent = "That email doesn't look valid.";
         responseMessage.classList.add('error');
         return;
       }
@@ -715,15 +1206,15 @@
         const data = await response.json();
 
         if (response.ok) {
-          responseMessage.textContent = data.message || "You're on the list. Talk soon! 🔥";
+          responseMessage.textContent = data.message || "Reserved. The packet is on its way.";
           emailInput.value = "";
         } else {
-          responseMessage.textContent = data.message || "There was an error. Please try again later.";
+          responseMessage.textContent = data.message || "Something went wrong. Try again shortly.";
           responseMessage.classList.add('error');
         }
       } catch (error) {
         console.error(error);
-        responseMessage.textContent = "There was an error. Please try again later.";
+        responseMessage.textContent = "Something went wrong. Try again shortly.";
         responseMessage.classList.add('error');
       }
     }
