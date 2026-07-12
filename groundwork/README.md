@@ -37,8 +37,8 @@ ongoing habits.
    (to do / in progress / done / N/A), add notes, filter by category, and
    export the whole plan as Markdown.
 
-Everything runs client-side; profile and progress persist in
-`localStorage`. Nothing you enter leaves the browser.
+The app runs client-side, with profile and progress persisted in
+`localStorage`.
 
 ## Development
 
