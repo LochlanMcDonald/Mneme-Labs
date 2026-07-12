@@ -723,8 +723,8 @@
         <a href="#hardware">Hardware</a>
         <a href="#quality">Quality</a>
         <a href="#roadmap">Roadmap</a>
-        <a href="#build">Build</a>
-        <a href="https://github.com/LochlanMcDonald/picrawler-ai" class="btn primary">GitHub ↗</a>
+        <a href="#specs">Specs</a>
+        <a href="#how" class="btn primary">How it works</a>
       </div>
     </div>
   </nav>
@@ -743,8 +743,8 @@
             before any motor turns. A cheap ultrasonic sensor outranks a billion-parameter model.
           </p>
           <div class="hero-ctas">
-            <a href="https://github.com/LochlanMcDonald/picrawler-ai" class="btn primary">Clone it on GitHub ↗</a>
-            <a href="#how" class="btn">See the control loop</a>
+            <a href="#how" class="btn primary">See the control loop</a>
+            <a href="#nimue" class="btn">Meet Nimue</a>
           </div>
           <div class="hero-stats">
             <div class="hstat"><b>4</b><span>behavior modes</span></div>
@@ -1077,7 +1077,7 @@
           <div class="q-item"><b>The hardware adapter</b> — the SunFounder API compatibility chain and ultrasonic range validation</div>
         </div>
         <p class="q-note">
-          CI runs the suite with coverage on <strong>Python 3.11 and 3.12</strong> for every pull request.
+          CI runs the suite with coverage on <strong>Python 3.11 and 3.12</strong> for every change.
           Every safety claim on this page corresponds to a test that fails if the behavior regresses — and the
           tests found real bugs while being written, including an escape-logic path that would have steered the
           robot <em>toward</em> the obstacle it was stuck on.
@@ -1092,7 +1092,7 @@
           <span class="exp-banner">⚗ experimental — in development, not shipped</span>
           <h2>Roadmap: the v4 architecture</h2>
           <p>The current robot is deliberately reactive: see, decide, act, repeat. The v4 redesign
-             (a standalone <code>picrawler-ai-4/</code> tree, not yet integrated with the tested main codebase)
+             (a standalone experimental build, not yet integrated with the tested main system)
              explores what the same hardware can do with <strong>memory, maps, and plans</strong>.</p>
         </div>
         <div class="tiers">
@@ -1113,21 +1113,14 @@
       </div>
     </section>
 
-    <!-- ================= BUILD ================= -->
-    <section id="build">
+    <!-- ================= SPECS ================= -->
+    <section id="specs">
       <div class="wrap">
         <div class="sec-head">
-          <span class="sec-kicker">Build your own</span>
-          <h2>From clone to crawling in five steps</h2>
+          <span class="sec-kicker">Specifications</span>
+          <h2>Quick specs</h2>
         </div>
         <div class="build-grid">
-          <div class="qs-steps">
-            <div class="qs"><b>1 · Clone</b><span class="line">git clone https://github.com/LochlanMcDonald/picrawler-ai</span><span class="line">cd picrawler-ai</span></div>
-            <div class="qs"><b>2 · Install</b><span class="line">chmod +x setup.sh &amp;&amp; ./setup.sh</span><span class="line">source .venv/bin/activate</span></div>
-            <div class="qs"><b>3 · Configure your key</b><span class="line">cp config/config.example.json config/config.json</span><span class="line">export OPENAI_API_KEY="..."</span></div>
-            <div class="qs"><b>4 · Self-check camera + AI</b><span class="line">python utils/check_camera.py</span><span class="line">python main.py --mode test</span></div>
-            <div class="qs"><b>5 · Let it roam</b><span class="line">python main.py --mode explore --duration 10</span></div>
-          </div>
           <div>
             <table class="spec-table">
               <tr><td>Platform</td><td>SunFounder PiCrawler quadruped + Raspberry Pi</td></tr>
@@ -1136,12 +1129,16 @@
               <tr><td>Voice</td><td>OpenAI TTS <code>gpt-4o-mini-tts</code> ("alloy"), cached on disk</td></tr>
               <tr><td>Camera</td><td>Picamera2 with OpenCV fallback, default 640×480</td></tr>
               <tr><td>Obstacle sensing</td><td>Ultrasonic · 20 cm threshold · 50 ms mid-motion polling</td></tr>
+            </table>
+          </div>
+          <div>
+            <table class="spec-table">
               <tr><td>Decision cadence</td><td>Frame every ~2.5 s · AI calls ≥3 s apart</td></tr>
               <tr><td>Actions</td><td>forward · backward · turn_left · turn_right · stop · posture:*</td></tr>
               <tr><td>Duration bounds</td><td>0.2 – 3.0 s, clamped in code</td></tr>
+              <tr><td>Behavior modes</td><td>explore · detect · follow · avoid (+ test self-check)</td></tr>
+              <tr><td>Safety layers</td><td>6, from action allowlist to fail-safe lifecycle</td></tr>
               <tr><td>Logs</td><td>operation.log · decisions.jsonl · saved frames</td></tr>
-              <tr><td>Dependencies</td><td>openai · numpy · Pillow · opencv-python-headless</td></tr>
-              <tr><td>Source</td><td><a href="https://github.com/LochlanMcDonald/picrawler-ai">github.com/LochlanMcDonald/picrawler-ai</a></td></tr>
             </table>
           </div>
         </div>
@@ -1152,7 +1149,7 @@
   <footer>
     <div class="foot-inner">
       <div class="logo"><span class="dollar">$</span> picrawler-ai</div>
-      <p>An autonomous Raspberry Pi crawler robot driven by OpenAI vision — that never trusts its own AI blindly. · <a href="https://github.com/LochlanMcDonald/picrawler-ai">Source on GitHub</a></p>
+      <p>An autonomous Raspberry Pi crawler robot driven by OpenAI vision — that never trusts its own AI blindly.</p>
     </div>
   </footer>
 
