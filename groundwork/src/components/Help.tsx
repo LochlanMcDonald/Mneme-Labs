@@ -53,12 +53,6 @@ export function Help({ onBack, backLabel }: Props) {
           First-aid playbooks for the incidents startups actually hit. Work
           top to bottom; containment first, tidy explanations later.
         </p>
-        <div className="help-callout">
-          If money, health data, or a live intrusion is involved, get
-          professionals on the line early: your cyber insurer's hotline if
-          you have one, an incident response firm if you do not. These steps
-          buy you time; they are not a substitute for expert help.
-        </div>
         {INCIDENT_PLAYBOOKS.map((entry) => (
           <HelpAccordion key={entry.id} entry={entry} />
         ))}
