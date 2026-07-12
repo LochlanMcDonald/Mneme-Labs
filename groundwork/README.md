@@ -9,6 +9,16 @@ a knowledge base of ~50 startup-sized security controls and produces a phased
 plan: what to do this week, in the first 30 days, the first 90 days, and as
 ongoing habits.
 
+## Screenshots
+
+| Landing | Onboarding wizard |
+| --- | --- |
+| ![Landing page](docs/screenshots/landing.png) | ![Onboarding wizard](docs/screenshots/wizard.png) |
+
+| Roadmap dashboard | Control detail |
+| --- | --- |
+| ![Dashboard](docs/screenshots/dashboard.png) | ![Control detail](docs/screenshots/control-detail.png) |
+
 ## How it works
 
 1. **Onboarding wizard** (6 steps, ~5 minutes): company basics, product &
