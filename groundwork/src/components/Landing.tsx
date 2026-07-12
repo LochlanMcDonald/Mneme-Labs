@@ -1,5 +1,6 @@
 interface Props {
   onStart: () => void;
+  onHelp: () => void;
 }
 
 const STEPS = [
@@ -9,7 +10,7 @@ const STEPS = [
   },
   {
     title: 'Get a tailored roadmap',
-    body: 'We match your answers against a knowledge base of startup-sized security controls — baseline essentials for everyone, plus the ones your specific setup demands.',
+    body: 'We match your answers against a knowledge base of startup-sized security controls: baseline essentials for everyone, plus the ones your specific setup demands.',
   },
   {
     title: 'Work through it, step by step',
@@ -17,7 +18,7 @@ const STEPS = [
   },
 ];
 
-export function Landing({ onStart }: Props) {
+export function Landing({ onStart, onHelp }: Props) {
   return (
     <div className="landing">
       <header className="landing-hero">
@@ -28,13 +29,13 @@ export function Landing({ onStart }: Props) {
           Groundwork
         </div>
         <h1>
-          Startup security, sorted —<br />
-          without the hassle.
+          Startup security, sorted.<br />
+          Without the hassle.
         </h1>
         <p className="lede">
           Answer a few questions about your company and get a prioritized,
           plain-language security roadmap: what to do this week, this month,
-          this quarter — and why.
+          this quarter, and why.
         </p>
         <button className="btn btn-primary btn-lg" onClick={onStart}>
           Build my security plan
@@ -51,8 +52,38 @@ export function Landing({ onStart }: Props) {
         ))}
       </section>
 
+      <section className="landing-beyond">
+        <h2>More than a checklist</h2>
+        <p className="landing-beyond-sub">
+          Getting set up is half the story. We're also there for the messy
+          moments and the questions in between.
+        </p>
+        <div className="beyond-grid">
+          <div className="step-card">
+            <h3>Help after an incident</h3>
+            <p>
+              Phished account, leaked key, lost laptop, exposed data:
+              step-by-step first-aid playbooks for the moments when something
+              has already gone wrong, including who to call and what to do
+              first.
+            </p>
+          </div>
+          <div className="step-card">
+            <h3>Answers along the way</h3>
+            <p>
+              Straight answers to the questions founders actually ask: what
+              to spend, who should own security, when SOC 2 makes sense, and
+              how to handle customer security questionnaires.
+            </p>
+          </div>
+        </div>
+        <button className="btn btn-lg" onClick={onHelp}>
+          Browse incident help &amp; FAQs
+        </button>
+      </section>
+
       <footer className="landing-footer">
-        We're dedicated to helping startups get their security footing —
+        We're dedicated to helping startups get their security footing:
         clear priorities, concrete steps, and a plan that grows with you.
       </footer>
     </div>

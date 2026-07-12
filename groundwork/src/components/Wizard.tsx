@@ -105,7 +105,7 @@ interface StepDef {
 const STEPS: StepDef[] = [
   {
     title: 'About your company',
-    subtitle: 'The basics — who you are and where you’re at.',
+    subtitle: 'The basics: who you are and where you’re at.',
     render: (p, set) => (
       <>
         <label className="field">
@@ -122,7 +122,7 @@ const STEPS: StepDef[] = [
           <textarea
             value={p.description}
             rows={3}
-            placeholder="One or two sentences — e.g. “We build scheduling software for veterinary clinics.”"
+            placeholder="One or two sentences, e.g. “We build scheduling software for veterinary clinics.”"
             onChange={(e) => set({ description: e.target.value })}
           />
         </label>
@@ -229,7 +229,7 @@ const STEPS: StepDef[] = [
     render: (p, set) => (
       <div className="field">
         <span className="field-label">
-          Which of these are already fully in place? (select all that apply — be honest, it’s your plan)
+          Which of these are already fully in place? (select all that apply; be honest, it’s your plan)
         </span>
         <MultiChoice options={EXISTING_OPTIONS} values={p.existing} onChange={(v) => set({ existing: v })} />
       </div>

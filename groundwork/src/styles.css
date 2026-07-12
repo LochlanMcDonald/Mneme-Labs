@@ -165,6 +165,56 @@ h3 {
   font-size: 13px;
   margin-top: 40px;
 }
+.landing-beyond {
+  text-align: center;
+  margin-top: 56px;
+}
+.landing-beyond h2 {
+  font-size: 24px;
+  margin-bottom: 8px;
+}
+.landing-beyond-sub {
+  color: var(--text-dim);
+  max-width: 520px;
+  margin: 0 auto 22px;
+}
+.beyond-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+  text-align: left;
+  margin-bottom: 24px;
+}
+.beyond-grid h3 {
+  font-size: 16px;
+  margin: 0 0 8px;
+}
+
+/* ───────── Help ───────── */
+.help {
+  max-width: 720px;
+  margin: 0 auto;
+}
+.help-section {
+  margin-top: 36px;
+}
+.help-section h2 {
+  font-size: 24px;
+  margin-bottom: 6px;
+}
+.help-sub {
+  color: var(--text-dim);
+  margin: 0 0 16px;
+}
+.help-callout {
+  background: rgba(240, 180, 41, 0.09);
+  border: 1px solid rgba(240, 180, 41, 0.35);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  font-size: 14px;
+  color: var(--text);
+  margin-bottom: 16px;
+}
 
 /* ───────── Wizard ───────── */
 .wizard {

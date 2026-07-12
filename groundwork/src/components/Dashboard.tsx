@@ -14,6 +14,7 @@ import {
 interface Props {
   store: Store;
   onEditProfile: () => void;
+  onHelp: () => void;
 }
 
 const STATUS_LABELS: Record<ItemStatus, string> = {
@@ -69,7 +70,7 @@ function ItemCard({
       <div className="item-head">
         <button
           className={`status-btn status-${status}`}
-          title={`Status: ${STATUS_LABELS[status]} — click to change`}
+          title={`Status: ${STATUS_LABELS[status]} (click to change)`}
           onClick={() =>
             onStatus(STATUS_CYCLE[(STATUS_CYCLE.indexOf(status) + 1) % STATUS_CYCLE.length])
           }
@@ -141,7 +142,7 @@ function ItemCard({
   );
 }
 
-export function Dashboard({ store, onEditProfile }: Props) {
+export function Dashboard({ store, onEditProfile, onHelp }: Props) {
   const { plan, profile, items } = store;
   const [expanded, setExpanded] = useState<string | null>(null);
   const [categoryFilter, setCategoryFilter] = useState<Category | 'all'>('all');
@@ -209,6 +210,9 @@ export function Dashboard({ store, onEditProfile }: Props) {
             </button>
             <button className="btn" onClick={copyMarkdown}>
               {copied ? 'Copied!' : 'Copy as Markdown'}
+            </button>
+            <button className="btn" onClick={onHelp}>
+              Incident help &amp; FAQs
             </button>
           </div>
         </div>

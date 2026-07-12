@@ -51,7 +51,7 @@ export const DATA_TYPE_OPTIONS: Option<DataType>[] = [
   { value: 'credentials', label: 'Credentials / API keys for other services' },
   { value: 'children', label: 'Data about children under 13' },
   { value: 'ip', label: 'Sensitive IP / trade secrets' },
-  { value: 'minimal', label: 'Very little — mostly anonymous or public data' },
+  { value: 'minimal', label: 'Very little (mostly anonymous or public data)' },
 ];
 
 export const INFRA_OPTIONS: Option<Infra>[] = [
