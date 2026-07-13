@@ -165,6 +165,9 @@ h3 {
   font-size: 13px;
   margin-top: 40px;
 }
+.landing-pro {
+  margin-top: 56px;
+}
 .landing-beyond {
   text-align: center;
   margin-top: 56px;
@@ -224,6 +227,261 @@ h3 {
 .btn-small {
   font-size: 12.5px;
   padding: 5px 12px;
+}
+
+/* ───────── Pro ───────── */
+.pro-badge {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: var(--bg);
+  background: var(--amber);
+  border-radius: 5px;
+  padding: 2px 6px;
+  vertical-align: middle;
+}
+.pro-view {
+  max-width: 760px;
+  margin: 0 auto;
+}
+.upgrade {
+  text-align: center;
+  margin-top: 32px;
+}
+.upgrade h2 {
+  font-size: 26px;
+  margin: 10px 0 8px;
+}
+.upgrade-lede {
+  color: var(--text-dim);
+  max-width: 520px;
+  margin: 0 auto 22px;
+}
+.upgrade-perks {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+  text-align: left;
+  margin-bottom: 24px;
+}
+.upgrade-perks h3 {
+  font-size: 16px;
+  margin: 0 0 8px;
+}
+.upgrade-note {
+  color: var(--text-dim);
+}
+.advisor-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 8px;
+}
+.advisor-form .btn {
+  align-self: flex-start;
+}
+.advisor-error {
+  color: var(--red);
+  margin: 0;
+  font-size: 14px;
+}
+.advisor-request {
+  align-items: center;
+}
+.advisor-request-body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 14px;
+}
+.advisor-request-date {
+  color: var(--text-dim);
+  font-size: 12.5px;
+}
+
+/* ───────── Report (always light; built for print) ───────── */
+.report-toolbar {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 0 18px;
+}
+.report {
+  background: #ffffff;
+  color: #1a2333;
+  border-radius: var(--radius);
+  padding: 44px 48px;
+  line-height: 1.5;
+}
+.report h1 {
+  font-size: 30px;
+  margin: 6px 0 4px;
+  color: #101828;
+}
+.report h2 {
+  font-size: 17px;
+  margin: 30px 0 12px;
+  color: #101828;
+  border-bottom: 2px solid #e8ecf3;
+  padding-bottom: 6px;
+}
+.report-brand {
+  font-weight: 700;
+  color: #3d6ff0;
+  font-size: 14px;
+}
+.report-company {
+  font-size: 19px;
+  font-weight: 700;
+}
+.report-desc {
+  color: #52607a;
+  margin: 6px 0 0;
+  max-width: 560px;
+}
+.report-date {
+  color: #7a879e;
+  font-size: 13px;
+  margin-top: 8px;
+}
+.report-summary {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  margin-top: 26px;
+  padding: 18px 22px;
+  background: #f4f7fc;
+  border-radius: 10px;
+}
+.report-score-num {
+  font-size: 42px;
+  font-weight: 800;
+  color: #1a9a64;
+  line-height: 1;
+}
+.report-score-label {
+  color: #52607a;
+  font-size: 13px;
+  max-width: 130px;
+}
+.report-stats {
+  display: flex;
+  gap: 26px;
+  flex-wrap: wrap;
+  color: #52607a;
+  font-size: 14px;
+}
+.report-stats strong {
+  color: #101828;
+  font-size: 18px;
+  display: block;
+}
+.report-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+.report-table th {
+  text-align: left;
+  color: #7a879e;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 6px 10px 6px 0;
+}
+.report-table td {
+  padding: 7px 10px 7px 0;
+  border-top: 1px solid #edf0f6;
+}
+.report-bar {
+  background: #e8ecf3;
+  border-radius: 4px;
+  height: 8px;
+  width: 160px;
+  overflow: hidden;
+}
+.report-bar-fill {
+  background: #1a9a64;
+  height: 100%;
+}
+.report-phase {
+  break-inside: auto;
+}
+.report-item {
+  padding: 10px 0;
+  border-bottom: 1px solid #edf0f6;
+  break-inside: avoid;
+}
+.report-item-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.report-item-title {
+  font-weight: 600;
+  color: #101828;
+}
+.report-status {
+  font-size: 11px;
+  font-weight: 700;
+  border-radius: 5px;
+  padding: 2px 8px;
+  white-space: nowrap;
+}
+.report-status-done {
+  background: #d9f2e5;
+  color: #157a4f;
+}
+.report-status-in-progress {
+  background: #fdf0d3;
+  color: #9a6d00;
+}
+.report-status-todo {
+  background: #e8ecf3;
+  color: #52607a;
+}
+.report-status-na {
+  background: #f0f1f4;
+  color: #9aa2b3;
+}
+.report-item-meta {
+  color: #7a879e;
+  font-size: 12px;
+  margin: 4px 0;
+}
+.report-item-why {
+  color: #52607a;
+  font-size: 13px;
+  margin: 4px 0 0;
+}
+.report-item-note {
+  color: #1a2333;
+  font-size: 13px;
+  margin: 6px 0 0;
+  font-style: italic;
+}
+.report-footer {
+  margin-top: 30px;
+  color: #7a879e;
+  font-size: 12px;
+  text-align: center;
+}
+
+@media print {
+  body {
+    background: #ffffff;
+  }
+  .app {
+    max-width: none;
+    padding: 0;
+  }
+  .report-toolbar {
+    display: none;
+  }
+  .report {
+    border-radius: 0;
+    padding: 0;
+  }
 }
 
 /* ───────── Help ───────── */

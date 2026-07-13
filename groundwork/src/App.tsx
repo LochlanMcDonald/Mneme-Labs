@@ -3,9 +3,11 @@ import { Landing } from './components/Landing';
 import { Wizard } from './components/Wizard';
 import { Dashboard } from './components/Dashboard';
 import { Help } from './components/Help';
+import { Report } from './components/Report';
+import { Advisor } from './components/Advisor';
 import { useStore } from './state/store';
 
-type View = 'landing' | 'wizard' | 'dashboard' | 'help';
+type View = 'landing' | 'wizard' | 'dashboard' | 'help' | 'report' | 'advisor';
 
 export default function App() {
   const store = useStore();
@@ -21,6 +23,7 @@ export default function App() {
   }, [store.profile]);
 
   const home: View = store.profile ? 'dashboard' : 'landing';
+  const goHome = () => setView(home);
 
   return (
     <div className="app">
@@ -48,6 +51,8 @@ export default function App() {
             store={store}
             onEditProfile={() => setView('wizard')}
             onHelp={() => setView('help')}
+            onReport={() => setView('report')}
+            onAdvisor={() => setView('advisor')}
           />
         ) : (
           <Landing
@@ -58,11 +63,10 @@ export default function App() {
           />
         ))}
       {view === 'help' && (
-        <Help
-          onBack={() => setView(home)}
-          backLabel={home === 'dashboard' ? 'Back to my plan' : 'Back'}
-        />
+        <Help onBack={goHome} backLabel={home === 'dashboard' ? 'Back to my plan' : 'Back'} />
       )}
+      {view === 'report' && <Report store={store} onBack={goHome} />}
+      {view === 'advisor' && <Advisor store={store} onBack={goHome} />}
     </div>
   );
 }

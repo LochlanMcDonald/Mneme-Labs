@@ -1,4 +1,5 @@
 import { AccountControls } from './Account';
+import { Upgrade } from './Upgrade';
 import type { AuthState } from '../state/auth';
 import type { SyncStatus } from '../state/sync';
 
@@ -89,6 +90,10 @@ export function Landing({ onStart, onHelp, auth, sync }: Props) {
         <button className="btn btn-lg" onClick={onHelp}>
           Browse incident help &amp; FAQs
         </button>
+      </section>
+
+      <section className="landing-pro">
+        <Upgrade auth={auth} />
       </section>
 
       <footer className="landing-footer">
