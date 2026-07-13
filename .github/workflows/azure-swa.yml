@@ -5,10 +5,6 @@ on:
     branches: [main]
     paths:
       - 'groundwork/**'
-      - 'index.html'
-      - 'images/**'
-      - 'staticwebapp.config.json'
-      - 'scripts/build-site.sh'
       - '.github/workflows/azure-swa.yml'
   workflow_dispatch:
 
@@ -27,6 +23,9 @@ jobs:
       - id: check
         run: echo "has-token=${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN != '' }}" >> "$GITHUB_OUTPUT"
 
+  # The Azure Static Web App serves the Groundwork app at its root; it is
+  # the home of groundwork-security.com. The Mneme Labs site stays on
+  # Netlify.
   deploy:
     needs: check-token
     if: needs.check-token.outputs.has-token == 'true'
@@ -36,22 +35,11 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
-      - uses: actions/setup-node@v5
-        with:
-          node-version: 22
-          cache: npm
-          cache-dependency-path: groundwork/package-lock.json
-
-      # Same layout the Netlify build produces: root site at /, app at
-      # /groundwork/, staticwebapp.config.json at the artifact root.
-      - name: Build site
-        run: bash scripts/build-site.sh
-
-      - name: Deploy site and API
+      - name: Deploy app and API
         uses: Azure/static-web-apps-deploy@v1
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
           action: upload
-          app_location: _site
+          app_location: groundwork
           api_location: groundwork/api
-          skip_app_build: true
+          output_location: dist

@@ -10,4 +10,4 @@
   NODE_VERSION = "22"
   # The account-enabled deployment (the app on the Azure Static Web App).
   # The Netlify copy shows a sign-in button that hands users off here.
-  VITE_ACCOUNT_URL = "https://blue-bush-0c19ab210.7.azurestaticapps.net/groundwork/"
+  VITE_ACCOUNT_URL = "https://www.groundwork-security.com/"
