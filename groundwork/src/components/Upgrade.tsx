@@ -54,7 +54,11 @@ export function Upgrade({ auth }: { auth: AuthState }) {
         </a>
       ) : (
         <p className="upgrade-note">
-          Pro is in early access and rolling out gradually. Check back soon.
+          Pro is in early access. Email{' '}
+          <a href="mailto:support@groundwork-security.com?subject=Groundwork%20Pro">
+            support@groundwork-security.com
+          </a>{' '}
+          and we'll set you up.
         </p>
       )}
     </div>

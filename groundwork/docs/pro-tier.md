@@ -37,8 +37,10 @@ the manual operations while the tier is in early access.
 
 - Requests live in the `assist` partition of the same table: subject,
   message, `userDetails` (their email), `createdAt`, `status`.
-- Check for `status = "open"` rows, reply by email, then edit the row and
-  set `status` to `answered` so the app shows it as handled.
+- Check for `status = "open"` rows, reply from
+  **support@groundwork-security.com** (the address promised in the app),
+  then edit the row and set `status` to `answered` so the app shows it as
+  handled.
 - Consider a recurring reminder to check the table until there's
   notification automation.
 

@@ -500,6 +500,16 @@ h3 {
   color: var(--text-dim);
   margin: 0 0 16px;
 }
+.help-contact {
+  color: var(--text-dim);
+  font-size: 14px;
+  margin-top: 18px;
+}
+.help-contact a,
+.upgrade-note a,
+.help-sub a {
+  color: var(--accent);
+}
 
 /* ───────── Wizard ───────── */
 .wizard {
