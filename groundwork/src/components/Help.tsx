@@ -66,6 +66,13 @@ export function Help({ onBack, backLabel }: Props) {
         {GENERAL_FAQS.map((entry) => (
           <HelpAccordion key={entry.id} entry={entry} />
         ))}
+        <p className="help-contact">
+          Didn't find what you need? Email{' '}
+          <a href="mailto:support@groundwork-security.com">
+            support@groundwork-security.com
+          </a>
+          .
+        </p>
       </section>
     </div>
   );

@@ -74,9 +74,12 @@ export function Advisor({ store, onBack }: Props) {
         </h2>
         <p className="help-sub">
           A question, a decision to sanity-check, or something that just
-          happened: send it over. A human replies to{' '}
-          <strong>{me?.userDetails || 'your sign-in email'}</strong> within one
-          business day, with your plan already in front of them. If it's
+          happened: send it over. A human replies from{' '}
+          <a href="mailto:support@groundwork-security.com">
+            support@groundwork-security.com
+          </a>{' '}
+          to <strong>{me?.userDetails || 'your sign-in email'}</strong> within
+          one business day, with your plan already in front of them. If it's
           urgent, say so in the subject.
         </p>
 
