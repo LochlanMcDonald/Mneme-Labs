@@ -1,12 +1,13 @@
 {
-  "navigationFallback": {
-    "rewrite": "/index.html",
-    "exclude": ["/assets/*", "*.png", "*.svg", "*.ico", "*.txt"]
-  },
   "routes": [
     {
       "route": "/api/*",
       "allowedRoles": ["authenticated"]
+    },
+    {
+      "route": "/groundwork",
+      "redirect": "/groundwork/",
+      "statusCode": 301
     }
   ],
   "platform": {

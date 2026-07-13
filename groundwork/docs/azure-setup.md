@@ -33,8 +33,17 @@ one-time Azure setup takes about ten minutes.
    - Value: the connection string from step 2.
 
 5. Run the **"Deploy to Azure Static Web Apps"** workflow (it also runs on
-   every push to `main` that touches `groundwork/`; until the secret exists
+   every push to `main` that touches the site; until the secret exists
    the deploy job simply skips).
+
+## Site layout on Azure
+
+The workflow deploys the full site, mirroring the Netlify layout: the
+repo's root page at `/` and the Groundwork app at `/groundwork/`, with
+the managed API at `/api` and sign-in on the same origin. The Azure URL
+can therefore serve as the site's main address; put a custom domain on
+the Static Web App (Settings → Custom domains, free certificate) when
+ready.
 
 ## How it behaves
 

@@ -17,21 +17,39 @@ export interface AuthState {
   user: AuthUser | null;
 }
 
-export const LOGIN_URL = '/.auth/login/aad?post_login_redirect_uri=/';
-export const LOGOUT_URL = '/.auth/logout?post_logout_redirect_uri=/';
+/** Path of the current page, so sign-in and sign-out return the user here. */
+function herePath(): string {
+  return typeof window === 'undefined' ? '/' : window.location.pathname;
+}
+
+export function loginUrl(): string {
+  return `/.auth/login/aad?post_login_redirect_uri=${encodeURIComponent(herePath())}`;
+}
+
+export function logoutUrl(): string {
+  return `/.auth/logout?post_logout_redirect_uri=${encodeURIComponent(herePath())}`;
+}
 
 /**
- * Where the account-enabled deployment lives (the Azure Static Web App).
- * Set at build time via VITE_ACCOUNT_URL. On hosts without SWA auth, the
- * sign-in button links here so accounts are reachable from any copy of
- * the site; when unset, those hosts show no sign-in UI at all.
+ * Where the account-enabled app lives (its URL on the Azure Static Web
+ * App, including any path). Set at build time via VITE_ACCOUNT_URL. On
+ * hosts without SWA auth, the sign-in button links there so accounts are
+ * reachable from any copy of the site; when unset, those hosts show no
+ * sign-in UI at all.
  */
 export const ACCOUNT_URL: string =
-  ((import.meta.env.VITE_ACCOUNT_URL as string | undefined) ?? '').replace(/\/+$/, '');
+  ((import.meta.env.VITE_ACCOUNT_URL as string | undefined) ?? '').trim();
 
-export const REMOTE_LOGIN_URL = ACCOUNT_URL
-  ? `${ACCOUNT_URL}/.auth/login/aad?post_login_redirect_uri=/`
-  : '';
+export function remoteLoginUrl(): string {
+  if (!ACCOUNT_URL) return '';
+  try {
+    const target = new URL(ACCOUNT_URL);
+    const path = target.pathname.endsWith('/') ? target.pathname : `${target.pathname}/`;
+    return `${target.origin}/.auth/login/aad?post_login_redirect_uri=${encodeURIComponent(path)}`;
+  } catch {
+    return '';
+  }
+}
 
 export async function fetchAuth(): Promise<AuthState> {
   try {

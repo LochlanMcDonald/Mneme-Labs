@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # Assemble the deployable site: root site at /, Groundwork app at /groundwork/.
+# Used by both the Netlify build and the Azure Static Web Apps workflow.
 set -euo pipefail
 
 (cd groundwork && npm ci && npm run build)
@@ -9,3 +10,4 @@ mkdir -p _site/groundwork
 cp index.html LICENSE _site/
 cp -r images _site/images
 cp -r groundwork/dist/. _site/groundwork/
+cp staticwebapp.config.json _site/
