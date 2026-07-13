@@ -8,3 +8,6 @@
 
 [build.environment]
   NODE_VERSION = "22"
+  # The account-enabled deployment (Azure Static Web App). The Netlify copy
+  # shows a sign-in button that hands users off to this URL.
+  VITE_ACCOUNT_URL = "https://blue-bush-0c19ab210.7.azurestaticapps.net"

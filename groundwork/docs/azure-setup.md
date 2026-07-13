@@ -49,8 +49,10 @@ one-time Azure setup takes about ten minutes.
   SWA user id. Saves are last-write-wins.
 - On hosts without SWA auth (the Netlify site, deploy previews, local
   `vite dev`), the app detects that `/.auth/me` is missing and runs in
-  local-only mode: no sign-in UI, everything in localStorage, exactly as
-  before.
+  local-only localStorage mode. When `VITE_ACCOUNT_URL` is set at build
+  time (see `netlify.toml`), those hosts still show a "Sign in with
+  Microsoft" button that hands users off to the account-enabled Azure
+  deployment; when unset, they show no sign-in UI at all.
 
 ## Local development with accounts
 

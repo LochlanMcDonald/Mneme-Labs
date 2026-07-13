@@ -1,4 +1,4 @@
-import { LOGIN_URL, LOGOUT_URL, type AuthState } from '../state/auth';
+import { LOGIN_URL, LOGOUT_URL, REMOTE_LOGIN_URL, type AuthState } from '../state/auth';
 import type { SyncStatus } from '../state/sync';
 
 const SYNC_LABELS: Record<SyncStatus, string> = {
@@ -8,9 +8,27 @@ const SYNC_LABELS: Record<SyncStatus, string> = {
   error: "Couldn't reach your account. Changes are kept on this device.",
 };
 
-/** Sign-in / signed-in controls. Renders nothing where accounts are unavailable. */
+/**
+ * Sign-in / signed-in controls. On hosts without SWA auth, links to the
+ * account-enabled deployment when one is configured; otherwise renders
+ * nothing.
+ */
 export function AccountControls({ auth, sync }: { auth: AuthState; sync: SyncStatus }) {
-  if (auth.status === 'checking' || auth.status === 'unavailable') return null;
+  if (auth.status === 'checking') return null;
+
+  if (auth.status === 'unavailable') {
+    if (!REMOTE_LOGIN_URL) return null;
+    return (
+      <div className="account">
+        <a className="btn" href={REMOTE_LOGIN_URL}>
+          Sign in with Microsoft
+        </a>
+        <span className="account-hint">
+          Sign in to save your plan and open it from any device.
+        </span>
+      </div>
+    );
+  }
 
   if (auth.status === 'signed-out') {
     return (

@@ -20,6 +20,19 @@ export interface AuthState {
 export const LOGIN_URL = '/.auth/login/aad?post_login_redirect_uri=/';
 export const LOGOUT_URL = '/.auth/logout?post_logout_redirect_uri=/';
 
+/**
+ * Where the account-enabled deployment lives (the Azure Static Web App).
+ * Set at build time via VITE_ACCOUNT_URL. On hosts without SWA auth, the
+ * sign-in button links here so accounts are reachable from any copy of
+ * the site; when unset, those hosts show no sign-in UI at all.
+ */
+export const ACCOUNT_URL: string =
+  ((import.meta.env.VITE_ACCOUNT_URL as string | undefined) ?? '').replace(/\/+$/, '');
+
+export const REMOTE_LOGIN_URL = ACCOUNT_URL
+  ? `${ACCOUNT_URL}/.auth/login/aad?post_login_redirect_uri=/`
+  : '';
+
 export async function fetchAuth(): Promise<AuthState> {
   try {
     const res = await fetch('/.auth/me', { headers: { accept: 'application/json' } });
