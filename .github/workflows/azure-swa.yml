@@ -1,0 +1,42 @@
+name: Deploy to Azure Static Web Apps
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'groundwork/**'
+      - '.github/workflows/azure-swa.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  # Secrets are not readable in job-level if conditions, so a tiny job
+  # exposes whether the deployment token is configured. Until it is, the
+  # deploy job skips cleanly instead of failing the workflow.
+  check-token:
+    runs-on: ubuntu-latest
+    outputs:
+      has-token: ${{ steps.check.outputs.has-token }}
+    steps:
+      - id: check
+        run: echo "has-token=${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN != '' }}" >> "$GITHUB_OUTPUT"
+
+  deploy:
+    needs: check-token
+    if: needs.check-token.outputs.has-token == 'true'
+    runs-on: ubuntu-latest
+    environment:
+      name: azure-swa
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Deploy app and API
+        uses: Azure/static-web-apps-deploy@v1
+        with:
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
+          action: upload
+          app_location: groundwork
+          api_location: groundwork/api
+          output_location: dist

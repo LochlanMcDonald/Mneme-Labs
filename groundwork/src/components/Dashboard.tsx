@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import type { Store } from '../state/store';
+import { AccountControls } from './Account';
 import { planStats } from '../engine/plan';
 import { planToMarkdown } from '../export/markdown';
 import type { Category, ItemStatus, Phase, PlanItem } from '../types';
@@ -215,6 +216,7 @@ export function Dashboard({ store, onEditProfile, onHelp }: Props) {
               Incident help &amp; FAQs
             </button>
           </div>
+          <AccountControls auth={store.auth} sync={store.sync} />
         </div>
         <ProgressRing percent={stats.percent} />
       </header>

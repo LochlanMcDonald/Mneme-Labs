@@ -38,7 +38,12 @@ ongoing habits.
    export the whole plan as Markdown.
 
 The app runs client-side, with profile and progress persisted in
-`localStorage`.
+`localStorage`. On Azure Static Web Apps it also offers **user accounts**:
+Microsoft sign-in via the built-in SWA auth, with each user's plan saved
+through the managed Functions API in [`api/`](api/) to Azure Table Storage,
+so plans follow the user across devices. On hosts without SWA auth the app
+detects that and runs in local-only mode. See
+[`docs/azure-setup.md`](docs/azure-setup.md) for the one-time Azure setup.
 
 ## Development
 

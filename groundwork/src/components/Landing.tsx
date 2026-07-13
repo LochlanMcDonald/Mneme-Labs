@@ -1,6 +1,12 @@
+import { AccountControls } from './Account';
+import type { AuthState } from '../state/auth';
+import type { SyncStatus } from '../state/sync';
+
 interface Props {
   onStart: () => void;
   onHelp: () => void;
+  auth: AuthState;
+  sync: SyncStatus;
 }
 
 const STEPS = [
@@ -18,7 +24,7 @@ const STEPS = [
   },
 ];
 
-export function Landing({ onStart, onHelp }: Props) {
+export function Landing({ onStart, onHelp, auth, sync }: Props) {
   return (
     <div className="landing">
       <header className="landing-hero">
@@ -40,6 +46,9 @@ export function Landing({ onStart, onHelp }: Props) {
         <button className="btn btn-primary btn-lg" onClick={onStart}>
           Build my security plan
         </button>
+        <div className="landing-account">
+          <AccountControls auth={auth} sync={sync} />
+        </div>
       </header>
 
       <section className="landing-steps">
