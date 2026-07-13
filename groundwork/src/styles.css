@@ -190,6 +190,42 @@ h3 {
   margin: 0 0 8px;
 }
 
+/* ───────── Account ───────── */
+.account {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+}
+.landing-account {
+  display: flex;
+  justify-content: center;
+  margin-top: 16px;
+}
+.landing-account .account {
+  justify-content: center;
+}
+.account-hint {
+  color: var(--text-dim);
+  font-size: 13px;
+}
+.account-user {
+  font-size: 13px;
+  font-weight: 600;
+}
+.account-sync {
+  color: var(--text-dim);
+  font-size: 12.5px;
+}
+.account-sync.error {
+  color: var(--amber);
+}
+.btn-small {
+  font-size: 12.5px;
+  padding: 5px 12px;
+}
+
 /* ───────── Help ───────── */
 .help {
   max-width: 720px;
