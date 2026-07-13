@@ -38,12 +38,13 @@ one-time Azure setup takes about ten minutes.
 
 ## Site layout on Azure
 
-The workflow deploys the full site, mirroring the Netlify layout: the
-repo's root page at `/` and the Groundwork app at `/groundwork/`, with
-the managed API at `/api` and sign-in on the same origin. The Azure URL
-can therefore serve as the site's main address; put a custom domain on
-the Static Web App (Settings → Custom domains, free certificate) when
-ready.
+The Static Web App serves the Groundwork app at its root, with the
+managed API at `/api` and sign-in on the same origin. It is the home of
+**groundwork-security.com** (Settings → Custom domains): `www` points at
+the SWA via CNAME, and the apex domain forwards to `www` at the
+registrar. The Mneme Labs root site stays on Netlify, where the
+`/groundwork/` copy runs local-only and hands sign-in off to the domain
+via `VITE_ACCOUNT_URL` in `netlify.toml`.
 
 ## How it behaves
 
