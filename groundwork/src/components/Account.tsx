@@ -1,4 +1,4 @@
-import { LOGIN_URL, LOGOUT_URL, REMOTE_LOGIN_URL, type AuthState } from '../state/auth';
+import { loginUrl, logoutUrl, remoteLoginUrl, type AuthState } from '../state/auth';
 import type { SyncStatus } from '../state/sync';
 
 const SYNC_LABELS: Record<SyncStatus, string> = {
@@ -17,10 +17,11 @@ export function AccountControls({ auth, sync }: { auth: AuthState; sync: SyncSta
   if (auth.status === 'checking') return null;
 
   if (auth.status === 'unavailable') {
-    if (!REMOTE_LOGIN_URL) return null;
+    const remote = remoteLoginUrl();
+    if (!remote) return null;
     return (
       <div className="account">
-        <a className="btn" href={REMOTE_LOGIN_URL}>
+        <a className="btn" href={remote}>
           Sign in with Microsoft
         </a>
         <span className="account-hint">
@@ -33,7 +34,7 @@ export function AccountControls({ auth, sync }: { auth: AuthState; sync: SyncSta
   if (auth.status === 'signed-out') {
     return (
       <div className="account">
-        <a className="btn" href={LOGIN_URL}>
+        <a className="btn" href={loginUrl()}>
           Sign in with Microsoft
         </a>
         <span className="account-hint">
@@ -51,7 +52,7 @@ export function AccountControls({ auth, sync }: { auth: AuthState; sync: SyncSta
           {SYNC_LABELS[sync]}
         </span>
       )}
-      <a className="btn btn-small" href={LOGOUT_URL}>
+      <a className="btn btn-small" href={logoutUrl()}>
         Sign out
       </a>
     </div>
