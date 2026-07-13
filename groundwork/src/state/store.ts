@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { buildPlan, initialItemStates } from '../engine/plan';
 import { fetchAuth, type AuthState } from './auth';
+import { fetchMe, type Me } from './pro';
 import {
   loadServerState,
   resolveInitialState,
@@ -33,6 +34,8 @@ export interface Store {
   generatedAt: string | null;
   auth: AuthState;
   sync: SyncStatus;
+  /** Account details incl. Pro entitlement; null until loaded or when signed out. */
+  me: Me | null;
   generate: (profile: CompanyProfile) => void;
   setStatus: (controlId: string, status: ItemStatus) => void;
   setNote: (controlId: string, note: string) => void;
@@ -54,6 +57,7 @@ export function useStore(): Store {
   const [state, setState] = useState<AppState>(loadLocalState);
   const [auth, setAuth] = useState<AuthState>({ status: 'checking', user: null });
   const [sync, setSync] = useState<SyncStatus>('idle');
+  const [me, setMe] = useState<Me | null>(null);
 
   // JSON of the last state confirmed on the server, to avoid echoing a
   // just-loaded server state back up. Null until the initial load ran.
@@ -77,6 +81,20 @@ export function useStore(): Store {
       cancelled = true;
     };
   }, []);
+
+  // Entitlement lookup once signed in.
+  useEffect(() => {
+    if (auth.status !== 'signed-in') return;
+    let cancelled = false;
+    fetchMe()
+      .then((m) => {
+        if (!cancelled) setMe(m);
+      })
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+    };
+  }, [auth.status]);
 
   // Initial account load once signed in.
   useEffect(() => {
@@ -177,6 +195,7 @@ export function useStore(): Store {
     generatedAt: state.generatedAt,
     auth,
     sync,
+    me,
     generate,
     setStatus,
     setNote,

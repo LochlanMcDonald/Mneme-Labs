@@ -1,38 +1,9 @@
 const { app } = require('@azure/functions');
-const { TableClient } = require('@azure/data-tables');
+const { tableClient, principalFrom } = require('../lib/common');
 
-const TABLE_NAME = 'groundworkstate';
 const PARTITION = 'state';
 // Generous ceiling for one plan document; real payloads are a few KB.
 const MAX_BODY_BYTES = 200_000;
-
-function tableClient() {
-  const conn = process.env.STORAGE_CONNECTION_STRING;
-  if (!conn) {
-    throw new Error(
-      'STORAGE_CONNECTION_STRING is not set. Add it in the Static Web App configuration (see groundwork/docs/azure-setup.md).',
-    );
-  }
-  return TableClient.fromConnectionString(conn, TABLE_NAME);
-}
-
-/**
- * Static Web Apps forwards the authenticated user as a base64-encoded JSON
- * principal. Routes are additionally locked to the "authenticated" role in
- * staticwebapp.config.json; this is defense in depth.
- */
-function principalFrom(request) {
-  const header = request.headers.get('x-ms-client-principal');
-  if (!header) return null;
-  try {
-    const parsed = JSON.parse(Buffer.from(header, 'base64').toString('utf8'));
-    return parsed && typeof parsed.userId === 'string' && parsed.userId.length > 0
-      ? parsed
-      : null;
-  } catch {
-    return null;
-  }
-}
 
 app.http('state', {
   methods: ['GET', 'PUT'],
