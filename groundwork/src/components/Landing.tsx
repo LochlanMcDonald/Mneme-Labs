@@ -62,6 +62,17 @@ export function Landing({ onStart, onHelp, auth, sync }: Props) {
         ))}
       </section>
 
+      <section className="landing-video">
+        <h2>See it in action</h2>
+        <p className="landing-video-sub">
+          From first question to finished plan, in under a minute.
+        </p>
+        <video controls playsInline preload="metadata" poster="demo-poster.jpg">
+          <source src="demo.mp4" type="video/mp4" />
+          Your browser doesn't support embedded video.
+        </video>
+      </section>
+
       <section className="landing-beyond">
         <h2>More than a checklist</h2>
         <p className="landing-beyond-sub">
