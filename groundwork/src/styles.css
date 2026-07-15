@@ -168,6 +168,76 @@ h3 {
 .landing-pro {
   margin-top: 56px;
 }
+.footer-links {
+  margin-top: 10px;
+}
+.footer-links a {
+  color: var(--text-dim);
+}
+.link-btn {
+  font: inherit;
+  color: var(--text-dim);
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  text-decoration: underline;
+}
+.link-btn:hover,
+.footer-links a:hover {
+  color: var(--text);
+}
+
+/* ───────── Legal pages ───────── */
+.legal {
+  max-width: 680px;
+  margin: 0 auto;
+}
+.legal h1 {
+  font-size: 30px;
+  margin: 22px 0 4px;
+}
+.legal h2 {
+  font-size: 18px;
+  margin: 26px 0 8px;
+}
+.legal p {
+  color: var(--text-dim);
+  font-size: 15px;
+  margin: 0 0 10px;
+}
+.legal a {
+  color: var(--accent);
+}
+.legal-updated {
+  font-size: 13px;
+}
+.legal-contact {
+  margin-top: 30px;
+}
+
+/* ───────── Upgrade price ───────── */
+.upgrade-price {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+.upgrade-price-num {
+  font-size: 44px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+.upgrade-price-per {
+  color: var(--text-dim);
+  font-size: 16px;
+}
+.upgrade-guarantee {
+  color: var(--text-dim);
+  font-size: 13px;
+  margin: 0 0 22px;
+}
 .landing-video {
   text-align: center;
   margin-top: 56px;

@@ -28,6 +28,11 @@ export function Upgrade({ auth }: { auth: AuthState }) {
         Everything in the free plan, plus the proof and the people for when
         security starts affecting deals.
       </p>
+      <div className="upgrade-price">
+        <span className="upgrade-price-num">$299</span>
+        <span className="upgrade-price-per">per year</span>
+      </div>
+      <p className="upgrade-guarantee">14-day money-back guarantee.</p>
       <div className="upgrade-perks">
         {PERKS.map((perk) => (
           <div className="step-card" key={perk.title}>
