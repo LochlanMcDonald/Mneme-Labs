@@ -6,6 +6,8 @@ import type { SyncStatus } from '../state/sync';
 interface Props {
   onStart: () => void;
   onHelp: () => void;
+  onTerms: () => void;
+  onPrivacy: () => void;
   auth: AuthState;
   sync: SyncStatus;
 }
@@ -25,7 +27,7 @@ const STEPS = [
   },
 ];
 
-export function Landing({ onStart, onHelp, auth, sync }: Props) {
+export function Landing({ onStart, onHelp, onTerms, onPrivacy, auth, sync }: Props) {
   return (
     <div className="landing">
       <header className="landing-hero">
@@ -108,8 +110,23 @@ export function Landing({ onStart, onHelp, auth, sync }: Props) {
       </section>
 
       <footer className="landing-footer">
-        We're dedicated to helping startups get their security footing:
-        clear priorities, concrete steps, and a plan that grows with you.
+        <p>
+          We're dedicated to helping startups get their security footing:
+          clear priorities, concrete steps, and a plan that grows with you.
+        </p>
+        <p className="footer-links">
+          <button className="link-btn" onClick={onTerms}>
+            Terms of Service
+          </button>
+          {' · '}
+          <button className="link-btn" onClick={onPrivacy}>
+            Privacy Policy
+          </button>
+          {' · '}
+          <a href="mailto:support@groundwork-security.com">
+            support@groundwork-security.com
+          </a>
+        </p>
       </footer>
     </div>
   );
