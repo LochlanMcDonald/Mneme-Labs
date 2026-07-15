@@ -168,6 +168,27 @@ h3 {
 .landing-pro {
   margin-top: 56px;
 }
+.landing-video {
+  text-align: center;
+  margin-top: 56px;
+}
+.landing-video h2 {
+  font-size: 24px;
+  margin-bottom: 8px;
+}
+.landing-video-sub {
+  color: var(--text-dim);
+  margin: 0 0 22px;
+}
+.landing-video video {
+  width: 100%;
+  max-width: 820px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+  display: block;
+  margin: 0 auto;
+}
 .landing-beyond {
   text-align: center;
   margin-top: 56px;
