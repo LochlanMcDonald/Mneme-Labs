@@ -38,10 +38,11 @@ jobs:
       - name: Deploy app and API
         uses: Azure/static-web-apps-deploy@v1
         env:
-          # Optional checkout link (e.g. Stripe Payment Link) baked into the
-          # build; set the UPGRADE_URL repository variable to enable the
-          # upgrade button. See groundwork/docs/pro-tier.md.
-          VITE_UPGRADE_URL: ${{ vars.UPGRADE_URL }}
+          # Stripe Payment Link for Groundwork Pro, baked into the build to
+          # enable the upgrade button. Set the UPGRADE_URL repository variable
+          # to override (e.g. to swap the link) without a code change.
+          # See groundwork/docs/pro-tier.md.
+          VITE_UPGRADE_URL: ${{ vars.UPGRADE_URL || 'https://buy.stripe.com/eVqcN7a7h4VAe304Nw2Nq00' }}
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
           action: upload

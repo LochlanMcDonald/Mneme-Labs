@@ -1,5 +1,5 @@
 import { UPGRADE_URL } from '../state/pro';
-import { remoteLoginUrl, type AuthState } from '../state/auth';
+import { loginUrl, remoteLoginUrl, type AuthState } from '../state/auth';
 
 const PERKS = [
   {
@@ -18,7 +18,9 @@ const PERKS = [
  */
 export function Upgrade({ auth }: { auth: AuthState }) {
   const signedIn = auth.status === 'signed-in';
-  const remote = remoteLoginUrl();
+  // On the auth-enabled host use the local login; on hosts without SWA auth
+  // (Netlify, previews) hand off to the account-enabled deployment.
+  const signInHref = auth.status === 'unavailable' ? remoteLoginUrl() : loginUrl();
 
   return (
     <div className="upgrade">
@@ -43,9 +45,9 @@ export function Upgrade({ auth }: { auth: AuthState }) {
       </div>
       {!signedIn ? (
         <p className="upgrade-note">
-          {remote ? (
+          {signInHref ? (
             <>
-              <a className="btn btn-primary" href={remote}>
+              <a className="btn btn-primary" href={signInHref}>
                 Sign in to get started
               </a>
             </>

@@ -46,16 +46,29 @@ the manual operations while the tier is in early access.
 
 ## Taking payment
 
-The upgrade button appears when the build has `VITE_UPGRADE_URL` set
-(e.g. a Stripe Payment Link). Suggested early-access flow:
+The Stripe Payment Link for Pro is live: the "Upgrade to Pro" button is
+baked into both the Azure and Netlify builds via `VITE_UPGRADE_URL`. To
+swap the link without a code change, set an `UPGRADE_URL` repository
+variable (GitHub → Settings → Secrets and variables → Actions →
+Variables); the Azure workflow prefers it over the built-in default.
 
-1. Create a Payment Link in Stripe (product "Groundwork Pro", yearly
-   price).
-2. Set `VITE_UPGRADE_URL` to that link for the Azure build (repository
-   variable consumed by the deploy workflow) and in `netlify.toml` if the
-   Netlify copy should show it too.
-3. When a payment lands, Stripe emails you the buyer's email; find their
-   user row by `userDetails` and grant Pro as above.
+### When a payment lands (manual activation)
 
-Automating step 3 (a Stripe webhook function that writes the entitlement
-row) is the natural next step once volume justifies it.
+There is no webhook yet, so activation is manual:
+
+1. Stripe emails you (and shows the payment in the dashboard) with the
+   buyer's email.
+2. Find their row in the `state` partition by `userDetails` (their email)
+   to get their user id.
+3. Grant Pro by adding their `entitlement` row (see "Granting Pro
+   manually" above). They get access on their next page load.
+
+Because activation is not instant, set the Payment Link's **post-payment
+confirmation message** in Stripe to set expectations, e.g. "Thanks! We're
+activating your Pro access now and will confirm by email within one
+business day." Watch for Stripe payment notifications so grants happen
+promptly.
+
+Automating this (a Stripe webhook function that verifies the event and
+writes the entitlement row) is the natural next step once volume
+justifies it.
