@@ -58,14 +58,14 @@ export async function fetchMe(): Promise<Me | null> {
 }
 
 export async function listAllAssistRequests(): Promise<AdminAssistRequest[]> {
-  const res = await fetch('/api/admin/assist', { headers: { accept: 'application/json' } });
+  const res = await fetch('/api/admin-assist', { headers: { accept: 'application/json' } });
   if (!res.ok) throw new Error(`Failed to load requests (${res.status})`);
   const data = await res.json();
   return Array.isArray(data?.requests) ? data.requests : [];
 }
 
 export async function answerAssistRequest(id: string, answer: string): Promise<void> {
-  const res = await fetch('/api/admin/assist', {
+  const res = await fetch('/api/admin-assist', {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify({ id, answer }),

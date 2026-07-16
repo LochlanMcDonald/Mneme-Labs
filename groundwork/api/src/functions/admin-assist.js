@@ -10,10 +10,13 @@ const MAX_ANSWER = 8000;
  * emailing the user that a reply is waiting. Restricted to admins
  * (ADMIN_USER_IDS app setting) on top of the SWA authenticated gate.
  */
-app.http('assist-admin', {
+// Route is a single segment matching the function name: Azure Static Web
+// Apps managed functions serve /api/<name>, and nested routes (admin/assist)
+// are not reachable there.
+app.http('admin-assist', {
   methods: ['GET', 'POST'],
   authLevel: 'anonymous',
-  route: 'admin/assist',
+  route: 'admin-assist',
   handler: async (request, context) => {
     const principal = principalFrom(request);
     if (!principal) {
