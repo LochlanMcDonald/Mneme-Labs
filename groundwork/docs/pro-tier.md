@@ -49,23 +49,16 @@ and the user sees it threaded under their question in "Ask an advisor".
 
 Requests still live in the `assist` partition of the table (subject,
 message, `userDetails`, `status`, and now `answer`/`answeredAt`), so the
-storage browser remains a fallback.
+storage browser remains a fallback. Admin operations run through the
+existing `assist` function at `/api/assist?scope=admin` (Azure Static Web
+Apps serves that already-registered endpoint reliably; a separate admin
+function was not being served).
 
-### Email notifications (optional)
+### Email notifications
 
-With Azure Communication Services configured, you get an email when a
-question arrives and the user gets one when you reply. All email is
-best-effort: if unset, the app works exactly the same, just without the
-alerts. Set these app settings on the Static Web App:
-
-- `ACS_EMAIL_CONNECTION_STRING` — from an Azure Communication Services
-  resource with Email enabled.
-- `EMAIL_SENDER` — a verified sender address. Fastest start: the free
-  Azure-managed domain (`DoNotReply@<something>.azurecomm.net`). For mail
-  from `support@groundwork-security.com`, verify the domain in ACS first
-  (the SPF/DKIM records).
-- `ADMIN_NOTIFY_EMAIL` — where new-question alerts go
-  (e.g. support@groundwork-security.com).
+Not wired up in the app for now. Until they are, check the Admin view for
+new questions (or the `assist` table). Email alerts can be added later via
+Azure Communication Services once the core flow is confirmed stable.
 
 ## Taking payment
 
