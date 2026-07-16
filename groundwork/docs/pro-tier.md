@@ -52,23 +52,33 @@ swap the link without a code change, set an `UPGRADE_URL` repository
 variable (GitHub → Settings → Secrets and variables → Actions →
 Variables); the Azure workflow prefers it over the built-in default.
 
-### When a payment lands (manual activation)
+### Automatic activation (Stripe webhook)
 
-There is no webhook yet, so activation is manual:
+Paid accounts unlock Pro automatically:
 
-1. Stripe emails you (and shows the payment in the dashboard) with the
-   buyer's email.
-2. Find their row in the `state` partition by `userDetails` (their email)
-   to get their user id.
-3. Grant Pro by adding their `entitlement` row (see "Granting Pro
-   manually" above). They get access on their next page load.
+1. When a signed-in user clicks **Upgrade to Pro**, their Groundwork user
+   id rides along as Stripe's `client_reference_id` in the checkout URL.
+2. On payment, Stripe calls `POST /api/stripe-webhook`. The function
+   verifies the Stripe signature, reads `client_reference_id`, and writes
+   that user's `entitlement` row with `pro = true`. The user has Pro on
+   their next page load, no manual step.
 
-Because activation is not instant, set the Payment Link's **post-payment
-confirmation message** in Stripe to set expectations, e.g. "Thanks! We're
-activating your Pro access now and will confirm by email within one
-business day." Watch for Stripe payment notifications so grants happen
-promptly.
+**One-time setup:**
 
-Automating this (a Stripe webhook function that verifies the event and
-writes the entitlement row) is the natural next step once volume
-justifies it.
+1. Stripe Dashboard → Developers → Webhooks → **Add endpoint**.
+2. Endpoint URL: `https://www.groundwork-security.com/api/stripe-webhook`.
+3. Events to send: **`checkout.session.completed`**.
+4. After creating it, copy the endpoint's **Signing secret** (`whsec_...`).
+5. In the Static Web App → Environment variables, add
+   `STRIPE_WEBHOOK_SECRET` = that value.
+6. Use Stripe's **Send test webhook** (or a real $299 test purchase and
+   refund) to confirm the entitlement row appears.
+
+**Manual fallback:** if someone pays through a link that lost the
+`client_reference_id` (rare), the webhook logs it and acks. Match them by
+the email in the Stripe payment and grant Pro manually (see "Granting Pro
+manually" above).
+
+Set the Payment Link's **post-payment confirmation message** to reassure
+buyers, e.g. "Thanks! Your Pro access is unlocking now, refresh Groundwork
+in a moment."

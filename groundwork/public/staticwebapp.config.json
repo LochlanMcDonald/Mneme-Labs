@@ -5,6 +5,10 @@
   },
   "routes": [
     {
+      "route": "/api/stripe-webhook",
+      "allowedRoles": ["anonymous"]
+    },
+    {
       "route": "/api/*",
       "allowedRoles": ["authenticated"]
     }

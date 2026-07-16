@@ -22,6 +22,19 @@ export interface AssistRequest {
 export const UPGRADE_URL: string =
   ((import.meta.env.VITE_UPGRADE_URL as string | undefined) ?? '').trim();
 
+/**
+ * Checkout URL for a specific signed-in user. The user's id rides along as
+ * Stripe's `client_reference_id`, so the payment webhook knows exactly
+ * which account to unlock; their email is prefilled for convenience.
+ */
+export function checkoutUrl(userId: string, email: string): string {
+  if (!UPGRADE_URL) return '';
+  const sep = UPGRADE_URL.includes('?') ? '&' : '?';
+  const params = new URLSearchParams({ client_reference_id: userId });
+  if (email) params.set('prefilled_email', email);
+  return `${UPGRADE_URL}${sep}${params.toString()}`;
+}
+
 export async function fetchMe(): Promise<Me | null> {
   const res = await fetch('/api/me', { headers: { accept: 'application/json' } });
   if (!res.ok) return null;
