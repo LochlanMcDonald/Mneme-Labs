@@ -4,6 +4,7 @@ export interface Me {
   userId: string;
   userDetails: string;
   pro: boolean;
+  admin: boolean;
 }
 
 export interface AssistRequest {
@@ -12,6 +13,14 @@ export interface AssistRequest {
   message: string;
   status: string;
   createdAt: string;
+  answer: string;
+  answeredAt: string;
+}
+
+/** An advisor request as seen by an admin, including who sent it. */
+export interface AdminAssistRequest extends AssistRequest {
+  userId: string;
+  userDetails: string;
 }
 
 /**
@@ -44,7 +53,27 @@ export async function fetchMe(): Promise<Me | null> {
     userId: data.userId,
     userDetails: String(data.userDetails ?? ''),
     pro: data.pro === true,
+    admin: data.admin === true,
   };
+}
+
+export async function listAllAssistRequests(): Promise<AdminAssistRequest[]> {
+  const res = await fetch('/api/admin/assist', { headers: { accept: 'application/json' } });
+  if (!res.ok) throw new Error(`Failed to load requests (${res.status})`);
+  const data = await res.json();
+  return Array.isArray(data?.requests) ? data.requests : [];
+}
+
+export async function answerAssistRequest(id: string, answer: string): Promise<void> {
+  const res = await fetch('/api/admin/assist', {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ id, answer }),
+  });
+  if (!res.ok) {
+    const data = await res.json().catch(() => null);
+    throw new Error(data?.error ?? `Failed to save answer (${res.status})`);
+  }
 }
 
 export async function listAssistRequests(): Promise<AssistRequest[]> {

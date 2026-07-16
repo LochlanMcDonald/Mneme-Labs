@@ -135,6 +135,12 @@ export function Advisor({ store, onBack }: Props) {
                   </span>
                 </div>
               </div>
+              {req.answer ? (
+                <div className="advisor-answer">
+                  <span className="advisor-answer-label">Advisor reply</span>
+                  <p>{req.answer}</p>
+                </div>
+              ) : null}
             </div>
           ))
         )}

@@ -48,4 +48,17 @@ async function isPro(client, userId) {
   }
 }
 
-module.exports = { tableClient, principalFrom, isPro };
+/**
+ * Whether a user id is a Groundwork admin. Admins are listed in the
+ * ADMIN_USER_IDS app setting (comma-separated SWA user ids). Find your own
+ * id at /api/me while signed in.
+ */
+function isAdmin(userId) {
+  const ids = String(process.env.ADMIN_USER_IDS || '')
+    .split(',')
+    .map((s) => s.trim())
+    .filter(Boolean);
+  return ids.includes(userId);
+}
+
+module.exports = { tableClient, principalFrom, isPro, isAdmin };

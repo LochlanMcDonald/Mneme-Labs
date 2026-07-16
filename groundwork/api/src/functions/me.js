@@ -1,5 +1,5 @@
 const { app } = require('@azure/functions');
-const { tableClient, principalFrom, isPro } = require('../lib/common');
+const { tableClient, principalFrom, isPro, isAdmin } = require('../lib/common');
 
 app.http('me', {
   methods: ['GET'],
@@ -19,6 +19,7 @@ app.http('me', {
           userId: principal.userId,
           userDetails: String(principal.userDetails || ''),
           pro,
+          admin: isAdmin(principal.userId),
         },
       };
     } catch (err) {

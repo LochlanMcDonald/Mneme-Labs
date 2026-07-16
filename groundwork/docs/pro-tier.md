@@ -35,14 +35,37 @@ the manual operations while the tier is in early access.
 
 ## Answering advisor requests
 
-- Requests live in the `assist` partition of the same table: subject,
-  message, `userDetails` (their email), `createdAt`, `status`.
-- Check for `status = "open"` rows, reply from
-  **support@groundwork-security.com** (the address promised in the app),
-  then edit the row and set `status` to `answered` so the app shows it as
-  handled.
-- Consider a recurring reminder to check the table until there's
-  notification automation.
+Answer questions in the app's **Admin** view (a button appears on the
+dashboard for admins). It lists every request, open first; type a reply
+and the user sees it threaded under their question in "Ask an advisor".
+
+### Becoming an admin
+
+1. Sign in to the app and open `https://<app-domain>/api/me` — copy your
+   `userId`.
+2. Add it to the `ADMIN_USER_IDS` app setting on the Static Web App
+   (comma-separated for multiple admins).
+3. Reload; the **Admin** button appears on your dashboard.
+
+Requests still live in the `assist` partition of the table (subject,
+message, `userDetails`, `status`, and now `answer`/`answeredAt`), so the
+storage browser remains a fallback.
+
+### Email notifications (optional)
+
+With Azure Communication Services configured, you get an email when a
+question arrives and the user gets one when you reply. All email is
+best-effort: if unset, the app works exactly the same, just without the
+alerts. Set these app settings on the Static Web App:
+
+- `ACS_EMAIL_CONNECTION_STRING` — from an Azure Communication Services
+  resource with Email enabled.
+- `EMAIL_SENDER` — a verified sender address. Fastest start: the free
+  Azure-managed domain (`DoNotReply@<something>.azurecomm.net`). For mail
+  from `support@groundwork-security.com`, verify the domain in ACS first
+  (the SPF/DKIM records).
+- `ADMIN_NOTIFY_EMAIL` — where new-question alerts go
+  (e.g. support@groundwork-security.com).
 
 ## Taking payment
 
