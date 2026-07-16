@@ -1,5 +1,6 @@
 const { app } = require('@azure/functions');
 const { tableClient, principalFrom, isPro } = require('../lib/common');
+const { sendEmail, ADMIN_NOTIFY_EMAIL } = require('../lib/notify');
 
 const MAX_SUBJECT = 200;
 const MAX_MESSAGE = 4000;
@@ -45,6 +46,8 @@ app.http('assist', {
             message: entity.message,
             status: entity.status,
             createdAt: entity.createdAt,
+            answer: entity.answer || '',
+            answeredAt: entity.answeredAt || '',
           });
         }
       } catch (err) {
@@ -102,10 +105,25 @@ app.http('assist', {
       context.error('Failed to store assist request', err);
       return { status: 500, jsonBody: { error: 'Failed to submit request' } };
     }
+
+    // Best-effort: alert the team that a question came in. Never blocks or
+    // fails the user's submission.
+    const adminEmail = ADMIN_NOTIFY_EMAIL();
+    if (adminEmail) {
+      sendEmail(
+        {
+          to: adminEmail,
+          subject: `New Groundwork advisor question: ${subject}`,
+          text: `From: ${principal.userDetails || principal.userId}\n\nSubject: ${subject}\n\n${message}\n\nReply in the Groundwork admin view.`,
+        },
+        context,
+      ).catch(() => {});
+    }
+
     return {
       status: 201,
       jsonBody: {
-        request: { id: rowKey, subject, message, status: 'open', createdAt },
+        request: { id: rowKey, subject, message, status: 'open', createdAt, answer: '', answeredAt: '' },
       },
     };
   },

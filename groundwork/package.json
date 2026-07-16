@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
-    "test": "vitest run"
+    "test": "vitest run && node api/test/verify-signature.test.mjs"
   },
   "dependencies": {
     "react": "^18.3.1",

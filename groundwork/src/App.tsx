@@ -5,10 +5,20 @@ import { Dashboard } from './components/Dashboard';
 import { Help } from './components/Help';
 import { Report } from './components/Report';
 import { Advisor } from './components/Advisor';
+import { Admin } from './components/Admin';
 import { Privacy, Terms } from './components/Legal';
 import { useStore } from './state/store';
 
-type View = 'landing' | 'wizard' | 'dashboard' | 'help' | 'report' | 'advisor' | 'terms' | 'privacy';
+type View =
+  | 'landing'
+  | 'wizard'
+  | 'dashboard'
+  | 'help'
+  | 'report'
+  | 'advisor'
+  | 'admin'
+  | 'terms'
+  | 'privacy';
 
 /** Views that are directly linkable via the URL hash (#/terms etc.). */
 const HASH_VIEWS: Record<string, View> = {
@@ -89,6 +99,7 @@ export default function App() {
             onHelp={() => setView('help')}
             onReport={() => setView('report')}
             onAdvisor={() => setView('advisor')}
+            onAdmin={() => setView('admin')}
           />
         ) : (
           <Landing
@@ -105,6 +116,7 @@ export default function App() {
       )}
       {view === 'report' && <Report store={store} onBack={goHome} />}
       {view === 'advisor' && <Advisor store={store} onBack={goHome} />}
+      {view === 'admin' && <Admin store={store} onBack={goHome} />}
       {view === 'terms' && <Terms onBack={goHome} />}
       {view === 'privacy' && <Privacy onBack={goHome} />}
     </div>

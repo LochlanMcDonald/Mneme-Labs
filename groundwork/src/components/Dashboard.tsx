@@ -18,6 +18,7 @@ interface Props {
   onHelp: () => void;
   onReport: () => void;
   onAdvisor: () => void;
+  onAdmin: () => void;
 }
 
 const STATUS_LABELS: Record<ItemStatus, string> = {
@@ -145,7 +146,7 @@ function ItemCard({
   );
 }
 
-export function Dashboard({ store, onEditProfile, onHelp, onReport, onAdvisor }: Props) {
+export function Dashboard({ store, onEditProfile, onHelp, onReport, onAdvisor, onAdmin }: Props) {
   const { plan, profile, items } = store;
   const [expanded, setExpanded] = useState<string | null>(null);
   const [categoryFilter, setCategoryFilter] = useState<Category | 'all'>('all');
@@ -223,6 +224,11 @@ export function Dashboard({ store, onEditProfile, onHelp, onReport, onAdvisor }:
             <button className="btn" onClick={onAdvisor}>
               Ask an advisor <span className="pro-badge">PRO</span>
             </button>
+            {store.me?.admin && (
+              <button className="btn" onClick={onAdmin}>
+                Admin
+              </button>
+            )}
           </div>
           <AccountControls auth={store.auth} sync={store.sync} />
         </div>

@@ -1,4 +1,4 @@
-import { UPGRADE_URL } from '../state/pro';
+import { UPGRADE_URL, checkoutUrl } from '../state/pro';
 import { loginUrl, remoteLoginUrl, type AuthState } from '../state/auth';
 
 const PERKS = [
@@ -56,7 +56,10 @@ export function Upgrade({ auth }: { auth: AuthState }) {
           )}
         </p>
       ) : UPGRADE_URL ? (
-        <a className="btn btn-primary btn-lg" href={UPGRADE_URL}>
+        <a
+          className="btn btn-primary btn-lg"
+          href={checkoutUrl(auth.user?.userId ?? '', auth.user?.userDetails ?? '')}
+        >
           Upgrade to Pro
         </a>
       ) : (
