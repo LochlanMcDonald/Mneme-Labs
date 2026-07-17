@@ -181,4 +181,10 @@ export interface AppState {
   /** Keyed by control id. */
   items: Record<string, ItemState>;
   generatedAt: string | null;
+  /**
+   * The signed-in user id this plan belongs to, or null when it was built
+   * logged-out. Used so one account never adopts another user's leftover
+   * local plan on a shared browser.
+   */
+  ownerId?: string | null;
 }

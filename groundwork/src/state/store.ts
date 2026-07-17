@@ -13,7 +13,7 @@ import type { AppState, CompanyProfile, ItemState, ItemStatus, Plan } from '../t
 const STORAGE_KEY = 'groundwork-state-v1';
 const SAVE_DEBOUNCE_MS = 1200;
 
-const EMPTY_STATE: AppState = { profile: null, items: {}, generatedAt: null };
+const EMPTY_STATE: AppState = { profile: null, items: {}, generatedAt: null, ownerId: null };
 
 function loadLocalState(): AppState {
   try {
@@ -99,24 +99,40 @@ export function useStore(): Store {
   // Initial account load once signed in.
   useEffect(() => {
     if (auth.status !== 'signed-in') return;
+    const uid = auth.user?.userId ?? '';
     let cancelled = false;
+
+    // Immediately drop any plan belonging to a different user so it never
+    // shows, even briefly, under this account on a shared browser.
+    const local0 = loadLocalState();
+    if (local0.profile && (local0.ownerId ?? null) !== null && local0.ownerId !== uid) {
+      setState({ ...EMPTY_STATE, ownerId: uid });
+    }
+
     (async () => {
       try {
         const server = await loadServerState();
         if (cancelled) return;
         const local = loadLocalState();
-        const resolution = resolveInitialState(local, server);
+        const resolution = resolveInitialState(local, server, uid);
         if (resolution.action === 'use-server') {
-          lastSyncedRef.current = JSON.stringify(resolution.state);
-          setState(resolution.state);
+          const owned = { ...resolution.state, ownerId: uid };
+          lastSyncedRef.current = JSON.stringify(owned);
+          setState(owned);
           setSync('saved');
         } else if (resolution.action === 'push-local') {
-          await saveServerState(local);
+          const owned = { ...local, ownerId: uid };
+          await saveServerState(owned);
           if (cancelled) return;
-          lastSyncedRef.current = JSON.stringify(local);
+          lastSyncedRef.current = JSON.stringify(owned);
+          setState(owned);
           setSync('saved');
         } else {
-          lastSyncedRef.current = JSON.stringify(EMPTY_STATE);
+          // reset: this account has no plan and there is nothing of this
+          // user's to adopt. Start empty, owned by this user.
+          const owned = { ...EMPTY_STATE, ownerId: uid };
+          lastSyncedRef.current = JSON.stringify(owned);
+          setState(owned);
         }
         serverReadyRef.current = true;
       } catch {
@@ -126,7 +142,8 @@ export function useStore(): Store {
     return () => {
       cancelled = true;
     };
-  }, [auth.status]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [auth.status, auth.user?.userId]);
 
   // Debounced save of changes while signed in.
   useEffect(() => {
@@ -160,7 +177,7 @@ export function useStore(): Store {
         if (id in items && existing.status !== 'todo') items[id] = existing;
         else if (id in items && existing.note) items[id] = { ...items[id], note: existing.note };
       }
-      return { profile, items, generatedAt: newPlan.generatedAt };
+      return { profile, items, generatedAt: newPlan.generatedAt, ownerId: prev.ownerId ?? null };
     });
   }, []);
 
@@ -185,7 +202,9 @@ export function useStore(): Store {
   }, []);
 
   const reset = useCallback(() => {
-    setState(EMPTY_STATE);
+    // Keep ownership so a signed-in user's cleared plan stays theirs (and
+    // the empty state syncs to their account rather than looking unowned).
+    setState((prev) => ({ ...EMPTY_STATE, ownerId: prev.ownerId ?? null }));
   }, []);
 
   return {
