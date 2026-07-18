@@ -1,0 +1,98 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Inter', -apple-system, 'Segoe UI', Roboto, sans-serif; background: #333; -webkit-font-smoothing: antialiased; }
+  .board {
+    position: relative; overflow: hidden; color: #e8edf6; margin-bottom: 40px;
+    background:
+      radial-gradient(900px 600px at 82% -10%, rgba(79,140,255,0.22), transparent 60%),
+      radial-gradient(700px 500px at -8% 108%, rgba(62,207,142,0.13), transparent 60%),
+      #0c111b;
+  }
+  .brand { display: flex; align-items: center; gap: 14px; font-weight: 800; }
+  .brand .mark { color: #4f8cff; }
+  h1 { letter-spacing: -0.03em; line-height: 1.08; font-weight: 800; }
+  .sub { color: #9aa8c0; line-height: 1.45; }
+  .free { display: inline-block; background: rgba(62,207,142,0.14); color: #3ecf8e; border: 1.5px solid rgba(62,207,142,0.4); border-radius: 999px; font-weight: 800; }
+  .chip { display:inline-block; background: rgba(79,140,255,0.16); color:#7fa8ff; border:1.5px solid rgba(79,140,255,0.45); border-radius:999px; font-weight:700; }
+  .handle { color: #7fa8ff; font-weight: 700; }
+
+  /* ── Avatar 1080×1080. IG crops to a circle, so the mark is centered
+     and text-free to survive the crop. ── */
+  #avatar { width: 1080px; height: 1080px; display: flex; align-items: center; justify-content: center; }
+  #avatar .mark { font-size: 620px; color: #4f8cff; line-height: 1; filter: drop-shadow(0 24px 70px rgba(79,140,255,0.45)); }
+
+  /* ── Post: hook 1080×1080 ── */
+  #hook { width: 1080px; height: 1080px; padding: 96px 90px; display: flex; flex-direction: column; }
+  #hook .brand { font-size: 34px; margin-bottom: 60px; }
+  #hook .brand .mark { font-size: 40px; }
+  #hook h1 { font-size: 88px; margin-bottom: 34px; }
+  #hook .sub { font-size: 34px; max-width: 820px; }
+  #hook .spacer { flex: 1; }
+  #hook .free { font-size: 30px; padding: 16px 34px; }
+
+  /* ── Post: questionnaire moment 1080×1080 ── */
+  #moment { width: 1080px; height: 1080px; padding: 96px 90px; display: flex; flex-direction: column; }
+  #moment .brand { font-size: 30px; margin-bottom: 50px; color: #9aa8c0; }
+  #moment .brand .mark { color:#4f8cff; }
+  #moment .eyebrow { color: #f0b429; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; font-size: 26px; margin-bottom: 22px; }
+  #moment h1 { font-size: 78px; margin-bottom: 30px; }
+  #moment .sub { font-size: 33px; max-width: 840px; }
+  #moment .spacer { flex: 1; }
+  #moment .cta { font-size: 30px; color: #3ecf8e; font-weight: 700; }
+
+  /* ── Post: tip card 1080×1080 ── */
+  #tip { width: 1080px; height: 1080px; padding: 96px 90px; display: flex; flex-direction: column; }
+  #tip .brand { font-size: 30px; margin-bottom: 40px; color:#9aa8c0; }
+  #tip .brand .mark { color:#4f8cff; }
+  #tip .eyebrow { color:#7fa8ff; font-weight:800; letter-spacing:0.06em; text-transform:uppercase; font-size:26px; margin-bottom: 26px; }
+  #tip h1 { font-size: 72px; margin-bottom: 40px; }
+  #tip .rows { display:flex; flex-direction:column; gap: 22px; }
+  #tip .row { display:flex; align-items:center; gap: 22px; font-size: 34px; color:#e8edf6; }
+  #tip .row .dot { width: 40px; height: 40px; border-radius: 10px; background: rgba(62,207,142,0.18); color:#3ecf8e; display:flex; align-items:center; justify-content:center; font-weight:900; flex-shrink:0; }
+  #tip .spacer { flex:1; }
+  #tip .handle { font-size: 30px; }
+</style>
+</head>
+<body>
+
+<div class="board" id="avatar">
+  <div class="mark">⬢</div>
+</div>
+
+<div class="board" id="hook">
+  <div class="brand"><span class="mark">⬢</span> Groundwork</div>
+  <h1>Your startup's security plan, in 5 minutes.</h1>
+  <div class="sub">Answer a few questions. Get a tailored, prioritized roadmap: what to do this week, this month, this quarter.</div>
+  <div class="spacer"></div>
+  <div><span class="free">Free · No expertise needed</span></div>
+</div>
+
+<div class="board" id="moment">
+  <div class="brand"><span class="mark">⬢</span> Groundwork</div>
+  <div class="eyebrow">The moment it gets real</div>
+  <h1>A customer just sent you a security questionnaire.</h1>
+  <div class="sub">Don't panic. Groundwork builds your plan and gives you the answers, free.</div>
+  <div class="spacer"></div>
+  <div class="cta">groundwork-security.com</div>
+</div>
+
+<div class="board" id="tip">
+  <div class="brand"><span class="mark">⬢</span> Groundwork</div>
+  <div class="eyebrow">Do this week</div>
+  <h1>4 things that stop most startup breaches</h1>
+  <div class="rows">
+    <div class="row"><span class="dot">✓</span> Turn on MFA everywhere</div>
+    <div class="row"><span class="dot">✓</span> Roll out a password manager</div>
+    <div class="row"><span class="dot">✓</span> Encrypt every laptop</div>
+    <div class="row"><span class="dot">✓</span> Set up automatic, tested backups</div>
+  </div>
+  <div class="spacer"></div>
+  <div class="handle">Get your full plan free · <span class="handle">groundwork-security.com</span></div>
+</div>
+
+</body>
+</html>

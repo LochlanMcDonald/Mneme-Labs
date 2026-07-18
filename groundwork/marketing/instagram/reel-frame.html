@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Inter', -apple-system, 'Segoe UI', Roboto, sans-serif; -webkit-font-smoothing: antialiased; }
+  /* 9:16 background frame the demo video is overlaid onto. The middle band
+     (between header and footer) is where the 1080x-wide video sits. */
+  #frame {
+    width: 1080px; height: 1920px; color: #e8edf6; display: flex; flex-direction: column;
+    background:
+      radial-gradient(900px 700px at 80% 4%, rgba(79,140,255,0.24), transparent 60%),
+      radial-gradient(800px 700px at 10% 98%, rgba(62,207,142,0.14), transparent 60%),
+      #0c111b;
+  }
+  .header { padding: 90px 80px 0; text-align: center; }
+  .brand { display: inline-flex; align-items: center; gap: 14px; font-weight: 800; font-size: 40px; margin-bottom: 30px; }
+  .brand .mark { color: #4f8cff; font-size: 46px; }
+  .header h1 { font-size: 66px; line-height: 1.1; letter-spacing: -0.02em; font-weight: 800; }
+  /* Reserve the video band: header ~470px, video 1080x608 centered, footer rest */
+  .videoband { height: 700px; }
+  .footer { flex: 1; padding: 0 80px 120px; text-align: center; display: flex; flex-direction: column; justify-content: center; gap: 26px; }
+  .footer .cta { display: inline-block; background: #4f8cff; color: #fff; font-weight: 800; font-size: 44px; padding: 26px 0; border-radius: 20px; }
+  .footer .url { color: #9aa8c0; font-size: 40px; font-weight: 700; }
+  .footer .free { color: #3ecf8e; font-weight: 800; font-size: 34px; }
+</style>
+</head>
+<body>
+  <div id="frame">
+    <div class="header">
+      <div class="brand"><span class="mark">⬢</span> Groundwork</div>
+      <h1>Your startup's security plan,<br />built in 5 minutes.</h1>
+    </div>
+    <div class="videoband"></div>
+    <div class="footer">
+      <div class="free">Free · No security expertise needed</div>
+      <div class="cta">Get your free plan</div>
+      <div class="url">groundwork-security.com</div>
+    </div>
+  </div>
+</body>
+</html>
