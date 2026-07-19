@@ -42,7 +42,7 @@ export function Landing({ onStart, onHelp, onTerms, onPrivacy, auth, sync }: Pro
         </h1>
         <p className="lede">
           Answer a few questions about your company and get a prioritized,
-          plain-language security roadmap: what to do this week, this month,
+          plain language security roadmap: what to do this week, this month,
           this quarter, and why.
         </p>
         <button className="btn btn-primary btn-lg" onClick={onStart}>
