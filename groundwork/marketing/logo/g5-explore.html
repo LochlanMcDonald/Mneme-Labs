@@ -1,0 +1,212 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Inter', -apple-system, 'Segoe UI', Roboto, sans-serif; background: #333; -webkit-font-smoothing: antialiased; }
+  svg { display:block; }
+  #sheet {
+    width: 1600px; padding: 74px; color: #e8edf6;
+    background:
+      radial-gradient(1100px 700px at 85% -6%, rgba(79,140,255,0.16), transparent 60%),
+      radial-gradient(900px 600px at -6% 106%, rgba(62,207,142,0.10), transparent 60%),
+      #0c111b;
+  }
+  .sheet-head { display:flex; align-items:baseline; gap:20px; margin-bottom: 12px; }
+  .sheet-head h2 { font-size: 40px; font-weight: 800; letter-spacing: -0.02em; }
+  .sheet-head span { color:#9aa8c0; font-size: 24px; }
+  .sub { color:#9aa8c0; font-size: 22px; margin-bottom: 40px; }
+
+  .section { color:#7fa8ff; font-weight:800; text-transform:uppercase; letter-spacing:0.08em; font-size:22px; margin: 40px 0 24px; }
+
+  .g4 { display:grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+  .g3 { display:grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .tile {
+    background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 22px; padding: 30px; display:flex; flex-direction:column; align-items:center; gap: 18px;
+  }
+  .tile.onlight { background:#f4f7fc; border-color: transparent; }
+  .tile svg.mark { width: 118px; height: 118px; }
+  .tile .name { font-weight: 800; font-size: 20px; }
+  .tile.onlight .name { color:#31415c; }
+  .tile .note { color:#9aa8c0; font-size: 16px; text-align:center; line-height:1.35; }
+  .tile.onlight .note { color:#5a6b86; }
+
+  .favrow { margin-top: 44px; display:flex; align-items:flex-end; gap: 30px; }
+  .favrow .fav { display:flex; flex-direction:column; align-items:center; gap:12px; }
+  .favrow .fav .chip { background:#0c111b; border:1px solid rgba(255,255,255,0.1); border-radius: 22%; display:flex; align-items:center; justify-content:center; }
+  .favrow .fav .cap { color:#9aa8c0; font-size:15px; font-weight:600; }
+  .favnote { color:#9aa8c0; font-size:19px; max-width:520px; line-height:1.5; padding-bottom:6px; }
+</style>
+</head>
+<body>
+<div id="sheet">
+  <div class="sheet-head"><h2>Groundwork · G5 Ascend</h2><span>color &amp; form study</span></div>
+  <div class="sub">The chosen mark (stacked chevrons rising to a point), explored across eight colorways and six form treatments. Tell me the number you want and I will build the full set from it.</div>
+
+  <div class="section">Colorways</div>
+  <div class="g4">
+
+    <div class="tile">
+      <svg class="mark" viewBox="0 0 100 100">
+        <path d="M20 70 L50 55 L80 70" fill="none" stroke="#4f8cff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M28 56 L50 45 L72 56" fill="none" stroke="#7fa8ff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M36 43 L50 36 L64 43" fill="none" stroke="#3ecf8e" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <div class="name">1 · Signal</div>
+      <div class="note">The current brand: blue base, green peak</div>
+    </div>
+
+    <div class="tile">
+      <svg class="mark" viewBox="0 0 100 100">
+        <path d="M20 70 L50 55 L80 70" fill="none" stroke="#2f6bd6" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M28 56 L50 45 L72 56" fill="none" stroke="#4f8cff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M36 43 L50 36 L64 43" fill="none" stroke="#7fa8ff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <div class="name">2 · Mono Blue</div>
+      <div class="note">Three shades of the brand blue</div>
+    </div>
+
+    <div class="tile">
+      <svg class="mark" viewBox="0 0 100 100">
+        <defs><linearGradient id="grad3" x1="0" y1="70" x2="0" y2="36" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#4f8cff"/><stop offset="1" stop-color="#3ecf8e"/></linearGradient></defs>
+        <path d="M20 70 L50 55 L80 70" fill="none" stroke="url(#grad3)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M28 56 L50 45 L72 56" fill="none" stroke="url(#grad3)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M36 43 L50 36 L64 43" fill="none" stroke="url(#grad3)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <div class="name">3 · Ascent Gradient</div>
+      <div class="note">Smooth blue to green climb</div>
+    </div>
+
+    <div class="tile">
+      <svg class="mark" viewBox="0 0 100 100">
+        <path d="M20 70 L50 55 L80 70" fill="none" stroke="#2f6bd6" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M28 56 L50 45 L72 56" fill="none" stroke="#20b0b8" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M36 43 L50 36 L64 43" fill="none" stroke="#3ecf8e" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <div class="name">4 · Emerald</div>
+      <div class="note">Blue into teal into green</div>
+    </div>
+
+    <div class="tile">
+      <svg class="mark" viewBox="0 0 100 100">
+        <path d="M20 70 L50 55 L80 70" fill="none" stroke="#4f8cff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M28 56 L50 45 L72 56" fill="none" stroke="#4f8cff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M36 43 L50 36 L64 43" fill="none" stroke="#4f8cff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <div class="name">5 · Solid Blue</div>
+      <div class="note">One color, maximum simplicity</div>
+    </div>
+
+    <div class="tile">
+      <svg class="mark" viewBox="0 0 100 100">
+        <path d="M20 70 L50 55 L80 70" fill="none" stroke="#4f8cff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M28 56 L50 45 L72 56" fill="none" stroke="#7fa8ff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M36 43 L50 36 L64 43" fill="none" stroke="#f0b429" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <div class="name">6 · Sunrise</div>
+      <div class="note">Blue base, warm amber peak</div>
+    </div>
+
+    <div class="tile">
+      <svg class="mark" viewBox="0 0 100 100">
+        <path d="M20 70 L50 55 L80 70" fill="none" stroke="#6a4cff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M28 56 L50 45 L72 56" fill="none" stroke="#8f79ff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M36 43 L50 36 L64 43" fill="none" stroke="#4f8cff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <div class="name">7 · Violet</div>
+      <div class="note">A bolder, alt-brand palette</div>
+    </div>
+
+    <div class="tile onlight">
+      <svg class="mark" viewBox="0 0 100 100">
+        <path d="M20 70 L50 55 L80 70" fill="none" stroke="#1f57c9" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M28 56 L50 45 L72 56" fill="none" stroke="#3a7bf0" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M36 43 L50 36 L64 43" fill="none" stroke="#1aa06a" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <div class="name">8 · Signal on light</div>
+      <div class="note">How colorway 1 sits on white</div>
+    </div>
+
+  </div>
+
+  <div class="section">Form variations <span style="color:#9aa8c0;text-transform:none;letter-spacing:0;font-weight:600;">(shown in the Signal colorway)</span></div>
+  <div class="g3">
+
+    <div class="tile">
+      <svg class="mark" viewBox="0 0 100 100">
+        <path d="M20 70 L50 55 L80 70" fill="none" stroke="#4f8cff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M28 56 L50 45 L72 56" fill="none" stroke="#7fa8ff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M36 43 L50 36 L64 43" fill="none" stroke="#3ecf8e" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <div class="name">A · Stroke</div>
+      <div class="note">The original: rounded open chevrons</div>
+    </div>
+
+    <div class="tile">
+      <svg class="mark" viewBox="0 0 100 100">
+        <path d="M20 70 L50 55 L80 70 L80 61 L50 46 L20 61 Z" fill="#4f8cff"/>
+        <path d="M28 56 L50 45 L72 56 L72 47 L50 36 L28 47 Z" fill="#7fa8ff"/>
+        <path d="M36 43 L50 36 L64 43 L64 35 L50 28 L36 35 Z" fill="#3ecf8e"/>
+      </svg>
+      <div class="name">B · Solid</div>
+      <div class="note">Filled bands, heavier and bolder</div>
+    </div>
+
+    <div class="tile">
+      <svg class="mark" viewBox="0 0 100 100">
+        <rect x="14" y="14" width="72" height="72" rx="18" fill="#0c111b" stroke="rgba(255,255,255,0.08)" stroke-width="1.5"/>
+        <path d="M28 68 L50 56 L72 68" fill="none" stroke="#4f8cff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M34 57 L50 48 L66 57" fill="none" stroke="#7fa8ff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M40 46 L50 40 L60 46" fill="none" stroke="#3ecf8e" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <div class="name">C · App badge</div>
+      <div class="note">Inside a rounded-square icon</div>
+    </div>
+
+    <div class="tile">
+      <svg class="mark" viewBox="0 0 100 100">
+        <defs><linearGradient id="cg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6ea0ff"/><stop offset="1" stop-color="#4f8cff"/></linearGradient></defs>
+        <circle cx="50" cy="50" r="42" fill="url(#cg)"/>
+        <path d="M30 66 L50 54 L70 66" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M36 55 L50 46 L64 55" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/>
+        <path d="M42 45 L50 40 L58 45" fill="none" stroke="#eafff5" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <div class="name">D · Circle badge</div>
+      <div class="note">Reversed on a blue disc, avatar-ready</div>
+    </div>
+
+    <div class="tile">
+      <svg class="mark" viewBox="0 0 100 100">
+        <path d="M20 66 L50 51 L80 66" fill="none" stroke="#4f8cff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M28 52 L50 41 L72 52" fill="none" stroke="#7fa8ff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M36 39 L50 32 L64 39" fill="none" stroke="#3ecf8e" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+        <rect x="20" y="76" width="60" height="7" rx="3.5" fill="#7fa8ff" opacity="0.5"/>
+      </svg>
+      <div class="name">E · On ground</div>
+      <div class="note">Chevrons rising off a baseline</div>
+    </div>
+
+    <div class="tile">
+      <svg class="mark" viewBox="0 0 100 100">
+        <path d="M20 70 L50 55 L80 70 L80 61 L50 46 L20 61 Z" fill="#4f8cff"/>
+        <path d="M28 56 L50 45 L72 56" fill="none" stroke="#7fa8ff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M36 43 L50 36 L64 43" fill="none" stroke="#3ecf8e" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <div class="name">F · Duotone</div>
+      <div class="note">Solid base, open upper chevrons</div>
+    </div>
+
+  </div>
+
+  <div class="favrow">
+    <div class="fav"><div class="chip" style="width:64px;height:64px;"><svg width="46" height="46" viewBox="0 0 100 100"><path d="M20 70 L50 55 L80 70" fill="none" stroke="#4f8cff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/><path d="M28 56 L50 45 L72 56" fill="none" stroke="#7fa8ff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/><path d="M36 43 L50 36 L64 43" fill="none" stroke="#3ecf8e" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="cap">Signal · 32</div></div>
+    <div class="fav"><div class="chip" style="width:64px;height:64px;"><svg width="46" height="46" viewBox="0 0 100 100"><path d="M20 70 L50 55 L80 70 L80 61 L50 46 L20 61 Z" fill="#4f8cff"/><path d="M28 56 L50 45 L72 56 L72 47 L50 36 L28 47 Z" fill="#7fa8ff"/><path d="M36 43 L50 36 L64 43 L64 35 L50 28 L36 35 Z" fill="#3ecf8e"/></svg></div><div class="cap">Solid · 32</div></div>
+    <div class="fav"><div class="chip" style="width:64px;height:64px;overflow:hidden;"><svg width="64" height="64" viewBox="0 0 100 100"><defs><linearGradient id="cgf" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6ea0ff"/><stop offset="1" stop-color="#4f8cff"/></linearGradient></defs><circle cx="50" cy="50" r="50" fill="url(#cgf)"/><path d="M30 66 L50 54 L70 66" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><path d="M36 55 L50 46 L64 55" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/><path d="M42 45 L50 40 L58 45" fill="none" stroke="#eafff5" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="cap">Circle · 32</div></div>
+    <div class="favnote">Favicon check. The open stroke stays clean; the solid bands read boldest at tiny sizes; the circle badge is the best social avatar.</div>
+  </div>
+
+</div>
+</body>
+</html>
