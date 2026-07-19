@@ -1,12 +1,14 @@
 :root {
-  --bg: #0c111b;
-  --surface: #131a28;
-  --surface-2: #1a2335;
-  --border: #263248;
+  --bg: #090d16;
+  --surface: #121a2b;
+  --surface-2: #18223a;
+  --border: #26324a;
   --text: #e8edf6;
   --text-dim: #9aa8c0;
   --accent: #4f8cff;
-  --accent-soft: rgba(79, 140, 255, 0.14);
+  --accent-soft: rgba(79, 140, 255, 0.16);
+  --cyan: #22d3ee;
+  --violet: #a855f7;
   --green: #3ecf8e;
   --amber: #f0b429;
   --red: #ef6461;
@@ -27,7 +29,11 @@ body {
     'Segoe UI',
     Roboto,
     sans-serif;
-  background: var(--bg);
+  background:
+    radial-gradient(900px 620px at 88% -6%, rgba(168, 85, 247, 0.1), transparent 60%),
+    radial-gradient(820px 640px at -8% 104%, rgba(34, 211, 238, 0.09), transparent 60%),
+    var(--bg);
+  background-attachment: fixed;
   color: var(--text);
   line-height: 1.55;
   -webkit-font-smoothing: antialiased;
@@ -70,13 +76,15 @@ h3 {
   transform: translateY(1px);
 }
 .btn-primary {
-  background: var(--accent);
-  border-color: var(--accent);
+  background: linear-gradient(135deg, #4f8cff, #7b5cff);
+  border-color: transparent;
   color: #fff;
+  box-shadow: 0 6px 20px rgba(79, 140, 255, 0.28);
 }
 .btn-primary:hover {
-  background: #3d7bf0;
-  border-color: #3d7bf0;
+  background: linear-gradient(135deg, #3d7bf0, #6a49f0);
+  border-color: transparent;
+  box-shadow: 0 8px 26px rgba(123, 92, 255, 0.4);
 }
 .btn-lg {
   font-size: 16px;
@@ -109,8 +117,10 @@ h3 {
   color: var(--text-dim);
 }
 .brand-mark {
-  color: var(--accent);
-  font-size: 1.15em;
+  width: 1.5em;
+  height: 1.5em;
+  flex-shrink: 0;
+  display: block;
 }
 
 /* ───────── Landing ───────── */
@@ -455,9 +465,17 @@ h3 {
   padding-bottom: 6px;
 }
 .report-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   font-weight: 700;
   color: #3d6ff0;
   font-size: 14px;
+}
+.report-brand-mark {
+  width: 1.5em;
+  height: 1.5em;
+  flex-shrink: 0;
 }
 .report-company {
   font-size: 19px;

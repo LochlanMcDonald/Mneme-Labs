@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="512" height="512">
+  <!-- top course (cyan) -->
+  <polygon points="44,22 62,31 44,40 26,31" fill="#7df3ff"/>
+  <polygon points="26,31 44,40 44,47 26,38" fill="#22d3ee"/>
+  <polygon points="62,31 44,40 44,47 62,38" fill="#0e7490"/>
+  <!-- middle course (blue) -->
+  <polygon points="56,38 74,47 56,56 38,47" fill="#9ad4ff"/>
+  <polygon points="38,47 56,56 56,63 38,54" fill="#4f8cff"/>
+  <polygon points="74,47 56,56 56,63 74,54" fill="#3b5bdb"/>
+  <!-- base course (violet) -->
+  <polygon points="44,54 62,63 44,72 26,63" fill="#d3b0ff"/>
+  <polygon points="26,63 44,72 44,79 26,70" fill="#a855f7"/>
+  <polygon points="62,63 44,72 44,79 62,70" fill="#7c3aed"/>
+</svg>

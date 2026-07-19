@@ -18,6 +18,14 @@ for (const [id, out] of [
   ['hook', 'post-hook-1080.png'],
   ['moment', 'post-questionnaire-1080.png'],
   ['tip', 'post-tips-1080.png'],
+  ['tip-cloud', 'post-cloud-1080.png'],
+  ['tip-backups', 'post-backups-1080.png'],
+  ['tip-bec', 'post-bec-1080.png'],
+  ['tip-github', 'post-github-1080.png'],
+  ['tip-incident', 'post-incident-1080.png'],
+  ['tip-vendors', 'post-vendors-1080.png'],
+  ['tip-secrets', 'post-secrets-1080.png'],
+  ['tip-soc2', 'post-soc2-1080.png'],
 ]) {
   await page.locator(`#${id}`).screenshot({ path: path.join(here, out) });
   console.log('wrote', out);

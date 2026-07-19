@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="512" height="512">
+  <!-- single-hue blue 3D, for light backgrounds where the cyber palette washes out -->
+  <polygon points="44,22 62,31 44,40 26,31" fill="#6ea0ff"/>
+  <polygon points="26,31 44,40 44,47 26,38" fill="#4f8cff"/>
+  <polygon points="62,31 44,40 44,47 62,38" fill="#2f4fb0"/>
+  <polygon points="56,38 74,47 56,56 38,47" fill="#6ea0ff"/>
+  <polygon points="38,47 56,56 56,63 38,54" fill="#4f8cff"/>
+  <polygon points="74,47 56,56 56,63 74,54" fill="#2f4fb0"/>
+  <polygon points="44,54 62,63 44,72 26,63" fill="#6ea0ff"/>
+  <polygon points="26,63 44,72 44,79 26,70" fill="#4f8cff"/>
+  <polygon points="62,63 44,72 44,79 62,70" fill="#2f4fb0"/>
+</svg>

@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import type { Store } from '../state/store';
 import { planStats } from '../engine/plan';
+import { BrandMark } from './BrandMark';
 import { Upgrade } from './Upgrade';
 import type { Category, ItemStatus } from '../types';
 import {
@@ -80,7 +81,7 @@ export function Report({ store, onBack }: Props) {
 
       <div className="report">
         <header className="report-header">
-          <div className="report-brand">⬢ Groundwork</div>
+          <div className="report-brand"><BrandMark className="report-brand-mark" variant="blue" /> Groundwork</div>
           <h1>Security Readiness Report</h1>
           <div className="report-company">{name}</div>
           {profile.description.trim() && (

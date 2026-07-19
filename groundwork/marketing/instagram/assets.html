@@ -22,8 +22,12 @@
 
   /* ── Avatar 1080×1080. IG crops to a circle, so the mark is centered
      and text-free to survive the crop. ── */
-  #avatar { width: 1080px; height: 1080px; display: flex; align-items: center; justify-content: center; }
-  #avatar .mark { font-size: 620px; color: #4f8cff; line-height: 1; filter: drop-shadow(0 24px 70px rgba(79,140,255,0.45)); }
+  #avatar { width: 1080px; height: 1080px; display: flex; align-items: center; justify-content: center;
+    background:
+      radial-gradient(760px 620px at 78% -8%, rgba(168,85,247,0.28), transparent 60%),
+      radial-gradient(680px 560px at 12% 110%, rgba(34,211,238,0.20), transparent 60%),
+      #05070f; }
+  #avatar svg { width: 600px; height: 600px; filter: drop-shadow(0 30px 80px rgba(34,211,238,0.35)) drop-shadow(0 10px 40px rgba(168,85,247,0.30)); }
 
   /* ── Post: hook 1080×1080 ── */
   #hook { width: 1080px; height: 1080px; padding: 96px 90px; display: flex; flex-direction: column; }
@@ -44,23 +48,33 @@
   #moment .spacer { flex: 1; }
   #moment .cta { font-size: 30px; color: #3ecf8e; font-weight: 700; }
 
-  /* ── Post: tip card 1080×1080 ── */
-  #tip { width: 1080px; height: 1080px; padding: 96px 90px; display: flex; flex-direction: column; }
-  #tip .brand { font-size: 30px; margin-bottom: 40px; color:#9aa8c0; }
-  #tip .brand .mark { color:#4f8cff; }
-  #tip .eyebrow { color:#7fa8ff; font-weight:800; letter-spacing:0.06em; text-transform:uppercase; font-size:26px; margin-bottom: 26px; }
-  #tip h1 { font-size: 72px; margin-bottom: 40px; }
-  #tip .rows { display:flex; flex-direction:column; gap: 22px; }
-  #tip .row { display:flex; align-items:center; gap: 22px; font-size: 34px; color:#e8edf6; }
-  #tip .row .dot { width: 40px; height: 40px; border-radius: 10px; background: rgba(62,207,142,0.18); color:#3ecf8e; display:flex; align-items:center; justify-content:center; font-weight:900; flex-shrink:0; }
-  #tip .spacer { flex:1; }
-  #tip .handle { font-size: 30px; }
+  /* ── Post: tip card 1080×1080 (shared .tip layout) ── */
+  .tip { width: 1080px; height: 1080px; padding: 96px 90px; display: flex; flex-direction: column; }
+  .tip .brand { font-size: 30px; margin-bottom: 40px; color:#9aa8c0; }
+  .tip .brand .mark { color:#4f8cff; }
+  .tip .eyebrow { color:#7fa8ff; font-weight:800; letter-spacing:0.06em; text-transform:uppercase; font-size:26px; margin-bottom: 26px; }
+  .tip h1 { font-size: 72px; margin-bottom: 40px; }
+  .tip .rows { display:flex; flex-direction:column; gap: 22px; }
+  .tip .row { display:flex; align-items:center; gap: 22px; font-size: 34px; color:#e8edf6; }
+  .tip .row .dot { width: 40px; height: 40px; border-radius: 10px; background: rgba(62,207,142,0.18); color:#3ecf8e; display:flex; align-items:center; justify-content:center; font-weight:900; flex-shrink:0; }
+  .tip .spacer { flex:1; }
+  .tip .handle { font-size: 30px; }
 </style>
 </head>
 <body>
 
 <div class="board" id="avatar">
-  <div class="mark">⬢</div>
+  <svg viewBox="0 0 100 100">
+    <polygon points="44,22 62,31 44,40 26,31" fill="#7df3ff"/>
+    <polygon points="26,31 44,40 44,47 26,38" fill="#22d3ee"/>
+    <polygon points="62,31 44,40 44,47 62,38" fill="#0e7490"/>
+    <polygon points="56,38 74,47 56,56 38,47" fill="#9ad4ff"/>
+    <polygon points="38,47 56,56 56,63 38,54" fill="#4f8cff"/>
+    <polygon points="74,47 56,56 56,63 74,54" fill="#3b5bdb"/>
+    <polygon points="44,54 62,63 44,72 26,63" fill="#d3b0ff"/>
+    <polygon points="26,63 44,72 44,79 26,70" fill="#a855f7"/>
+    <polygon points="62,63 44,72 44,79 62,70" fill="#7c3aed"/>
+  </svg>
 </div>
 
 <div class="board" id="hook">
@@ -80,7 +94,7 @@
   <div class="cta">groundwork-security.com</div>
 </div>
 
-<div class="board" id="tip">
+<div class="board tip" id="tip">
   <div class="brand"><span class="mark">⬢</span> Groundwork</div>
   <div class="eyebrow">Do this week</div>
   <h1>4 things that stop most startup breaches</h1>
@@ -89,6 +103,118 @@
     <div class="row"><span class="dot">✓</span> Roll out a password manager</div>
     <div class="row"><span class="dot">✓</span> Encrypt every laptop</div>
     <div class="row"><span class="dot">✓</span> Set up automatic, tested backups</div>
+  </div>
+  <div class="spacer"></div>
+  <div class="handle">Get your full plan free · <span class="handle">groundwork-security.com</span></div>
+</div>
+
+<div class="board tip" id="tip-cloud">
+  <div class="brand"><span class="mark">⬢</span> Groundwork</div>
+  <div class="eyebrow">Cloud security</div>
+  <h1>Stop one leaked key from ending your startup</h1>
+  <div class="rows">
+    <div class="row"><span class="dot">✓</span> Add hardware-key MFA to your root account</div>
+    <div class="row"><span class="dot">✓</span> Delete root API keys entirely</div>
+    <div class="row"><span class="dot">✓</span> Give people SSO roles, not access keys</div>
+    <div class="row"><span class="dot">✓</span> Review IAM users and keys quarterly</div>
+  </div>
+  <div class="spacer"></div>
+  <div class="handle">Get your full plan free · <span class="handle">groundwork-security.com</span></div>
+</div>
+
+<div class="board tip" id="tip-backups">
+  <div class="brand"><span class="mark">⬢</span> Groundwork</div>
+  <div class="eyebrow">Ransomware defense</div>
+  <h1>Ransomware-proof your startup in an afternoon</h1>
+  <div class="rows">
+    <div class="row"><span class="dot">✓</span> Turn on automated database backups</div>
+    <div class="row"><span class="dot">✓</span> Keep one copy in a separate account</div>
+    <div class="row"><span class="dot">✓</span> Enable storage versioning</div>
+    <div class="row"><span class="dot">✓</span> Actually restore a backup this quarter</div>
+  </div>
+  <div class="spacer"></div>
+  <div class="handle">Get your full plan free · <span class="handle">groundwork-security.com</span></div>
+</div>
+
+<div class="board tip" id="tip-bec">
+  <div class="brand"><span class="mark">⬢</span> Groundwork</div>
+  <div class="eyebrow">Protect the money</div>
+  <h1>The email scam that drains startup bank accounts</h1>
+  <div class="rows">
+    <div class="row"><span class="dot">✓</span> Verify new bank details by phone, always</div>
+    <div class="row"><span class="dot">✓</span> Require two people for big payments</div>
+    <div class="row"><span class="dot">✓</span> Turn on alerts for every account</div>
+    <div class="row"><span class="dot">✓</span> Brief whoever pays the invoices</div>
+  </div>
+  <div class="spacer"></div>
+  <div class="handle">Get your full plan free · <span class="handle">groundwork-security.com</span></div>
+</div>
+
+<div class="board tip" id="tip-github">
+  <div class="brand"><span class="mark">⬢</span> Groundwork</div>
+  <div class="eyebrow">Free wins</div>
+  <h1>4 GitHub settings every startup should turn on</h1>
+  <div class="rows">
+    <div class="row"><span class="dot">✓</span> Dependabot for vulnerable dependencies</div>
+    <div class="row"><span class="dot">✓</span> Secret scanning with push protection</div>
+    <div class="row"><span class="dot">✓</span> Branch protection on main</div>
+    <div class="row"><span class="dot">✓</span> Required reviews before merge</div>
+  </div>
+  <div class="spacer"></div>
+  <div class="handle">Get your full plan free · <span class="handle">groundwork-security.com</span></div>
+</div>
+
+<div class="board tip" id="tip-incident">
+  <div class="brand"><span class="mark">⬢</span> Groundwork</div>
+  <div class="eyebrow">Before you need it</div>
+  <h1>Write your incident plan on a calm day</h1>
+  <div class="rows">
+    <div class="row"><span class="dot">✓</span> Define what counts as an incident</div>
+    <div class="row"><span class="dot">✓</span> Name who takes charge</div>
+    <div class="row"><span class="dot">✓</span> List first moves: contain, then assess</div>
+    <div class="row"><span class="dot">✓</span> Keep a contact sheet: provider, lawyer, insurer</div>
+  </div>
+  <div class="spacer"></div>
+  <div class="handle">Get your full plan free · <span class="handle">groundwork-security.com</span></div>
+</div>
+
+<div class="board tip" id="tip-vendors">
+  <div class="brand"><span class="mark">⬢</span> Groundwork</div>
+  <div class="eyebrow">Shadow IT</div>
+  <h1>The forgotten SaaS tool leaking your data</h1>
+  <div class="rows">
+    <div class="row"><span class="dot">✓</span> List every tool from receipts and SSO logs</div>
+    <div class="row"><span class="dot">✓</span> Note what data each one touches</div>
+    <div class="row"><span class="dot">✓</span> Cancel what you no longer use</div>
+    <div class="row"><span class="dot">✓</span> Review the list every quarter</div>
+  </div>
+  <div class="spacer"></div>
+  <div class="handle">Get your full plan free · <span class="handle">groundwork-security.com</span></div>
+</div>
+
+<div class="board tip" id="tip-secrets">
+  <div class="brand"><span class="mark">⬢</span> Groundwork</div>
+  <div class="eyebrow">Developer basics</div>
+  <h1>Get your secrets out of your code</h1>
+  <div class="rows">
+    <div class="row"><span class="dot">✓</span> Move secrets to a secret manager</div>
+    <div class="row"><span class="dot">✓</span> Add .env to .gitignore</div>
+    <div class="row"><span class="dot">✓</span> Share credentials via a password manager</div>
+    <div class="row"><span class="dot">✓</span> Rotate anything ever committed</div>
+  </div>
+  <div class="spacer"></div>
+  <div class="handle">Get your full plan free · <span class="handle">groundwork-security.com</span></div>
+</div>
+
+<div class="board tip" id="tip-soc2">
+  <div class="brand"><span class="mark">⬢</span> Groundwork</div>
+  <div class="eyebrow">Enterprise ready</div>
+  <h1>Closing enterprise deals? Start SOC 2 early</h1>
+  <div class="rows">
+    <div class="row"><span class="dot">✓</span> Finish the security basics first</div>
+    <div class="row"><span class="dot">✓</span> Pick a compliance automation platform</div>
+    <div class="row"><span class="dot">✓</span> Start with SOC 2 Type I</div>
+    <div class="row"><span class="dot">✓</span> Budget 3 to 6 months, not 3 weeks</div>
   </div>
   <div class="spacer"></div>
   <div class="handle">Get your full plan free · <span class="handle">groundwork-security.com</span></div>

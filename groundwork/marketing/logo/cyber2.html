@@ -1,0 +1,237 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Inter', -apple-system, 'Segoe UI', Roboto, sans-serif; background: #333; -webkit-font-smoothing: antialiased; }
+  svg { display:block; }
+  #sheet {
+    width: 1600px; padding: 74px; color: #e6f4ff;
+    background:
+      radial-gradient(900px 600px at 84% -8%, rgba(168,85,247,0.18), transparent 60%),
+      radial-gradient(800px 600px at -8% 106%, rgba(34,211,238,0.16), transparent 60%),
+      #05070f;
+  }
+  .sheet-head { display:flex; align-items:baseline; gap:20px; margin-bottom: 12px; }
+  .sheet-head h2 { font-size: 40px; font-weight: 800; letter-spacing: -0.02em; background:linear-gradient(90deg,#22d3ee,#a855f7); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .sheet-head span { color:#8aa0c6; font-size: 24px; }
+  .sub { color:#8aa0c6; font-size: 22px; margin-bottom: 30px; max-width: 1200px; }
+
+  .fam { color:#8aa0c6; font-weight:800; text-transform:uppercase; letter-spacing:0.08em; font-size:19px; margin: 34px 0 20px; display:flex; align-items:center; gap:14px; }
+  .fam::after { content:""; flex:1; height:1px; background:linear-gradient(90deg,rgba(120,180,255,0.25),transparent); }
+
+  .g3 { display:grid; grid-template-columns: repeat(3, 1fr); gap: 26px; }
+  .card {
+    border-radius: 22px; padding: 34px; display:flex; flex-direction:column; align-items:center; gap: 16px;
+    background: linear-gradient(180deg, rgba(34,211,238,0.05), rgba(168,85,247,0.04)), #0a0f1c;
+    border: 1px solid rgba(120,180,255,0.14);
+  }
+  .card .mark { width: 138px; height: 138px; }
+  .card .label { font-weight:800; text-transform:uppercase; letter-spacing:0.06em; font-size: 18px;
+    background:linear-gradient(90deg,#38e0ff,#c084fc); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .card .desc { color:#8aa0c6; font-size: 17px; line-height:1.4; text-align:center; max-width: 340px; }
+</style>
+</head>
+<body>
+<div id="sheet">
+  <div class="sheet-head"><h2>Groundwork</h2><span>cyber / 3D · structural variations</span></div>
+  <div class="sub">More in the family you liked: isometric grids, stacks, and prisms. Nine variations across the three themes.</div>
+
+  <div class="fam">Grid &amp; structure</div>
+  <div class="g3">
+
+    <!-- Y1 Wireframe cube on grid -->
+    <div class="card">
+      <svg class="mark" viewBox="0 0 100 100">
+        <defs><filter id="y1g" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="1.6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+        <g stroke="#22d3ee" stroke-width="1.1" opacity="0.5">
+          <line x1="50" y1="60" x2="50" y2="92"/><line x1="20" y1="76" x2="80" y2="76"/>
+          <line x1="35" y1="68" x2="65" y2="84"/><line x1="65" y1="68" x2="35" y2="84"/>
+        </g>
+        <polygon points="50,60 80,76 50,92 20,76" fill="none" stroke="#38e0ff" stroke-width="1.3"/>
+        <g filter="url(#y1g)" fill="none" stroke="#7df3ff" stroke-width="2" stroke-linejoin="round" stroke-linecap="round">
+          <polygon points="50,20 70,31 50,42 30,31"/>
+          <line x1="30" y1="31" x2="30" y2="52"/><line x1="70" y1="31" x2="70" y2="52"/><line x1="50" y1="42" x2="50" y2="63"/>
+          <line x1="30" y1="52" x2="50" y2="63"/><line x1="70" y1="52" x2="50" y2="63"/>
+        </g>
+        <line x1="50" y1="20" x2="50" y2="42" stroke="#38e0ff" stroke-width="1.2" opacity="0.35"/>
+      </svg>
+      <div class="label">Y1 · Wire Cube</div>
+      <div class="desc">A hollow neon cube hovering over the grid. All structure, no fill.</div>
+    </div>
+
+    <!-- Y2 Iso bars on grid -->
+    <div class="card">
+      <svg class="mark" viewBox="0 0 100 100">
+        <defs><filter id="y2g" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+        <g stroke="#22d3ee" stroke-width="1.1" opacity="0.45">
+          <line x1="50" y1="60" x2="50" y2="92"/><line x1="18" y1="76" x2="82" y2="76"/>
+          <line x1="34" y1="68" x2="66" y2="84"/><line x1="66" y1="68" x2="34" y2="84"/>
+        </g>
+        <polygon points="50,60 82,76 50,92 18,76" fill="none" stroke="#38e0ff" stroke-width="1.3"/>
+        <g filter="url(#y2g)">
+          <!-- bar left h14 -->
+          <polygon points="36,58 43,61.5 36,65 29,61.5" fill="#7df3ff"/><polygon points="29,61.5 36,65 36,79 29,75.5" fill="#22d3ee"/><polygon points="43,61.5 36,65 36,79 43,75.5" fill="#0e7490"/>
+          <!-- bar mid h24 -->
+          <polygon points="50,50 57,53.5 50,57 43,53.5" fill="#9ad4ff"/><polygon points="43,53.5 50,57 50,81 43,77.5" fill="#4f8cff"/><polygon points="57,53.5 50,57 50,81 57,77.5" fill="#3b5bdb"/>
+          <!-- bar right h32 -->
+          <polygon points="64,42 71,45.5 64,49 57,45.5" fill="#d3b0ff"/><polygon points="57,45.5 64,49 64,73 57,69.5" fill="#a855f7"/><polygon points="71,45.5 64,49 64,73 71,69.5" fill="#7c3aed"/>
+        </g>
+      </svg>
+      <div class="label">Y2 · Grid Bars</div>
+      <div class="desc">Ascending 3D bars on the grid: week, month, quarter, dimensional.</div>
+    </div>
+
+    <!-- Y3 Nested core cube -->
+    <div class="card">
+      <svg class="mark" viewBox="0 0 100 100">
+        <defs><filter id="y3g" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="2.4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+        <g stroke="#22d3ee" stroke-width="1.1" opacity="0.45">
+          <line x1="50" y1="62" x2="50" y2="92"/><line x1="22" y1="77" x2="78" y2="77"/>
+        </g>
+        <polygon points="50,62 78,77 50,92 22,77" fill="none" stroke="#38e0ff" stroke-width="1.3"/>
+        <g fill="none" stroke="#4f8cff" stroke-width="1.6" stroke-linejoin="round" opacity="0.85">
+          <polygon points="50,16 74,30 74,58 50,72 26,58 26,30"/>
+          <line x1="26" y1="30" x2="50" y2="44"/><line x1="74" y1="30" x2="50" y2="44"/><line x1="50" y1="44" x2="50" y2="72"/>
+        </g>
+        <g filter="url(#y3g)">
+          <polygon points="50,34 62,41 50,48 38,41" fill="#a8fbff"/>
+          <polygon points="38,41 50,48 50,60 38,53" fill="#22d3ee"/>
+          <polygon points="62,41 50,48 50,60 62,53" fill="#7c3aed"/>
+        </g>
+      </svg>
+      <div class="label">Y3 · Secure Core</div>
+      <div class="desc">A glowing core cube shielded inside an outer cage. Protection, literally.</div>
+    </div>
+
+  </div>
+
+  <div class="fam">Stacks</div>
+  <div class="g3">
+
+    <!-- Y4 Staggered slabs -->
+    <div class="card">
+      <svg class="mark" viewBox="0 0 100 100">
+        <defs><filter id="y4g" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+        <g filter="url(#y4g)">
+          <!-- top slab (left, cyan) -->
+          <polygon points="44,26 62,35 44,44 26,35" fill="#7df3ff"/><polygon points="26,35 44,44 44,51 26,42" fill="#22d3ee"/><polygon points="62,35 44,44 44,51 62,42" fill="#0e7490"/>
+          <!-- mid slab (right, blue) -->
+          <polygon points="56,42 74,51 56,60 38,51" fill="#9ad4ff"/><polygon points="38,51 56,60 56,67 38,58" fill="#4f8cff"/><polygon points="74,51 56,60 56,67 74,58" fill="#3b5bdb"/>
+          <!-- bottom slab (left, violet) -->
+          <polygon points="44,58 62,67 44,76 26,67" fill="#d3b0ff"/><polygon points="26,67 44,76 44,83 26,74" fill="#a855f7"/><polygon points="62,67 44,76 44,83 62,74" fill="#7c3aed"/>
+        </g>
+      </svg>
+      <div class="label">Y4 · Stagger</div>
+      <div class="desc">Slabs offset into a twisting stack. More dynamic than a straight tower.</div>
+    </div>
+
+    <!-- Y5 Cube pyramid -->
+    <div class="card">
+      <svg class="mark" viewBox="0 0 100 100">
+        <defs><filter id="y5g" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+        <g filter="url(#y5g)">
+          <!-- bottom-left cube (violet) -->
+          <polygon points="36,50 50,58 36,66 22,58" fill="#c9a2ff"/><polygon points="22,58 36,66 36,80 22,72" fill="#a855f7"/><polygon points="50,58 36,66 36,80 50,72" fill="#7c3aed"/>
+          <!-- bottom-right cube (blue) -->
+          <polygon points="64,50 78,58 64,66 50,58" fill="#9ad4ff"/><polygon points="50,58 64,66 64,80 50,72" fill="#4f8cff"/><polygon points="78,58 64,66 64,80 78,72" fill="#3b5bdb"/>
+          <!-- top cube (cyan) -->
+          <polygon points="50,34 64,42 50,50 36,42" fill="#a8fbff"/><polygon points="36,42 50,50 50,64 36,56" fill="#22d3ee"/><polygon points="64,42 50,50 50,64 64,56" fill="#0ea5c4"/>
+        </g>
+      </svg>
+      <div class="label">Y5 · Pyramid</div>
+      <div class="desc">Three cubes locking into a foundation pyramid, cyan capstone on top.</div>
+    </div>
+
+    <!-- Y6 Monolith -->
+    <div class="card">
+      <svg class="mark" viewBox="0 0 100 100">
+        <defs>
+          <linearGradient id="y6t" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#a8fbff"/><stop offset="1" stop-color="#22d3ee"/></linearGradient>
+          <filter id="y6g" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        </defs>
+        <g filter="url(#y6g)">
+          <polygon points="34,22 50,30 50,76 34,68" fill="#3f74d6"/>
+          <polygon points="66,22 50,30 50,76 66,68" fill="#6d28d9"/>
+          <polygon points="50,14 66,22 50,30 34,22" fill="url(#y6t)"/>
+          <g stroke="#7df3ff" stroke-width="1.2" opacity="0.7">
+            <line x1="34" y1="40" x2="50" y2="48"/><line x1="66" y1="40" x2="50" y2="48"/>
+            <line x1="34" y1="54" x2="50" y2="62"/><line x1="66" y1="54" x2="50" y2="62"/>
+          </g>
+          <polygon points="50,14 66,22 50,30 34,22" fill="none" stroke="#c9fdff" stroke-width="1.1"/>
+        </g>
+      </svg>
+      <div class="label">Y6 · Monolith</div>
+      <div class="desc">A tall data vault with glowing seams. Solid, serious, unmistakably secure.</div>
+    </div>
+
+  </div>
+
+  <div class="fam">Prisms &amp; crystals</div>
+  <div class="g3">
+
+    <!-- Y7 Prism cluster -->
+    <div class="card">
+      <svg class="mark" viewBox="0 0 100 100">
+        <defs><filter id="y7g" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+        <g filter="url(#y7g)">
+          <!-- center tall (blue) -->
+          <polygon points="39,36 50,42 50,74 39,68" fill="#3b5bdb"/><polygon points="61,36 50,42 50,74 61,68" fill="#2a3fa0"/>
+          <polygon points="50,18 61,24 61,36 50,42 39,36 39,24" fill="#5b9dff"/>
+          <!-- left short (cyan) -->
+          <polygon points="25,50 34,55 34,75 25,70" fill="#0e7490"/><polygon points="43,50 34,55 34,75 43,70" fill="#0b5566"/>
+          <polygon points="34,36 43,41 43,50 34,55 25,50 25,41" fill="#22d3ee"/>
+          <!-- right med (violet) -->
+          <polygon points="57,52 66,57 66,74 57,69" fill="#7c3aed"/><polygon points="75,52 66,57 66,74 75,69" fill="#5b21b6"/>
+          <polygon points="66,40 75,45 75,52 66,57 57,52 57,45" fill="#a855f7"/>
+        </g>
+      </svg>
+      <div class="label">Y7 · Cluster</div>
+      <div class="desc">Three crystal prisms rising like a skyline. Distinct and premium.</div>
+    </div>
+
+    <!-- Y8 Crystal gem -->
+    <div class="card">
+      <svg class="mark" viewBox="0 0 100 100">
+        <defs><filter id="y8g" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+        <g filter="url(#y8g)">
+          <polygon points="50,16 30,42 50,50" fill="#7df3ff"/>
+          <polygon points="50,16 70,42 50,50" fill="#22d3ee"/>
+          <polygon points="30,42 50,50 50,88" fill="#4f8cff"/>
+          <polygon points="70,42 50,50 50,88" fill="#7c3aed"/>
+          <polygon points="50,16 30,42 22,42 50,16" fill="#a8fbff" opacity="0.7"/>
+          <polygon points="50,16 70,42 78,42 50,16" fill="#5b9dff" opacity="0.7"/>
+          <polygon points="22,42 30,42 50,88" fill="#3b5bdb"/>
+          <polygon points="78,42 70,42 50,88" fill="#6d28d9"/>
+          <g fill="none" stroke="#c9fdff" stroke-width="0.9" opacity="0.85"><polygon points="50,16 30,42 50,50 70,42"/></g>
+        </g>
+      </svg>
+      <div class="label">Y8 · Crystal</div>
+      <div class="desc">A faceted gem. The most jewel-like and eye-catching option.</div>
+    </div>
+
+    <!-- Y9 Glass prism + core -->
+    <div class="card">
+      <svg class="mark" viewBox="0 0 100 100">
+        <defs><filter id="y9g" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="2.6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+        <polygon points="28,45 50,57 50,80 28,68" fill="#22d3ee" opacity="0.16"/>
+        <polygon points="72,45 50,57 50,80 72,68" fill="#a855f7" opacity="0.16"/>
+        <polygon points="50,10 72,22 72,45 50,57 28,45 28,22" fill="#7db9ff" opacity="0.12"/>
+        <g filter="url(#y9g)">
+          <polygon points="50,34 60,40 50,46 40,40" fill="#a8fbff"/>
+          <polygon points="40,40 50,46 50,58 40,52" fill="#22d3ee"/>
+          <polygon points="60,40 50,46 50,58 60,52" fill="#7c3aed"/>
+        </g>
+        <polygon points="50,10 72,22 72,45 50,57 28,45 28,22" fill="none" stroke="#7df3ff" stroke-width="1.3" stroke-linejoin="round"/>
+        <line x1="28" y1="22" x2="50" y2="34" stroke="#7df3ff" stroke-width="1" opacity="0.5"/>
+        <line x1="72" y1="22" x2="50" y2="34" stroke="#7df3ff" stroke-width="1" opacity="0.5"/>
+      </svg>
+      <div class="label">Y9 · Vault Crystal</div>
+      <div class="desc">A glowing core suspended inside a glass prism. Your data, encased.</div>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>

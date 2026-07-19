@@ -1,4 +1,5 @@
 import { AccountControls } from './Account';
+import { BrandMark } from './BrandMark';
 import { Upgrade } from './Upgrade';
 import type { AuthState } from '../state/auth';
 import type { SyncStatus } from '../state/sync';
@@ -32,9 +33,7 @@ export function Landing({ onStart, onHelp, onTerms, onPrivacy, auth, sync }: Pro
     <div className="landing">
       <header className="landing-hero">
         <div className="brand">
-          <span className="brand-mark" aria-hidden>
-            ⬢
-          </span>
+          <BrandMark className="brand-mark" />
           Groundwork
         </div>
         <h1>
