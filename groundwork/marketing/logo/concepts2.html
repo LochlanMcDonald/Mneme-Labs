@@ -1,0 +1,181 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Inter', -apple-system, 'Segoe UI', Roboto, sans-serif; background: #333; -webkit-font-smoothing: antialiased; }
+  svg { display:block; }
+  #sheet {
+    width: 1600px; padding: 70px; color: #e8edf6;
+    background:
+      radial-gradient(1100px 700px at 85% -6%, rgba(79,140,255,0.16), transparent 60%),
+      radial-gradient(900px 600px at -6% 106%, rgba(62,207,142,0.10), transparent 60%),
+      #0c111b;
+  }
+  .sheet-head { display:flex; align-items:baseline; gap:20px; margin-bottom: 14px; }
+  .sheet-head h2 { font-size: 40px; font-weight: 800; letter-spacing: -0.02em; }
+  .sheet-head span { color:#9aa8c0; font-size: 24px; }
+  .sub { color:#9aa8c0; font-size: 22px; margin-bottom: 46px; }
+  .grid { display:grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+  .card {
+    background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 24px; padding: 44px; display:flex; align-items:center; gap: 40px;
+  }
+  .card .mark { width: 150px; height: 150px; flex-shrink:0; }
+  .card .meta .label { color:#7fa8ff; font-weight:800; text-transform:uppercase; letter-spacing:0.06em; font-size: 20px; margin-bottom: 12px; }
+  .card .meta .word { display:flex; align-items:center; gap:18px; font-size: 46px; font-weight: 800; letter-spacing:-0.02em; margin-bottom: 14px; }
+  .card .meta .word .wm { width: 54px; height: 54px; }
+  .card .meta .desc { color:#9aa8c0; font-size: 21px; line-height:1.4; max-width: 460px; }
+
+  .wide { grid-column: 1 / -1; }
+  .logotype { display:flex; flex-direction:column; gap: 18px; align-items:flex-start; }
+  .logotype .lt { font-size: 92px; font-weight: 800; letter-spacing: -0.04em; line-height: 1; }
+  .logotype .ground { height: 12px; width: 520px; border-radius: 6px; background: linear-gradient(90deg, #4f8cff, #3ecf8e); }
+
+  .favrow { margin-top: 50px; display:flex; align-items:flex-end; gap: 30px; }
+  .favrow .fav { display:flex; flex-direction:column; align-items:center; gap:12px; }
+  .favrow .fav .chip { background:#0c111b; border:1px solid rgba(255,255,255,0.1); border-radius: 22%; display:flex; align-items:center; justify-content:center; }
+  .favrow .fav .cap { color:#9aa8c0; font-size:16px; font-weight:600; }
+  .favnote { color:#9aa8c0; font-size:19px; max-width:520px; line-height:1.5; padding-bottom:6px; }
+</style>
+</head>
+<body>
+<div id="sheet">
+  <div class="sheet-head"><h2>Groundwork</h2><span>logo concepts · batch 2</span></div>
+  <div class="sub">Eight fresh directions: masonry, geology, construction tools, and a logotype option. Pick any one (from either batch) and I will refine it into the full set.</div>
+
+  <div class="grid">
+
+    <!-- G1 Setstone -->
+    <div class="card">
+      <svg class="mark" viewBox="0 0 100 100">
+        <rect x="14" y="78" width="72" height="6" rx="3" fill="#7fa8ff" opacity="0.4"/>
+        <rect x="28" y="36" width="44" height="38" rx="11" fill="#4f8cff"/>
+        <rect x="40" y="23" width="20" height="14" rx="7" fill="#3ecf8e"/>
+      </svg>
+      <div class="meta">
+        <div class="label">G1 · Setstone</div>
+        <div class="word"><svg class="wm" viewBox="0 0 100 100"><rect x="14" y="78" width="72" height="6" rx="3" fill="#7fa8ff" opacity="0.4"/><rect x="28" y="36" width="44" height="38" rx="11" fill="#4f8cff"/><rect x="40" y="23" width="20" height="14" rx="7" fill="#3ecf8e"/></svg> Groundwork</div>
+        <div class="desc">A stone set on the ground, with the next block placed on top. Warm and literal, still simple enough for a favicon.</div>
+      </div>
+    </div>
+
+    <!-- G2 Strata -->
+    <div class="card">
+      <svg class="mark" viewBox="0 0 100 100">
+        <defs><clipPath id="c2"><circle cx="50" cy="50" r="42"/></clipPath></defs>
+        <g clip-path="url(#c2)">
+          <rect x="0" y="8" width="100" height="30" fill="#7fa8ff"/>
+          <rect x="0" y="38" width="100" height="24" fill="#4f8cff"/>
+          <rect x="0" y="62" width="100" height="30" fill="#3d6ff0"/>
+          <rect x="0" y="8" width="100" height="9" fill="#3ecf8e"/>
+        </g>
+      </svg>
+      <div class="meta">
+        <div class="label">G2 · Strata</div>
+        <div class="word"><svg class="wm" viewBox="0 0 100 100"><defs><clipPath id="c2w"><circle cx="50" cy="50" r="42"/></clipPath></defs><g clip-path="url(#c2w)"><rect x="0" y="8" width="100" height="30" fill="#7fa8ff"/><rect x="0" y="38" width="100" height="24" fill="#4f8cff"/><rect x="0" y="62" width="100" height="30" fill="#3d6ff0"/><rect x="0" y="8" width="100" height="9" fill="#3ecf8e"/></g></svg> Groundwork</div>
+        <div class="desc">Layers of ground in a circle: topsoil, then bedrock. The round shape makes a striking social avatar.</div>
+      </div>
+    </div>
+
+    <!-- G3 Brickwork -->
+    <div class="card">
+      <svg class="mark" viewBox="0 0 100 100">
+        <rect x="37" y="26" width="26" height="15" rx="4" fill="#3ecf8e"/>
+        <rect x="23" y="45" width="26" height="15" rx="4" fill="#7fa8ff"/>
+        <rect x="51" y="45" width="26" height="15" rx="4" fill="#7fa8ff"/>
+        <rect x="9" y="64" width="26" height="15" rx="4" fill="#4f8cff"/>
+        <rect x="37" y="64" width="26" height="15" rx="4" fill="#4f8cff"/>
+        <rect x="65" y="64" width="26" height="15" rx="4" fill="#4f8cff"/>
+      </svg>
+      <div class="meta">
+        <div class="label">G3 · Brickwork</div>
+        <div class="word"><svg class="wm" viewBox="0 0 100 100"><rect x="37" y="26" width="26" height="15" rx="4" fill="#3ecf8e"/><rect x="23" y="45" width="26" height="15" rx="4" fill="#7fa8ff"/><rect x="51" y="45" width="26" height="15" rx="4" fill="#7fa8ff"/><rect x="9" y="64" width="26" height="15" rx="4" fill="#4f8cff"/><rect x="37" y="64" width="26" height="15" rx="4" fill="#4f8cff"/><rect x="65" y="64" width="26" height="15" rx="4" fill="#4f8cff"/></svg> Groundwork</div>
+        <div class="desc">Bricks laid in a running bond, building up course by course. The clearest "we build your foundation" read.</div>
+      </div>
+    </div>
+
+    <!-- G4 Level -->
+    <div class="card">
+      <svg class="mark" viewBox="0 0 100 100">
+        <rect x="14" y="40" width="72" height="22" rx="11" fill="none" stroke="#4f8cff" stroke-width="6"/>
+        <line x1="38" y1="46" x2="38" y2="56" stroke="#7fa8ff" stroke-width="4" stroke-linecap="round"/>
+        <line x1="62" y1="46" x2="62" y2="56" stroke="#7fa8ff" stroke-width="4" stroke-linecap="round"/>
+        <circle cx="50" cy="51" r="7.5" fill="#3ecf8e"/>
+      </svg>
+      <div class="meta">
+        <div class="label">G4 · Level</div>
+        <div class="word"><svg class="wm" viewBox="0 0 100 100"><rect x="14" y="40" width="72" height="22" rx="11" fill="none" stroke="#4f8cff" stroke-width="6"/><line x1="38" y1="46" x2="38" y2="56" stroke="#7fa8ff" stroke-width="4" stroke-linecap="round"/><line x1="62" y1="46" x2="62" y2="56" stroke="#7fa8ff" stroke-width="4" stroke-linecap="round"/><circle cx="50" cy="51" r="7.5" fill="#3ecf8e"/></svg> Groundwork</div>
+        <div class="desc">A spirit level with the bubble centered: getting your security set up right and true. Ownable and a bit clever.</div>
+      </div>
+    </div>
+
+    <!-- G5 Ascend -->
+    <div class="card">
+      <svg class="mark" viewBox="0 0 100 100">
+        <path d="M20 70 L50 55 L80 70" fill="none" stroke="#4f8cff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M28 56 L50 45 L72 56" fill="none" stroke="#7fa8ff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M36 43 L50 36 L64 43" fill="none" stroke="#3ecf8e" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <div class="meta">
+        <div class="label">G5 · Ascend</div>
+        <div class="word"><svg class="wm" viewBox="0 0 100 100"><path d="M20 70 L50 55 L80 70" fill="none" stroke="#4f8cff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/><path d="M28 56 L50 45 L72 56" fill="none" stroke="#7fa8ff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/><path d="M36 43 L50 36 L64 43" fill="none" stroke="#3ecf8e" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/></svg> Groundwork</div>
+        <div class="desc">Stacked chevrons rising to a point: progress and leveling up. Energetic, and reads instantly at small sizes.</div>
+      </div>
+    </div>
+
+    <!-- G6 Dome -->
+    <div class="card">
+      <svg class="mark" viewBox="0 0 100 100">
+        <path d="M24 60 A26 26 0 0 1 76 60" fill="none" stroke="#7fa8ff" stroke-width="7" stroke-linecap="round"/>
+        <rect x="22" y="60" width="56" height="16" rx="8" fill="#4f8cff"/>
+        <path d="M41 68 L47 73.5 L60 62" fill="none" stroke="#3ecf8e" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <div class="meta">
+        <div class="label">G6 · Dome</div>
+        <div class="word"><svg class="wm" viewBox="0 0 100 100"><path d="M24 60 A26 26 0 0 1 76 60" fill="none" stroke="#7fa8ff" stroke-width="7" stroke-linecap="round"/><rect x="22" y="60" width="56" height="16" rx="8" fill="#4f8cff"/><path d="M41 68 L47 73.5 L60 62" fill="none" stroke="#3ecf8e" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Groundwork</div>
+        <div class="desc">A protective dome arcing over a solid base, with a done-check. Merges the security and foundation ideas in one mark.</div>
+      </div>
+    </div>
+
+    <!-- G7 Monoblock -->
+    <div class="card">
+      <svg class="mark" viewBox="0 0 100 100">
+        <rect x="16" y="16" width="68" height="68" rx="18" fill="#4f8cff"/>
+        <path d="M64 41 A16 16 0 1 0 64 61 L64 52 L52 52" fill="none" stroke="#0c111b" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+        <rect x="16" y="70" width="68" height="14" rx="0" fill="#3d6ff0"/>
+        <rect x="16" y="70" width="68" height="14" fill="#3ecf8e" opacity="0.0"/>
+      </svg>
+      <div class="meta">
+        <div class="label">G7 · Monoblock</div>
+        <div class="word"><svg class="wm" viewBox="0 0 100 100"><rect x="16" y="16" width="68" height="68" rx="18" fill="#4f8cff"/><path d="M64 41 A16 16 0 1 0 64 61 L64 52 L52 52" fill="none" stroke="#0c111b" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/></svg> Groundwork</div>
+        <div class="desc">A bold "G" cut from a solid block, with a darker base course. App-store friendly and unmistakably an initial.</div>
+      </div>
+    </div>
+
+    <!-- G8 Logotype (wordmark) -->
+    <div class="card wide">
+      <div class="logotype">
+        <div class="lt">groundwork</div>
+        <div class="ground"></div>
+      </div>
+      <div class="meta" style="margin-left: 20px;">
+        <div class="label">G8 · Logotype</div>
+        <div class="desc" style="font-size:23px; max-width:560px;">A pure wordmark option: lowercase and friendly, sitting on a two-tone "ground" bar. No icon needed, though it pairs with any mark above for a stacked lockup.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Favicon legibility of the three strongest icon marks -->
+  <div class="favrow">
+    <div class="fav"><div class="chip" style="width:64px;height:64px;"><svg width="44" height="44" viewBox="0 0 100 100"><defs><clipPath id="f2"><circle cx="50" cy="50" r="42"/></clipPath></defs><g clip-path="url(#f2)"><rect x="0" y="8" width="100" height="30" fill="#7fa8ff"/><rect x="0" y="38" width="100" height="24" fill="#4f8cff"/><rect x="0" y="62" width="100" height="30" fill="#3d6ff0"/><rect x="0" y="8" width="100" height="9" fill="#3ecf8e"/></g></svg></div><div class="cap">G2 · 32px</div></div>
+    <div class="fav"><div class="chip" style="width:64px;height:64px;"><svg width="44" height="44" viewBox="0 0 100 100"><rect x="37" y="26" width="26" height="15" rx="4" fill="#3ecf8e"/><rect x="23" y="45" width="26" height="15" rx="4" fill="#7fa8ff"/><rect x="51" y="45" width="26" height="15" rx="4" fill="#7fa8ff"/><rect x="9" y="64" width="26" height="15" rx="4" fill="#4f8cff"/><rect x="37" y="64" width="26" height="15" rx="4" fill="#4f8cff"/><rect x="65" y="64" width="26" height="15" rx="4" fill="#4f8cff"/></svg></div><div class="cap">G3 · 32px</div></div>
+    <div class="fav"><div class="chip" style="width:64px;height:64px;"><svg width="44" height="44" viewBox="0 0 100 100"><path d="M20 70 L50 55 L80 70" fill="none" stroke="#4f8cff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/><path d="M28 56 L50 45 L72 56" fill="none" stroke="#7fa8ff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/><path d="M36 43 L50 36 L64 43" fill="none" stroke="#3ecf8e" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="cap">G5 · 32px</div></div>
+    <div class="favnote">The circle (G2), brickwork (G3), and chevrons (G5) hold up best when shrunk to a browser tab. The level (G4) and dome (G6) are more distinctive but get delicate below 24px.</div>
+  </div>
+
+</div>
+</body>
+</html>
