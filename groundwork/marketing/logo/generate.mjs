@@ -34,9 +34,15 @@ await page.setViewportSize({ width: 512, height: 512 });
 await page.setContent(
   `<div style="width:512px;height:512px;background:#0c111b;display:flex;align-items:center;justify-content:center">
      <svg width="512" height="512" viewBox="0 0 100 100">
-       <rect x="39" y="20" width="22" height="15" rx="7" fill="#3ecf8e"/>
-       <rect x="29" y="42.5" width="42" height="15" rx="7" fill="#7fa8ff"/>
-       <rect x="15" y="65" width="70" height="16" rx="8" fill="#4f8cff"/>
+       <polygon points="44,22 62,31 44,40 26,31" fill="#7df3ff"/>
+       <polygon points="26,31 44,40 44,47 26,38" fill="#22d3ee"/>
+       <polygon points="62,31 44,40 44,47 62,38" fill="#0e7490"/>
+       <polygon points="56,38 74,47 56,56 38,47" fill="#9ad4ff"/>
+       <polygon points="38,47 56,56 56,63 38,54" fill="#4f8cff"/>
+       <polygon points="74,47 56,56 56,63 74,54" fill="#3b5bdb"/>
+       <polygon points="44,54 62,63 44,72 26,63" fill="#d3b0ff"/>
+       <polygon points="26,63 44,72 44,79 26,70" fill="#a855f7"/>
+       <polygon points="62,63 44,72 44,79 62,70" fill="#7c3aed"/>
      </svg></div>`,
 );
 await page.waitForTimeout(150);

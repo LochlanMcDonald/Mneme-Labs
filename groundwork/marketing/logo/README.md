@@ -1,9 +1,9 @@
 # Groundwork logo
 
-The Groundwork mark is three stacked courses building up from a wide base:
-the "foundation" the brand is named for. It is built entirely from the brand
-palette and is intentionally simple so it stays legible down to a 16px
-browser-tab favicon.
+The Groundwork mark is three offset slabs stacked into a foundation, drawn
+isometrically so it reads as a dimensional structure. The palette climbs from
+a violet base through blue to a cyan top course, giving it a modern, technical
+feel while still telling the "building your foundation" story.
 
 ## The mark lives in code
 
@@ -15,15 +15,18 @@ component and the favicon together to reskin the whole app.
 
 ## Colors
 
-| Token | Hex | Used for |
-| --- | --- | --- |
-| Green | `#3ecf8e` | Top course |
-| Blue (light) | `#7fa8ff` | Middle course |
-| Blue | `#4f8cff` | Base course |
-| Base dark | `#0c111b` | App-icon background |
+Each slab is drawn with three faces (top, left, right) to fake the isometric
+lighting.
 
-On light backgrounds the two blues drop to `#1f57c9` for contrast; on the
-brand blue the whole mark reverses to white.
+| Slab | Top | Left | Right |
+| --- | --- | --- | --- |
+| Top (cyan) | `#7df3ff` | `#22d3ee` | `#0e7490` |
+| Middle (blue) | `#9ad4ff` | `#4f8cff` | `#3b5bdb` |
+| Base (violet) | `#d3b0ff` | `#a855f7` | `#7c3aed` |
+
+App-icon background is `#0c111b`. On light backgrounds, use the single-hue
+blue version (`mark-mono-blue.svg`); on dark or photographic backgrounds, use
+the white version (`mark-mono-light.svg`).
 
 ## Files
 
@@ -31,12 +34,14 @@ brand blue the whole mark reverses to white.
 | --- | --- |
 | `mark.svg` | Primary full-color mark (transparent) |
 | `mark-badge.svg` | Mark on a rounded dark square (app-icon lockup) |
-| `mark-mono-light.svg` | White single-color mark, for dark/photographic backgrounds |
-| `mark-mono-dark.svg` | Near-black single-color mark, for light backgrounds |
+| `mark-mono-blue.svg` | Single-hue blue 3D, for light backgrounds |
+| `mark-mono-light.svg` | White 3D, for dark/photographic backgrounds |
 | `app-icon-512.png` | 512px flat app icon (platforms apply their own corner mask) |
 | `avatar-1080.png` | 1080×1080 social profile avatar (mark on brand gradient) |
 | `brand-sheet.png` | The finalized one-page brand sheet |
-| `concepts.png` | The six explored directions (A–F), kept for reference |
+| `concepts.png` / `concepts2.png` | Flat directions explored (batch 1 and 2) |
+| `g5-explore.png` | The G5 color and form study |
+| `cyber.png` / `cyber2.png` | The cyber / 3D explorations (Y4 was chosen here) |
 
 ## Regenerating
 
@@ -45,12 +50,10 @@ cd groundwork && npm install --no-save playwright-core
 node marketing/logo/generate.mjs
 ```
 
-Edit the artboards (`final.html`, `avatar.html`, `concepts.html`) and re-run.
+Edit the artboards (`final.html`, `avatar.html`) and re-run.
 
 ## Switching direction
 
-Concept A ("Foundation") is the chosen mark. The other five explored
-directions still live in `concepts.html`. To adopt a different one, swap the
-three `<rect>` shapes in `BrandMark.tsx`, the favicon data URI in
-`index.html`, and the SVG in the artboards, then regenerate. Because the mark
-is centralized in one component, it is a small change.
+The mark is centralized in `BrandMark.tsx`, the favicon data URI in
+`index.html`, and the artboard SVGs. Because it is nine polygons in one
+component, swapping to a different explored direction is a contained change.
