@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { BrandMark } from './BrandMark';
 import { GENERAL_FAQS, INCIDENT_PLAYBOOKS, type HelpEntry } from '../data/help';
 
 interface Props {
@@ -38,9 +39,7 @@ export function Help({ onBack, backLabel }: Props) {
   return (
     <div className="help">
       <div className="brand small">
-        <span className="brand-mark" aria-hidden>
-          ⬢
-        </span>
+        <BrandMark className="brand-mark" />
         Groundwork
       </div>
       <button className="btn" onClick={onBack}>

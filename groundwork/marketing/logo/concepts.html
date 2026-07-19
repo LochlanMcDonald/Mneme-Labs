@@ -1,0 +1,192 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Inter', -apple-system, 'Segoe UI', Roboto, sans-serif; background: #333; -webkit-font-smoothing: antialiased; }
+  #sheet {
+    width: 1600px; padding: 70px; color: #e8edf6;
+    background:
+      radial-gradient(1100px 700px at 85% -6%, rgba(79,140,255,0.16), transparent 60%),
+      radial-gradient(900px 600px at -6% 106%, rgba(62,207,142,0.10), transparent 60%),
+      #0c111b;
+  }
+  .sheet-head { display:flex; align-items:baseline; gap:20px; margin-bottom: 14px; }
+  .sheet-head h2 { font-size: 40px; font-weight: 800; letter-spacing: -0.02em; }
+  .sheet-head span { color:#9aa8c0; font-size: 24px; }
+  .sub { color:#9aa8c0; font-size: 22px; margin-bottom: 46px; }
+  .grid { display:grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+  .card {
+    background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 24px; padding: 44px; display:flex; align-items:center; gap: 40px;
+  }
+  .card .mark { width: 150px; height: 150px; flex-shrink:0; }
+  .card .meta .label { color:#7fa8ff; font-weight:800; text-transform:uppercase; letter-spacing:0.06em; font-size: 20px; margin-bottom: 12px; }
+  .card .meta .word { display:flex; align-items:center; gap:18px; font-size: 46px; font-weight: 800; letter-spacing:-0.02em; margin-bottom: 14px; }
+  .card .meta .word .wm { width: 54px; height: 54px; }
+  .card .meta .desc { color:#9aa8c0; font-size: 21px; line-height:1.4; max-width: 460px; }
+
+  .strip { margin-top: 50px; display:flex; gap: 24px; }
+  .swatch { flex:1; border-radius:20px; padding: 34px; display:flex; flex-direction:column; align-items:center; gap:18px; }
+  .swatch.dark { background:#0c111b; border:1px solid rgba(255,255,255,0.08); }
+  .swatch.light { background:#f4f7fc; }
+  .swatch.blue { background:#4f8cff; }
+  .swatch .m { width: 84px; height: 84px; }
+  .swatch .cap { font-size: 18px; font-weight:700; }
+  .swatch.dark .cap { color:#9aa8c0; }
+  .swatch.light .cap { color:#5a6b86; }
+  .swatch.blue .cap { color:#dbe6ff; }
+
+  .favrow { margin-top: 44px; display:flex; align-items:flex-end; gap: 30px; }
+  .favrow .fav { display:flex; flex-direction:column; align-items:center; gap:12px; }
+  .favrow .fav .chip { background:#0c111b; border:1px solid rgba(255,255,255,0.1); border-radius: 14px; display:flex; align-items:center; justify-content:center; }
+  .favrow .fav .cap { color:#9aa8c0; font-size:16px; font-weight:600; }
+</style>
+</head>
+<body>
+<div id="sheet">
+  <div class="sheet-head"><h2>Groundwork</h2><span>logo concepts · v1</span></div>
+  <div class="sub">Six directions on the "security foundation" idea, all built from the brand palette. Pick one to refine into the full set (app mark, favicon, wordmark, social).</div>
+
+  <div class="grid">
+
+    <!-- A: Foundation blocks -->
+    <div class="card">
+      <svg class="mark" viewBox="0 0 100 100">
+        <defs><linearGradient id="gA" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6ea0ff"/><stop offset="1" stop-color="#4f8cff"/></linearGradient></defs>
+        <rect x="39" y="20" width="22" height="15" rx="7" fill="#3ecf8e"/>
+        <rect x="29" y="42.5" width="42" height="15" rx="7" fill="#6ea0ff"/>
+        <rect x="15" y="65" width="70" height="16" rx="8" fill="url(#gA)"/>
+      </svg>
+      <div class="meta">
+        <div class="label">A · Foundation</div>
+        <div class="word">
+          <svg class="wm" viewBox="0 0 100 100"><rect x="39" y="20" width="22" height="15" rx="7" fill="#3ecf8e"/><rect x="29" y="42.5" width="42" height="15" rx="7" fill="#7fa8ff"/><rect x="15" y="65" width="70" height="16" rx="8" fill="#4f8cff"/></svg>
+          Groundwork
+        </div>
+        <div class="desc">Three stacked courses building up from a wide base. Literal "groundwork," reads at any size, no legacy hexagon baggage.</div>
+      </div>
+    </div>
+
+    <!-- B: Shield base -->
+    <div class="card">
+      <svg class="mark" viewBox="0 0 100 100">
+        <path d="M50 9 L84 22 L84 49 C84 72 68 86 50 92 C32 86 16 72 16 49 L16 22 Z" fill="none" stroke="#4f8cff" stroke-width="7" stroke-linejoin="round"/>
+        <path d="M35 51 L46 62 L66 39" fill="none" stroke="#3ecf8e" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <div class="meta">
+        <div class="label">B · Guardstone</div>
+        <div class="word">
+          <svg class="wm" viewBox="0 0 100 100"><path d="M50 9 L84 22 L84 49 C84 72 68 86 50 92 C32 86 16 72 16 49 L16 22 Z" fill="none" stroke="#4f8cff" stroke-width="7" stroke-linejoin="round"/><path d="M35 51 L46 62 L66 39" fill="none" stroke="#3ecf8e" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Groundwork
+        </div>
+        <div class="desc">The most direct security signal: a shield with a done-check. Instantly legible, but a more common look in the category.</div>
+      </div>
+    </div>
+
+    <!-- C: Layered hexagon (keeps hex lineage) -->
+    <div class="card">
+      <svg class="mark" viewBox="0 0 100 100">
+        <defs><clipPath id="hexC"><path d="M50 6 L88 28 L88 72 L50 94 L12 72 L12 28 Z"/></clipPath></defs>
+        <g clip-path="url(#hexC)">
+          <rect x="0" y="0" width="100" height="100" fill="#0c111b"/>
+          <rect x="0" y="62" width="100" height="40" fill="#4f8cff"/>
+          <rect x="0" y="50" width="100" height="4" fill="rgba(127,168,255,0.5)"/>
+          <rect x="0" y="38" width="100" height="4" fill="rgba(127,168,255,0.3)"/>
+        </g>
+        <path d="M50 6 L88 28 L88 72 L50 94 L12 72 L12 28 Z" fill="none" stroke="#4f8cff" stroke-width="6.5" stroke-linejoin="round"/>
+      </svg>
+      <div class="meta">
+        <div class="label">C · Bedrock hex</div>
+        <div class="word">
+          <svg class="wm" viewBox="0 0 100 100"><defs><clipPath id="hexCw"><path d="M50 6 L88 28 L88 72 L50 94 L12 72 L12 28 Z"/></clipPath></defs><g clip-path="url(#hexCw)"><rect x="0" y="0" width="100" height="100" fill="#0c111b"/><rect x="0" y="62" width="100" height="40" fill="#4f8cff"/><rect x="0" y="50" width="100" height="4" fill="rgba(127,168,255,0.5)"/><rect x="0" y="38" width="100" height="4" fill="rgba(127,168,255,0.3)"/></g><path d="M50 6 L88 28 L88 72 L50 94 L12 72 L12 28 Z" fill="none" stroke="#4f8cff" stroke-width="6.5" stroke-linejoin="round"/></svg>
+          Groundwork
+        </div>
+        <div class="desc">Keeps the hexagon you already use, but fills it with strata rising from bedrock. Continuity plus the foundation story.</div>
+      </div>
+    </div>
+
+    <!-- D: G monogram in hexagon -->
+    <div class="card">
+      <svg class="mark" viewBox="0 0 100 100">
+        <path d="M50 7 L87 28.5 L87 71.5 L50 93 L13 71.5 L13 28.5 Z" fill="none" stroke="#4f8cff" stroke-width="6.5" stroke-linejoin="round"/>
+        <path d="M63 40 A17 17 0 1 0 63 60 L63 51 L52 51" fill="none" stroke="#3ecf8e" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <div class="meta">
+        <div class="label">D · Monogram</div>
+        <div class="word">
+          <svg class="wm" viewBox="0 0 100 100"><path d="M50 7 L87 28.5 L87 71.5 L50 93 L13 71.5 L13 28.5 Z" fill="none" stroke="#4f8cff" stroke-width="6.5" stroke-linejoin="round"/><path d="M63 40 A17 17 0 1 0 63 60 L63 51 L52 51" fill="none" stroke="#3ecf8e" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Groundwork
+        </div>
+        <div class="desc">A "G" set inside the hexagon. Ownable and initial-driven, though the G can get busy at favicon size.</div>
+      </div>
+    </div>
+
+    <!-- E: Keystone / locked base -->
+    <div class="card">
+      <svg class="mark" viewBox="0 0 100 100">
+        <path d="M50 7 L87 28.5 L87 71.5 L50 93 L13 71.5 L13 28.5 Z" fill="none" stroke="#4f8cff" stroke-width="6.5" stroke-linejoin="round"/>
+        <path d="M50 50 L87 28.5 L87 71.5 L50 93 L13 71.5 L13 50 Z" fill="#4f8cff"/>
+        <path d="M50 50 L68 39.6 M50 50 L32 39.6 M50 50 L50 93" fill="none" stroke="#0c111b" stroke-width="4.5" stroke-linecap="round"/>
+      </svg>
+      <div class="meta">
+        <div class="label">E · Keystone</div>
+        <div class="word">
+          <svg class="wm" viewBox="0 0 100 100"><path d="M50 7 L87 28.5 L87 71.5 L50 93 L13 71.5 L13 28.5 Z" fill="none" stroke="#4f8cff" stroke-width="6.5" stroke-linejoin="round"/><path d="M50 50 L87 28.5 L87 71.5 L50 93 L13 71.5 L13 50 Z" fill="#4f8cff"/><path d="M50 50 L68 39.6 M50 50 L32 39.6 M50 50 L50 93" fill="none" stroke="#0c111b" stroke-width="4.5" stroke-linecap="round"/></svg>
+          Groundwork
+        </div>
+        <div class="desc">A hexagon half-filled like set stones, base locked in. Geometric and modern; the solid half gives it real presence.</div>
+      </div>
+    </div>
+
+    <!-- F: Ascending roadmap -->
+    <div class="card">
+      <svg class="mark" viewBox="0 0 100 100">
+        <rect x="16" y="60" width="19" height="24" rx="6" fill="#4f8cff"/>
+        <rect x="40.5" y="44" width="19" height="40" rx="6" fill="#6ea0ff"/>
+        <rect x="65" y="26" width="19" height="58" rx="6" fill="#3ecf8e"/>
+        <path d="M20 40 L46 30 L74 16" fill="none" stroke="#7fa8ff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" opacity="0.55"/>
+      </svg>
+      <div class="meta">
+        <div class="label">F · Roadmap</div>
+        <div class="word">
+          <svg class="wm" viewBox="0 0 100 100"><rect x="16" y="60" width="19" height="24" rx="6" fill="#4f8cff"/><rect x="40.5" y="44" width="19" height="40" rx="6" fill="#6ea0ff"/><rect x="65" y="26" width="19" height="58" rx="6" fill="#3ecf8e"/></svg>
+          Groundwork
+        </div>
+        <div class="desc">Rising steps: week, month, quarter. Speaks to the product's core promise of a prioritized plan over time.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Concept A shown across backgrounds -->
+  <div class="strip">
+    <div class="swatch dark">
+      <svg class="m" viewBox="0 0 100 100"><rect x="39" y="20" width="22" height="15" rx="7" fill="#3ecf8e"/><rect x="29" y="42.5" width="42" height="15" rx="7" fill="#7fa8ff"/><rect x="15" y="65" width="70" height="16" rx="8" fill="#4f8cff"/></svg>
+      <div class="cap">On dark</div>
+    </div>
+    <div class="swatch light">
+      <svg class="m" viewBox="0 0 100 100"><rect x="39" y="20" width="22" height="15" rx="7" fill="#3ecf8e"/><rect x="29" y="42.5" width="42" height="15" rx="7" fill="#4f8cff"/><rect x="15" y="65" width="70" height="16" rx="8" fill="#1f57c9"/></svg>
+      <div class="cap">On light</div>
+    </div>
+    <div class="swatch blue">
+      <svg class="m" viewBox="0 0 100 100"><rect x="39" y="20" width="22" height="15" rx="7" fill="#0c111b"/><rect x="29" y="42.5" width="42" height="15" rx="7" fill="rgba(255,255,255,0.85)"/><rect x="15" y="65" width="70" height="16" rx="8" fill="#fff"/></svg>
+      <div class="cap">Reversed</div>
+    </div>
+    <div class="swatch dark" style="justify-content:center;">
+      <div style="font-size:19px;color:#9aa8c0;line-height:1.6;text-align:center;">Example only.<br/>Every concept gets<br/>the same treatment.</div>
+    </div>
+  </div>
+
+  <!-- Favicon legibility check (concept A) -->
+  <div class="favrow">
+    <div class="fav"><div class="chip" style="width:96px;height:96px;"><svg width="64" height="64" viewBox="0 0 100 100"><rect x="39" y="20" width="22" height="15" rx="7" fill="#3ecf8e"/><rect x="29" y="42.5" width="42" height="15" rx="7" fill="#7fa8ff"/><rect x="15" y="65" width="70" height="16" rx="8" fill="#4f8cff"/></svg></div><div class="cap">64px</div></div>
+    <div class="fav"><div class="chip" style="width:56px;height:56px;"><svg width="36" height="36" viewBox="0 0 100 100"><rect x="39" y="20" width="22" height="15" rx="7" fill="#3ecf8e"/><rect x="29" y="42.5" width="42" height="15" rx="7" fill="#7fa8ff"/><rect x="15" y="65" width="70" height="16" rx="8" fill="#4f8cff"/></svg></div><div class="cap">32px</div></div>
+    <div class="fav"><div class="chip" style="width:40px;height:40px;"><svg width="26" height="26" viewBox="0 0 100 100"><rect x="39" y="20" width="22" height="15" rx="7" fill="#3ecf8e"/><rect x="29" y="42.5" width="42" height="15" rx="7" fill="#7fa8ff"/><rect x="15" y="65" width="70" height="16" rx="8" fill="#4f8cff"/></svg></div><div class="cap">16px</div></div>
+    <div style="color:#9aa8c0;font-size:19px;max-width:520px;line-height:1.5;padding-bottom:6px;">Favicon test at real sizes. The winning mark has to survive down to 16px in a browser tab, which is why the simpler shapes (A, C, E) tend to win.</div>
+  </div>
+
+</div>
+</body>
+</html>

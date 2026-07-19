@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import type { Store } from '../state/store';
 import { AccountControls } from './Account';
+import { BrandMark } from './BrandMark';
 import { planStats } from '../engine/plan';
 import { planToMarkdown } from '../export/markdown';
 import type { Category, ItemStatus, Phase, PlanItem } from '../types';
@@ -195,9 +196,7 @@ export function Dashboard({ store, onEditProfile, onHelp, onReport, onAdvisor, o
       <header className="dash-header">
         <div>
           <div className="brand small">
-            <span className="brand-mark" aria-hidden>
-              ⬢
-            </span>
+            <BrandMark className="brand-mark" />
             Groundwork
           </div>
           <h2>{profile.companyName.trim() || 'Your security plan'}</h2>

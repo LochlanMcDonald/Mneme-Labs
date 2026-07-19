@@ -109,8 +109,10 @@ h3 {
   color: var(--text-dim);
 }
 .brand-mark {
-  color: var(--accent);
-  font-size: 1.15em;
+  width: 1.5em;
+  height: 1.5em;
+  flex-shrink: 0;
+  display: block;
 }
 
 /* ───────── Landing ───────── */
@@ -455,9 +457,17 @@ h3 {
   padding-bottom: 6px;
 }
 .report-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   font-weight: 700;
   color: #3d6ff0;
   font-size: 14px;
+}
+.report-brand-mark {
+  width: 1.5em;
+  height: 1.5em;
+  flex-shrink: 0;
 }
 .report-company {
   font-size: 19px;
