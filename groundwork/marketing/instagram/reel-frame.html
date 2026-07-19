@@ -16,7 +16,7 @@
   }
   .header { padding: 90px 80px 0; text-align: center; }
   .brand { display: inline-flex; align-items: center; gap: 14px; font-weight: 800; font-size: 40px; margin-bottom: 30px; }
-  .brand .mark { color: #4f8cff; font-size: 46px; }
+  .brand .mark { width: 66px; height: 66px; flex-shrink: 0; }
   .header h1 { font-size: 66px; line-height: 1.1; letter-spacing: -0.02em; font-weight: 800; }
   /* Reserve the video band: header ~470px, video 1080x608 centered, footer rest */
   .videoband { height: 700px; }
@@ -29,7 +29,7 @@
 <body>
   <div id="frame">
     <div class="header">
-      <div class="brand"><span class="mark">⬢</span> Groundwork</div>
+      <div class="brand"><svg class="mark" viewBox="0 0 100 100"><polygon points="44,22 62,31 44,40 26,31" fill="#7df3ff"/><polygon points="26,31 44,40 44,47 26,38" fill="#22d3ee"/><polygon points="62,31 44,40 44,47 62,38" fill="#0e7490"/><polygon points="56,38 74,47 56,56 38,47" fill="#9ad4ff"/><polygon points="38,47 56,56 56,63 38,54" fill="#4f8cff"/><polygon points="74,47 56,56 56,63 74,54" fill="#3b5bdb"/><polygon points="44,54 62,63 44,72 26,63" fill="#d3b0ff"/><polygon points="26,63 44,72 44,79 26,70" fill="#a855f7"/><polygon points="62,63 44,72 44,79 62,70" fill="#7c3aed"/></svg> Groundwork</div>
       <h1>Your startup's security plan,<br />built in 5 minutes.</h1>
     </div>
     <div class="videoband"></div>
