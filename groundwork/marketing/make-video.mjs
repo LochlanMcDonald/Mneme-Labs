@@ -107,20 +107,14 @@ const savedState = {
   generatedAt: '2026-07-14T00:00:00.000Z',
 };
 
-// A prior advisor exchange, so the advisor view shows a real, answered
-// conversation alongside the new question.
-const priorRequests = [
-  {
-    id: 'req-prior',
-    subject: 'Do we need a penetration test before our enterprise deal?',
-    message: '',
-    status: 'answered',
-    createdAt: '2026-07-02T00:00:00.000Z',
-    answer:
-      'For a first enterprise deal, your SOC 2 report plus a recent vulnerability scan usually clears the bar. I would schedule a light pentest before the renewal. Send me the security addendum and I will mark it up with you.',
-    answeredAt: '2026-07-03T00:00:00.000Z',
-  },
-];
+// The advisor's reply to the question asked in the demo. Kept as a single,
+// matching question-and-answer pair so the exchange reads cleanly.
+const ADVISOR_ANSWER =
+  'Good instinct to check. Encrypt them at rest with a managed KMS, give each ' +
+  'key the narrowest scope it needs, and keep them out of logs and error ' +
+  'reports. Because they are customer secrets, add them to your SOC 2 ' +
+  'data-handling controls and set a rotation schedule. Send me your storage ' +
+  'design and I will review it.';
 
 async function moveClick(page, locator) {
   await locator.scrollIntoViewIfNeeded();
@@ -239,15 +233,15 @@ await page2.route('**/api/assist**', (r) => {
           id: 'req-new',
           subject: body.subject || '',
           message: body.message || '',
-          status: 'open',
+          status: 'answered',
           createdAt: '2026-07-19T00:00:00.000Z',
-          answer: '',
-          answeredAt: '',
+          answer: ADVISOR_ANSWER,
+          answeredAt: '2026-07-19T00:00:00.000Z',
         },
       },
     });
   }
-  return r.fulfill({ json: { requests: priorRequests } });
+  return r.fulfill({ json: { requests: [] } });
 });
 
 await page2.goto(APP);
