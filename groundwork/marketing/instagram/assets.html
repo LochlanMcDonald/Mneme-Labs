@@ -22,8 +22,12 @@
 
   /* ── Avatar 1080×1080. IG crops to a circle, so the mark is centered
      and text-free to survive the crop. ── */
-  #avatar { width: 1080px; height: 1080px; display: flex; align-items: center; justify-content: center; }
-  #avatar .mark { font-size: 620px; color: #4f8cff; line-height: 1; filter: drop-shadow(0 24px 70px rgba(79,140,255,0.45)); }
+  #avatar { width: 1080px; height: 1080px; display: flex; align-items: center; justify-content: center;
+    background:
+      radial-gradient(760px 620px at 78% -8%, rgba(168,85,247,0.28), transparent 60%),
+      radial-gradient(680px 560px at 12% 110%, rgba(34,211,238,0.20), transparent 60%),
+      #05070f; }
+  #avatar svg { width: 600px; height: 600px; filter: drop-shadow(0 30px 80px rgba(34,211,238,0.35)) drop-shadow(0 10px 40px rgba(168,85,247,0.30)); }
 
   /* ── Post: hook 1080×1080 ── */
   #hook { width: 1080px; height: 1080px; padding: 96px 90px; display: flex; flex-direction: column; }
@@ -60,7 +64,17 @@
 <body>
 
 <div class="board" id="avatar">
-  <div class="mark">⬢</div>
+  <svg viewBox="0 0 100 100">
+    <polygon points="44,22 62,31 44,40 26,31" fill="#7df3ff"/>
+    <polygon points="26,31 44,40 44,47 26,38" fill="#22d3ee"/>
+    <polygon points="62,31 44,40 44,47 62,38" fill="#0e7490"/>
+    <polygon points="56,38 74,47 56,56 38,47" fill="#9ad4ff"/>
+    <polygon points="38,47 56,56 56,63 38,54" fill="#4f8cff"/>
+    <polygon points="74,47 56,56 56,63 74,54" fill="#3b5bdb"/>
+    <polygon points="44,54 62,63 44,72 26,63" fill="#d3b0ff"/>
+    <polygon points="26,63 44,72 44,79 26,70" fill="#a855f7"/>
+    <polygon points="62,63 44,72 44,79 62,70" fill="#7c3aed"/>
+  </svg>
 </div>
 
 <div class="board" id="hook">
