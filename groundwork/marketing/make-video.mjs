@@ -1,6 +1,6 @@
 // Records a short silent product demo (title cards, wizard flow, dashboard,
-// Pro report, end card) against a local preview server, then stitches the
-// segments into demo.mp4.
+// security report, advisor question, end card) against a local preview
+// server, then stitches the segments into demo.mp4.
 //
 // Usage: npm run build && npx vite preview --port 4173 &
 //        node marketing/make-video.mjs
@@ -45,7 +45,7 @@ const card = (title, subtitle, opts = {}) => {
       radial-gradient(720px 460px at -8% 112%, rgba(34,211,238,.13), transparent 60%),
       #0a0f1c;
     font-family:'Inter',-apple-system,'Segoe UI',Roboto,sans-serif; color:#e8edf6; text-align:center; }
-  .in { max-width: 960px; padding: 0 60px; }
+  .in { max-width: 980px; padding: 0 60px; }
   .brand { display:inline-flex; align-items:center; font-weight:800; font-size:28px; margin-bottom:34px; color:#eaf3ff; }
   .eyebrow { color:#7fa8ff; font-weight:800; letter-spacing:.08em; text-transform:uppercase; font-size:22px; margin-bottom:18px; }
   h1 { font-size:56px; letter-spacing:-0.03em; line-height:1.12; font-weight:800; }
@@ -60,13 +60,20 @@ const card = (title, subtitle, opts = {}) => {
 </div></body></html>`;
 };
 
-// A visible cursor so viewers can follow the clicks.
-const CURSOR_SCRIPT = `
+// A visible cursor so viewers can follow the clicks, plus a style rule that
+// hides the plan/paid tier badges so the demo reads as one seamless product.
+const INIT_SCRIPT = `
   const dot = document.createElement('div');
   dot.style.cssText = 'position:fixed;z-index:99999;width:22px;height:22px;border-radius:50%;' +
     'background:rgba(79,140,255,.45);border:2.5px solid #7fa8ff;pointer-events:none;' +
     'transform:translate(-50%,-50%);transition:width .12s,height .12s;left:-50px;top:-50px';
-  const attach = () => document.body && document.body.appendChild(dot);
+  const attach = () => {
+    if (!document.body) return;
+    document.body.appendChild(dot);
+    const st = document.createElement('style');
+    st.textContent = '.pro-badge{display:none!important}';
+    document.head.appendChild(st);
+  };
   document.readyState === 'loading' ? addEventListener('DOMContentLoaded', attach) : attach();
   addEventListener('mousemove', (e) => { dot.style.left = e.clientX + 'px'; dot.style.top = e.clientY + 'px'; }, true);
   addEventListener('mousedown', () => { dot.style.width = '30px'; dot.style.height = '30px'; }, true);
@@ -75,8 +82,8 @@ const CURSOR_SCRIPT = `
 
 const savedState = {
   profile: {
-    companyName: 'VetSched',
-    description: 'Scheduling software for veterinary clinics.',
+    companyName: 'Nimbus',
+    description: 'A SaaS platform that helps engineering teams ship and scale cloud apps.',
     teamSize: 'small',
     stage: 'launched',
     productTypes: ['saas'],
@@ -100,6 +107,21 @@ const savedState = {
   generatedAt: '2026-07-14T00:00:00.000Z',
 };
 
+// A prior advisor exchange, so the advisor view shows a real, answered
+// conversation alongside the new question.
+const priorRequests = [
+  {
+    id: 'req-prior',
+    subject: 'Do we need a penetration test before our enterprise deal?',
+    message: '',
+    status: 'answered',
+    createdAt: '2026-07-02T00:00:00.000Z',
+    answer:
+      'For a first enterprise deal, your SOC 2 report plus a recent vulnerability scan usually clears the bar. I would schedule a light pentest before the renewal. Send me the security addendum and I will mark it up with you.',
+    answeredAt: '2026-07-03T00:00:00.000Z',
+  },
+];
+
 async function moveClick(page, locator) {
   await locator.scrollIntoViewIfNeeded();
   await page.waitForTimeout(250);
@@ -118,7 +140,7 @@ const context = await browser.newContext({
   viewport: SIZE,
   recordVideo: { dir: workDir, size: SIZE },
 });
-await context.addInitScript(CURSOR_SCRIPT);
+await context.addInitScript(INIT_SCRIPT);
 
 // ── Segment 1: hook, landing, wizard, plan reveal ──
 const page1 = await context.newPage();
@@ -132,10 +154,8 @@ await page1.setContent(
   }),
 );
 await page1.waitForTimeout(3200);
-await page1.setContent(
-  card('Meet Groundwork.', 'A tailored security plan for your startup. Free, in about 5 minutes.'),
-);
-await page1.waitForTimeout(2800);
+await page1.setContent(card('Meet Groundwork.', 'A tailored security plan for your startup, built in minutes.'));
+await page1.waitForTimeout(2600);
 
 await page1.goto(APP);
 await page1.waitForSelector('.landing-hero');
@@ -145,10 +165,10 @@ await page1.waitForSelector('.wizard');
 await page1.waitForTimeout(500);
 
 await page1.locator('input[type=text]').click();
-await page1.keyboard.type('VetSched', { delay: 70 });
+await page1.keyboard.type('Nimbus', { delay: 75 });
 await page1.waitForTimeout(300);
 await page1.locator('textarea').click();
-await page1.keyboard.type('Scheduling software for veterinary clinics.', { delay: 26 });
+await page1.keyboard.type('A SaaS platform that helps engineering teams ship and scale cloud apps.', { delay: 22 });
 await page1.waitForTimeout(300);
 await moveClick(page1, page1.locator('button:has-text("2–10 people")'));
 await moveClick(page1, page1.locator('button:has-text("Launched")'));
@@ -186,37 +206,85 @@ await moveClick(page1, page1.locator('button:has-text("Team password manager")')
 await page1.waitForTimeout(400);
 await moveClick(page1, page1.locator('button:has-text("Generate my plan")'));
 await page1.waitForSelector('.dashboard');
-await page1.waitForTimeout(2400);
+await page1.waitForTimeout(2200);
 
 // Scroll through the plan, open one control.
 await page1.evaluate(() => window.scrollTo({ top: 500, behavior: 'smooth' }));
-await page1.waitForTimeout(1500);
+await page1.waitForTimeout(1400);
 await moveClick(page1, page1.locator('.item-title').nth(3));
-await page1.waitForTimeout(2600);
+await page1.waitForTimeout(2400);
 await page1.close();
 
-// ── Segment 2: Pro report (signed-in, entitled) + end card ──
+// ── Segment 2: report, advisor question, end card (signed-in) ──
 const page2 = await context.newPage();
 await page2.route('**/.auth/me', (r) =>
-  r.fulfill({ json: { clientPrincipal: { userId: 'u1', userDetails: 'founder@vetsched.com', identityProvider: 'aad' } } }),
+  r.fulfill({ json: { clientPrincipal: { userId: 'u1', userDetails: 'founder@nimbus.dev', identityProvider: 'aad' } } }),
 );
 await page2.route('**/api/me', (r) =>
-  r.fulfill({ json: { userId: 'u1', userDetails: 'founder@vetsched.com', pro: true } }),
+  r.fulfill({ json: { userId: 'u1', userDetails: 'founder@nimbus.dev', pro: true } }),
 );
 await page2.route('**/api/state', (r) =>
   r.request().method() === 'GET' ? r.fulfill({ json: { state: savedState } }) : r.fulfill({ status: 204 }),
 );
+await page2.route('**/api/assist**', (r) => {
+  const req = r.request();
+  if (req.method() === 'POST') {
+    let body = {};
+    try {
+      body = JSON.parse(req.postData() || '{}');
+    } catch {}
+    return r.fulfill({
+      json: {
+        request: {
+          id: 'req-new',
+          subject: body.subject || '',
+          message: body.message || '',
+          status: 'open',
+          createdAt: '2026-07-19T00:00:00.000Z',
+          answer: '',
+          answeredAt: '',
+        },
+      },
+    });
+  }
+  return r.fulfill({ json: { requests: priorRequests } });
+});
+
 await page2.goto(APP);
 await page2.waitForSelector('.dashboard');
 await page2.waitForTimeout(900);
+
+// Security report
 await moveClick(page2, page2.locator('button:has-text("Security report")'));
 await page2.waitForSelector('.report');
-await page2.waitForTimeout(1900);
-await page2.evaluate(() => window.scrollTo({ top: 620, behavior: 'smooth' }));
-await page2.waitForTimeout(1900);
+await page2.waitForTimeout(1700);
+await page2.evaluate(() => window.scrollTo({ top: 640, behavior: 'smooth' }));
+await page2.waitForTimeout(1800);
+await moveClick(page2, page2.locator('button:has-text("Back")').first());
+await page2.waitForSelector('.dashboard');
+await page2.waitForTimeout(700);
+
+// Ask an advisor
+await moveClick(page2, page2.locator('button:has-text("Ask an advisor")'));
+await page2.waitForSelector('.advisor-form');
+await page2.waitForTimeout(700);
+await page2.locator('.advisor-form input[type=text]').click();
+await page2.keyboard.type('Is it safe to store customer API keys in our database?', { delay: 26 });
+await page2.waitForTimeout(300);
+await page2.locator('.advisor-form textarea').click();
+await page2.keyboard.type(
+  "We're adding a feature that stores our users' third-party API keys. What's the right way to handle them, and does it widen our SOC 2 scope?",
+  { delay: 18 },
+);
+await page2.waitForTimeout(400);
+await moveClick(page2, page2.locator('button:has-text("Send to an advisor")'));
+await page2.waitForTimeout(1300);
+// Scroll to the request list: the new question, and a prior answered one.
+await page2.evaluate(() => window.scrollTo({ top: 540, behavior: 'smooth' }));
+await page2.waitForTimeout(2600);
 
 await page2.setContent(
-  card('Get your free security plan today.', 'No expertise needed. No credit card.', {
+  card('Get your security plan today.', 'Your roadmap, an expert advisor, and audit-ready reports.', {
     cta: 'groundwork-security.com',
   }),
 );
