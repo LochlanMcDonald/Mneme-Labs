@@ -1,0 +1,230 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Inter', -apple-system, 'Segoe UI', Roboto, sans-serif; background: #333; -webkit-font-smoothing: antialiased; }
+  svg { display:block; }
+  #sheet {
+    width: 1600px; padding: 74px; color: #e6f4ff;
+    background:
+      radial-gradient(900px 600px at 84% -8%, rgba(168,85,247,0.18), transparent 60%),
+      radial-gradient(800px 600px at -8% 106%, rgba(34,211,238,0.16), transparent 60%),
+      #05070f;
+  }
+  #sheet::before { content:""; }
+  .sheet-head { display:flex; align-items:baseline; gap:20px; margin-bottom: 12px; }
+  .sheet-head h2 { font-size: 40px; font-weight: 800; letter-spacing: -0.02em; background:linear-gradient(90deg,#22d3ee,#a855f7); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .sheet-head span { color:#8aa0c6; font-size: 24px; }
+  .sub { color:#8aa0c6; font-size: 22px; margin-bottom: 44px; max-width: 1200px; }
+
+  .g3 { display:grid; grid-template-columns: repeat(3, 1fr); gap: 26px; }
+  .card {
+    position:relative; border-radius: 22px; padding: 40px; display:flex; align-items:center; gap: 34px;
+    background: linear-gradient(180deg, rgba(34,211,238,0.05), rgba(168,85,247,0.04)), #0a0f1c;
+    border: 1px solid rgba(120,180,255,0.14);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
+  }
+  .card .mark { width: 132px; height: 132px; flex-shrink:0; }
+  .card .meta .label { font-weight:800; text-transform:uppercase; letter-spacing:0.08em; font-size: 19px; margin-bottom: 10px;
+    background:linear-gradient(90deg,#38e0ff,#c084fc); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .card .meta .name { font-size: 27px; font-weight: 800; letter-spacing:-0.01em; margin-bottom: 10px; color:#eaf6ff; }
+  .card .meta .desc { color:#8aa0c6; font-size: 18px; line-height:1.4; max-width: 300px; }
+
+  .wide { grid-column: 1 / -1; }
+  .logo-wrap { display:flex; flex-direction:column; gap:16px; align-items:flex-start; }
+  .cyberword {
+    font-size: 78px; font-weight: 800; letter-spacing: 0.14em; line-height:1;
+    background:linear-gradient(92deg,#22d3ee 0%, #7db9ff 45%, #d946ef 100%);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+    filter: drop-shadow(0 0 18px rgba(56,224,255,0.45)) drop-shadow(0 0 26px rgba(217,70,239,0.30));
+  }
+  .cyberline { height:4px; width: 640px; border-radius:2px; background:linear-gradient(90deg,#22d3ee,#d946ef); box-shadow:0 0 14px rgba(56,224,255,0.7); }
+
+  .section { color:#8aa0c6; font-weight:800; text-transform:uppercase; letter-spacing:0.08em; font-size:20px; margin: 44px 0 22px; }
+  .favrow { display:flex; align-items:flex-end; gap: 30px; }
+  .favrow .fav { display:flex; flex-direction:column; align-items:center; gap:12px; }
+  .favrow .fav .chip { background:#05070f; border:1px solid rgba(120,180,255,0.18); border-radius: 22%; display:flex; align-items:center; justify-content:center; }
+  .favrow .fav .cap { color:#8aa0c6; font-size:15px; font-weight:600; }
+  .favnote { color:#8aa0c6; font-size:18px; max-width:520px; line-height:1.5; padding-bottom:6px; }
+</style>
+</head>
+<body>
+<div id="sheet">
+  <div class="sheet-head"><h2>Groundwork</h2><span>cyber / 3D concepts</span></div>
+  <div class="sub">A completely different direction: dimensional marks with an electric palette (cyan, violet, magenta, holographic gradients and glow). Pick one and I will refine it into the full set.</div>
+
+  <div class="g3">
+
+    <!-- X1 Iso Cube -->
+    <div class="card">
+      <svg class="mark" viewBox="0 0 100 100">
+        <defs>
+          <linearGradient id="x1t" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#a8fbff"/><stop offset="1" stop-color="#22d3ee"/></linearGradient>
+          <linearGradient id="x1l" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5b9dff"/><stop offset="1" stop-color="#3b5bdb"/></linearGradient>
+          <linearGradient id="x1r" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b46bff"/><stop offset="1" stop-color="#6d28d9"/></linearGradient>
+          <filter id="x1g" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="2.2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        </defs>
+        <g filter="url(#x1g)">
+          <polygon points="50,16 82,34 50,52 18,34" fill="url(#x1t)"/>
+          <polygon points="18,34 50,52 50,86 18,68" fill="url(#x1l)"/>
+          <polygon points="82,34 50,52 50,86 82,68" fill="url(#x1r)"/>
+          <polygon points="50,16 82,34 50,52 18,34" fill="none" stroke="#c9fdff" stroke-width="1.3" stroke-linejoin="round"/>
+          <line x1="50" y1="52" x2="50" y2="86" stroke="#dcfbff" stroke-width="1" opacity="0.5"/>
+        </g>
+      </svg>
+      <div class="meta">
+        <div class="label">X1 · Blockchain</div>
+        <div class="name">Groundwork</div>
+        <div class="desc">A single 3D foundation block, cyan face into violet depth.</div>
+      </div>
+    </div>
+
+    <!-- X2 Stacked slabs -->
+    <div class="card">
+      <svg class="mark" viewBox="0 0 100 100">
+        <defs>
+          <filter id="x2g" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        </defs>
+        <g filter="url(#x2g)">
+          <!-- top slab (cyan) -->
+          <polygon points="50,15 80,30 50,45 20,30" fill="#7df3ff"/>
+          <polygon points="20,30 50,45 50,54 20,39" fill="#22d3ee"/>
+          <polygon points="80,30 50,45 50,54 80,39" fill="#0ea5c4"/>
+          <!-- mid slab (blue) -->
+          <polygon points="50,33 80,48 50,63 20,48" fill="#7db0ff"/>
+          <polygon points="20,48 50,63 50,72 20,57" fill="#4f8cff"/>
+          <polygon points="80,48 50,63 50,72 80,57" fill="#3b5bdb"/>
+          <!-- bottom slab (violet) -->
+          <polygon points="50,51 80,66 50,81 20,66" fill="#c9a2ff"/>
+          <polygon points="20,66 50,81 50,90 20,75" fill="#a855f7"/>
+          <polygon points="80,66 50,81 50,90 80,75" fill="#7c3aed"/>
+        </g>
+      </svg>
+      <div class="meta">
+        <div class="label">X2 · Stack</div>
+        <div class="name">Groundwork</div>
+        <div class="desc">Three glowing slabs stacked into a foundation tower.</div>
+      </div>
+    </div>
+
+    <!-- X3 Hex prism -->
+    <div class="card">
+      <svg class="mark" viewBox="0 0 100 100">
+        <defs>
+          <linearGradient id="x3t" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7bffe0"/><stop offset="1" stop-color="#22d3ee"/></linearGradient>
+          <filter id="x3g" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="2.1" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        </defs>
+        <g filter="url(#x3g)">
+          <polygon points="28,45 50,57 50,77 28,65" fill="#158b9e"/>
+          <polygon points="72,45 50,57 50,77 72,65" fill="#0d6b7a"/>
+          <polygon points="50,7 72,19 72,45 50,57 28,45 28,19" fill="url(#x3t)"/>
+          <polygon points="50,7 72,19 72,45 50,57 28,45 28,19" fill="none" stroke="#c9fff2" stroke-width="1.3" stroke-linejoin="round"/>
+        </g>
+      </svg>
+      <div class="meta">
+        <div class="label">X3 · Prism</div>
+        <div class="name">Groundwork</div>
+        <div class="desc">The hexagon reborn as an extruded 3D crystal prism.</div>
+      </div>
+    </div>
+
+    <!-- X4 Neon Ascend -->
+    <div class="card">
+      <svg class="mark" viewBox="0 0 100 100">
+        <defs>
+          <filter id="x4g" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="2.4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        </defs>
+        <g filter="url(#x4g)">
+          <polygon points="20,70 50,55 80,70 80,74 50,59 20,74" fill="#0e7490"/>
+          <polygon points="28,56 50,45 72,56 72,60 50,49 28,60" fill="#155e75"/>
+          <polygon points="36,43 50,36 64,43 64,47 50,40 36,47" fill="#3b0a5c"/>
+          <polygon points="20,70 50,55 80,70 80,63 50,48 20,63" fill="#22d3ee"/>
+          <polygon points="28,56 50,45 72,56 72,49 50,38 28,49" fill="#5eead4"/>
+          <polygon points="36,43 50,36 64,43 64,36 50,29 36,36" fill="#a855f7"/>
+        </g>
+      </svg>
+      <div class="meta">
+        <div class="label">X4 · Neon Ascend</div>
+        <div class="name">Groundwork</div>
+        <div class="desc">Your chevrons, extruded and lit like neon signage.</div>
+      </div>
+    </div>
+
+    <!-- X5 Holo shield -->
+    <div class="card">
+      <svg class="mark" viewBox="0 0 100 100">
+        <defs>
+          <linearGradient id="x5h" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#22d3ee"/><stop offset="0.5" stop-color="#7db9ff"/><stop offset="1" stop-color="#d946ef"/></linearGradient>
+          <filter id="x5g" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="2.2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        </defs>
+        <g filter="url(#x5g)">
+          <path d="M50 12 L82 25 L82 50 C82 72 66 85 50 91 C34 85 18 72 18 50 L18 25 Z" fill="url(#x5h)"/>
+          <polygon points="50,12 18,25 18,45 50,26" fill="#ffffff" opacity="0.18"/>
+          <path d="M50 12 L50 91" stroke="#04121e" stroke-width="1.4" opacity="0.25"/>
+          <path d="M50 12 L82 25 L82 50 C82 72 66 85 50 91 C34 85 18 72 18 50 L18 25 Z" fill="none" stroke="#c9fbff" stroke-width="1.4" stroke-linejoin="round"/>
+        </g>
+      </svg>
+      <div class="meta">
+        <div class="label">X5 · Holo Shield</div>
+        <div class="name">Groundwork</div>
+        <div class="desc">A faceted shield with an iridescent holographic sheen.</div>
+      </div>
+    </div>
+
+    <!-- X6 Grid platform -->
+    <div class="card">
+      <svg class="mark" viewBox="0 0 100 100">
+        <defs>
+          <linearGradient id="x6c" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a8fbff"/><stop offset="1" stop-color="#22d3ee"/></linearGradient>
+          <filter id="x6g" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="2.3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        </defs>
+        <polygon points="50,52 88,72 50,92 12,72" fill="#0a1c2e"/>
+        <g stroke="#22d3ee" stroke-width="1.2" opacity="0.55">
+          <line x1="50" y1="52" x2="50" y2="92"/>
+          <line x1="12" y1="72" x2="88" y2="72"/>
+          <line x1="31" y1="62" x2="69" y2="82"/>
+          <line x1="69" y1="62" x2="31" y2="82"/>
+        </g>
+        <polygon points="50,52 88,72 50,92 12,72" fill="none" stroke="#38e0ff" stroke-width="1.5"/>
+        <g filter="url(#x6g)">
+          <polygon points="50,26 68,36 50,46 32,36" fill="url(#x6c)"/>
+          <polygon points="32,36 50,46 50,64 32,54" fill="#2f80c4"/>
+          <polygon points="68,36 50,46 50,64 68,54" fill="#7c3aed"/>
+        </g>
+      </svg>
+      <div class="meta">
+        <div class="label">X6 · Grid Core</div>
+        <div class="name">Groundwork</div>
+        <div class="desc">A cube of protection rising from a glowing cyber grid.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- X7 Cyber logotype -->
+  <div class="g3" style="margin-top:26px;">
+    <div class="card wide">
+      <div class="logo-wrap">
+        <div class="cyberword">GROUNDWORK</div>
+        <div class="cyberline"></div>
+      </div>
+      <div class="meta" style="margin-left:24px;">
+        <div class="label">X7 · Cyber Logotype</div>
+        <div class="desc" style="max-width:520px;font-size:20px;">A neon-glow wordmark on a charged gradient bar. Works on its own or locked up beside any mark above.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">Favicon &amp; avatar check</div>
+  <div class="favrow">
+    <div class="fav"><div class="chip" style="width:64px;height:64px;"><svg width="46" height="46" viewBox="0 0 100 100"><polygon points="50,16 82,34 50,52 18,34" fill="#4de0f5"/><polygon points="18,34 50,52 50,86 18,68" fill="#4f8cff"/><polygon points="82,34 50,52 50,86 82,68" fill="#8b3ff0"/></svg></div><div class="cap">X1 · 32</div></div>
+    <div class="fav"><div class="chip" style="width:64px;height:64px;"><svg width="46" height="46" viewBox="0 0 100 100"><polygon points="28,45 50,57 50,77 28,65" fill="#158b9e"/><polygon points="72,45 50,57 50,77 72,65" fill="#0d6b7a"/><polygon points="50,7 72,19 72,45 50,57 28,45 28,19" fill="#2ad6ea"/></svg></div><div class="cap">X3 · 32</div></div>
+    <div class="fav"><div class="chip" style="width:64px;height:64px;overflow:hidden;"><svg width="64" height="64" viewBox="0 0 100 100"><defs><linearGradient id="fav5" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#22d3ee"/><stop offset="0.5" stop-color="#7db9ff"/><stop offset="1" stop-color="#d946ef"/></linearGradient></defs><rect width="100" height="100" fill="#070b16"/><path d="M50 16 L80 27 L80 50 C80 70 65 82 50 88 C35 82 20 70 20 50 L20 27 Z" fill="url(#fav5)"/></svg></div><div class="cap">X5 · 32</div></div>
+    <div class="favnote">Dimensional marks need a touch more room than flat ones, but the cube (X1), prism (X3), and shield (X5) still hold their shape in a browser tab.</div>
+  </div>
+
+</div>
+</body>
+</html>
