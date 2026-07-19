@@ -1,9 +1,10 @@
-// Records a short silent product demo (title card, wizard flow, dashboard,
+// Records a short silent product demo (title cards, wizard flow, dashboard,
 // Pro report, end card) against a local preview server, then stitches the
 // segments into demo.mp4.
 //
 // Usage: npm run build && npx vite preview --port 4173 &
 //        node marketing/make-video.mjs
+// Set OUT_NAME to change the output filename (default demo.mp4).
 // Requires playwright-core and an ffmpeg binary (FFMPEG_PATH env or
 // imageio-ffmpeg's bundled binary).
 import { chromium } from 'playwright-core';
@@ -18,22 +19,46 @@ fs.rmSync(workDir, { recursive: true, force: true });
 fs.mkdirSync(workDir, { recursive: true });
 
 const SIZE = { width: 1280, height: 720 };
-const APP = 'http://localhost:4173/';
+const APP = process.env.APP_URL || 'http://localhost:4173/';
+const OUT_NAME = process.env.OUT_NAME || 'demo.mp4';
 
-const card = (title, subtitle, accent = '#4f8cff') => `<!doctype html><html><head><style>
+// The Groundwork mark, inline so title cards match the app and favicon.
+const MARK =
+  `<svg viewBox="0 0 100 100" style="width:1.35em;height:1.35em;vertical-align:-0.32em;margin-right:6px">` +
+  `<polygon points="44,22 62,31 44,40 26,31" fill="#7df3ff"/>` +
+  `<polygon points="26,31 44,40 44,47 26,38" fill="#22d3ee"/>` +
+  `<polygon points="62,31 44,40 44,47 62,38" fill="#0e7490"/>` +
+  `<polygon points="56,38 74,47 56,56 38,47" fill="#9ad4ff"/>` +
+  `<polygon points="38,47 56,56 56,63 38,54" fill="#4f8cff"/>` +
+  `<polygon points="74,47 56,56 56,63 74,54" fill="#3b5bdb"/>` +
+  `<polygon points="44,54 62,63 44,72 26,63" fill="#d3b0ff"/>` +
+  `<polygon points="26,63 44,72 44,79 26,70" fill="#a855f7"/>` +
+  `<polygon points="62,63 44,72 44,79 62,70" fill="#7c3aed"/></svg>`;
+
+const card = (title, subtitle, opts = {}) => {
+  const { eyebrow = '', cta = '' } = opts;
+  return `<!doctype html><html><head><style>
   * { margin:0; box-sizing:border-box; }
   body { width:1280px; height:720px; display:flex; align-items:center; justify-content:center;
-    background: radial-gradient(900px 500px at 80% -10%, rgba(79,140,255,.2), transparent 60%), #0c111b;
+    background:
+      radial-gradient(760px 460px at 84% -12%, rgba(168,85,247,.16), transparent 60%),
+      radial-gradient(720px 460px at -8% 112%, rgba(34,211,238,.13), transparent 60%),
+      #0a0f1c;
     font-family:'Inter',-apple-system,'Segoe UI',Roboto,sans-serif; color:#e8edf6; text-align:center; }
-  .in { max-width: 900px; padding: 0 60px; }
-  .brand { color:${accent}; font-weight:800; font-size:30px; margin-bottom:28px; }
-  h1 { font-size:56px; letter-spacing:-0.03em; line-height:1.1; font-weight:800; }
-  p { color:#9aa8c0; font-size:26px; margin-top:20px; }
+  .in { max-width: 960px; padding: 0 60px; }
+  .brand { display:inline-flex; align-items:center; font-weight:800; font-size:28px; margin-bottom:34px; color:#eaf3ff; }
+  .eyebrow { color:#7fa8ff; font-weight:800; letter-spacing:.08em; text-transform:uppercase; font-size:22px; margin-bottom:18px; }
+  h1 { font-size:56px; letter-spacing:-0.03em; line-height:1.12; font-weight:800; }
+  p { color:#9aa8c0; font-size:27px; margin-top:22px; line-height:1.4; }
+  .cta { display:inline-block; margin-top:34px; font-weight:800; font-size:26px; color:#3ecf8e; }
 </style></head><body><div class="in">
-  <div class="brand">⬢ Groundwork</div>
+  <div class="brand">${MARK} Groundwork</div>
+  ${eyebrow ? `<div class="eyebrow">${eyebrow}</div>` : ''}
   <h1>${title}</h1>
   ${subtitle ? `<p>${subtitle}</p>` : ''}
+  ${cta ? `<div class="cta">${cta}</div>` : ''}
 </div></body></html>`;
+};
 
 // A visible cursor so viewers can follow the clicks.
 const CURSOR_SCRIPT = `
@@ -101,10 +126,16 @@ const page1 = await context.newPage();
 // opening seconds render letterboxed.
 await page1.goto('about:blank');
 await page1.waitForTimeout(900);
-await page1.setContent(card('Your first big customer just sent a security questionnaire.', 'Now what?'));
-await page1.waitForTimeout(3000);
-await page1.setContent(card('Meet Groundwork.', 'A tailored security plan for your startup, free, in 5 minutes.', '#3ecf8e'));
-await page1.waitForTimeout(2700);
+await page1.setContent(
+  card('A customer just asked for your security posture.', "You don't have a security team. That's fine.", {
+    eyebrow: 'The moment it gets real',
+  }),
+);
+await page1.waitForTimeout(3200);
+await page1.setContent(
+  card('Meet Groundwork.', 'A tailored security plan for your startup. Free, in about 5 minutes.'),
+);
+await page1.waitForTimeout(2800);
 
 await page1.goto(APP);
 await page1.waitForSelector('.landing-hero');
@@ -117,7 +148,7 @@ await page1.locator('input[type=text]').click();
 await page1.keyboard.type('VetSched', { delay: 70 });
 await page1.waitForTimeout(300);
 await page1.locator('textarea').click();
-await page1.keyboard.type('Scheduling software for veterinary clinics.', { delay: 28 });
+await page1.keyboard.type('Scheduling software for veterinary clinics.', { delay: 26 });
 await page1.waitForTimeout(300);
 await moveClick(page1, page1.locator('button:has-text("2–10 people")'));
 await moveClick(page1, page1.locator('button:has-text("Launched")'));
@@ -184,7 +215,11 @@ await page2.waitForTimeout(1900);
 await page2.evaluate(() => window.scrollTo({ top: 620, behavior: 'smooth' }));
 await page2.waitForTimeout(1900);
 
-await page2.setContent(card('Get your free security plan today.', 'groundwork-security.com', '#3ecf8e'));
+await page2.setContent(
+  card('Get your free security plan today.', 'No expertise needed. No credit card.', {
+    cta: 'groundwork-security.com',
+  }),
+);
 await page2.waitForTimeout(3400);
 await page2.close();
 
@@ -216,7 +251,7 @@ const mp4s = webms.map((w, i) => {
 
 const listFile = path.join(workDir, 'list.txt');
 fs.writeFileSync(listFile, mp4s.map((m) => `file '${m}'`).join('\n'));
-const finalOut = path.join(here, 'demo.mp4');
+const finalOut = path.join(here, OUT_NAME);
 execFileSync(ffmpeg, ['-y', '-f', 'concat', '-safe', '0', '-i', listFile, '-c', 'copy', '-movflags', '+faststart', finalOut]);
 
 console.log('wrote', finalOut, `(${(fs.statSync(finalOut).size / 1e6).toFixed(1)} MB, ${webms.length} segments)`);
