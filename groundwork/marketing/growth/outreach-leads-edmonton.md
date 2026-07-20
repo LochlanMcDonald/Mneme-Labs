@@ -43,6 +43,48 @@ Alberta or LinkedIn before contacting (I did not want to guess names).
 - **AltaML** - applied-AI firm working with ATB Financial and energy (mid-size)
 - **Nanoprecise Sci Corp** - industrial IoT predictive maintenance (~$52M, larger)
 
+## Finding the truly tiny fish (pre-seed, 1 to 3 people)
+
+Reality check: startups this small do not appear in funding databases or "top
+startup" lists, because they are too small to be indexed. You find them at the
+source, where they show up by name. Best sources, tiniest first:
+
+**University pipelines (the smallest, often pre-company):**
+- **eHUB** (University of Alberta's Entrepreneurship Centre) - Ideas Lab, student
+  ventures, and demo days. ehub.ualberta.ca.
+- **ThresholdImpact Venture Mentoring Service** (U of A) - early ventures being
+  mentored. thresholdimpactvms.com.
+- **NAIT Mawji Centre**, **MacEwan**, and **Concordia** entrepreneurship programs.
+
+**Incubator early cohorts and demo days (go, or watch the pages):**
+- **Edmonton Unlimited** early programs (Preflight, Launch Point, Get Ready Set
+  Raise). Attend the demo days: every founder pitching is a lead.
+- **Alberta Accelerator by 500** and **Plug and Play Alberta** cohort demo days.
+
+**Pitch nights (grab the whole roster, not just the winner):**
+- **Startup TNT** pitch events, **Startup Week Edmonton**, **Upper Bound** startup
+  alley, and hackathon demo days like **HackED** at the U of A.
+
+**Just-launched product directories, filtered to Edmonton makers:**
+- **Product Hunt** (filter makers by location), **BetaList**, **Indie Hackers**
+  (search Edmonton / Alberta). These are pre-launch and just-launched tiny teams.
+
+**LinkedIn (the scalable one for tiny teams):**
+- People search: **location = Edmonton area**, **title = Founder or Co-founder**,
+  and set **current company headcount = 1-10**. Add a recent-activity filter to
+  find the active ones.
+- Company search: **location = Edmonton**, **headcount 1-10**, **founded in the
+  last 1-2 years**.
+
+**In person and community (highest hit rate for tiny):**
+- **DevEdmonton**, **Amii** meetups, the **Startup Edmonton** coworking space,
+  and Edmonton tech Slack/Discord groups. For 1-to-3-person startups, showing up
+  and offering a coffee beats any database.
+
+The honest punchline: at this size you find founders by **being in the room**,
+not by running a query. Highest ROI this month: hit one Edmonton Unlimited or
+Startup TNT demo day, plus a LinkedIn people search with the filters above.
+
 ## Playing the local card
 
 - **Meet in person.** Offer a 15-minute coffee. "I'm building a startup security
