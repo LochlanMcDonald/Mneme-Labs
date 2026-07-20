@@ -20,6 +20,54 @@ out. A few may have pivoted or renamed since the roundups.
 3. Personalize with their YC one-liner and send the email/LinkedIn note from
    `outreach-templates.md`.
 
+## Enriched top targets (founders + sites, ready to contact)
+
+Researched from public sources (July 2026). Still confirm the founder and
+email on the company site or LinkedIn before sending. Emails are not published
+for most, so use Apollo/Hunter with the founder name + the domain below.
+Ordered by fit: the smaller, less-funded ones are the sweet spot (a founder
+doing security themselves, no security hire yet).
+
+1. **Unsiloed AI** - unsiloed.ai - San Francisco - YC F25, ~2 people
+   - Founders: **Adnan Abbas**, **Aman Mishra**
+   - APIs that turn messy documents into structured data; customers in finance,
+     legal, healthcare, and NASDAQ-listed firms, so buyers demand SOC 2.
+2. **Telemetron** - telemetron.ai - San Francisco - YC F25, ~2 people
+   - Founders: **Shivani Patel** (ex-SpaceX/Starlink support AI), **Hamza Shaikh**
+   - AI support platform for hardware companies; stores customer + device data.
+3. **AutoSitu** - autositu.com - Detroit - YC W26
+   - Founders: **George Zhai**, **Asher (Xuanshu) Lin**
+   - AI review of municipal development plans; piloting with the City of Detroit,
+     so government-grade security expectations.
+4. **MouseCat** - mousecat.ai - YC W26, ~$500K seed
+   - Founders: **Nicholas Aldridge** (CEO, ex-AWS Bedrock), **Joseph McAllister**
+     (CTO, ex-Coinbase; LinkedIn: joseph-mcallister)
+   - AI fraud/risk investigations; already lists Databricks and Snowflake as
+     customers, meaning real security questionnaires are landing now. (Caveat:
+     security-savvy team, but the enterprise logos make it timely.)
+5. **Flywheel.cx** - flywheel.cx
+   - Founders: **Alex** and **Jaen Carrodine** (verify full names)
+   - AI churn prediction for SaaS; integrates with customers' user data. Confirm
+     stage/backing before you tailor the note.
+6. **Locus** - paywithlocus.com - YC-backed
+   - Founders: **Cole Dermott** (ex-Coinbase payments), **Eliot Lee** (ex-Scale AI)
+   - Payment infrastructure for AI agents; payments = PCI and security scrutiny
+     from day one. Public contact exists: founders@paywithlocus.com.
+7. **F2** - f2.ai - New York (verify; one source said Tel Aviv) - ~$24M raised
+   - Founder: **Don Muir** (spun F2 out of Arc)
+   - AI platform for private credit/PE; handles sensitive financial data. Better
+     funded, so may already have security help. Still a fit, lower priority.
+8. **General Legal** - general.legal - YC W26, ~$11.5M raised
+   - Founders: **J.P. Mohler**, **Javed Qadruddin**, **Ryan Walker** (ex-Casetext/
+     CoCounsel)
+   - AI-native law firm for founders; confidential legal data. Better funded.
+9. **Vector Legal** - vectorlegal.com - YC W26
+   - Founders: see vectorlegal.com/team (team ex-Fenwick, YC Legal, Ironclad)
+   - AI-native law firm + legal OS for startups; confidential client data.
+
+Priority order to start emailing: 1-6 first (smaller, likelier to be doing
+security themselves), then 7-9.
+
 ## Best-fit first (they handle sensitive data or sell up-market fast)
 
 | Company | What they do | Why a strong fit |
