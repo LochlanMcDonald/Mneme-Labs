@@ -41,9 +41,9 @@ export function Landing({ onStart, onHelp, onTerms, onPrivacy, auth, sync }: Pro
           Without the hassle.
         </h1>
         <p className="lede">
-          Answer a few questions about your company and get a prioritized,
-          plain language security roadmap: what to do this week, this month,
-          this quarter, and why.
+          Answer a few quick questions about your company and get a security
+          plan, free. Sign in below to save it, and if you ever want a real
+          security advisor to weigh in, you can.
         </p>
         <button className="btn btn-primary btn-lg" onClick={onStart}>
           Build my security plan
