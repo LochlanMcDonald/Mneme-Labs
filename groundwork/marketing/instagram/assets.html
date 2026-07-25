@@ -6,28 +6,30 @@
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body { font-family: 'Inter', -apple-system, 'Segoe UI', Roboto, sans-serif; background: #333; -webkit-font-smoothing: antialiased; }
   .board {
-    position: relative; overflow: hidden; color: #e8edf6; margin-bottom: 40px;
+    position: relative; overflow: hidden; color: #0d2b3e; margin-bottom: 40px;
     background:
-      radial-gradient(900px 600px at 82% -10%, rgba(79,140,255,0.22), transparent 60%),
-      radial-gradient(700px 500px at -8% 108%, rgba(62,207,142,0.13), transparent 60%),
-      #0c111b;
+      radial-gradient(900px 620px at 84% -10%, rgba(10,165,201,0.30), transparent 62%),
+      radial-gradient(680px 470px at -6% 4%, rgba(124,92,219,0.20), transparent 60%),
+      radial-gradient(820px 600px at 18% 108%, rgba(255,138,76,0.22), transparent 62%),
+      #edf3fa;
   }
   .brand { display: flex; align-items: center; gap: 14px; font-weight: 800; }
   .brand .mark { width: 1.5em; height: 1.5em; flex-shrink: 0; }
   h1 { letter-spacing: -0.03em; line-height: 1.08; font-weight: 800; }
-  .sub { color: #9aa8c0; line-height: 1.45; }
-  .free { display: inline-block; background: rgba(62,207,142,0.14); color: #3ecf8e; border: 1.5px solid rgba(62,207,142,0.4); border-radius: 999px; font-weight: 800; }
-  .chip { display:inline-block; background: rgba(79,140,255,0.16); color:#7fa8ff; border:1.5px solid rgba(79,140,255,0.45); border-radius:999px; font-weight:700; }
-  .handle { color: #7fa8ff; font-weight: 700; }
+  .sub { color: #55738a; line-height: 1.45; }
+  .free { display: inline-block; background: rgba(18,160,107,0.13); color: #0d7a52; border: 1.5px solid rgba(18,160,107,0.38); border-radius: 999px; font-weight: 800; }
+  .chip { display:inline-block; background: rgba(10,134,171,0.12); color:#076780; border:1.5px solid rgba(10,134,171,0.38); border-radius:999px; font-weight:700; }
+  .handle { color: #0a86ab; font-weight: 700; }
 
   /* ── Avatar 1080×1080. IG crops to a circle, so the mark is centered
      and text-free to survive the crop. ── */
   #avatar { width: 1080px; height: 1080px; display: flex; align-items: center; justify-content: center;
     background:
-      radial-gradient(760px 620px at 78% -8%, rgba(168,85,247,0.28), transparent 60%),
-      radial-gradient(680px 560px at 12% 110%, rgba(34,211,238,0.20), transparent 60%),
-      #05070f; }
-  #avatar svg { width: 600px; height: 600px; filter: drop-shadow(0 30px 80px rgba(34,211,238,0.35)) drop-shadow(0 10px 40px rgba(168,85,247,0.30)); }
+      radial-gradient(760px 620px at 78% -8%, rgba(10,165,201,0.34), transparent 62%),
+      radial-gradient(620px 470px at 8% 6%, rgba(124,92,219,0.22), transparent 60%),
+      radial-gradient(680px 560px at 16% 110%, rgba(255,138,76,0.26), transparent 62%),
+      #edf3fa; }
+  #avatar svg { width: 680px; height: 680px; filter: drop-shadow(0 26px 60px rgba(9,45,66,0.22)) drop-shadow(0 8px 20px rgba(10,134,171,0.24)); }
 
   /* ── Post: hook 1080×1080 ── */
   #hook { width: 1080px; height: 1080px; padding: 96px 90px; display: flex; flex-direction: column; }
@@ -40,23 +42,23 @@
 
   /* ── Post: questionnaire moment 1080×1080 ── */
   #moment { width: 1080px; height: 1080px; padding: 96px 90px; display: flex; flex-direction: column; }
-  #moment .brand { font-size: 30px; margin-bottom: 50px; color: #9aa8c0; }
-  #moment .brand .mark { color:#4f8cff; }
-  #moment .eyebrow { color: #f0b429; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; font-size: 26px; margin-bottom: 22px; }
+  #moment .brand { font-size: 30px; margin-bottom: 50px; color: #55738a; }
+  #moment .brand .mark { color:#29bcdc; }
+  #moment .eyebrow { color: #c2600f; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; font-size: 26px; margin-bottom: 22px; }
   #moment h1 { font-size: 78px; margin-bottom: 30px; }
   #moment .sub { font-size: 33px; max-width: 840px; }
   #moment .spacer { flex: 1; }
-  #moment .cta { font-size: 30px; color: #3ecf8e; font-weight: 700; }
+  #moment .cta { font-size: 30px; color: #0a86ab; font-weight: 700; }
 
   /* ── Post: tip card 1080×1080 (shared .tip layout) ── */
   .tip { width: 1080px; height: 1080px; padding: 96px 90px; display: flex; flex-direction: column; }
-  .tip .brand { font-size: 30px; margin-bottom: 40px; color:#9aa8c0; }
-  .tip .brand .mark { color:#4f8cff; }
-  .tip .eyebrow { color:#7fa8ff; font-weight:800; letter-spacing:0.06em; text-transform:uppercase; font-size:26px; margin-bottom: 26px; }
+  .tip .brand { font-size: 30px; margin-bottom: 40px; color:#55738a; }
+  .tip .brand .mark { color:#29bcdc; }
+  .tip .eyebrow { color:#076780; font-weight:800; letter-spacing:0.06em; text-transform:uppercase; font-size:26px; margin-bottom: 26px; }
   .tip h1 { font-size: 72px; margin-bottom: 40px; }
   .tip .rows { display:flex; flex-direction:column; gap: 22px; }
-  .tip .row { display:flex; align-items:center; gap: 22px; font-size: 34px; color:#e8edf6; }
-  .tip .row .dot { width: 40px; height: 40px; border-radius: 10px; background: rgba(62,207,142,0.18); color:#3ecf8e; display:flex; align-items:center; justify-content:center; font-weight:900; flex-shrink:0; }
+  .tip .row { display:flex; align-items:center; gap: 22px; font-size: 34px; color:#0d2b3e; }
+  .tip .row .dot { width: 40px; height: 40px; border-radius: 10px; background: rgba(18,160,107,0.15); color:#0f8a5c; display:flex; align-items:center; justify-content:center; font-weight:900; flex-shrink:0; }
   .tip .spacer { flex:1; }
   .tip .handle { font-size: 30px; }
 </style>
@@ -65,20 +67,20 @@
 
 <div class="board" id="avatar">
   <svg viewBox="0 0 100 100">
-    <polygon points="44,22 62,31 44,40 26,31" fill="#7df3ff"/>
-    <polygon points="26,31 44,40 44,47 26,38" fill="#22d3ee"/>
-    <polygon points="62,31 44,40 44,47 62,38" fill="#0e7490"/>
-    <polygon points="56,38 74,47 56,56 38,47" fill="#9ad4ff"/>
-    <polygon points="38,47 56,56 56,63 38,54" fill="#4f8cff"/>
-    <polygon points="74,47 56,56 56,63 74,54" fill="#3b5bdb"/>
-    <polygon points="44,54 62,63 44,72 26,63" fill="#d3b0ff"/>
-    <polygon points="26,63 44,72 44,79 26,70" fill="#a855f7"/>
-    <polygon points="62,63 44,72 44,79 62,70" fill="#7c3aed"/>
+    <polygon points="44,22 62,31 44,40 26,31" fill="#ffc09a"/>
+    <polygon points="26,31 44,40 44,47 26,38" fill="#ff8a4c"/>
+    <polygon points="62,31 44,40 44,47 62,38" fill="#ef6b28"/>
+    <polygon points="56,38 74,47 56,56 38,47" fill="#7ce0f2"/>
+    <polygon points="38,47 56,56 56,63 38,54" fill="#29bcdc"/>
+    <polygon points="74,47 56,56 56,63 74,54" fill="#1595b8"/>
+    <polygon points="44,54 62,63 44,72 26,63" fill="#54bcd8"/>
+    <polygon points="26,63 44,72 44,79 26,70" fill="#0a86ab"/>
+    <polygon points="62,63 44,72 44,79 62,70" fill="#076780"/>
   </svg>
 </div>
 
 <div class="board" id="hook">
-  <div class="brand"><svg class="mark" viewBox="0 0 100 100"><polygon points="44,22 62,31 44,40 26,31" fill="#7df3ff"/><polygon points="26,31 44,40 44,47 26,38" fill="#22d3ee"/><polygon points="62,31 44,40 44,47 62,38" fill="#0e7490"/><polygon points="56,38 74,47 56,56 38,47" fill="#9ad4ff"/><polygon points="38,47 56,56 56,63 38,54" fill="#4f8cff"/><polygon points="74,47 56,56 56,63 74,54" fill="#3b5bdb"/><polygon points="44,54 62,63 44,72 26,63" fill="#d3b0ff"/><polygon points="26,63 44,72 44,79 26,70" fill="#a855f7"/><polygon points="62,63 44,72 44,79 62,70" fill="#7c3aed"/></svg> Groundwork</div>
+  <div class="brand"><svg class="mark" viewBox="0 0 100 100"><polygon points="44,22 62,31 44,40 26,31" fill="#ffc09a"/><polygon points="26,31 44,40 44,47 26,38" fill="#ff8a4c"/><polygon points="62,31 44,40 44,47 62,38" fill="#ef6b28"/><polygon points="56,38 74,47 56,56 38,47" fill="#7ce0f2"/><polygon points="38,47 56,56 56,63 38,54" fill="#29bcdc"/><polygon points="74,47 56,56 56,63 74,54" fill="#1595b8"/><polygon points="44,54 62,63 44,72 26,63" fill="#54bcd8"/><polygon points="26,63 44,72 44,79 26,70" fill="#0a86ab"/><polygon points="62,63 44,72 44,79 62,70" fill="#076780"/></svg> Groundwork</div>
   <h1>Your startup's security plan, in 5 minutes.</h1>
   <div class="sub">Answer a few questions. Get a tailored, prioritized roadmap: what to do this week, this month, this quarter.</div>
   <div class="spacer"></div>
@@ -86,7 +88,7 @@
 </div>
 
 <div class="board" id="moment">
-  <div class="brand"><svg class="mark" viewBox="0 0 100 100"><polygon points="44,22 62,31 44,40 26,31" fill="#7df3ff"/><polygon points="26,31 44,40 44,47 26,38" fill="#22d3ee"/><polygon points="62,31 44,40 44,47 62,38" fill="#0e7490"/><polygon points="56,38 74,47 56,56 38,47" fill="#9ad4ff"/><polygon points="38,47 56,56 56,63 38,54" fill="#4f8cff"/><polygon points="74,47 56,56 56,63 74,54" fill="#3b5bdb"/><polygon points="44,54 62,63 44,72 26,63" fill="#d3b0ff"/><polygon points="26,63 44,72 44,79 26,70" fill="#a855f7"/><polygon points="62,63 44,72 44,79 62,70" fill="#7c3aed"/></svg> Groundwork</div>
+  <div class="brand"><svg class="mark" viewBox="0 0 100 100"><polygon points="44,22 62,31 44,40 26,31" fill="#ffc09a"/><polygon points="26,31 44,40 44,47 26,38" fill="#ff8a4c"/><polygon points="62,31 44,40 44,47 62,38" fill="#ef6b28"/><polygon points="56,38 74,47 56,56 38,47" fill="#7ce0f2"/><polygon points="38,47 56,56 56,63 38,54" fill="#29bcdc"/><polygon points="74,47 56,56 56,63 74,54" fill="#1595b8"/><polygon points="44,54 62,63 44,72 26,63" fill="#54bcd8"/><polygon points="26,63 44,72 44,79 26,70" fill="#0a86ab"/><polygon points="62,63 44,72 44,79 62,70" fill="#076780"/></svg> Groundwork</div>
   <div class="eyebrow">The moment it gets real</div>
   <h1>A customer just sent you a security questionnaire.</h1>
   <div class="sub">Don't panic. Groundwork builds your plan and gives you the answers, free.</div>
@@ -95,7 +97,7 @@
 </div>
 
 <div class="board tip" id="tip">
-  <div class="brand"><svg class="mark" viewBox="0 0 100 100"><polygon points="44,22 62,31 44,40 26,31" fill="#7df3ff"/><polygon points="26,31 44,40 44,47 26,38" fill="#22d3ee"/><polygon points="62,31 44,40 44,47 62,38" fill="#0e7490"/><polygon points="56,38 74,47 56,56 38,47" fill="#9ad4ff"/><polygon points="38,47 56,56 56,63 38,54" fill="#4f8cff"/><polygon points="74,47 56,56 56,63 74,54" fill="#3b5bdb"/><polygon points="44,54 62,63 44,72 26,63" fill="#d3b0ff"/><polygon points="26,63 44,72 44,79 26,70" fill="#a855f7"/><polygon points="62,63 44,72 44,79 62,70" fill="#7c3aed"/></svg> Groundwork</div>
+  <div class="brand"><svg class="mark" viewBox="0 0 100 100"><polygon points="44,22 62,31 44,40 26,31" fill="#ffc09a"/><polygon points="26,31 44,40 44,47 26,38" fill="#ff8a4c"/><polygon points="62,31 44,40 44,47 62,38" fill="#ef6b28"/><polygon points="56,38 74,47 56,56 38,47" fill="#7ce0f2"/><polygon points="38,47 56,56 56,63 38,54" fill="#29bcdc"/><polygon points="74,47 56,56 56,63 74,54" fill="#1595b8"/><polygon points="44,54 62,63 44,72 26,63" fill="#54bcd8"/><polygon points="26,63 44,72 44,79 26,70" fill="#0a86ab"/><polygon points="62,63 44,72 44,79 62,70" fill="#076780"/></svg> Groundwork</div>
   <div class="eyebrow">Do this week</div>
   <h1>4 things that stop most startup breaches</h1>
   <div class="rows">
@@ -109,7 +111,7 @@
 </div>
 
 <div class="board tip" id="tip-cloud">
-  <div class="brand"><svg class="mark" viewBox="0 0 100 100"><polygon points="44,22 62,31 44,40 26,31" fill="#7df3ff"/><polygon points="26,31 44,40 44,47 26,38" fill="#22d3ee"/><polygon points="62,31 44,40 44,47 62,38" fill="#0e7490"/><polygon points="56,38 74,47 56,56 38,47" fill="#9ad4ff"/><polygon points="38,47 56,56 56,63 38,54" fill="#4f8cff"/><polygon points="74,47 56,56 56,63 74,54" fill="#3b5bdb"/><polygon points="44,54 62,63 44,72 26,63" fill="#d3b0ff"/><polygon points="26,63 44,72 44,79 26,70" fill="#a855f7"/><polygon points="62,63 44,72 44,79 62,70" fill="#7c3aed"/></svg> Groundwork</div>
+  <div class="brand"><svg class="mark" viewBox="0 0 100 100"><polygon points="44,22 62,31 44,40 26,31" fill="#ffc09a"/><polygon points="26,31 44,40 44,47 26,38" fill="#ff8a4c"/><polygon points="62,31 44,40 44,47 62,38" fill="#ef6b28"/><polygon points="56,38 74,47 56,56 38,47" fill="#7ce0f2"/><polygon points="38,47 56,56 56,63 38,54" fill="#29bcdc"/><polygon points="74,47 56,56 56,63 74,54" fill="#1595b8"/><polygon points="44,54 62,63 44,72 26,63" fill="#54bcd8"/><polygon points="26,63 44,72 44,79 26,70" fill="#0a86ab"/><polygon points="62,63 44,72 44,79 62,70" fill="#076780"/></svg> Groundwork</div>
   <div class="eyebrow">Cloud security</div>
   <h1>Stop one leaked key from ending your startup</h1>
   <div class="rows">
@@ -123,7 +125,7 @@
 </div>
 
 <div class="board tip" id="tip-backups">
-  <div class="brand"><svg class="mark" viewBox="0 0 100 100"><polygon points="44,22 62,31 44,40 26,31" fill="#7df3ff"/><polygon points="26,31 44,40 44,47 26,38" fill="#22d3ee"/><polygon points="62,31 44,40 44,47 62,38" fill="#0e7490"/><polygon points="56,38 74,47 56,56 38,47" fill="#9ad4ff"/><polygon points="38,47 56,56 56,63 38,54" fill="#4f8cff"/><polygon points="74,47 56,56 56,63 74,54" fill="#3b5bdb"/><polygon points="44,54 62,63 44,72 26,63" fill="#d3b0ff"/><polygon points="26,63 44,72 44,79 26,70" fill="#a855f7"/><polygon points="62,63 44,72 44,79 62,70" fill="#7c3aed"/></svg> Groundwork</div>
+  <div class="brand"><svg class="mark" viewBox="0 0 100 100"><polygon points="44,22 62,31 44,40 26,31" fill="#ffc09a"/><polygon points="26,31 44,40 44,47 26,38" fill="#ff8a4c"/><polygon points="62,31 44,40 44,47 62,38" fill="#ef6b28"/><polygon points="56,38 74,47 56,56 38,47" fill="#7ce0f2"/><polygon points="38,47 56,56 56,63 38,54" fill="#29bcdc"/><polygon points="74,47 56,56 56,63 74,54" fill="#1595b8"/><polygon points="44,54 62,63 44,72 26,63" fill="#54bcd8"/><polygon points="26,63 44,72 44,79 26,70" fill="#0a86ab"/><polygon points="62,63 44,72 44,79 62,70" fill="#076780"/></svg> Groundwork</div>
   <div class="eyebrow">Ransomware defense</div>
   <h1>Ransomware-proof your startup in an afternoon</h1>
   <div class="rows">
@@ -137,7 +139,7 @@
 </div>
 
 <div class="board tip" id="tip-bec">
-  <div class="brand"><svg class="mark" viewBox="0 0 100 100"><polygon points="44,22 62,31 44,40 26,31" fill="#7df3ff"/><polygon points="26,31 44,40 44,47 26,38" fill="#22d3ee"/><polygon points="62,31 44,40 44,47 62,38" fill="#0e7490"/><polygon points="56,38 74,47 56,56 38,47" fill="#9ad4ff"/><polygon points="38,47 56,56 56,63 38,54" fill="#4f8cff"/><polygon points="74,47 56,56 56,63 74,54" fill="#3b5bdb"/><polygon points="44,54 62,63 44,72 26,63" fill="#d3b0ff"/><polygon points="26,63 44,72 44,79 26,70" fill="#a855f7"/><polygon points="62,63 44,72 44,79 62,70" fill="#7c3aed"/></svg> Groundwork</div>
+  <div class="brand"><svg class="mark" viewBox="0 0 100 100"><polygon points="44,22 62,31 44,40 26,31" fill="#ffc09a"/><polygon points="26,31 44,40 44,47 26,38" fill="#ff8a4c"/><polygon points="62,31 44,40 44,47 62,38" fill="#ef6b28"/><polygon points="56,38 74,47 56,56 38,47" fill="#7ce0f2"/><polygon points="38,47 56,56 56,63 38,54" fill="#29bcdc"/><polygon points="74,47 56,56 56,63 74,54" fill="#1595b8"/><polygon points="44,54 62,63 44,72 26,63" fill="#54bcd8"/><polygon points="26,63 44,72 44,79 26,70" fill="#0a86ab"/><polygon points="62,63 44,72 44,79 62,70" fill="#076780"/></svg> Groundwork</div>
   <div class="eyebrow">Protect the money</div>
   <h1>The email scam that drains startup bank accounts</h1>
   <div class="rows">
@@ -151,7 +153,7 @@
 </div>
 
 <div class="board tip" id="tip-github">
-  <div class="brand"><svg class="mark" viewBox="0 0 100 100"><polygon points="44,22 62,31 44,40 26,31" fill="#7df3ff"/><polygon points="26,31 44,40 44,47 26,38" fill="#22d3ee"/><polygon points="62,31 44,40 44,47 62,38" fill="#0e7490"/><polygon points="56,38 74,47 56,56 38,47" fill="#9ad4ff"/><polygon points="38,47 56,56 56,63 38,54" fill="#4f8cff"/><polygon points="74,47 56,56 56,63 74,54" fill="#3b5bdb"/><polygon points="44,54 62,63 44,72 26,63" fill="#d3b0ff"/><polygon points="26,63 44,72 44,79 26,70" fill="#a855f7"/><polygon points="62,63 44,72 44,79 62,70" fill="#7c3aed"/></svg> Groundwork</div>
+  <div class="brand"><svg class="mark" viewBox="0 0 100 100"><polygon points="44,22 62,31 44,40 26,31" fill="#ffc09a"/><polygon points="26,31 44,40 44,47 26,38" fill="#ff8a4c"/><polygon points="62,31 44,40 44,47 62,38" fill="#ef6b28"/><polygon points="56,38 74,47 56,56 38,47" fill="#7ce0f2"/><polygon points="38,47 56,56 56,63 38,54" fill="#29bcdc"/><polygon points="74,47 56,56 56,63 74,54" fill="#1595b8"/><polygon points="44,54 62,63 44,72 26,63" fill="#54bcd8"/><polygon points="26,63 44,72 44,79 26,70" fill="#0a86ab"/><polygon points="62,63 44,72 44,79 62,70" fill="#076780"/></svg> Groundwork</div>
   <div class="eyebrow">Free wins</div>
   <h1>4 GitHub settings every startup should turn on</h1>
   <div class="rows">
@@ -165,7 +167,7 @@
 </div>
 
 <div class="board tip" id="tip-incident">
-  <div class="brand"><svg class="mark" viewBox="0 0 100 100"><polygon points="44,22 62,31 44,40 26,31" fill="#7df3ff"/><polygon points="26,31 44,40 44,47 26,38" fill="#22d3ee"/><polygon points="62,31 44,40 44,47 62,38" fill="#0e7490"/><polygon points="56,38 74,47 56,56 38,47" fill="#9ad4ff"/><polygon points="38,47 56,56 56,63 38,54" fill="#4f8cff"/><polygon points="74,47 56,56 56,63 74,54" fill="#3b5bdb"/><polygon points="44,54 62,63 44,72 26,63" fill="#d3b0ff"/><polygon points="26,63 44,72 44,79 26,70" fill="#a855f7"/><polygon points="62,63 44,72 44,79 62,70" fill="#7c3aed"/></svg> Groundwork</div>
+  <div class="brand"><svg class="mark" viewBox="0 0 100 100"><polygon points="44,22 62,31 44,40 26,31" fill="#ffc09a"/><polygon points="26,31 44,40 44,47 26,38" fill="#ff8a4c"/><polygon points="62,31 44,40 44,47 62,38" fill="#ef6b28"/><polygon points="56,38 74,47 56,56 38,47" fill="#7ce0f2"/><polygon points="38,47 56,56 56,63 38,54" fill="#29bcdc"/><polygon points="74,47 56,56 56,63 74,54" fill="#1595b8"/><polygon points="44,54 62,63 44,72 26,63" fill="#54bcd8"/><polygon points="26,63 44,72 44,79 26,70" fill="#0a86ab"/><polygon points="62,63 44,72 44,79 62,70" fill="#076780"/></svg> Groundwork</div>
   <div class="eyebrow">Before you need it</div>
   <h1>Write your incident plan on a calm day</h1>
   <div class="rows">
@@ -179,7 +181,7 @@
 </div>
 
 <div class="board tip" id="tip-vendors">
-  <div class="brand"><svg class="mark" viewBox="0 0 100 100"><polygon points="44,22 62,31 44,40 26,31" fill="#7df3ff"/><polygon points="26,31 44,40 44,47 26,38" fill="#22d3ee"/><polygon points="62,31 44,40 44,47 62,38" fill="#0e7490"/><polygon points="56,38 74,47 56,56 38,47" fill="#9ad4ff"/><polygon points="38,47 56,56 56,63 38,54" fill="#4f8cff"/><polygon points="74,47 56,56 56,63 74,54" fill="#3b5bdb"/><polygon points="44,54 62,63 44,72 26,63" fill="#d3b0ff"/><polygon points="26,63 44,72 44,79 26,70" fill="#a855f7"/><polygon points="62,63 44,72 44,79 62,70" fill="#7c3aed"/></svg> Groundwork</div>
+  <div class="brand"><svg class="mark" viewBox="0 0 100 100"><polygon points="44,22 62,31 44,40 26,31" fill="#ffc09a"/><polygon points="26,31 44,40 44,47 26,38" fill="#ff8a4c"/><polygon points="62,31 44,40 44,47 62,38" fill="#ef6b28"/><polygon points="56,38 74,47 56,56 38,47" fill="#7ce0f2"/><polygon points="38,47 56,56 56,63 38,54" fill="#29bcdc"/><polygon points="74,47 56,56 56,63 74,54" fill="#1595b8"/><polygon points="44,54 62,63 44,72 26,63" fill="#54bcd8"/><polygon points="26,63 44,72 44,79 26,70" fill="#0a86ab"/><polygon points="62,63 44,72 44,79 62,70" fill="#076780"/></svg> Groundwork</div>
   <div class="eyebrow">Shadow IT</div>
   <h1>The forgotten SaaS tool leaking your data</h1>
   <div class="rows">
@@ -193,7 +195,7 @@
 </div>
 
 <div class="board tip" id="tip-secrets">
-  <div class="brand"><svg class="mark" viewBox="0 0 100 100"><polygon points="44,22 62,31 44,40 26,31" fill="#7df3ff"/><polygon points="26,31 44,40 44,47 26,38" fill="#22d3ee"/><polygon points="62,31 44,40 44,47 62,38" fill="#0e7490"/><polygon points="56,38 74,47 56,56 38,47" fill="#9ad4ff"/><polygon points="38,47 56,56 56,63 38,54" fill="#4f8cff"/><polygon points="74,47 56,56 56,63 74,54" fill="#3b5bdb"/><polygon points="44,54 62,63 44,72 26,63" fill="#d3b0ff"/><polygon points="26,63 44,72 44,79 26,70" fill="#a855f7"/><polygon points="62,63 44,72 44,79 62,70" fill="#7c3aed"/></svg> Groundwork</div>
+  <div class="brand"><svg class="mark" viewBox="0 0 100 100"><polygon points="44,22 62,31 44,40 26,31" fill="#ffc09a"/><polygon points="26,31 44,40 44,47 26,38" fill="#ff8a4c"/><polygon points="62,31 44,40 44,47 62,38" fill="#ef6b28"/><polygon points="56,38 74,47 56,56 38,47" fill="#7ce0f2"/><polygon points="38,47 56,56 56,63 38,54" fill="#29bcdc"/><polygon points="74,47 56,56 56,63 74,54" fill="#1595b8"/><polygon points="44,54 62,63 44,72 26,63" fill="#54bcd8"/><polygon points="26,63 44,72 44,79 26,70" fill="#0a86ab"/><polygon points="62,63 44,72 44,79 62,70" fill="#076780"/></svg> Groundwork</div>
   <div class="eyebrow">Developer basics</div>
   <h1>Get your secrets out of your code</h1>
   <div class="rows">
@@ -207,7 +209,7 @@
 </div>
 
 <div class="board tip" id="tip-soc2">
-  <div class="brand"><svg class="mark" viewBox="0 0 100 100"><polygon points="44,22 62,31 44,40 26,31" fill="#7df3ff"/><polygon points="26,31 44,40 44,47 26,38" fill="#22d3ee"/><polygon points="62,31 44,40 44,47 62,38" fill="#0e7490"/><polygon points="56,38 74,47 56,56 38,47" fill="#9ad4ff"/><polygon points="38,47 56,56 56,63 38,54" fill="#4f8cff"/><polygon points="74,47 56,56 56,63 74,54" fill="#3b5bdb"/><polygon points="44,54 62,63 44,72 26,63" fill="#d3b0ff"/><polygon points="26,63 44,72 44,79 26,70" fill="#a855f7"/><polygon points="62,63 44,72 44,79 62,70" fill="#7c3aed"/></svg> Groundwork</div>
+  <div class="brand"><svg class="mark" viewBox="0 0 100 100"><polygon points="44,22 62,31 44,40 26,31" fill="#ffc09a"/><polygon points="26,31 44,40 44,47 26,38" fill="#ff8a4c"/><polygon points="62,31 44,40 44,47 62,38" fill="#ef6b28"/><polygon points="56,38 74,47 56,56 38,47" fill="#7ce0f2"/><polygon points="38,47 56,56 56,63 38,54" fill="#29bcdc"/><polygon points="74,47 56,56 56,63 74,54" fill="#1595b8"/><polygon points="44,54 62,63 44,72 26,63" fill="#54bcd8"/><polygon points="26,63 44,72 44,79 26,70" fill="#0a86ab"/><polygon points="62,63 44,72 44,79 62,70" fill="#076780"/></svg> Groundwork</div>
   <div class="eyebrow">Enterprise ready</div>
   <h1>Closing enterprise deals? Start SOC 2 early</h1>
   <div class="rows">
