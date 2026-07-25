@@ -9,6 +9,8 @@ interface Props {
   onHelp: () => void;
   onTerms: () => void;
   onPrivacy: () => void;
+  onAbout: () => void;
+  onCoverage: () => void;
   auth: AuthState;
   sync: SyncStatus;
 }
@@ -16,25 +18,67 @@ interface Props {
 const STEPS = [
   {
     title: 'Tell us about your startup',
-    body: 'A five-minute questionnaire: what you build, what data you handle, what systems you run, and who your customers are.',
+    body: 'Five minutes of plain questions. No jargon, and nothing you need to look up before you can answer it.',
   },
   {
     title: 'Get a tailored roadmap',
-    body: 'We match your answers against a knowledge base of startup-sized security controls: baseline essentials for everyone, plus the ones your specific setup demands.',
+    body: 'Your answers rule out most of the advice on the internet. What is left is the work that actually applies to a company built like yours, in the order it should happen.',
   },
   {
     title: 'Work through it, step by step',
-    body: 'Every item explains the risk, the concrete steps, the effort, and tools to use. Track progress, add notes, and export the plan when a customer or auditor asks.',
+    body: 'Each item tells you what it protects you from and how long it takes. Tick things off as you go, and export the whole thing when somebody asks to see it.',
   },
 ];
 
-export function Landing({ onStart, onHelp, onTerms, onPrivacy, auth, sync }: Props) {
+const FRAMEWORKS = [
+  'SOC 2',
+  'ISO 27001',
+  'CIS Controls',
+  'GDPR',
+  'HIPAA',
+  'PCI DSS',
+  'OWASP',
+];
+
+export function Landing({
+  onStart,
+  onHelp,
+  onTerms,
+  onPrivacy,
+  onAbout,
+  onCoverage,
+  auth,
+  sync,
+}: Props) {
   return (
     <div className="landing">
+      <nav className="nav">
+        <div className="nav-inner">
+          <div className="brand nav-brand">
+            <BrandMark className="brand-mark" />
+            Groundwork
+          </div>
+          <div className="nav-links">
+            <button className="nav-link" onClick={onCoverage}>
+              What&apos;s covered
+            </button>
+            <button className="nav-link" onClick={onAbout}>
+              About
+            </button>
+            <button className="nav-link nav-link-wide" onClick={onHelp}>
+              Help &amp; FAQs
+            </button>
+            <button className="btn btn-primary btn-small" onClick={onStart}>
+              Get my plan
+            </button>
+          </div>
+        </div>
+      </nav>
+
       <header className="landing-hero">
-        <div className="brand">
-          <BrandMark className="brand-mark" />
-          Groundwork
+        <div className="hero-eyebrow">
+          <span className="hero-dot" />
+          For companies with no security team and no time to build one
         </div>
         <h1>
           Startup security, sorted.<br />
@@ -53,6 +97,17 @@ export function Landing({ onStart, onHelp, onTerms, onPrivacy, auth, sync }: Pro
         </div>
       </header>
 
+      <section className="trust">
+        <p className="trust-label">
+          Cross-referenced to the standards your customers will ask about
+        </p>
+        <ul className="trust-list">
+          {FRAMEWORKS.map((f) => (
+            <li key={f}>{f}</li>
+          ))}
+        </ul>
+      </section>
+
       <section className="landing-steps">
         {STEPS.map((step, i) => (
           <div className="step-card" key={step.title}>
@@ -64,9 +119,9 @@ export function Landing({ onStart, onHelp, onTerms, onPrivacy, auth, sync }: Pro
       </section>
 
       <section className="landing-video">
-        <h2>See it in action</h2>
+        <h2>Watch someone do it</h2>
         <p className="landing-video-sub">
-          From first question to finished plan, in under a minute.
+          The whole thing, start to finish, at normal speed.
         </p>
         <video controls playsInline preload="metadata" poster="demo-poster.jpg">
           <source src="demo.mp4" type="video/mp4" />
@@ -75,27 +130,27 @@ export function Landing({ onStart, onHelp, onTerms, onPrivacy, auth, sync }: Pro
       </section>
 
       <section className="landing-beyond">
-        <h2>More than a checklist</h2>
+        <h2>For the bad days too</h2>
         <p className="landing-beyond-sub">
-          Getting set up is half the story. We're also there for the messy
-          moments and the questions in between.
+          Setting things up is the easy half. We also cover what happens when
+          something has already gone wrong.
         </p>
         <div className="beyond-grid">
           <div className="step-card">
             <h3>Help after an incident</h3>
             <p>
-              Phished account, leaked key, lost laptop, exposed data:
-              step-by-step first-aid playbooks for the moments when something
-              has already gone wrong, including who to call and what to do
-              first.
+              Somebody clicked the wrong link, a key ended up in a public repo,
+              a laptop went missing. There is a playbook for each one that
+              starts with what to do in the first ten minutes and who you need
+              to tell.
             </p>
           </div>
           <div className="step-card">
             <h3>Answers along the way</h3>
             <p>
-              Straight answers to the questions founders actually ask: what
-              to spend, who should own security, when SOC 2 makes sense, and
-              how to handle customer security questionnaires.
+              How much should any of this cost. Who owns it when nobody has the
+              word security in their title. Whether you are ready for SOC 2 or
+              being sold it too early. Answered like a colleague would.
             </p>
           </div>
         </div>
@@ -110,10 +165,18 @@ export function Landing({ onStart, onHelp, onTerms, onPrivacy, auth, sync }: Pro
 
       <footer className="landing-footer">
         <p>
-          We're dedicated to helping startups get their security footing:
-          clear priorities, concrete steps, and a plan that grows with you.
+          We help young companies get their security footing before somebody
+          forces the issue.
         </p>
         <p className="footer-links">
+          <button className="link-btn" onClick={onAbout}>
+            About
+          </button>
+          {' · '}
+          <button className="link-btn" onClick={onCoverage}>
+            What&apos;s covered
+          </button>
+          {' · '}
           <button className="link-btn" onClick={onTerms}>
             Terms of Service
           </button>

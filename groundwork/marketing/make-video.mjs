@@ -25,15 +25,15 @@ const OUT_NAME = process.env.OUT_NAME || 'demo.mp4';
 // The Groundwork mark, inline so title cards match the app and favicon.
 const MARK =
   `<svg viewBox="0 0 100 100" style="width:1.35em;height:1.35em;vertical-align:-0.32em;margin-right:6px">` +
-  `<polygon points="44,22 62,31 44,40 26,31" fill="#7df3ff"/>` +
-  `<polygon points="26,31 44,40 44,47 26,38" fill="#22d3ee"/>` +
-  `<polygon points="62,31 44,40 44,47 62,38" fill="#0e7490"/>` +
-  `<polygon points="56,38 74,47 56,56 38,47" fill="#9ad4ff"/>` +
-  `<polygon points="38,47 56,56 56,63 38,54" fill="#4f8cff"/>` +
-  `<polygon points="74,47 56,56 56,63 74,54" fill="#3b5bdb"/>` +
-  `<polygon points="44,54 62,63 44,72 26,63" fill="#d3b0ff"/>` +
-  `<polygon points="26,63 44,72 44,79 26,70" fill="#a855f7"/>` +
-  `<polygon points="62,63 44,72 44,79 62,70" fill="#7c3aed"/></svg>`;
+  `<polygon points="44,22 62,31 44,40 26,31" fill="#ffc09a"/>` +
+  `<polygon points="26,31 44,40 44,47 26,38" fill="#ff8a4c"/>` +
+  `<polygon points="62,31 44,40 44,47 62,38" fill="#ef6b28"/>` +
+  `<polygon points="56,38 74,47 56,56 38,47" fill="#7ce0f2"/>` +
+  `<polygon points="38,47 56,56 56,63 38,54" fill="#29bcdc"/>` +
+  `<polygon points="74,47 56,56 56,63 74,54" fill="#1595b8"/>` +
+  `<polygon points="44,54 62,63 44,72 26,63" fill="#54bcd8"/>` +
+  `<polygon points="26,63 44,72 44,79 26,70" fill="#0a86ab"/>` +
+  `<polygon points="62,63 44,72 44,79 62,70" fill="#076780"/></svg>`;
 
 const card = (title, subtitle, opts = {}) => {
   const { eyebrow = '', cta = '' } = opts;
@@ -41,16 +41,17 @@ const card = (title, subtitle, opts = {}) => {
   * { margin:0; box-sizing:border-box; }
   body { width:1280px; height:720px; display:flex; align-items:center; justify-content:center;
     background:
-      radial-gradient(760px 460px at 84% -12%, rgba(168,85,247,.16), transparent 60%),
-      radial-gradient(720px 460px at -8% 112%, rgba(34,211,238,.13), transparent 60%),
-      #0a0f1c;
-    font-family:'Inter',-apple-system,'Segoe UI',Roboto,sans-serif; color:#e8edf6; text-align:center; }
+      radial-gradient(760px 470px at 84% -12%, rgba(10,165,201,.26), transparent 62%),
+      radial-gradient(640px 430px at -6% 6%, rgba(124,92,219,.18), transparent 60%),
+      radial-gradient(700px 470px at 18% 112%, rgba(255,138,76,.2), transparent 62%),
+      #edf3fa;
+    font-family:'Inter',-apple-system,'Segoe UI',Roboto,sans-serif; color:#0d2b3e; text-align:center; }
   .in { max-width: 980px; padding: 0 60px; }
-  .brand { display:inline-flex; align-items:center; font-weight:800; font-size:28px; margin-bottom:34px; color:#eaf3ff; }
-  .eyebrow { color:#7fa8ff; font-weight:800; letter-spacing:.08em; text-transform:uppercase; font-size:22px; margin-bottom:18px; }
+  .brand { display:inline-flex; align-items:center; font-weight:800; font-size:28px; margin-bottom:34px; color:#0d2b3e; }
+  .eyebrow { color:#076780; font-weight:800; letter-spacing:.08em; text-transform:uppercase; font-size:22px; margin-bottom:18px; }
   h1 { font-size:56px; letter-spacing:-0.03em; line-height:1.12; font-weight:800; }
-  p { color:#9aa8c0; font-size:27px; margin-top:22px; line-height:1.4; }
-  .cta { display:inline-block; margin-top:34px; font-weight:800; font-size:26px; color:#3ecf8e; }
+  p { color:#55738a; font-size:27px; margin-top:22px; line-height:1.4; }
+  .cta { display:inline-block; margin-top:34px; font-weight:800; font-size:26px; color:#0a86ab; }
 </style></head><body><div class="in">
   <div class="brand">${MARK} Groundwork</div>
   ${eyebrow ? `<div class="eyebrow">${eyebrow}</div>` : ''}
@@ -65,7 +66,7 @@ const card = (title, subtitle, opts = {}) => {
 const INIT_SCRIPT = `
   const dot = document.createElement('div');
   dot.style.cssText = 'position:fixed;z-index:99999;width:22px;height:22px;border-radius:50%;' +
-    'background:rgba(79,140,255,.45);border:2.5px solid #7fa8ff;pointer-events:none;' +
+    'background:rgba(10,134,171,.35);border:2.5px solid #0a86ab;pointer-events:none;' +
     'transform:translate(-50%,-50%);transition:width .12s,height .12s;left:-50px;top:-50px';
   const attach = () => {
     if (!document.body) return;
