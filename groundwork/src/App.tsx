@@ -7,6 +7,8 @@ import { Report } from './components/Report';
 import { Advisor } from './components/Advisor';
 import { Admin } from './components/Admin';
 import { Privacy, Terms } from './components/Legal';
+import { About } from './components/About';
+import { Coverage } from './components/Coverage';
 import { useStore } from './state/store';
 
 type View =
@@ -18,13 +20,17 @@ type View =
   | 'advisor'
   | 'admin'
   | 'terms'
-  | 'privacy';
+  | 'privacy'
+  | 'about'
+  | 'coverage';
 
 /** Views that are directly linkable via the URL hash (#/terms etc.). */
 const HASH_VIEWS: Record<string, View> = {
   '#/terms': 'terms',
   '#/privacy': 'privacy',
   '#/help': 'help',
+  '#/about': 'about',
+  '#/coverage': 'coverage',
 };
 
 function initialView(hasProfile: boolean): View {
@@ -77,6 +83,8 @@ export default function App() {
           onHelp={() => setView('help')}
           onTerms={() => setView('terms')}
           onPrivacy={() => setView('privacy')}
+          onAbout={() => setView('about')}
+          onCoverage={() => setView('coverage')}
           auth={store.auth}
           sync={store.sync}
         />
@@ -107,6 +115,8 @@ export default function App() {
             onHelp={() => setView('help')}
             onTerms={() => setView('terms')}
             onPrivacy={() => setView('privacy')}
+            onAbout={() => setView('about')}
+            onCoverage={() => setView('coverage')}
             auth={store.auth}
             sync={store.sync}
           />
@@ -117,6 +127,8 @@ export default function App() {
       {view === 'report' && <Report store={store} onBack={goHome} />}
       {view === 'advisor' && <Advisor store={store} onBack={goHome} />}
       {view === 'admin' && <Admin store={store} onBack={goHome} />}
+      {view === 'about' && <About onBack={goHome} onStart={() => setView('wizard')} />}
+      {view === 'coverage' && <Coverage onBack={goHome} onStart={() => setView('wizard')} />}
       {view === 'terms' && <Terms onBack={goHome} />}
       {view === 'privacy' && <Privacy onBack={goHome} />}
     </div>

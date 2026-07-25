@@ -3,12 +3,12 @@ import { loginUrl, remoteLoginUrl, type AuthState } from '../state/auth';
 
 const PERKS = [
   {
-    title: 'Your personalized security report',
-    body: 'A polished, branded PDF of your security posture: readiness score, category breakdown, and your full plan. Built to hand to enterprise customers, insurers, and investors.',
+    title: 'A report you can hand over',
+    body: 'One clean document showing where you stand and what you have done about it. Built for the moment a customer, insurer, or investor asks you to prove it.',
   },
   {
-    title: 'A security advisor in your corner',
-    body: 'Ask questions, sanity-check decisions, or get guidance during an incident. Real humans answer within one business day, with your plan already in front of them.',
+    title: 'Someone to ask',
+    body: 'Send over a question, a decision you want checked, or something that just went wrong. A person replies inside a business day, and they can already see your plan.',
   },
 ];
 
@@ -27,8 +27,8 @@ export function Upgrade({ auth }: { auth: AuthState }) {
       <span className="pro-badge">PRO</span>
       <h2>Groundwork Pro</h2>
       <p className="upgrade-lede">
-        Everything in the free plan, plus the proof and the people for when
-        security starts affecting deals.
+        Everything in the free plan. Then the paperwork and the backup for
+        when security starts holding up deals.
       </p>
       <div className="upgrade-price">
         <span className="upgrade-price-num">$299</span>

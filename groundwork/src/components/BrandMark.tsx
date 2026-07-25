@@ -14,14 +14,14 @@ type Props = {
 // Each slab has three faces (top, left, right) to fake the isometric lighting.
 const FACES: Record<NonNullable<Props['variant']>, { top: string[]; mid: string[]; base: string[] }> = {
   color: {
-    top: ['#7df3ff', '#22d3ee', '#0e7490'],
-    mid: ['#9ad4ff', '#4f8cff', '#3b5bdb'],
-    base: ['#d3b0ff', '#a855f7', '#7c3aed'],
+    top: ['#ffc09a', '#ff8a4c', '#ef6b28'],
+    mid: ['#7ce0f2', '#29bcdc', '#1595b8'],
+    base: ['#54bcd8', '#0a86ab', '#076780'],
   },
   blue: {
-    top: ['#6ea0ff', '#4f8cff', '#2f4fb0'],
-    mid: ['#6ea0ff', '#4f8cff', '#2f4fb0'],
-    base: ['#6ea0ff', '#4f8cff', '#2f4fb0'],
+    top: ['#54bcd8', '#0a86ab', '#076780'],
+    mid: ['#54bcd8', '#0a86ab', '#076780'],
+    base: ['#54bcd8', '#0a86ab', '#076780'],
   },
   white: {
     top: ['#ffffff', 'rgba(255,255,255,0.72)', 'rgba(255,255,255,0.45)'],
