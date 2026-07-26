@@ -76,6 +76,48 @@ from the same design system as the site and the rest of the marketing kit.
 >
 > #cybersecurity #startuptips #infosec #founders #mfa #databreach
 
+### The "moment" series (your best performer, extended)
+
+The questionnaire post outperformed everything else, so this is the same
+formula six more ways: a specific stressful moment, then calm reassurance.
+Space them out; one moment post per week keeps the format from wearing out.
+
+**Insurer (`post-moment-insurer-1080.png`):**
+> Insurance renewals come with homework now. Groundwork turns what you
+> already run into the answers. Free plan in bio.
+>
+> #cyberinsurance #startup #cybersecurity #founders #smallbusiness
+
+**Investor (`post-moment-investor-1080.png`):**
+> Due diligence includes your security posture. Walk in with a real
+> answer instead of a shrug. Free plan in bio.
+>
+> #startup #fundraising #duediligence #cybersecurity #founders
+
+**SOC 2 ask (`post-moment-soc2-1080.png`):**
+> The bigger the customer, the sooner this question lands. You do not
+> need the report tomorrow, you need to be moving. Free plan in bio.
+>
+> #soc2 #b2bsaas #startup #compliance #cybersecurity
+
+**Phishing click (`post-moment-phish-1080.png`):**
+> It happens to careful people every day. What matters is the next ten
+> minutes. The playbook is free, link in bio.
+>
+> #phishing #incidentresponse #cybersecurity #startup #infosec
+
+**Leaked key (`post-moment-key-1080.png`):**
+> Bots find exposed keys in minutes, so rotation comes first and blame
+> comes never. Playbook in bio, free.
+>
+> #devsecops #github #cybersecurity #startup #appsec
+
+**Lost laptop (`post-moment-laptop-1080.png`):**
+> A lost laptop is either a bad hour or a breach notification, depending
+> on what you set up beforehand. Free plan in bio.
+>
+> #cybersecurity #remotework #startup #dataprotection #infosec
+
 ### Content queue (post ~2x/week)
 
 **Cloud lockdown (`post-cloud-1080.png`):**
