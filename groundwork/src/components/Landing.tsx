@@ -121,13 +121,7 @@ export function Landing({
         ))}
       </section>
 
-      <section className="landing-video video-split">
-        <div className="video-copy">
-          <h2>Watch someone do it</h2>
-          <p className="landing-video-sub">
-            The whole thing, start to finish, at normal speed.
-          </p>
-        </div>
+      <section className="landing-video">
         <video controls playsInline preload="metadata" poster="demo-poster.jpg">
           <source src="demo.mp4" type="video/mp4" />
           Your browser doesn't support embedded video.
