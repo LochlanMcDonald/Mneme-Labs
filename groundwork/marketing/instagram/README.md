@@ -182,6 +182,22 @@ Space them out; one moment post per week keeps the format from wearing out.
 >
 > #soc2 #compliance #b2bsaas #startup #cybersecurity #founders
 
+## Second video: the bad day (`moments-video-16x9.mp4` / `moments-reel-9x16.mp4`)
+
+A 30 second story built from the two best performing themes. The wrong-link
+moment opens it, the phishing playbook answers it, the Friday questionnaire
+raises the stakes, and the plan plus the report resolve it. Use the 16x9 for
+YouTube, X, and LinkedIn; the 9x16 for Reels and Stories.
+
+**Caption:**
+> Someone on your team just clicked the wrong link. The next ten minutes
+> matter more than the last ten months. Groundwork keeps the playbook ready,
+> and your security questionnaire answers too. Free to start, link in bio.
+>
+> #phishing #incidentresponse #cybersecurity #startup #founders #infosec
+
+Regenerate with `node marketing/make-video2.mjs` against a running preview.
+
 ## Regenerating
 
 ```bash
@@ -277,7 +293,23 @@ In Ads Manager, **Primary text** is the paragraph above the image and
 - Refresh the top performer every few weeks; the same creative fatigues fast on
   a small audience.
 
-### Regenerating
+### Second video: the bad day (`moments-video-16x9.mp4` / `moments-reel-9x16.mp4`)
+
+A 30 second story built from the two best performing themes. The wrong-link
+moment opens it, the phishing playbook answers it, the Friday questionnaire
+raises the stakes, and the plan plus the report resolve it. Use the 16x9 for
+YouTube, X, and LinkedIn; the 9x16 for Reels and Stories.
+
+**Caption:**
+> Someone on your team just clicked the wrong link. The next ten minutes
+> matter more than the last ten months. Groundwork keeps the playbook ready,
+> and your security questionnaire answers too. Free to start, link in bio.
+>
+> #phishing #incidentresponse #cybersecurity #startup #founders #infosec
+
+Regenerate with `node marketing/make-video2.mjs` against a running preview.
+
+## Regenerating
 
 ```bash
 cd groundwork && node marketing/instagram/generate-ads.mjs
