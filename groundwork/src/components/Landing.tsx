@@ -75,25 +75,54 @@ export function Landing({
         </div>
       </nav>
 
-      <header className="landing-hero">
-        <div className="hero-eyebrow">
-          <span className="hero-dot" />
-          For companies with no security team and no time to build one
+      <header className="landing-hero hero-split">
+        <div className="hero-copy">
+          <div className="hero-eyebrow">
+            <span className="hero-dot" />
+            For companies with no security team and no time to build one
+          </div>
+          <h1>
+            Startup security, sorted.<br />
+            Without the hassle.
+          </h1>
+          <p className="lede">
+            Answer a few quick questions about your company and get a security
+            plan, free. Sign in below to save it, and if you ever want a real
+            security advisor to weigh in, you can.
+          </p>
+          <button className="btn btn-primary btn-lg" onClick={onStart}>
+            Build my security plan
+          </button>
+          <div className="landing-account">
+            <AccountControls auth={auth} sync={sync} />
+          </div>
         </div>
-        <h1>
-          Startup security, sorted.<br />
-          Without the hassle.
-        </h1>
-        <p className="lede">
-          Answer a few quick questions about your company and get a security
-          plan, free. Sign in below to save it, and if you ever want a real
-          security advisor to weigh in, you can.
-        </p>
-        <button className="btn btn-primary btn-lg" onClick={onStart}>
-          Build my security plan
-        </button>
-        <div className="landing-account">
-          <AccountControls auth={auth} sync={sync} />
+        <div className="hero-visual" aria-hidden>
+          <div className="hv-card">
+            <div className="hv-head">
+              <div className="hv-ring">
+                <span>58%</span>
+              </div>
+              <div className="hv-title">
+                <strong>Your security plan</strong>
+                <span>12 items this week</span>
+              </div>
+            </div>
+            <div className="hv-row hv-done">
+              <span className="hv-tick">✓</span> Turn on MFA everywhere
+            </div>
+            <div className="hv-row hv-done">
+              <span className="hv-tick">✓</span> Roll out a password manager
+            </div>
+            <div className="hv-row">
+              <span className="hv-tick" /> Encrypt every laptop
+            </div>
+            <div className="hv-row">
+              <span className="hv-tick" /> Lock down the cloud root
+            </div>
+          </div>
+          <div className="hv-chip hv-chip-a">SOC 2</div>
+          <div className="hv-chip hv-chip-b">Free to start</div>
         </div>
       </header>
 
@@ -108,7 +137,8 @@ export function Landing({
         </ul>
       </section>
 
-      <section className="landing-steps">
+      <section className="landing-steps steps-rail">
+        <h2 className="steps-title">How it works</h2>
         {STEPS.map((step, i) => (
           <div className="step-card" key={step.title}>
             <div className="step-num">{i + 1}</div>
@@ -118,11 +148,13 @@ export function Landing({
         ))}
       </section>
 
-      <section className="landing-video">
-        <h2>Watch someone do it</h2>
-        <p className="landing-video-sub">
-          The whole thing, start to finish, at normal speed.
-        </p>
+      <section className="landing-video video-split">
+        <div className="video-copy">
+          <h2>Watch someone do it</h2>
+          <p className="landing-video-sub">
+            The whole thing, start to finish, at normal speed.
+          </p>
+        </div>
         <video controls playsInline preload="metadata" poster="demo-poster.jpg">
           <source src="demo.mp4" type="video/mp4" />
           Your browser doesn't support embedded video.
@@ -163,32 +195,45 @@ export function Landing({
         <Upgrade auth={auth} />
       </section>
 
-      <footer className="landing-footer">
-        <p>
-          We help young companies get their security footing before somebody
-          forces the issue.
-        </p>
-        <p className="footer-links">
-          <button className="link-btn" onClick={onAbout}>
-            About
-          </button>
-          {' · '}
+      <footer className="landing-footer footer-cols">
+        <div className="footer-brand">
+          <div className="brand small">
+            <BrandMark className="brand-mark" />
+            Groundwork
+          </div>
+          <p>
+            We help young companies get their security footing before somebody
+            forces the issue.
+          </p>
+        </div>
+        <div className="footer-col">
+          <span className="footer-col-title">Product</span>
           <button className="link-btn" onClick={onCoverage}>
             What&apos;s covered
           </button>
-          {' · '}
+          <button className="link-btn" onClick={onHelp}>
+            Help &amp; FAQs
+          </button>
+          <button className="link-btn" onClick={onStart}>
+            Get my plan
+          </button>
+        </div>
+        <div className="footer-col">
+          <span className="footer-col-title">Company</span>
+          <button className="link-btn" onClick={onAbout}>
+            About
+          </button>
+          <a href="mailto:support@groundwork-security.com">Contact</a>
+        </div>
+        <div className="footer-col">
+          <span className="footer-col-title">Legal</span>
           <button className="link-btn" onClick={onTerms}>
             Terms of Service
           </button>
-          {' · '}
           <button className="link-btn" onClick={onPrivacy}>
             Privacy Policy
           </button>
-          {' · '}
-          <a href="mailto:support@groundwork-security.com">
-            support@groundwork-security.com
-          </a>
-        </p>
+        </div>
       </footer>
     </div>
   );

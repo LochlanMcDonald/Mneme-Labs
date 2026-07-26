@@ -48,10 +48,9 @@ export function About({ onBack, onStart }: Props) {
         <h2>Where this comes from</h2>
         <p>
           I have spent my career in the security function of an enterprise that
-          measures revenue in the billions, and I work today as a lead
-          automation analyst. Most of that job is figuring out why a control
-          everyone agrees on keeps failing in practice, then building
-          something that makes the right thing the easy thing.
+          measures revenue in the billions. These days I work as a lead
+          security analyst, and I am constantly building solutions that make
+          the work easier and more efficient for my team.
         </p>
         <p>
           Large companies get there in the end because they can throw people at

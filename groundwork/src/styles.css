@@ -184,12 +184,12 @@ a {
 .btn::before {
   content: '';
   position: absolute;
-  left: 7%;
-  right: 7%;
+  left: 8%;
+  right: 8%;
   top: 2px;
-  height: 46%;
+  height: 42%;
   border-radius: 999px;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.05));
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0.03));
   pointer-events: none;
 }
 .btn:hover {
@@ -205,20 +205,20 @@ a {
 
 .btn-primary {
   color: #ffffff;
-  text-shadow: 0 1px 1px rgba(16, 40, 120, 0.3);
+  text-shadow: 0 1px 1px rgba(16, 40, 120, 0.18);
   background: linear-gradient(180deg, #6f9bff 0%, var(--accent) 52%, #2a5cf0 100%);
   border: 1px solid rgba(21, 54, 160, 0.55);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5),
-    0 2px 6px rgba(29, 78, 216, 0.3), 0 16px 34px -14px rgba(29, 78, 216, 0.65);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4),
+    0 2px 6px rgba(29, 78, 216, 0.22), 0 14px 28px -14px rgba(29, 78, 216, 0.45);
 }
 .btn-primary::before {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.08));
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.05));
 }
 .btn-primary:hover {
   background: linear-gradient(180deg, #82a9ff 0%, #3b74ff 52%, #2f63f5 100%);
   border-color: rgba(21, 54, 160, 0.55);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6),
-    0 3px 10px rgba(29, 78, 216, 0.32), 0 22px 44px -16px rgba(29, 78, 216, 0.7);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    0 3px 10px rgba(29, 78, 216, 0.24), 0 18px 36px -16px rgba(29, 78, 216, 0.5);
 }
 
 .btn-lg {
@@ -995,7 +995,7 @@ a {
 }
 .wizard-progress-seg.active {
   background: linear-gradient(90deg, var(--accent-bright), var(--accent));
-  box-shadow: 0 2px 8px -3px rgba(47, 107, 255, 0.8);
+  box-shadow: 0 2px 7px -3px rgba(47, 107, 255, 0.55);
 }
 .wizard-step-count {
   color: var(--text-faint);
@@ -1089,7 +1089,7 @@ textarea:focus {
   border-color: var(--accent);
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), var(--accent-soft));
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9),
-    0 0 0 1px var(--accent-line), 0 10px 24px -14px rgba(47, 107, 255, 0.7);
+    0 0 0 1px var(--accent-line), 0 10px 22px -14px rgba(47, 107, 255, 0.5);
 }
 .choice-label {
   font-weight: 650;
@@ -1197,7 +1197,7 @@ textarea:focus {
   border-color: transparent;
   background: linear-gradient(180deg, var(--accent-bright), var(--accent));
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4),
-    0 6px 14px -7px rgba(29, 78, 216, 0.8);
+    0 6px 13px -7px rgba(29, 78, 216, 0.55);
 }
 .hide-done {
   display: flex;
@@ -1569,7 +1569,7 @@ textarea:focus {
 .hero-eyebrow {
   border: 1px solid rgba(47, 107, 255, 0.4);
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(240, 245, 255, 0.75));
-  box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 1), 0 8px 20px -12px rgba(29, 78, 216, 0.5);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9), 0 6px 16px -12px rgba(29, 78, 216, 0.35);
   color: var(--accent-deep);
 }
 .hero-dot {
@@ -1623,15 +1623,15 @@ textarea:focus {
 /* Step numbers keep their gel finish in the new hues. */
 .step-num {
   background: linear-gradient(180deg, #6f9bff, var(--accent) 55%, #2a5cf0);
-  box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 0.55), 0 7px 16px -7px rgba(29, 78, 216, 0.8);
+  box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 0.55), 0 6px 13px -7px rgba(29, 78, 216, 0.55);
 }
 .landing-steps .step-card:nth-child(2) .step-num {
   background: linear-gradient(180deg, #ffb27c, var(--tangerine) 55%, var(--tangerine-deep));
-  box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 0.55), 0 7px 16px -7px rgba(232, 111, 31, 0.8);
+  box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 0.55), 0 6px 13px -7px rgba(232, 111, 31, 0.55);
 }
 .landing-steps .step-card:nth-child(3) .step-num {
   background: linear-gradient(180deg, #b299f9, var(--grape) 55%, var(--grape-deep));
-  box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 0.55), 0 7px 16px -7px rgba(109, 40, 217, 0.8);
+  box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 0.55), 0 6px 13px -7px rgba(109, 40, 217, 0.55);
 }
 
 /* Progress ring goes lime, the era's "everything is fine" colour. */
@@ -1701,4 +1701,313 @@ textarea:focus {
 /* Report stays print-first, but its progress bar joins the lime system. */
 .report-bar-fill {
   background: linear-gradient(90deg, var(--lime), #7ed957);
+}
+
+/* ═══════════ Layout edition: the landing stops mirroring v1 ═══════════ */
+
+/* Split hero: copy on the left, a living plan card on the right. */
+.landing-hero.hero-split {
+  text-align: left;
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 48px;
+  align-items: center;
+  padding: 58px 0 44px;
+}
+.hero-split .lede {
+  margin: 0 0 30px;
+  max-width: 560px;
+}
+.hero-split .landing-account {
+  justify-content: flex-start;
+  margin-top: 18px;
+}
+.hero-split .landing-account .account {
+  justify-content: flex-start;
+}
+
+/* The visual: a plan card at a slight tilt with floating flavor chips. */
+.hero-visual {
+  position: relative;
+  min-height: 360px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.hv-card {
+  width: 100%;
+  max-width: 400px;
+  background: var(--pinstripe),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(255, 255, 255, 0.8));
+  -webkit-backdrop-filter: var(--blur);
+  backdrop-filter: var(--blur);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 24px 24px 18px;
+  box-shadow: var(--lift-3);
+  transform: rotate(-1.6deg);
+}
+.hv-head {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+.hv-ring {
+  width: 62px;
+  height: 62px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 15px;
+  color: var(--lime-deep);
+  background: conic-gradient(var(--lime) 0 58%, rgba(23, 44, 84, 0.08) 58% 100%);
+}
+.hv-ring span {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.hv-title {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.3;
+}
+.hv-title strong {
+  font-size: 16px;
+}
+.hv-title span {
+  font-size: 13px;
+  color: var(--text-dim);
+}
+.hv-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 11px 12px;
+  border-top: 1px solid rgba(23, 44, 84, 0.08);
+}
+.hv-tick {
+  width: 24px;
+  height: 24px;
+  border-radius: 8px;
+  border: 1.5px solid var(--border-strong);
+  background: rgba(255, 255, 255, 0.9);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--green);
+}
+.hv-done .hv-tick {
+  background: var(--green-soft);
+  border-color: var(--green);
+}
+.hv-done {
+  color: var(--text-dim);
+}
+.hv-chip {
+  position: absolute;
+  font-size: 13px;
+  font-weight: 750;
+  padding: 9px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(255, 255, 255, 0.8));
+  box-shadow: var(--lift-1);
+}
+.hv-chip-a {
+  top: 8%;
+  right: 2%;
+  color: var(--grape-deep);
+  border-color: rgba(139, 92, 246, 0.4);
+  transform: rotate(2.5deg);
+}
+.hv-chip-b {
+  bottom: 6%;
+  left: 0;
+  color: var(--tangerine-deep);
+  border-color: rgba(255, 139, 61, 0.45);
+  transform: rotate(-2deg);
+}
+
+/* Steps become a rail instead of three tiles. */
+.landing-steps.steps-rail {
+  display: block;
+  margin-top: 64px;
+  position: relative;
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.steps-title {
+  font-size: 28px;
+  text-align: center;
+  margin-bottom: 26px;
+}
+.steps-rail .step-card {
+  position: relative;
+  padding: 24px 26px 24px 96px;
+  margin-bottom: 16px;
+}
+.steps-rail .step-card h3 {
+  margin-top: 0;
+}
+.steps-rail .step-num {
+  position: absolute;
+  left: 30px;
+  top: 26px;
+}
+.steps-rail .step-card:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  left: 46px;
+  bottom: -17px;
+  width: 2px;
+  height: 18px;
+  background: var(--border-strong);
+}
+
+/* Video sits beside its copy instead of under a centred heading. */
+.landing-video.video-split {
+  display: grid;
+  grid-template-columns: 0.75fr 1.25fr;
+  gap: 40px;
+  align-items: center;
+  text-align: left;
+  margin-top: 72px;
+}
+.video-split .landing-video-sub {
+  margin-bottom: 0;
+}
+.video-split video {
+  margin: 0;
+}
+
+/* Footer grows into columns. */
+.landing-footer.footer-cols {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1fr;
+  gap: 32px;
+  text-align: left;
+  align-items: start;
+}
+.footer-brand p {
+  margin: 4px 0 0;
+  font-size: 13.5px;
+  max-width: 300px;
+}
+.footer-cols .footer-col {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+.footer-col-title {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin-bottom: 2px;
+}
+.footer-cols .link-btn,
+.footer-cols .footer-col a {
+  text-decoration: none;
+  color: var(--text-dim);
+  font-size: 14px;
+  text-align: left;
+  align-self: flex-start;
+}
+.footer-cols .link-btn:hover,
+.footer-cols .footer-col a:hover {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+@media (max-width: 860px) {
+  .landing-hero.hero-split {
+    grid-template-columns: 1fr;
+    gap: 36px;
+    text-align: center;
+  }
+  .hero-split .lede {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .hero-split .landing-account,
+  .hero-split .landing-account .account {
+    justify-content: center;
+  }
+  .hero-visual {
+    min-height: 0;
+  }
+  .landing-video.video-split {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    text-align: center;
+  }
+  .landing-footer.footer-cols {
+    grid-template-columns: 1fr 1fr;
+    gap: 26px;
+  }
+  .footer-brand {
+    grid-column: 1 / -1;
+  }
+  .steps-rail .step-card {
+    padding-left: 88px;
+  }
+}
+
+/* Layout edition, corrections. */
+.hero-split h1 {
+  font-size: clamp(32px, 4.6vw, 50px);
+}
+.hv-chip-b {
+  bottom: -5%;
+  left: -2%;
+}
+
+/* The rail has a heading before the cards, which shifts nth-child, so the
+   flavor order is pinned by type position instead. */
+.steps-rail .step-card:nth-of-type(1) {
+  background: linear-gradient(180deg, rgba(47, 107, 255, 0.07), rgba(255, 255, 255, 0.8) 52%);
+}
+.steps-rail .step-card:nth-of-type(1)::before {
+  background: linear-gradient(90deg, var(--accent-bright), transparent 85%);
+}
+.steps-rail .step-card:nth-of-type(1) .step-num {
+  background: linear-gradient(180deg, #6f9bff, var(--accent) 55%, #2a5cf0);
+  box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 0.55), 0 6px 13px -7px rgba(29, 78, 216, 0.55);
+}
+.steps-rail .step-card:nth-of-type(2) {
+  background: linear-gradient(180deg, rgba(255, 139, 61, 0.09), rgba(255, 255, 255, 0.8) 52%);
+}
+.steps-rail .step-card:nth-of-type(2)::before {
+  background: linear-gradient(90deg, var(--tangerine), transparent 85%);
+}
+.steps-rail .step-card:nth-of-type(2) .step-num {
+  background: linear-gradient(180deg, #ffb27c, var(--tangerine) 55%, var(--tangerine-deep));
+  box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 0.55), 0 6px 13px -7px rgba(232, 111, 31, 0.55);
+}
+.steps-rail .step-card:nth-of-type(3) {
+  background: linear-gradient(180deg, rgba(139, 92, 246, 0.08), rgba(255, 255, 255, 0.8) 52%);
+}
+.steps-rail .step-card:nth-of-type(3)::before {
+  background: linear-gradient(90deg, var(--grape), transparent 85%);
+}
+.steps-rail .step-card:nth-of-type(3) .step-num {
+  background: linear-gradient(180deg, #b299f9, var(--grape) 55%, var(--grape-deep));
+  box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 0.55), 0 6px 13px -7px rgba(109, 40, 217, 0.55);
 }
