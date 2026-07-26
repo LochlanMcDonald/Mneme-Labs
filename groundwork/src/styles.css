@@ -1,60 +1,80 @@
 /* ═══════════════════════════════════════════════════════════════════
-   Groundwork design system
-   Bright, translucent, built on soft curves and layered glass. The
-   palette nods to the candy-coloured translucent hardware of the early
-   2000s, held back to a professional register: one confident blue does
-   the heavy lifting, warm accents appear only where they earn attention.
+   Groundwork design system, second edition: "Flavors"
+   The full translucent-hardware lineup this time. Five saturated
+   flavors seen through frosted polycarbonate, gel buttons with a real
+   gloss cap, hairline pinstripes, and chunky rounded shells. Blueberry
+   leads; grape, lime, tangerine, and strawberry take supporting roles.
+   Ink stays dark and the grid stays disciplined, which is what keeps
+   it professional rather than nostalgic.
    ═══════════════════════════════════════════════════════════════════ */
 
 :root {
   /* Surfaces */
-  --bg: #edf3fa;
-  --bg-tint-a: rgba(10, 165, 201, 0.24);
-  --bg-tint-b: rgba(255, 138, 76, 0.18);
-  --bg-tint-c: rgba(124, 92, 219, 0.16);
+  --bg: #f2f5fc;
+  --bg-tint-a: rgba(47, 107, 255, 0.28);
+  --bg-tint-b: rgba(255, 139, 61, 0.24);
+  --bg-tint-c: rgba(139, 92, 246, 0.24);
+  --bg-tint-d: rgba(101, 200, 55, 0.15);
+  --bg-tint-e: rgba(255, 95, 143, 0.12);
 
-  --surface: rgba(255, 255, 255, 0.74);
+  --surface: rgba(255, 255, 255, 0.78);
   --surface-solid: #ffffff;
-  --surface-2: rgba(255, 255, 255, 0.5);
-  --surface-sunken: rgba(13, 60, 82, 0.045);
+  --surface-2: rgba(255, 255, 255, 0.55);
+  --surface-sunken: rgba(23, 44, 84, 0.05);
 
-  --border: rgba(13, 60, 82, 0.13);
-  --border-strong: rgba(13, 60, 82, 0.22);
+  --border: rgba(23, 44, 84, 0.14);
+  --border-strong: rgba(23, 44, 84, 0.24);
 
   /* Ink */
-  --text: #0d2b3e;
-  --text-dim: #55738a;
-  --text-faint: #8199ac;
+  --text: #101f38;
+  --text-dim: #4e6382;
+  --text-faint: #7c8ea9;
 
-  /* Bondi blue, the workhorse */
-  --accent: #0a86ab;
-  --accent-bright: #12a8ce;
-  --accent-deep: #076780;
-  --accent-soft: rgba(10, 134, 171, 0.11);
-  --accent-line: rgba(10, 134, 171, 0.32);
+  /* Blueberry, the lead flavor */
+  --accent: #2f6bff;
+  --accent-bright: #5087ff;
+  --accent-deep: #1d4ed8;
+  --accent-soft: rgba(47, 107, 255, 0.1);
+  --accent-line: rgba(47, 107, 255, 0.36);
 
-  /* Candy accents, used sparingly */
-  --green: #12a06b;
-  --green-soft: rgba(18, 160, 107, 0.13);
+  /* The rest of the lineup */
+  --grape: #8b5cf6;
+  --grape-deep: #6d28d9;
+  --lime: #58b32c;
+  --lime-deep: #3c8f16;
+  --tangerine: #ff8b3d;
+  --tangerine-deep: #e86f1f;
+  --strawberry: #ff5f8f;
+
+  /* Status colors (green/amber/red keep their jobs) */
+  --green: #22a35e;
+  --green-soft: rgba(34, 163, 94, 0.13);
   --amber: #e07a15;
   --amber-soft: rgba(224, 122, 21, 0.14);
-  --red: #d94662;
-  --grape: #7c5cdb;
-  --tangerine: #ff8a4c;
+  --red: #e0447a;
 
-  /* Form */
-  --radius: 16px;
-  --radius-sm: 11px;
-  --radius-lg: 24px;
+  /* Form: chunkier shells than last time */
+  --radius: 18px;
+  --radius-sm: 13px;
+  --radius-lg: 28px;
 
   /* Light through plastic: a bright top edge and a soft cast shadow */
-  --lift-1: inset 0 1px 0 rgba(255, 255, 255, 0.9), 0 1px 2px rgba(9, 45, 66, 0.05),
-    0 6px 18px -10px rgba(9, 45, 66, 0.22);
-  --lift-2: inset 0 1px 0 rgba(255, 255, 255, 0.95), 0 2px 4px rgba(9, 45, 66, 0.05),
-    0 18px 42px -22px rgba(9, 45, 66, 0.35);
-  --lift-3: inset 0 1px 0 rgba(255, 255, 255, 0.95), 0 30px 70px -32px rgba(9, 45, 66, 0.45);
+  --lift-1: inset 0 1.5px 0 rgba(255, 255, 255, 0.95), 0 1px 2px rgba(16, 31, 56, 0.05),
+    0 8px 20px -12px rgba(16, 31, 56, 0.28);
+  --lift-2: inset 0 1.5px 0 rgba(255, 255, 255, 1), 0 2px 5px rgba(16, 31, 56, 0.05),
+    0 20px 46px -22px rgba(16, 31, 56, 0.38);
+  --lift-3: inset 0 1.5px 0 rgba(255, 255, 255, 1), 0 34px 80px -34px rgba(16, 31, 56, 0.5);
 
-  --blur: saturate(170%) blur(20px);
+  /* Hairline pinstripes, the era's quiet signature */
+  --pinstripe: repeating-linear-gradient(
+    0deg,
+    rgba(29, 78, 216, 0.022) 0,
+    rgba(29, 78, 216, 0.022) 1px,
+    transparent 1px,
+    transparent 6px
+  );
+
+  --blur: saturate(180%) blur(22px);
   --app-pad-top: 28px;
 
   color-scheme: light;
@@ -80,17 +100,30 @@ body {
 }
 
 /* Ambient colour, fixed so it behaves like light in the room rather than
-   something that scrolls with the content. */
+   something that scrolls with the content. Five flavors, arranged like a
+   shelf of translucent shells with the light behind them. */
 body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  background:
+    radial-gradient(860px 600px at 88% -10%, var(--bg-tint-a), transparent 60%),
+    radial-gradient(700px 520px at -8% 6%, var(--bg-tint-c), transparent 58%),
+    radial-gradient(640px 480px at 108% 55%, var(--bg-tint-d), transparent 58%),
+    radial-gradient(820px 620px at 12% 106%, var(--bg-tint-b), transparent 60%),
+    radial-gradient(560px 440px at 55% 118%, var(--bg-tint-e), transparent 58%);
+}
+
+/* The pinstripe sits over the colour wash, under the content. */
+body::after {
   content: '';
   position: fixed;
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  background:
-    radial-gradient(900px 620px at 84% -8%, var(--bg-tint-a), transparent 62%),
-    radial-gradient(760px 560px at -6% 8%, var(--bg-tint-c), transparent 60%),
-    radial-gradient(880px 640px at 20% 104%, var(--bg-tint-b), transparent 62%);
+  background: var(--pinstripe);
 }
 
 .app {
@@ -114,7 +147,7 @@ a {
 }
 
 ::selection {
-  background: rgba(10, 134, 171, 0.2);
+  background: rgba(47, 107, 255, 0.18);
 }
 
 :focus-visible {
@@ -123,27 +156,34 @@ a {
   border-radius: 6px;
 }
 
-/* ───────── Buttons ───────── */
+/* ───────── Buttons: gel capsules ─────────
+   The classic gel control, rebuilt with restraint: a saturated body, a
+   crisp gloss cap across the top half, and a shadow the colour of the
+   plastic. The cap is a pseudo-element so every existing button markup
+   gets it for free. */
 .btn {
+  position: relative;
+  overflow: hidden;
   font: inherit;
-  font-weight: 650;
+  font-weight: 680;
   font-size: 14.5px;
   color: var(--text);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(255, 255, 255, 0.72));
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0) 46%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(240, 245, 255, 0.85));
   -webkit-backdrop-filter: var(--blur);
   backdrop-filter: var(--blur);
   border: 1px solid var(--border-strong);
   border-radius: 999px;
-  padding: 10px 20px;
+  padding: 10px 21px;
   cursor: pointer;
   text-decoration: none;
   display: inline-block;
   box-shadow: var(--lift-1);
   transition: transform 0.14s cubic-bezier(0.2, 0.8, 0.3, 1), box-shadow 0.14s,
-    background 0.14s, border-color 0.14s;
+    background 0.14s, border-color 0.14s, filter 0.14s;
 }
 .btn:hover {
-  background: linear-gradient(180deg, #ffffff, rgba(255, 255, 255, 0.9));
   border-color: var(--accent-line);
   transform: translateY(-1px);
   box-shadow: var(--lift-2);
@@ -151,20 +191,26 @@ a {
 .btn:active {
   transform: translateY(0);
   box-shadow: var(--lift-1);
+  filter: saturate(115%) brightness(0.98);
 }
 
 .btn-primary {
   color: #ffffff;
-  background: linear-gradient(180deg, var(--accent-bright), var(--accent));
-  border-color: transparent;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45),
-    0 2px 6px rgba(7, 103, 128, 0.28), 0 14px 30px -14px rgba(7, 103, 128, 0.6);
+  text-shadow: 0 1px 1px rgba(16, 40, 120, 0.18);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.02) 48%),
+    linear-gradient(180deg, #6f9bff 0%, var(--accent) 52%, #2a5cf0 100%);
+  border: 1px solid rgba(21, 54, 160, 0.55);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4),
+    0 2px 6px rgba(29, 78, 216, 0.22), 0 14px 28px -14px rgba(29, 78, 216, 0.45);
 }
 .btn-primary:hover {
-  background: linear-gradient(180deg, #17b4dc, var(--accent-bright));
-  border-color: transparent;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55),
-    0 3px 10px rgba(7, 103, 128, 0.3), 0 20px 40px -16px rgba(7, 103, 128, 0.66);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.45), rgba(255, 255, 255, 0.02) 48%),
+    linear-gradient(180deg, #82a9ff 0%, #3b74ff 52%, #2f63f5 100%);
+  border-color: rgba(21, 54, 160, 0.55);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    0 3px 10px rgba(29, 78, 216, 0.24), 0 18px 36px -16px rgba(29, 78, 216, 0.5);
 }
 
 .btn-lg {
@@ -375,7 +421,7 @@ a {
   justify-content: center;
   font-size: 15px;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5),
-    0 6px 14px -6px rgba(7, 103, 128, 0.7);
+    0 6px 14px -6px rgba(29, 78, 216, 0.7);
 }
 
 /* A nod to the translucent hardware line-up: each card carries its own
@@ -941,7 +987,7 @@ a {
 }
 .wizard-progress-seg.active {
   background: linear-gradient(90deg, var(--accent-bright), var(--accent));
-  box-shadow: 0 2px 8px -3px rgba(10, 134, 171, 0.8);
+  box-shadow: 0 2px 7px -3px rgba(47, 107, 255, 0.55);
 }
 .wizard-step-count {
   color: var(--text-faint);
@@ -1001,7 +1047,7 @@ textarea:focus {
   border-color: var(--accent-bright);
   background: #ffffff;
   box-shadow: inset 0 1px 3px rgba(9, 45, 66, 0.04),
-    0 0 0 4px rgba(18, 168, 206, 0.16);
+    0 0 0 4px rgba(47, 107, 255, 0.16);
 }
 
 .choice-grid {
@@ -1035,7 +1081,7 @@ textarea:focus {
   border-color: var(--accent);
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), var(--accent-soft));
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9),
-    0 0 0 1px var(--accent-line), 0 10px 24px -14px rgba(10, 134, 171, 0.7);
+    0 0 0 1px var(--accent-line), 0 10px 22px -14px rgba(47, 107, 255, 0.5);
 }
 .choice-label {
   font-weight: 650;
@@ -1143,7 +1189,7 @@ textarea:focus {
   border-color: transparent;
   background: linear-gradient(180deg, var(--accent-bright), var(--accent));
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4),
-    0 6px 14px -7px rgba(7, 103, 128, 0.8);
+    0 6px 13px -7px rgba(29, 78, 216, 0.55);
 }
 .hide-done {
   display: flex;
@@ -1499,5 +1545,570 @@ textarea:focus {
 @media (max-width: 720px) {
   .nav-link-wide {
     display: none;
+  }
+}
+
+/* ═══════════ Flavors pass: colour distribution ═══════════
+   Appended overrides that hand each surface its flavor. Kept together so
+   the distribution of colour across the app reads in one place. */
+
+/* Nav wears the pinstripe openly. */
+.nav {
+  background: var(--pinstripe), rgba(253, 254, 255, 0.8);
+}
+
+/* Hero badge becomes a small gel chip. */
+.hero-eyebrow {
+  border: 1px solid rgba(47, 107, 255, 0.4);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(240, 245, 255, 0.75));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9), 0 6px 16px -12px rgba(29, 78, 216, 0.35);
+  color: var(--accent-deep);
+}
+.hero-dot {
+  background: var(--lime);
+  box-shadow: 0 0 0 3px rgba(101, 200, 55, 0.2);
+}
+
+/* Framework chips: each one takes a flavor stripe, like a shelf of shells. */
+.trust-list li {
+  position: relative;
+  padding-left: 30px;
+  border-radius: 12px;
+}
+.trust-list li::before {
+  content: '';
+  position: absolute;
+  left: 13px;
+  top: 50%;
+  width: 9px;
+  height: 9px;
+  margin-top: -4.5px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+.trust-list li:nth-child(5n + 2)::before { background: var(--tangerine); }
+.trust-list li:nth-child(5n + 3)::before { background: var(--lime); }
+.trust-list li:nth-child(5n + 4)::before { background: var(--grape); }
+.trust-list li:nth-child(5n + 5)::before { background: var(--strawberry); }
+
+/* Step cards: the tint soaks into the plastic, not just the spine. */
+.step-card::before {
+  height: 6px;
+  opacity: 1;
+}
+.landing-steps .step-card:nth-child(1) {
+  background: linear-gradient(180deg, rgba(47, 107, 255, 0.07), rgba(255, 255, 255, 0.8) 52%);
+}
+.landing-steps .step-card:nth-child(2) {
+  background: linear-gradient(180deg, rgba(255, 139, 61, 0.09), rgba(255, 255, 255, 0.8) 52%);
+}
+.landing-steps .step-card:nth-child(3) {
+  background: linear-gradient(180deg, rgba(139, 92, 246, 0.08), rgba(255, 255, 255, 0.8) 52%);
+}
+.beyond-grid .step-card:nth-child(1) {
+  background: linear-gradient(180deg, rgba(47, 107, 255, 0.06), rgba(255, 255, 255, 0.8) 52%);
+}
+.beyond-grid .step-card:nth-child(2) {
+  background: linear-gradient(180deg, rgba(255, 139, 61, 0.08), rgba(255, 255, 255, 0.8) 52%);
+}
+
+/* Step numbers keep their gel finish in the new hues. */
+.step-num {
+  background: linear-gradient(180deg, #6f9bff, var(--accent) 55%, #2a5cf0);
+  box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 0.55), 0 6px 13px -7px rgba(29, 78, 216, 0.55);
+}
+.landing-steps .step-card:nth-child(2) .step-num {
+  background: linear-gradient(180deg, #ffb27c, var(--tangerine) 55%, var(--tangerine-deep));
+  box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 0.55), 0 6px 13px -7px rgba(232, 111, 31, 0.55);
+}
+.landing-steps .step-card:nth-child(3) .step-num {
+  background: linear-gradient(180deg, #b299f9, var(--grape) 55%, var(--grape-deep));
+  box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 0.55), 0 6px 13px -7px rgba(109, 40, 217, 0.55);
+}
+
+/* Progress ring goes lime, the era's "everything is fine" colour. */
+.ring-fill {
+  stroke: var(--lime);
+}
+.report-score-num {
+  color: var(--lime-deep);
+}
+
+/* Content pages: principle cards each take a flavor wash too. */
+.principle-grid .step-card:nth-child(1) {
+  background: linear-gradient(180deg, rgba(47, 107, 255, 0.06), rgba(255, 255, 255, 0.8) 52%);
+}
+.principle-grid .step-card:nth-child(2) {
+  background: linear-gradient(180deg, rgba(255, 139, 61, 0.08), rgba(255, 255, 255, 0.8) 52%);
+}
+.principle-grid .step-card:nth-child(3) {
+  background: linear-gradient(180deg, rgba(139, 92, 246, 0.07), rgba(255, 255, 255, 0.8) 52%);
+}
+.principle-grid .step-card:nth-child(4) {
+  background: linear-gradient(180deg, rgba(101, 200, 55, 0.08), rgba(255, 255, 255, 0.8) 52%);
+}
+.principle-grid .step-card:nth-child(4)::before {
+  background: linear-gradient(90deg, var(--lime), transparent 85%);
+}
+
+/* Coverage list bullets rotate through the lineup. */
+.coverage-list li:nth-child(5n + 2)::before { background: var(--tangerine); }
+.coverage-list li:nth-child(5n + 3)::before { background: var(--lime); }
+.coverage-list li:nth-child(5n + 4)::before { background: var(--grape); }
+.coverage-list li:nth-child(5n + 5)::before { background: var(--strawberry); }
+
+/* ═══════════ Pass three: cohesion details ═══════════ */
+
+/* The big panels carry the same pinstripe as the nav, so landing,
+   dashboard, and upgrade all read as one material. */
+.dash-header,
+.upgrade,
+.content-cta {
+  background-image: var(--pinstripe),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.72));
+}
+
+/* Dashboard phases each take a flavor tick: this week, this month,
+   this quarter. */
+.phase-title::before {
+  content: '';
+  width: 11px;
+  height: 11px;
+  border-radius: 4px;
+  background: var(--strawberry);
+  flex-shrink: 0;
+}
+.phase:nth-of-type(2) .phase-title::before {
+  background: var(--tangerine);
+}
+.phase:nth-of-type(3) .phase-title::before {
+  background: var(--accent);
+}
+
+/* Item cards answer hover with the lead flavor. */
+.item-card:hover {
+  border-color: var(--accent-line);
+}
+
+/* Report stays print-first, but its progress bar joins the lime system. */
+.report-bar-fill {
+  background: linear-gradient(90deg, var(--lime), #7ed957);
+}
+
+/* ═══════════ Layout edition: the landing stops mirroring v1 ═══════════ */
+
+/* Split hero: copy on the left, a living plan card on the right. */
+.landing-hero.hero-split {
+  text-align: left;
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 48px;
+  align-items: center;
+  padding: 58px 0 44px;
+}
+.hero-split .lede {
+  margin: 0 0 30px;
+  max-width: 560px;
+}
+.hero-split .landing-account {
+  justify-content: flex-start;
+  margin-top: 18px;
+}
+.hero-split .landing-account .account {
+  justify-content: flex-start;
+}
+
+/* The visual: a plan card at a slight tilt with floating flavor chips. */
+.hero-visual {
+  position: relative;
+  min-height: 360px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.hv-card {
+  width: 100%;
+  max-width: 400px;
+  background: var(--pinstripe),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(255, 255, 255, 0.8));
+  -webkit-backdrop-filter: var(--blur);
+  backdrop-filter: var(--blur);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 24px 24px 18px;
+  box-shadow: var(--lift-3);
+  transform: rotate(-1.6deg);
+}
+.hv-head {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+.hv-ring {
+  width: 62px;
+  height: 62px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 15px;
+  color: var(--lime-deep);
+  background: conic-gradient(var(--lime) 0 58%, rgba(23, 44, 84, 0.08) 58% 100%);
+}
+.hv-ring span {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.hv-title {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.3;
+}
+.hv-title strong {
+  font-size: 16px;
+}
+.hv-title span {
+  font-size: 13px;
+  color: var(--text-dim);
+}
+.hv-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 11px 12px;
+  border-top: 1px solid rgba(23, 44, 84, 0.08);
+}
+.hv-tick {
+  width: 24px;
+  height: 24px;
+  border-radius: 8px;
+  border: 1.5px solid var(--border-strong);
+  background: rgba(255, 255, 255, 0.9);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--green);
+}
+.hv-done .hv-tick {
+  background: var(--green-soft);
+  border-color: var(--green);
+}
+.hv-done {
+  color: var(--text-dim);
+}
+.hv-chip {
+  position: absolute;
+  font-size: 13px;
+  font-weight: 750;
+  padding: 9px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(255, 255, 255, 0.8));
+  box-shadow: var(--lift-1);
+}
+.hv-chip-a {
+  top: 8%;
+  right: 2%;
+  color: var(--grape-deep);
+  border-color: rgba(139, 92, 246, 0.4);
+  transform: rotate(2.5deg);
+}
+.hv-chip-b {
+  bottom: 6%;
+  left: 0;
+  color: var(--tangerine-deep);
+  border-color: rgba(255, 139, 61, 0.45);
+  transform: rotate(-2deg);
+}
+
+/* Steps become a rail instead of three tiles. */
+.landing-steps.steps-rail {
+  display: block;
+  margin-top: 64px;
+  position: relative;
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.steps-title {
+  font-size: 28px;
+  text-align: center;
+  margin-bottom: 26px;
+}
+.steps-rail .step-card {
+  position: relative;
+  padding: 24px 26px 24px 96px;
+  margin-bottom: 16px;
+}
+.steps-rail .step-card h3 {
+  margin-top: 0;
+}
+.steps-rail .step-num {
+  position: absolute;
+  left: 30px;
+  top: 26px;
+}
+.steps-rail .step-card:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  left: 46px;
+  bottom: -17px;
+  width: 2px;
+  height: 18px;
+  background: var(--border-strong);
+}
+
+/* Video sits beside its copy instead of under a centred heading. */
+.landing-video.video-split {
+  display: grid;
+  grid-template-columns: 0.75fr 1.25fr;
+  gap: 40px;
+  align-items: center;
+  text-align: left;
+  margin-top: 72px;
+}
+.video-split .landing-video-sub {
+  margin-bottom: 0;
+}
+.video-split video {
+  margin: 0;
+}
+
+/* Footer grows into columns. */
+.landing-footer.footer-cols {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1fr;
+  gap: 32px;
+  text-align: left;
+  align-items: start;
+}
+.footer-brand p {
+  margin: 4px 0 0;
+  font-size: 13.5px;
+  max-width: 300px;
+}
+.footer-cols .footer-col {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+.footer-col-title {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin-bottom: 2px;
+}
+.footer-cols .link-btn,
+.footer-cols .footer-col a {
+  text-decoration: none;
+  color: var(--text-dim);
+  font-size: 14px;
+  text-align: left;
+  align-self: flex-start;
+}
+.footer-cols .link-btn:hover,
+.footer-cols .footer-col a:hover {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+@media (max-width: 860px) {
+  .landing-hero.hero-split {
+    grid-template-columns: 1fr;
+    gap: 36px;
+    text-align: center;
+  }
+  .hero-split .lede {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .hero-split .landing-account,
+  .hero-split .landing-account .account {
+    justify-content: center;
+  }
+  .hero-visual {
+    min-height: 0;
+  }
+  .landing-video.video-split {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    text-align: center;
+  }
+  .landing-footer.footer-cols {
+    grid-template-columns: 1fr 1fr;
+    gap: 26px;
+  }
+  .footer-brand {
+    grid-column: 1 / -1;
+  }
+  .steps-rail .step-card {
+    padding-left: 88px;
+  }
+}
+
+/* Layout edition, corrections. */
+.hero-split h1 {
+  font-size: clamp(32px, 4.6vw, 50px);
+}
+.hv-chip-b {
+  bottom: -5%;
+  left: -2%;
+}
+
+/* The rail has a heading before the cards, which shifts nth-child, so the
+   flavor order is pinned by type position instead. */
+.steps-rail .step-card:nth-of-type(1) {
+  background: linear-gradient(180deg, rgba(47, 107, 255, 0.07), rgba(255, 255, 255, 0.8) 52%);
+}
+.steps-rail .step-card:nth-of-type(1)::before {
+  background: linear-gradient(90deg, var(--accent-bright), transparent 85%);
+}
+.steps-rail .step-card:nth-of-type(1) .step-num {
+  background: linear-gradient(180deg, #6f9bff, var(--accent) 55%, #2a5cf0);
+  box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 0.55), 0 6px 13px -7px rgba(29, 78, 216, 0.55);
+}
+.steps-rail .step-card:nth-of-type(2) {
+  background: linear-gradient(180deg, rgba(255, 139, 61, 0.09), rgba(255, 255, 255, 0.8) 52%);
+}
+.steps-rail .step-card:nth-of-type(2)::before {
+  background: linear-gradient(90deg, var(--tangerine), transparent 85%);
+}
+.steps-rail .step-card:nth-of-type(2) .step-num {
+  background: linear-gradient(180deg, #ffb27c, var(--tangerine) 55%, var(--tangerine-deep));
+  box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 0.55), 0 6px 13px -7px rgba(232, 111, 31, 0.55);
+}
+.steps-rail .step-card:nth-of-type(3) {
+  background: linear-gradient(180deg, rgba(139, 92, 246, 0.08), rgba(255, 255, 255, 0.8) 52%);
+}
+.steps-rail .step-card:nth-of-type(3)::before {
+  background: linear-gradient(90deg, var(--grape), transparent 85%);
+}
+.steps-rail .step-card:nth-of-type(3) .step-num {
+  background: linear-gradient(180deg, #b299f9, var(--grape) 55%, var(--grape-deep));
+  box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 0.55), 0 6px 13px -7px rgba(109, 40, 217, 0.55);
+}
+
+/* ═══════════ Review corrections ═══════════ */
+
+/* Hero without the visual: a confident left-aligned column. */
+.landing-hero.hero-left {
+  text-align: center;
+  padding: 56px 0 40px;
+  max-width: 780px;
+  margin: 0 auto;
+}
+.hero-left h1 {
+  font-size: clamp(34px, 5vw, 54px);
+}
+.hero-left .lede {
+  margin: 0 auto 30px;
+  max-width: 620px;
+}
+.hero-left .landing-account,
+.hero-left .landing-account .account {
+  justify-content: center;
+  margin-top: 16px;
+}
+
+/* The flavor stripe moves into the card's own background, where the
+   border radius clips it exactly. The old pseudo-element bar could sit
+   proud of the corner curve; a background layer cannot. */
+.step-card::before {
+  display: none;
+}
+.step-card {
+  background:
+    linear-gradient(90deg, var(--accent-bright), transparent 85%) top / 100% 6px no-repeat,
+    linear-gradient(180deg, rgba(47, 107, 255, 0.07), rgba(255, 255, 255, 0.82) 52%);
+}
+.steps-rail .step-card:nth-of-type(2),
+.beyond-grid .step-card:nth-child(2),
+.principle-grid .step-card:nth-child(2) {
+  background:
+    linear-gradient(90deg, var(--tangerine), transparent 85%) top / 100% 6px no-repeat,
+    linear-gradient(180deg, rgba(255, 139, 61, 0.09), rgba(255, 255, 255, 0.82) 52%);
+}
+.steps-rail .step-card:nth-of-type(3),
+.principle-grid .step-card:nth-child(3) {
+  background:
+    linear-gradient(90deg, var(--grape), transparent 85%) top / 100% 6px no-repeat,
+    linear-gradient(180deg, rgba(139, 92, 246, 0.08), rgba(255, 255, 255, 0.82) 52%);
+}
+.steps-rail .step-card:nth-of-type(1),
+.beyond-grid .step-card:nth-child(1),
+.principle-grid .step-card:nth-child(1) {
+  background:
+    linear-gradient(90deg, var(--accent-bright), transparent 85%) top / 100% 6px no-repeat,
+    linear-gradient(180deg, rgba(47, 107, 255, 0.07), rgba(255, 255, 255, 0.82) 52%);
+}
+.principle-grid .step-card:nth-child(4) {
+  background:
+    linear-gradient(90deg, var(--lime), transparent 85%) top / 100% 6px no-repeat,
+    linear-gradient(180deg, rgba(101, 200, 55, 0.08), rgba(255, 255, 255, 0.82) 52%);
+}
+
+/* Buttons never wrap into pills-of-stacked-words. */
+.btn {
+  white-space: nowrap;
+}
+
+/* Small screens: the nav keeps brand + About + CTA; everything else
+   lives in the footer columns. */
+@media (max-width: 520px) {
+  .nav-link {
+    display: none;
+  }
+  .nav-inner {
+    padding: 11px 16px;
+  }
+}
+
+/* Links dressed as primary buttons stay white, even inside note text. */
+a.btn-primary,
+.upgrade-note a.btn-primary,
+.help-contact a.btn-primary,
+.help-sub a.btn-primary {
+  color: #ffffff;
+}
+
+/* Small screens: the footer centres with everything else. */
+@media (max-width: 520px) {
+  .landing-footer.footer-cols {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  .footer-brand {
+    grid-column: auto;
+  }
+  .footer-brand .brand {
+    justify-content: center;
+    display: flex;
+  }
+  .footer-brand p {
+    margin: 4px auto 0;
+  }
+  .footer-cols .footer-col {
+    align-items: center;
+  }
+  .footer-cols .link-btn,
+  .footer-cols .footer-col a {
+    align-self: center;
+    text-align: center;
   }
 }

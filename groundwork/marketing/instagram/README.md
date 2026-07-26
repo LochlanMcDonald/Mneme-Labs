@@ -149,3 +149,96 @@ node marketing/instagram/make-reel.mjs   # composes reel-9x16.mp4 from demo.mp4
 ```
 
 Edit copy in `assets.html` / `reel-frame.html` and re-run.
+
+## Paid ads (1080×1350, 4:5)
+
+Six creatives built for paid, not organic. They carry a visible button and a
+single offer, and 4:5 is the tallest ratio Instagram allows in feed so each ad
+takes the most screen it can get.
+
+Every claim on these is true of the product as built: 56 controls, the real
+framework mappings, a free plan. No invented statistics, no fake testimonials,
+no borrowed customer logos. Keep it that way when you edit them.
+
+In Ads Manager, **Primary text** is the paragraph above the image and
+**Headline** is the bold line under it. Suggested CTA button in brackets.
+
+| File | Angle | Best audience |
+| --- | --- | --- |
+| `ad-questionnaire-1080x1350.png` | The stalled deal | Founders selling to enterprise |
+| `ad-before-after-1080x1350.png` | Chaos to plan | Broad, cold traffic |
+| `ad-56-controls-1080x1350.png` | Short, ordered list | Broad, cold traffic |
+| `ad-product-1080x1350.png` | What you actually get | Warm, retargeting |
+| `ad-no-security-team-1080x1350.png` | Objection handler | Very early stage |
+| `ad-frameworks-1080x1350.png` | Credibility | SOC 2 and compliance intent |
+
+### 1. Questionnaire (`ad-questionnaire-1080x1350.png`)
+
+> **Primary text:** The deal was going well until the security questionnaire
+> landed. Most founders stall right here, because nobody on the team has done
+> this before. Groundwork turns your setup into a plain security plan and helps
+> you answer the questions properly. Free to start.
+>
+> **Headline:** Answer the security questionnaire
+> **[Learn more]**
+
+### 2. Before and after (`ad-before-after-1080x1350.png`)
+
+> **Primary text:** "We should probably do security" is where most startups sit
+> until something forces the issue. Five minutes of plain questions turns that
+> into a short, ordered list with the reasoning attached.
+>
+> **Headline:** From no idea to a real plan
+> **[Get started]**
+
+### 3. Fifty-six controls (`ad-56-controls-1080x1350.png`)
+
+> **Primary text:** There are 56 controls in the knowledge base. You will not
+> need most of them. Your answers rule the rest out, so what you get back is
+> short enough to actually finish.
+>
+> **Headline:** A security plan that fits your company
+> **[Learn more]**
+
+### 4. Product (`ad-product-1080x1350.png`)
+
+> **Primary text:** Not a PDF you skim once. A working plan you tick off, where
+> every item says what it protects you from and roughly how long it takes.
+>
+> **Headline:** Your security plan, in one place
+> **[Get started]**
+
+### 5. No security team (`ad-no-security-team-1080x1350.png`)
+
+> **Primary text:** You do not need a security hire to get the basics right. You
+> need somebody to tell you which four things matter this week. That is the
+> whole idea.
+>
+> **Headline:** Built for startups without a security team
+> **[Learn more]**
+
+### 6. Frameworks (`ad-frameworks-1080x1350.png`)
+
+> **Primary text:** Every item is cross-referenced to SOC 2, ISO 27001, CIS,
+> GDPR, HIPAA, PCI DSS and OWASP where a mapping exists. Do the work once and it
+> counts again when the audit arrives.
+>
+> **Headline:** Get audit-ready sooner
+> **[Learn more]**
+
+### Running them
+
+- Start all six in one ad set and let Meta find the winner. Kill anything below
+  half the best click-through rate after roughly a thousand impressions.
+- Point them at `groundwork-security.com`. The landing page already says the
+  same thing the ads do, which is what keeps the cost per click down.
+- Refresh the top performer every few weeks; the same creative fatigues fast on
+  a small audience.
+
+### Regenerating
+
+```bash
+cd groundwork && node marketing/instagram/generate-ads.mjs
+```
+
+Edit `ads.html` and re-run.

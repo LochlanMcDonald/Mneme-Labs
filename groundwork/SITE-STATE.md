@@ -4,12 +4,15 @@ Recorded 2026-07-25, immediately before the visual redesign. This is the
 reference for "what worked before," so any regression can be spotted and
 reversed.
 
-**Restore point:** git tag `snapshot/pre-redesign-2026-07-25`
-(commit `4848da3`, the merge of PR #26). To inspect or restore:
+**Restore points:**
+
+| State | Commit |
+| --- | --- |
+| Dark theme, before the first redesign | `4848da3` (merge of PR #26) |
+| Light translucent theme, live before the second redesign | `beb2132` (merge of PR #27) |
 
 ```bash
-git show snapshot/pre-redesign-2026-07-25
-git checkout -b restore snapshot/pre-redesign-2026-07-25
+git checkout -b restore <commit>
 ```
 
 ## Hosting

@@ -48,10 +48,9 @@ export function About({ onBack, onStart }: Props) {
         <h2>Where this comes from</h2>
         <p>
           I have spent my career in the security function of an enterprise that
-          measures revenue in the billions, and I work today as a lead
-          automation analyst. That job is mostly this: take a control that
-          matters, work out why it keeps failing in practice, and build
-          something that makes the right thing the easy thing.
+          measures revenue in the billions. These days I work as a lead
+          automation security analyst, and I am constantly building solutions that make
+          the work easier and more efficient for my team.
         </p>
         <p>
           Large companies get there in the end because they can throw people at
@@ -63,8 +62,8 @@ export function About({ onBack, onStart }: Props) {
         <p>
           The advice that reaches those founders is usually written for the
           companies I work in. It assumes a budget, a security hire, and time to
-          read a hundred-page standard. So it gets skimmed, filed, and ignored,
-          and the same avoidable things go wrong.
+          read a hundred-page standard. So it gets skimmed and forgotten, and the
+          same avoidable things keep going wrong.
         </p>
       </section>
 
