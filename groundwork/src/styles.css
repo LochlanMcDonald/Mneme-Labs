@@ -168,7 +168,9 @@ a {
   font-weight: 680;
   font-size: 14.5px;
   color: var(--text);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(240, 245, 255, 0.85));
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0) 46%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(240, 245, 255, 0.85));
   -webkit-backdrop-filter: var(--blur);
   backdrop-filter: var(--blur);
   border: 1px solid var(--border-strong);
@@ -180,17 +182,6 @@ a {
   box-shadow: var(--lift-1);
   transition: transform 0.14s cubic-bezier(0.2, 0.8, 0.3, 1), box-shadow 0.14s,
     background 0.14s, border-color 0.14s, filter 0.14s;
-}
-.btn::before {
-  content: '';
-  position: absolute;
-  left: 8%;
-  right: 8%;
-  top: 2px;
-  height: 42%;
-  border-radius: 999px;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0.03));
-  pointer-events: none;
 }
 .btn:hover {
   border-color: var(--accent-line);
@@ -206,16 +197,17 @@ a {
 .btn-primary {
   color: #ffffff;
   text-shadow: 0 1px 1px rgba(16, 40, 120, 0.18);
-  background: linear-gradient(180deg, #6f9bff 0%, var(--accent) 52%, #2a5cf0 100%);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.02) 48%),
+    linear-gradient(180deg, #6f9bff 0%, var(--accent) 52%, #2a5cf0 100%);
   border: 1px solid rgba(21, 54, 160, 0.55);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4),
     0 2px 6px rgba(29, 78, 216, 0.22), 0 14px 28px -14px rgba(29, 78, 216, 0.45);
 }
-.btn-primary::before {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.05));
-}
 .btn-primary:hover {
-  background: linear-gradient(180deg, #82a9ff 0%, #3b74ff 52%, #2f63f5 100%);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.45), rgba(255, 255, 255, 0.02) 48%),
+    linear-gradient(180deg, #82a9ff 0%, #3b74ff 52%, #2f63f5 100%);
   border-color: rgba(21, 54, 160, 0.55);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5),
     0 3px 10px rgba(29, 78, 216, 0.24), 0 18px 36px -16px rgba(29, 78, 216, 0.5);
@@ -2010,4 +2002,81 @@ textarea:focus {
 .steps-rail .step-card:nth-of-type(3) .step-num {
   background: linear-gradient(180deg, #b299f9, var(--grape) 55%, var(--grape-deep));
   box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 0.55), 0 6px 13px -7px rgba(109, 40, 217, 0.55);
+}
+
+/* ═══════════ Review corrections ═══════════ */
+
+/* Hero without the visual: a confident left-aligned column. */
+.landing-hero.hero-left {
+  text-align: left;
+  padding: 56px 0 40px;
+  max-width: 780px;
+}
+.hero-left h1 {
+  font-size: clamp(34px, 5vw, 54px);
+}
+.hero-left .lede {
+  margin: 0 0 30px;
+  max-width: 620px;
+}
+.hero-left .landing-account,
+.hero-left .landing-account .account {
+  justify-content: flex-start;
+  margin-top: 16px;
+}
+
+/* The flavor stripe moves into the card's own background, where the
+   border radius clips it exactly. The old pseudo-element bar could sit
+   proud of the corner curve; a background layer cannot. */
+.step-card::before {
+  display: none;
+}
+.step-card {
+  background:
+    linear-gradient(90deg, var(--accent-bright), transparent 85%) top / 100% 6px no-repeat,
+    linear-gradient(180deg, rgba(47, 107, 255, 0.07), rgba(255, 255, 255, 0.82) 52%);
+}
+.landing-steps .step-card:nth-child(2),
+.steps-rail .step-card:nth-of-type(2),
+.beyond-grid .step-card:nth-child(2),
+.principle-grid .step-card:nth-child(2) {
+  background:
+    linear-gradient(90deg, var(--tangerine), transparent 85%) top / 100% 6px no-repeat,
+    linear-gradient(180deg, rgba(255, 139, 61, 0.09), rgba(255, 255, 255, 0.82) 52%);
+}
+.landing-steps .step-card:nth-child(3),
+.steps-rail .step-card:nth-of-type(3),
+.principle-grid .step-card:nth-child(3) {
+  background:
+    linear-gradient(90deg, var(--grape), transparent 85%) top / 100% 6px no-repeat,
+    linear-gradient(180deg, rgba(139, 92, 246, 0.08), rgba(255, 255, 255, 0.82) 52%);
+}
+.landing-steps .step-card:nth-child(1),
+.steps-rail .step-card:nth-of-type(1),
+.beyond-grid .step-card:nth-child(1),
+.principle-grid .step-card:nth-child(1) {
+  background:
+    linear-gradient(90deg, var(--accent-bright), transparent 85%) top / 100% 6px no-repeat,
+    linear-gradient(180deg, rgba(47, 107, 255, 0.07), rgba(255, 255, 255, 0.82) 52%);
+}
+.principle-grid .step-card:nth-child(4) {
+  background:
+    linear-gradient(90deg, var(--lime), transparent 85%) top / 100% 6px no-repeat,
+    linear-gradient(180deg, rgba(101, 200, 55, 0.08), rgba(255, 255, 255, 0.82) 52%);
+}
+
+/* Buttons never wrap into pills-of-stacked-words. */
+.btn {
+  white-space: nowrap;
+}
+
+/* Small screens: the nav keeps brand + About + CTA; everything else
+   lives in the footer columns. */
+@media (max-width: 520px) {
+  .nav-link {
+    display: none;
+  }
+  .nav-inner {
+    padding: 11px 16px;
+  }
 }

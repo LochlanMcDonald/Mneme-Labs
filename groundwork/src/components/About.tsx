@@ -49,7 +49,7 @@ export function About({ onBack, onStart }: Props) {
         <p>
           I have spent my career in the security function of an enterprise that
           measures revenue in the billions. These days I work as a lead
-          security analyst, and I am constantly building solutions that make
+          automation security analyst, and I am constantly building solutions that make
           the work easier and more efficient for my team.
         </p>
         <p>

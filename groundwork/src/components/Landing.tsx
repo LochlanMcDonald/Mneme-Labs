@@ -75,7 +75,7 @@ export function Landing({
         </div>
       </nav>
 
-      <header className="landing-hero hero-split">
+      <header className="landing-hero hero-left">
         <div className="hero-copy">
           <div className="hero-eyebrow">
             <span className="hero-dot" />
@@ -96,33 +96,6 @@ export function Landing({
           <div className="landing-account">
             <AccountControls auth={auth} sync={sync} />
           </div>
-        </div>
-        <div className="hero-visual" aria-hidden>
-          <div className="hv-card">
-            <div className="hv-head">
-              <div className="hv-ring">
-                <span>58%</span>
-              </div>
-              <div className="hv-title">
-                <strong>Your security plan</strong>
-                <span>12 items this week</span>
-              </div>
-            </div>
-            <div className="hv-row hv-done">
-              <span className="hv-tick">✓</span> Turn on MFA everywhere
-            </div>
-            <div className="hv-row hv-done">
-              <span className="hv-tick">✓</span> Roll out a password manager
-            </div>
-            <div className="hv-row">
-              <span className="hv-tick" /> Encrypt every laptop
-            </div>
-            <div className="hv-row">
-              <span className="hv-tick" /> Lock down the cloud root
-            </div>
-          </div>
-          <div className="hv-chip hv-chip-a">SOC 2</div>
-          <div className="hv-chip hv-chip-b">Free to start</div>
         </div>
       </header>
 
