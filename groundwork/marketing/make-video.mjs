@@ -25,15 +25,15 @@ const OUT_NAME = process.env.OUT_NAME || 'demo.mp4';
 // The Groundwork mark, inline so title cards match the app and favicon.
 const MARK =
   `<svg viewBox="0 0 100 100" style="width:1.35em;height:1.35em;vertical-align:-0.32em;margin-right:6px">` +
-  `<polygon points="44,22 62,31 44,40 26,31" fill="#ffc09a"/>` +
-  `<polygon points="26,31 44,40 44,47 26,38" fill="#ff8a4c"/>` +
-  `<polygon points="62,31 44,40 44,47 62,38" fill="#ef6b28"/>` +
-  `<polygon points="56,38 74,47 56,56 38,47" fill="#7ce0f2"/>` +
-  `<polygon points="38,47 56,56 56,63 38,54" fill="#29bcdc"/>` +
-  `<polygon points="74,47 56,56 56,63 74,54" fill="#1595b8"/>` +
-  `<polygon points="44,54 62,63 44,72 26,63" fill="#54bcd8"/>` +
-  `<polygon points="26,63 44,72 44,79 26,70" fill="#0a86ab"/>` +
-  `<polygon points="62,63 44,72 44,79 62,70" fill="#076780"/></svg>`;
+  `<polygon points="44,22 62,31 44,40 26,31" fill="#ffbe8f"/>` +
+  `<polygon points="26,31 44,40 44,47 26,38" fill="#ff8b3d"/>` +
+  `<polygon points="62,31 44,40 44,47 62,38" fill="#e86f1f"/>` +
+  `<polygon points="56,38 74,47 56,56 38,47" fill="#8fb0ff"/>` +
+  `<polygon points="38,47 56,56 56,63 38,54" fill="#2f6bff"/>` +
+  `<polygon points="74,47 56,56 56,63 74,54" fill="#1d4ed8"/>` +
+  `<polygon points="44,54 62,63 44,72 26,63" fill="#b79bf7"/>` +
+  `<polygon points="26,63 44,72 44,79 26,70" fill="#8b5cf6"/>` +
+  `<polygon points="62,63 44,72 44,79 62,70" fill="#6d28d9"/></svg>`;
 
 const card = (title, subtitle, opts = {}) => {
   const { eyebrow = '', cta = '' } = opts;
@@ -41,17 +41,19 @@ const card = (title, subtitle, opts = {}) => {
   * { margin:0; box-sizing:border-box; }
   body { width:1280px; height:720px; display:flex; align-items:center; justify-content:center;
     background:
-      radial-gradient(760px 470px at 84% -12%, rgba(10,165,201,.26), transparent 62%),
-      radial-gradient(640px 430px at -6% 6%, rgba(124,92,219,.18), transparent 60%),
-      radial-gradient(700px 470px at 18% 112%, rgba(255,138,76,.2), transparent 62%),
-      #edf3fa;
-    font-family:'Inter',-apple-system,'Segoe UI',Roboto,sans-serif; color:#0d2b3e; text-align:center; }
+      repeating-linear-gradient(0deg, rgba(29,78,216,.022) 0, rgba(29,78,216,.022) 1px, transparent 1px, transparent 6px),
+      radial-gradient(760px 470px at 86% -12%, rgba(47,107,255,.26), transparent 60%),
+      radial-gradient(620px 420px at -6% 6%, rgba(139,92,246,.22), transparent 58%),
+      radial-gradient(560px 400px at 106% 60%, rgba(101,200,55,.16), transparent 58%),
+      radial-gradient(700px 470px at 14% 112%, rgba(255,139,61,.22), transparent 60%),
+      #f2f5fc;
+    font-family:'Inter',-apple-system,'Segoe UI',Roboto,sans-serif; color:#101f38; text-align:center; }
   .in { max-width: 980px; padding: 0 60px; }
-  .brand { display:inline-flex; align-items:center; font-weight:800; font-size:28px; margin-bottom:34px; color:#0d2b3e; }
-  .eyebrow { color:#076780; font-weight:800; letter-spacing:.08em; text-transform:uppercase; font-size:22px; margin-bottom:18px; }
+  .brand { display:inline-flex; align-items:center; font-weight:800; font-size:28px; margin-bottom:34px; color:#101f38; }
+  .eyebrow { color:#1d4ed8; font-weight:800; letter-spacing:.08em; text-transform:uppercase; font-size:22px; margin-bottom:18px; }
   h1 { font-size:56px; letter-spacing:-0.03em; line-height:1.12; font-weight:800; }
-  p { color:#55738a; font-size:27px; margin-top:22px; line-height:1.4; }
-  .cta { display:inline-block; margin-top:34px; font-weight:800; font-size:26px; color:#0a86ab; }
+  p { color:#4e6382; font-size:27px; margin-top:22px; line-height:1.4; }
+  .cta { display:inline-block; margin-top:34px; font-weight:800; font-size:26px; color:#2f6bff; }
 </style></head><body><div class="in">
   <div class="brand">${MARK} Groundwork</div>
   ${eyebrow ? `<div class="eyebrow">${eyebrow}</div>` : ''}
@@ -66,7 +68,7 @@ const card = (title, subtitle, opts = {}) => {
 const INIT_SCRIPT = `
   const dot = document.createElement('div');
   dot.style.cssText = 'position:fixed;z-index:99999;width:22px;height:22px;border-radius:50%;' +
-    'background:rgba(10,134,171,.35);border:2.5px solid #0a86ab;pointer-events:none;' +
+    'background:rgba(47,107,255,.32);border:2.5px solid #2f6bff;pointer-events:none;' +
     'transform:translate(-50%,-50%);transition:width .12s,height .12s;left:-50px;top:-50px';
   const attach = () => {
     if (!document.body) return;

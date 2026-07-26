@@ -49,8 +49,8 @@ export function About({ onBack, onStart }: Props) {
         <p>
           I have spent my career in the security function of an enterprise that
           measures revenue in the billions, and I work today as a lead
-          automation analyst. That job is mostly this: take a control that
-          matters, work out why it keeps failing in practice, and build
+          automation analyst. Most of that job is figuring out why a control
+          everyone agrees on keeps failing in practice, then building
           something that makes the right thing the easy thing.
         </p>
         <p>
@@ -63,8 +63,8 @@ export function About({ onBack, onStart }: Props) {
         <p>
           The advice that reaches those founders is usually written for the
           companies I work in. It assumes a budget, a security hire, and time to
-          read a hundred-page standard. So it gets skimmed, filed, and ignored,
-          and the same avoidable things go wrong.
+          read a hundred-page standard. So it gets skimmed and forgotten, and the
+          same avoidable things keep going wrong.
         </p>
       </section>
 

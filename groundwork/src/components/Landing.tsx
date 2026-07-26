@@ -18,7 +18,7 @@ interface Props {
 const STEPS = [
   {
     title: 'Tell us about your startup',
-    body: 'Five minutes of plain questions. No jargon, and nothing you need to look up before you can answer it.',
+    body: 'Five minutes of plain questions. Nothing you need to google before you can answer.',
   },
   {
     title: 'Get a tailored roadmap',
