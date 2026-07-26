@@ -1,0 +1,192 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Inter', -apple-system, 'Segoe UI', Roboto, sans-serif; background: #333; -webkit-font-smoothing: antialiased; }
+  svg { display: block; }
+
+  /* 4:5 is the tallest ratio Instagram allows in feed, so it wins the most
+     screen. All ad boards share the brand's light, translucent plate. */
+  .ad {
+    width: 1080px; height: 1350px; padding: 88px 80px;
+    display: flex; flex-direction: column; position: relative; overflow: hidden;
+    color: #0d2b3e; margin-bottom: 40px;
+    background:
+      radial-gradient(900px 620px at 84% -10%, rgba(10,165,201,0.30), transparent 62%),
+      radial-gradient(680px 470px at -6% 4%, rgba(124,92,219,0.20), transparent 60%),
+      radial-gradient(820px 600px at 18% 108%, rgba(255,138,76,0.22), transparent 62%),
+      #edf3fa;
+  }
+  .brand { display: flex; align-items: center; gap: 14px; font-weight: 800; font-size: 30px; color: #55738a; }
+  .brand .mark { width: 46px; height: 46px; flex-shrink: 0; }
+  /* The middle of the ad grows and centres itself, so no board is ever
+     top-heavy with a pool of dead space above the button. */
+  .body { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 44px 0; }
+
+  .eyebrow { font-weight: 800; letter-spacing: 0.07em; text-transform: uppercase; font-size: 25px; color: #076780; margin-bottom: 24px; }
+  .eyebrow.warm { color: #c2600f; }
+  h1 { letter-spacing: -0.035em; line-height: 1.05; font-weight: 800; font-size: 84px; }
+  h1.sm { font-size: 70px; }
+  .sub { color: #55738a; line-height: 1.4; font-size: 33px; margin-top: 28px; }
+
+  /* Glossy pill that reads as a tappable control */
+  .cta {
+    display: inline-flex; align-items: center; gap: 14px; align-self: flex-start;
+    background: linear-gradient(180deg, #12a8ce, #0a86ab); color: #fff;
+    font-weight: 800; font-size: 34px; padding: 26px 44px; border-radius: 999px;
+    box-shadow: inset 0 2px 0 rgba(255,255,255,0.4), 0 20px 44px -18px rgba(7,103,128,0.85);
+  }
+  .url { color: #0a86ab; font-weight: 800; font-size: 30px; margin-top: 26px; }
+
+  /* Panels */
+  .panel {
+    background: rgba(255,255,255,0.76); border: 1px solid rgba(13,60,82,0.13);
+    border-radius: 28px; padding: 34px 36px;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.95), 0 20px 46px -24px rgba(9,45,66,0.4);
+  }
+
+  /* ── A: questionnaire ── */
+  .q { display: flex; flex-direction: column; gap: 20px; margin-top: 40px; }
+  .q .row { display: flex; align-items: flex-start; gap: 20px; font-size: 31px; line-height: 1.3; }
+  .q .box { width: 40px; height: 40px; border-radius: 10px; border: 3px solid rgba(13,60,82,0.28); flex-shrink: 0; margin-top: 4px; }
+
+  /* ── B: before / after ── */
+  .split { display: flex; flex-direction: column; gap: 22px; margin-top: 36px; }
+  .side-label { font-size: 23px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 14px; }
+  .before .side-label { color: #c2600f; }
+  .after .side-label { color: #0f8a5c; }
+  .messy { font-size: 30px; color: #55738a; line-height: 1.45; }
+  .tasks { display: flex; flex-direction: column; gap: 13px; }
+  .task { display: flex; align-items: center; gap: 16px; font-size: 28px; font-weight: 600; }
+  .task .n { width: 36px; height: 36px; border-radius: 999px; background: linear-gradient(180deg,#12a8ce,#0a86ab); color:#fff; font-size: 19px; font-weight: 800; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .task .when { margin-left: auto; font-size: 22px; font-weight: 700; color: #8199ac; }
+
+  /* ── C: big number ── */
+  .huge { font-size: 250px; font-weight: 800; letter-spacing: -0.06em; line-height: 0.9;
+    background: linear-gradient(150deg, #12a8ce, #7c5cdb); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+  /* ── D: product mock ── */
+  .mock { margin-top: 36px; display: flex; flex-direction: column; gap: 14px; }
+  .mock-item { display: flex; align-items: center; gap: 18px; background: rgba(255,255,255,0.8);
+    border: 1px solid rgba(13,60,82,0.12); border-radius: 20px; padding: 22px 26px;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.95), 0 10px 26px -16px rgba(9,45,66,0.4); }
+  .mock-item .tick { width: 40px; height: 40px; border-radius: 12px; display:flex; align-items:center; justify-content:center; font-size: 22px; font-weight: 900; flex-shrink: 0; }
+  .tick.done { background: rgba(18,160,107,0.15); color: #0f8a5c; border: 2px solid rgba(18,160,107,0.5); }
+  .tick.todo { background: rgba(255,255,255,0.9); border: 2px solid rgba(13,60,82,0.22); }
+  .mock-item .t { font-size: 28px; font-weight: 650; }
+  .mock-item .tag { margin-left: auto; font-size: 20px; font-weight: 700; color: #55738a; background: rgba(13,60,82,0.05); border-radius: 999px; padding: 6px 16px; white-space: nowrap; }
+
+  /* ── F: chips ── */
+  .chips { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 36px; }
+  .chips span { font-size: 26px; font-weight: 750; color: #55738a; background: rgba(255,255,255,0.72);
+    border: 1px solid rgba(13,60,82,0.13); border-radius: 14px; padding: 14px 24px; }
+</style>
+</head>
+<body>
+
+<!-- ═══ AD A: the questionnaire panic ═══ -->
+<div class="ad" id="ad-questions">
+  <div class="brand"><svg class="mark" viewBox="0 0 100 100"><polygon points="44,22 62,31 44,40 26,31" fill="#ffc09a"/><polygon points="26,31 44,40 44,47 26,38" fill="#ff8a4c"/><polygon points="62,31 44,40 44,47 62,38" fill="#ef6b28"/><polygon points="56,38 74,47 56,56 38,47" fill="#7ce0f2"/><polygon points="38,47 56,56 56,63 38,54" fill="#29bcdc"/><polygon points="74,47 56,56 56,63 74,54" fill="#1595b8"/><polygon points="44,54 62,63 44,72 26,63" fill="#54bcd8"/><polygon points="26,63 44,72 44,79 26,70" fill="#0a86ab"/><polygon points="62,63 44,72 44,79 62,70" fill="#076780"/></svg> Groundwork</div>
+  <div class="body">
+  <div class="eyebrow warm">Your biggest deal, on hold</div>
+  <h1 class="sm">Can your startup answer these?</h1>
+  <div class="q">
+    <div class="row"><span class="box"></span> Do you enforce MFA on every admin account?</div>
+    <div class="row"><span class="box"></span> How is customer data encrypted at rest?</div>
+    <div class="row"><span class="box"></span> What is your incident response process?</div>
+    <div class="row"><span class="box"></span> Can you provide a SOC 2 report?</div>
+  </div>
+  
+  </div>
+  <div class="cta">Get the answers free</div>
+  <div class="url">groundwork-security.com</div>
+</div>
+
+<!-- ═══ AD B: before / after ═══ -->
+<div class="ad" id="ad-beforeafter">
+  <div class="brand"><svg class="mark" viewBox="0 0 100 100"><polygon points="44,22 62,31 44,40 26,31" fill="#ffc09a"/><polygon points="26,31 44,40 44,47 26,38" fill="#ff8a4c"/><polygon points="62,31 44,40 44,47 62,38" fill="#ef6b28"/><polygon points="56,38 74,47 56,56 38,47" fill="#7ce0f2"/><polygon points="38,47 56,56 56,63 38,54" fill="#29bcdc"/><polygon points="74,47 56,56 56,63 74,54" fill="#1595b8"/><polygon points="44,54 62,63 44,72 26,63" fill="#54bcd8"/><polygon points="26,63 44,72 44,79 26,70" fill="#0a86ab"/><polygon points="62,63 44,72 44,79 62,70" fill="#076780"/></svg> Groundwork</div>
+  <div class="body">
+  <h1 class="sm">Five minutes changes the whole picture.</h1>
+  <div class="split">
+    <div class="panel before">
+      <div class="side-label">Monday morning</div>
+      <div class="messy">"We know we should do security. We do not know what matters, what it costs, or where to start."</div>
+    </div>
+    <div class="panel after">
+      <div class="side-label">Five minutes later</div>
+      <div class="tasks">
+        <div class="task"><span class="n">1</span> Turn on MFA everywhere <span class="when">This week</span></div>
+        <div class="task"><span class="n">2</span> Roll out a password manager <span class="when">This week</span></div>
+        <div class="task"><span class="n">3</span> Lock down the cloud root <span class="when">This month</span></div>
+      </div>
+    </div>
+  </div>
+  
+  </div>
+  <div class="cta">Build my plan</div>
+</div>
+
+<!-- ═══ AD C: the number ═══ -->
+<div class="ad" id="ad-number">
+  <div class="brand"><svg class="mark" viewBox="0 0 100 100"><polygon points="44,22 62,31 44,40 26,31" fill="#ffc09a"/><polygon points="26,31 44,40 44,47 26,38" fill="#ff8a4c"/><polygon points="62,31 44,40 44,47 62,38" fill="#ef6b28"/><polygon points="56,38 74,47 56,56 38,47" fill="#7ce0f2"/><polygon points="38,47 56,56 56,63 38,54" fill="#29bcdc"/><polygon points="74,47 56,56 56,63 74,54" fill="#1595b8"/><polygon points="44,54 62,63 44,72 26,63" fill="#54bcd8"/><polygon points="26,63 44,72 44,79 26,70" fill="#0a86ab"/><polygon points="62,63 44,72 44,79 62,70" fill="#076780"/></svg> Groundwork</div>
+  <div class="body">
+  <div class="huge">56</div>
+  <h1 class="sm" style="margin-top:26px">security controls.<br />Only yours make the list.</h1>
+  <div class="sub">Answer a few questions and the rest get ruled out, so you are left with a short plan in the order it should happen.</div>
+  
+  </div>
+  <div class="cta">See what applies to you</div>
+  <div class="url">groundwork-security.com</div>
+</div>
+
+<!-- ═══ AD D: product shot ═══ -->
+<div class="ad" id="ad-product">
+  <div class="brand"><svg class="mark" viewBox="0 0 100 100"><polygon points="44,22 62,31 44,40 26,31" fill="#ffc09a"/><polygon points="26,31 44,40 44,47 26,38" fill="#ff8a4c"/><polygon points="62,31 44,40 44,47 62,38" fill="#ef6b28"/><polygon points="56,38 74,47 56,56 38,47" fill="#7ce0f2"/><polygon points="38,47 56,56 56,63 38,54" fill="#29bcdc"/><polygon points="74,47 56,56 56,63 74,54" fill="#1595b8"/><polygon points="44,54 62,63 44,72 26,63" fill="#54bcd8"/><polygon points="26,63 44,72 44,79 26,70" fill="#0a86ab"/><polygon points="62,63 44,72 44,79 62,70" fill="#076780"/></svg> Groundwork</div>
+  <div class="body">
+  <div class="eyebrow">Your plan, not a checklist</div>
+  <h1 class="sm">Tick it off. Watch it drop.</h1>
+  <div class="mock">
+    <div class="mock-item"><span class="tick done">✓</span><span class="t">Turn on MFA everywhere</span><span class="tag">Done</span></div>
+    <div class="mock-item"><span class="tick done">✓</span><span class="t">Roll out a password manager</span><span class="tag">Done</span></div>
+    <div class="mock-item"><span class="tick todo"></span><span class="t">Encrypt every laptop</span><span class="tag">1 hour</span></div>
+    <div class="mock-item"><span class="tick todo"></span><span class="t">Set up tested backups</span><span class="tag">A few hours</span></div>
+  </div>
+  <div class="sub" style="font-size:30px">Every item says what it protects you from and how long it takes.</div>
+  
+  </div>
+  <div class="cta">Start free</div>
+</div>
+
+<!-- ═══ AD E: objection handler ═══ -->
+<div class="ad" id="ad-noteam">
+  <div class="brand"><svg class="mark" viewBox="0 0 100 100"><polygon points="44,22 62,31 44,40 26,31" fill="#ffc09a"/><polygon points="26,31 44,40 44,47 26,38" fill="#ff8a4c"/><polygon points="62,31 44,40 44,47 62,38" fill="#ef6b28"/><polygon points="56,38 74,47 56,56 38,47" fill="#7ce0f2"/><polygon points="38,47 56,56 56,63 38,54" fill="#29bcdc"/><polygon points="74,47 56,56 56,63 74,54" fill="#1595b8"/><polygon points="44,54 62,63 44,72 26,63" fill="#54bcd8"/><polygon points="26,63 44,72 44,79 26,70" fill="#0a86ab"/><polygon points="62,63 44,72 44,79 62,70" fill="#076780"/></svg> Groundwork</div>
+  <div class="body">
+  <h1>No security team?<br />That is who this is for.</h1>
+  <div class="sub">Built by someone who does this inside a company with thousands of staff, rewritten for a company with four. No jargon, no hundred-page standard, no budget required to start.</div>
+  
+  </div>
+  <div class="cta">Get my plan free</div>
+  <div class="url">groundwork-security.com</div>
+</div>
+
+<!-- ═══ AD F: coverage / credibility ═══ -->
+<div class="ad" id="ad-frameworks">
+  <div class="brand"><svg class="mark" viewBox="0 0 100 100"><polygon points="44,22 62,31 44,40 26,31" fill="#ffc09a"/><polygon points="26,31 44,40 44,47 26,38" fill="#ff8a4c"/><polygon points="62,31 44,40 44,47 62,38" fill="#ef6b28"/><polygon points="56,38 74,47 56,56 38,47" fill="#7ce0f2"/><polygon points="38,47 56,56 56,63 38,54" fill="#29bcdc"/><polygon points="74,47 56,56 56,63 74,54" fill="#1595b8"/><polygon points="44,54 62,63 44,72 26,63" fill="#54bcd8"/><polygon points="26,63 44,72 44,79 26,70" fill="#0a86ab"/><polygon points="62,63 44,72 44,79 62,70" fill="#076780"/></svg> Groundwork</div>
+  <div class="body">
+  <div class="eyebrow">Work that counts twice</div>
+  <h1 class="sm">Cross-referenced to the standards buyers ask about.</h1>
+  <div class="chips">
+    <span>SOC 2</span><span>ISO 27001</span><span>CIS Controls</span>
+    <span>GDPR</span><span>HIPAA</span><span>PCI DSS</span><span>OWASP</span>
+  </div>
+  <div class="sub">So the thing you do this week is already evidence when the audit comes around.</div>
+  
+  </div>
+  <div class="cta">Get audit-ready sooner</div>
+  <div class="url">groundwork-security.com</div>
+</div>
+
+</body>
+</html>
