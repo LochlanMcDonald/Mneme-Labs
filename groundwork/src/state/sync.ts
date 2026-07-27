@@ -31,6 +31,18 @@ export function resolveInitialState(
   return { action: 'reset' };
 }
 
+/**
+ * True when this browser holds a plan that belongs to an account. Once auth
+ * definitively reports signed-out, that cached copy must not be shown or
+ * kept: signing out on a shared machine means the next visitor starts
+ * clean. The account's copy on the server is untouched and comes back on
+ * the next sign-in. Plans built logged-out (ownerId null) stay local
+ * property and survive.
+ */
+export function shouldPurgeOnSignOut(local: AppState): boolean {
+  return (local.ownerId ?? null) !== null;
+}
+
 export async function loadServerState(): Promise<AppState | null> {
   const res = await fetch('/api/state', { headers: { accept: 'application/json' } });
   if (!res.ok) {

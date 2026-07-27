@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { resolveInitialState } from './sync';
+import { resolveInitialState, shouldPurgeOnSignOut } from './sync';
 import type { AppState, CompanyProfile } from '../types';
 
 const profile: CompanyProfile = {
@@ -61,5 +61,22 @@ describe('resolveInitialState', () => {
   it('resets when neither side has a plan', () => {
     expect(resolveInitialState(empty, null, USER).action).toBe('reset');
     expect(resolveInitialState(empty, empty, USER).action).toBe('reset');
+  });
+});
+
+describe('shouldPurgeOnSignOut', () => {
+  it('purges an account-owned plan once the browser is signed out', () => {
+    expect(shouldPurgeOnSignOut({ ...withPlan, ownerId: USER })).toBe(true);
+  });
+
+  it('keeps a plan that was built logged-out', () => {
+    expect(shouldPurgeOnSignOut(withPlan)).toBe(false);
+    expect(shouldPurgeOnSignOut(empty)).toBe(false);
+  });
+
+  it('treats a legacy state without ownerId as unowned', () => {
+    const legacy = { ...withPlan } as AppState & { ownerId?: string | null };
+    delete legacy.ownerId;
+    expect(shouldPurgeOnSignOut(legacy)).toBe(false);
   });
 });

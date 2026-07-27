@@ -6,6 +6,7 @@ import {
   loadServerState,
   resolveInitialState,
   saveServerState,
+  shouldPurgeOnSignOut,
   type SyncStatus,
 } from './sync';
 import type { AppState, CompanyProfile, ItemState, ItemStatus, Plan } from '../types';
@@ -24,6 +25,19 @@ function loadLocalState(): AppState {
     return { ...EMPTY_STATE, ...parsed };
   } catch {
     return EMPTY_STATE;
+  }
+}
+
+/**
+ * Drop the plan cached in this browser. Used on sign-out so the plan is
+ * gone before the logout redirect even leaves the page. Server copies are
+ * untouched.
+ */
+export function clearLocalState(): void {
+  try {
+    localStorage.removeItem(STORAGE_KEY);
+  } catch {
+    // Storage may be unavailable; the signed-out purge in useStore still runs.
   }
 }
 
@@ -94,6 +108,14 @@ export function useStore(): Store {
     return () => {
       cancelled = true;
     };
+  }, [auth.status]);
+
+  // Arriving signed out clears any account-owned plan cached in this
+  // browser (the counterpart of the other-user drop below). The server
+  // copy is untouched; it reloads on the next sign-in.
+  useEffect(() => {
+    if (auth.status !== 'signed-out') return;
+    setState((prev) => (shouldPurgeOnSignOut(prev) ? EMPTY_STATE : prev));
   }, [auth.status]);
 
   // Initial account load once signed in.

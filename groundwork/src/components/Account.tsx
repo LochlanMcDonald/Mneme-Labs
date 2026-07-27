@@ -1,4 +1,5 @@
 import { loginUrl, logoutUrl, remoteLoginUrl, type AuthState } from '../state/auth';
+import { clearLocalState } from '../state/store';
 import type { SyncStatus } from '../state/sync';
 
 const SYNC_LABELS: Record<SyncStatus, string> = {
@@ -52,7 +53,7 @@ export function AccountControls({ auth, sync }: { auth: AuthState; sync: SyncSta
           {SYNC_LABELS[sync]}
         </span>
       )}
-      <a className="btn btn-small" href={logoutUrl()}>
+      <a className="btn btn-small" href={logoutUrl()} onClick={clearLocalState}>
         Sign out
       </a>
     </div>
