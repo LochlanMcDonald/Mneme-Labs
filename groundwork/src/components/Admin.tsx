@@ -2,8 +2,9 @@ import { useEffect, useState } from 'react';
 import type { Store } from '../state/store';
 import {
   answerAssistRequest,
-  listAllAssistRequests,
+  loadAdminOverview,
   type AdminAssistRequest,
+  type AdminStats,
 } from '../state/pro';
 
 interface Props {
@@ -61,14 +62,62 @@ function RequestCard({
   );
 }
 
+function day(iso: string): string {
+  return iso ? String(iso).slice(0, 10) : '';
+}
+
+function UserStats({ stats }: { stats: AdminStats }) {
+  return (
+    <section className="help-section">
+      <h2>Accounts</h2>
+      <div className="coverage-stats">
+        <div className="coverage-stat">
+          <strong>{stats.totalUsers}</strong>
+          <span>signed-in users</span>
+        </div>
+        <div className="coverage-stat">
+          <strong>{stats.withPlan}</strong>
+          <span>built a plan</span>
+        </div>
+        <div className="coverage-stat">
+          <strong>{stats.proUsers}</strong>
+          <span>Pro members</span>
+        </div>
+      </div>
+      {stats.users.length > 0 && (
+        <>
+          <h3 className="admin-group">Latest ({stats.users.length} shown)</h3>
+          {stats.users.map((u) => (
+            <p key={u.userId} className="admin-req-meta">
+              {u.userDetails || u.userId}
+              {u.pro && ' · Pro'}
+              {u.hasPlan && ' · has a plan'}
+              {u.createdAt
+                ? ` · joined ${day(u.createdAt)}`
+                : u.updatedAt
+                  ? ` · last saved ${day(u.updatedAt)}`
+                  : ''}
+            </p>
+          ))}
+        </>
+      )}
+    </section>
+  );
+}
+
 export function Admin({ store, onBack }: Props) {
   const [requests, setRequests] = useState<AdminAssistRequest[] | null>(null);
+  const [stats, setStats] = useState<AdminStats | null>(null);
   const [error, setError] = useState('');
 
   useEffect(() => {
     let cancelled = false;
-    listAllAssistRequests()
-      .then((r) => !cancelled && setRequests(r))
+    loadAdminOverview()
+      .then((o) => {
+        if (cancelled) return;
+        setRequests(o.requests);
+        setStats(o.stats);
+      })
       .catch((e) => !cancelled && setError(e instanceof Error ? e.message : 'Failed to load'));
     return () => {
       cancelled = true;
@@ -102,6 +151,7 @@ export function Admin({ store, onBack }: Props) {
       <button className="btn" onClick={onBack}>
         ← Back
       </button>
+      {stats && <UserStats stats={stats} />}
       <section className="help-section">
         <h2>Advisor requests</h2>
         {error && <p className="advisor-error">{error}</p>}

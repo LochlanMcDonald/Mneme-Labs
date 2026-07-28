@@ -48,6 +48,20 @@ app.http('state', {
       return { status: 400, jsonBody: { error: 'Missing state object' } };
     }
 
+    // First write stamps createdAt; later saves preserve it, so the admin
+    // page can show when each account first appeared. A failed read must
+    // not block the save, so it falls back to "now".
+    const updatedAt = new Date().toISOString();
+    let createdAt = updatedAt;
+    try {
+      const existing = await client.getEntity(PARTITION, principal.userId);
+      if (typeof existing.createdAt === 'string' && existing.createdAt) {
+        createdAt = existing.createdAt;
+      }
+    } catch {
+      // 404 (new user) or transient read failure: keep createdAt = now.
+    }
+
     try {
       await client.upsertEntity(
         {
@@ -55,7 +69,8 @@ app.http('state', {
           rowKey: principal.userId,
           payload: JSON.stringify(body.state),
           userDetails: String(principal.userDetails || ''),
-          updatedAt: new Date().toISOString(),
+          createdAt,
+          updatedAt,
         },
         'Replace',
       );
