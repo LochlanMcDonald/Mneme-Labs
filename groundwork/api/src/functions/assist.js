@@ -40,7 +40,53 @@ async function handleAdmin(request, context, client, principal) {
       if (a.status !== b.status) return a.status === 'open' ? -1 : 1;
       return String(b.createdAt).localeCompare(String(a.createdAt));
     });
-    return { jsonBody: { requests } };
+
+    // Account stats ride along with the same response: one row per user in
+    // the 'state' partition, pro flags in 'entitlement'. Stats failing must
+    // not take down the advisor inbox, so they degrade to null.
+    let stats = null;
+    try {
+      const users = [];
+      const stateIter = client.listEntities({
+        queryOptions: { filter: `PartitionKey eq 'state'` },
+      });
+      for await (const e of stateIter) {
+        let hasPlan = false;
+        try {
+          const parsed = JSON.parse(e.payload || 'null');
+          hasPlan = Boolean(parsed && parsed.profile);
+        } catch {
+          // Unreadable payload still counts as a user, just not a plan.
+        }
+        users.push({
+          userId: e.rowKey,
+          userDetails: e.userDetails || '',
+          createdAt: e.createdAt || '',
+          updatedAt: e.updatedAt || '',
+          hasPlan,
+        });
+      }
+      const proIds = new Set();
+      const entIter = client.listEntities({
+        queryOptions: { filter: `PartitionKey eq 'entitlement'` },
+      });
+      for await (const e of entIter) {
+        if (e.pro === true) proIds.add(e.rowKey);
+      }
+      users.sort((a, b) =>
+        String(b.createdAt || b.updatedAt).localeCompare(String(a.createdAt || a.updatedAt)),
+      );
+      stats = {
+        totalUsers: users.length,
+        withPlan: users.filter((u) => u.hasPlan).length,
+        proUsers: proIds.size,
+        users: users.slice(0, 25).map((u) => ({ ...u, pro: proIds.has(u.userId) })),
+      };
+    } catch (err) {
+      context.error('Failed to compute account stats', err);
+    }
+
+    return { jsonBody: { requests, stats } };
   }
 
   // POST: answer a request.

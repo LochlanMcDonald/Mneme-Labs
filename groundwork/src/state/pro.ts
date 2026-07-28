@@ -23,6 +23,30 @@ export interface AdminAssistRequest extends AssistRequest {
   userDetails: string;
 }
 
+/** One signed-in account, as shown on the admin page. */
+export interface AdminUserRow {
+  userId: string;
+  userDetails: string;
+  /** First save on this account. Empty for accounts that predate tracking. */
+  createdAt: string;
+  updatedAt: string;
+  hasPlan: boolean;
+  pro: boolean;
+}
+
+export interface AdminStats {
+  totalUsers: number;
+  withPlan: number;
+  proUsers: number;
+  users: AdminUserRow[];
+}
+
+export interface AdminOverview {
+  requests: AdminAssistRequest[];
+  /** Null when the stats query failed server-side; requests still load. */
+  stats: AdminStats | null;
+}
+
 /**
  * Optional checkout link (e.g. a Stripe Payment Link), baked in at build
  * time. When unset, the upgrade pitch shows an early-access note instead
@@ -57,11 +81,14 @@ export async function fetchMe(): Promise<Me | null> {
   };
 }
 
-export async function listAllAssistRequests(): Promise<AdminAssistRequest[]> {
+export async function loadAdminOverview(): Promise<AdminOverview> {
   const res = await fetch('/api/assist?scope=admin', { headers: { accept: 'application/json' } });
-  if (!res.ok) throw new Error(`Failed to load requests (${res.status})`);
+  if (!res.ok) throw new Error(`Failed to load admin data (${res.status})`);
   const data = await res.json();
-  return Array.isArray(data?.requests) ? data.requests : [];
+  return {
+    requests: Array.isArray(data?.requests) ? data.requests : [],
+    stats: data?.stats && typeof data.stats === 'object' ? data.stats : null,
+  };
 }
 
 export async function answerAssistRequest(id: string, answer: string): Promise<void> {
