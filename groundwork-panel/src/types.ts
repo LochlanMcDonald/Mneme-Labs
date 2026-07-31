@@ -11,7 +11,14 @@ export interface VendorDef {
   /** Default console URL the tile links out to. */
   consoleUrl: string;
   /** Credential fields the setup form asks for. */
-  fields: { key: string; label: string; secret?: boolean; placeholder?: string }[];
+  fields: {
+    key: string;
+    label: string;
+    secret?: boolean;
+    placeholder?: string;
+    /** May be left blank; the connector falls back to a sensible default. */
+    optional?: boolean;
+  }[];
   /** Flavor accent used for the tile stripe. */
   accent: 'blueberry' | 'grape' | 'tangerine' | 'lime' | 'strawberry';
   /** True when the connector is implemented; others show as planned. */

@@ -24,8 +24,11 @@ layout. Click "Add a console" to go live.
   sent only to the vendor's own API, and the config endpoint strips them
   before anything reaches the browser.
 - Connectors live in `connectors/`, one module per vendor exporting
-  `poll(creds) -> { total, severities }`. GitHub is implemented; Defender,
-  CrowdStrike, SentinelOne, Proofpoint TAP and Google Workspace are next.
+  `poll(creds) -> { total, severities }`. Each connector owns its vendor's
+  whole auth flow internally; the board never knows the difference. GitHub
+  (static token) and CrowdStrike Falcon (OAuth2 client-credentials with a
+  cached bearer token, regional clouds supported) are implemented;
+  Defender, SentinelOne, Proofpoint TAP and Google Workspace are next.
 
 ## Status
 

@@ -19,6 +19,7 @@ const CONFIG_FILE = path.join(CONFIG_DIR, 'config.json');
 
 const CONNECTORS = {
   github: () => import('./connectors/github.mjs'),
+  crowdstrike: () => import('./connectors/crowdstrike.mjs'),
 };
 
 async function loadConfig() {

@@ -35,14 +35,20 @@ export const VENDORS: VendorDef[] = [
   {
     id: 'crowdstrike',
     name: 'CrowdStrike Falcon',
-    blurb: 'Detections from the Falcon platform.',
+    blurb: 'New alerts from the Falcon platform, split by severity.',
     consoleUrl: 'https://falcon.crowdstrike.com',
     fields: [
       { key: 'clientId', label: 'API client ID' },
       { key: 'clientSecret', label: 'API client secret', secret: true },
+      {
+        key: 'baseUrl',
+        label: 'API base URL (your Falcon cloud)',
+        placeholder: 'https://api.crowdstrike.com',
+        optional: true,
+      },
     ],
     accent: 'strawberry',
-    ready: false,
+    ready: true,
   },
   {
     id: 'sentinelone',

@@ -48,7 +48,7 @@ export function AddVendor({ configured, onSave, onBack }: Props) {
     );
   }
 
-  const missing = picked.fields.some((f) => !(creds[f.key] ?? '').trim());
+  const missing = picked.fields.some((f) => !f.optional && !(creds[f.key] ?? '').trim());
 
   return (
     <div className="setup">
