@@ -66,6 +66,7 @@
     },
     "nsis": {
       "oneClick": true
-    }
+    },
+    "artifactName": "groundwork-panel-${version}-${os}-${arch}.${ext}"
   }
 }
