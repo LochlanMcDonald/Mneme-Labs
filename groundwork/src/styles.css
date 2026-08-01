@@ -1500,6 +1500,37 @@ textarea:focus {
 .coverage-frameworks {
   font-size: 15px;
 }
+
+/* Panel product page */
+.panel-consoles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 18px;
+}
+.panel-console {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13.5px;
+  font-weight: 700;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--lift-1);
+}
+.panel-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+}
+.panel-downloads {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 18px;
+}
 .coverage-count {
   font-size: 12px;
   font-weight: 700;
