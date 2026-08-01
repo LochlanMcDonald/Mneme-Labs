@@ -139,58 +139,76 @@ async function testDefender() {
   srv.close();
 }
 
-// ------------------------------------------------------------ SentinelOne
-async function testSentinelone() {
-  console.log('SentinelOne (static ApiToken header, pagination totals)');
-  const { poll } = await import('../connectors/sentinelone.mjs');
-  const { srv, url } = await listen((req, res) => {
-    if (req.headers.authorization !== 'ApiToken s1-tok') return json(res, 401, {});
-    const u = new URL(req.url, url);
-    if (u.pathname === '/web/api/v2.1/threats') {
-      if (u.searchParams.get('resolved') !== 'false') return json(res, 400, {});
-      const level = u.searchParams.get('confidenceLevel');
-      const totals = { malicious: 2, suspicious: 6 };
-      return json(res, 200, { data: [], pagination: { totalItems: totals[level] ?? 0 } });
+// ------------------------------------------------------ Microsoft Sentinel
+async function testSentinel() {
+  console.log('Microsoft Sentinel (ARM client-credentials, nextLink paging)');
+  const { poll } = await import('../connectors/sentinel.mjs');
+  let mints = 0;
+  const incident = (severity) => ({ properties: { severity, status: 'New' } });
+  const { srv, url } = await listen(async (req, res) => {
+    if (req.url === '/tenant-1/oauth2/v2.0/token' && req.method === 'POST') {
+      const p = new URLSearchParams(await body(req));
+      if (p.get('client_id') !== 'app-1' || p.get('client_secret') !== 'arm-sec') return json(res, 401, {});
+      // The token must be scoped to ARM, not Graph.
+      if (!p.get('scope').startsWith(url)) return json(res, 400, {});
+      mints += 1;
+      return json(res, 200, { access_token: `arm-tok-${mints}`, expires_in: 3599 });
     }
-    return json(res, 404, {});
-  });
-
-  const r = await poll({ baseUrl: url, apiToken: 's1-tok' });
-  check('counts 8 unresolved threats', r.total === 8, JSON.stringify(r));
-  check('malicious surfaces as high, suspicious as medium', r.severities.high === 2 && r.severities.medium === 6);
-  let err = '';
-  await poll({ baseUrl: url, apiToken: 'wrong' }).catch((e) => (err = e.message));
-  check('bad token yields a plain error', err.includes('rejected'), err);
-  srv.close();
-}
-
-// -------------------------------------------------------------- Proofpoint
-async function testProofpoint() {
-  console.log('Proofpoint TAP (HTTP Basic, SIEM /all events)');
-  const { poll } = await import('../connectors/proofpoint.mjs');
-  const good = Buffer.from('pp-principal:pp-secret').toString('base64');
-  const { srv, url } = await listen((req, res) => {
-    if (req.headers.authorization !== `Basic ${good}`) return json(res, 401, {});
-    const u = new URL(req.url, url);
-    if (u.pathname === '/v2/siem/all') {
-      if (Number(u.searchParams.get('sinceSeconds')) > 3600) return json(res, 400, {});
+    const armPath =
+      '/subscriptions/sub-1/resourceGroups/rg-1/providers/Microsoft.OperationalInsights' +
+      '/workspaces/ws-1/providers/Microsoft.SecurityInsights/incidents';
+    if (req.url.startsWith(armPath)) {
+      if (req.headers.authorization !== 'Bearer arm-tok-1') return json(res, 401, {});
+      const u = new URL(req.url, url);
+      if (!decodeURIComponent(u.search).includes("properties/status ne 'Closed'")) return json(res, 400, {});
+      // Two pages joined by nextLink, like ARM serves them.
+      if (u.searchParams.get('page') === '2') {
+        return json(res, 200, { value: [incident('Medium'), incident('Informational')] });
+      }
       return json(res, 200, {
-        messagesDelivered: [{}, {}],
-        clicksPermitted: [{}],
-        messagesBlocked: [{}, {}, {}],
-        clicksBlocked: [{}],
+        value: [incident('High'), incident('High'), incident('Medium')],
+        nextLink: `${url}${armPath}?api-version=2024-03-01&$filter=${encodeURIComponent("properties/status ne 'Closed'")}&page=2`,
       });
     }
     return json(res, 404, {});
   });
 
-  const r = await poll({ principal: 'pp-principal', secret: 'pp-secret', baseUrl: url });
-  check('counts 7 events in the last hour', r.total === 7, JSON.stringify(r));
-  check('threats that got through surface as high (2+1)', r.severities.high === 3);
-  check('blocked threats surface as low (3+1)', r.severities.low === 4);
+  const creds = {
+    tenantId: 'tenant-1', clientId: 'app-1', clientSecret: 'arm-sec',
+    subscriptionId: 'sub-1', resourceGroup: 'rg-1', workspace: 'ws-1',
+    loginUrl: url, armUrl: url,
+  };
+  const r = await poll(creds);
+  check('counts 5 open incidents across both pages', r.total === 5, JSON.stringify(r));
+  check('2 high / 2 medium / informational folds to low', r.severities.high === 2 && r.severities.medium === 2 && r.severities.low === 1);
+  await poll(creds);
+  check('second poll reuses the cached token (1 mint)', mints === 1, `mints=${mints}`);
   let err = '';
-  await poll({ principal: 'pp-principal', secret: 'wrong', baseUrl: url }).catch((e) => (err = e.message));
+  await poll({ ...creds, clientSecret: 'nope' }).catch((e) => (err = e.message));
   check('bad secret yields a plain error', err.includes('rejected'), err);
+  srv.close();
+}
+
+// --------------------------------------------------------- Proofpoint TRAP
+async function testProofpoint() {
+  console.log('Proofpoint TRAP (appliance API key header, open incidents)');
+  const { poll } = await import('../connectors/proofpoint.mjs');
+  const { srv, url } = await listen((req, res) => {
+    if (req.headers.authorization !== 'trap-key-1') return json(res, 401, {});
+    const u = new URL(req.url, url);
+    if (u.pathname === '/api/incidents') {
+      if (u.searchParams.get('state') !== 'open') return json(res, 400, {});
+      return json(res, 200, [{ id: 1 }, { id: 2 }, { id: 3 }]);
+    }
+    return json(res, 404, {});
+  });
+
+  const r = await poll({ baseUrl: url, apiKey: 'trap-key-1' });
+  check('counts 3 open incidents', r.total === 3, JSON.stringify(r));
+  check('open TRAP incidents surface as high', r.severities.high === 3);
+  let err = '';
+  await poll({ baseUrl: url, apiKey: 'wrong' }).catch((e) => (err = e.message));
+  check('bad API key yields a plain error', err.includes('rejected'), err);
   srv.close();
 }
 
@@ -255,7 +273,7 @@ async function testGworkspace() {
 }
 
 // ------------------------------------------------------------------- run
-for (const t of [testGithub, testCrowdstrike, testDefender, testSentinelone, testProofpoint, testGworkspace]) {
+for (const t of [testGithub, testCrowdstrike, testDefender, testSentinel, testProofpoint, testGworkspace]) {
   await t();
 }
 console.log(`\n${passed} passed, ${failed} failed`);

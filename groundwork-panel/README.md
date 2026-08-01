@@ -28,10 +28,12 @@ layout. Click "Add a console" to go live.
   whole auth flow internally; the board never knows the difference. All
   six are implemented: GitHub (static token), CrowdStrike Falcon (OAuth2
   client-credentials, cached bearer, regional clouds), Microsoft Defender
-  (Entra client-credentials into the Graph security API), SentinelOne
-  (static ApiToken header), Proofpoint TAP (HTTP Basic against the SIEM
-  API) and Google Workspace (service-account JWT signed locally, exchanged
-  for a bearer, domain-wide delegation).
+  (Entra client-credentials into the Graph security API), Microsoft
+  Sentinel (Entra client-credentials scoped to Azure Resource Manager,
+  reading workspace incidents with nextLink paging; the app needs the
+  Sentinel Reader role), Proofpoint TRAP (static API key against the
+  appliance's incidents API) and Google Workspace (service-account JWT
+  signed locally, exchanged for a bearer, domain-wide delegation).
 - `npm test` runs the connector suite: every vendor API is imitated by a
   local mock that enforces that vendor's real auth mechanics (the Google
   mock verifies the RS256 JWT signature), and every connector is asserted

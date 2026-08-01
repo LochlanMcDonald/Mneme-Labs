@@ -1,36 +1,33 @@
-// Proofpoint TAP connector. Auth is HTTP Basic with the TAP service
-// principal and secret against the SIEM API. One call to /v2/siem/all
-// returns the last hour of events; threats that got through (delivered
-// messages, permitted clicks) surface as high, blocked ones as low.
+// Proofpoint TRAP (Threat Response Auto-Pull) connector. TRAP is usually
+// an appliance on your own network, so the panel talks to its host
+// directly with a static API key in the Authorization header and lists
+// open incidents. TRAP does not report a uniform severity, so every open
+// incident surfaces as high: an open TRAP incident is a threat mid
+// quarantine that a human should look at.
+//
+// The appliance must present a certificate this machine trusts; add its
+// CA with NODE_EXTRA_CA_CERTS if it uses an internal one.
 
 export async function poll(creds) {
-  const principal = String(creds.principal || '').trim();
-  const secret = String(creds.secret || '').trim();
-  // Overridable for tests.
-  const baseUrl = String(creds.baseUrl || 'https://tap-api-v2.proofpoint.com').replace(/\/+$/, '');
-  if (!principal || !secret) {
-    throw new Error('Proofpoint TAP needs a service principal and secret');
+  const baseUrl = String(creds.baseUrl || '').trim().replace(/\/+$/, '');
+  const apiKey = String(creds.apiKey || '').trim();
+  if (!baseUrl || !apiKey) {
+    throw new Error('Proofpoint TRAP needs the appliance URL and an API key');
   }
 
-  // The SIEM API caps sinceSeconds at one hour.
-  const res = await fetch(`${baseUrl}/v2/siem/all?format=json&sinceSeconds=3600`, {
-    headers: {
-      authorization: `Basic ${Buffer.from(`${principal}:${secret}`).toString('base64')}`,
-      accept: 'application/json',
-    },
+  const res = await fetch(`${baseUrl}/api/incidents?state=open`, {
+    headers: { authorization: apiKey, accept: 'application/json' },
   });
   if (res.status === 401 || res.status === 403) {
-    throw new Error('Proofpoint rejected the service principal or secret');
+    throw new Error('TRAP rejected the API key');
   }
-  if (!res.ok) throw new Error(`Proofpoint SIEM API returned ${res.status}`);
+  if (!res.ok) throw new Error(`TRAP incidents API returned ${res.status}`);
   const data = await res.json();
+  const incidents = Array.isArray(data) ? data : (data.incidents ?? []);
 
-  const len = (a) => (Array.isArray(a) ? a.length : 0);
-  const through = len(data.messagesDelivered) + len(data.clicksPermitted);
-  const blocked = len(data.messagesBlocked) + len(data.clicksBlocked);
-
+  const total = incidents.length;
   return {
-    total: through + blocked,
-    severities: { critical: 0, high: through, medium: 0, low: blocked },
+    total,
+    severities: { critical: 0, high: total, medium: 0, low: 0 },
   };
 }

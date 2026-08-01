@@ -21,17 +21,17 @@ export const DEMO_RESULTS: PollResult[] = [
     checkedAt: new Date().toISOString(),
   },
   {
-    id: 'sentinelone',
+    id: 'sentinel',
     ok: true,
     total: 1,
-    severities: { critical: 1, high: 0, medium: 0, low: 0 },
+    severities: { critical: 0, high: 1, medium: 0, low: 0 },
     checkedAt: new Date().toISOString(),
   },
   {
     id: 'proofpoint',
     ok: true,
-    total: 5,
-    severities: { critical: 0, high: 2, medium: 0, low: 3 },
+    total: 2,
+    severities: { critical: 0, high: 2, medium: 0, low: 0 },
     checkedAt: new Date().toISOString(),
   },
   {
@@ -54,8 +54,8 @@ export const DEMO_RESULTS: PollResult[] = [
 export const DEMO_SEEN: Record<string, number> = {
   defender: 4,
   crowdstrike: 0,
-  sentinelone: 0,
-  proofpoint: 3,
+  sentinel: 0,
+  proofpoint: 0,
   gworkspace: 2,
   github: 1,
 };

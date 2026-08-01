@@ -21,7 +21,7 @@ const CONNECTORS = {
   github: () => import('./connectors/github.mjs'),
   crowdstrike: () => import('./connectors/crowdstrike.mjs'),
   defender: () => import('./connectors/defender.mjs'),
-  sentinelone: () => import('./connectors/sentinelone.mjs'),
+  sentinel: () => import('./connectors/sentinel.mjs'),
   proofpoint: () => import('./connectors/proofpoint.mjs'),
   gworkspace: () => import('./connectors/gworkspace.mjs'),
 };
