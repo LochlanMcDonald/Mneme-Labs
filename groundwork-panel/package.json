@@ -1,0 +1,25 @@
+{
+  "name": "groundwork-panel",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "One glance across every security console. Keys stay on your machine.",
+  "bin": { "groundwork-panel": "./server.mjs" },
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "start": "node server.mjs",
+    "test": "node test/connectors.test.mjs"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.4",
+    "typescript": "^5.7.2",
+    "vite": "^6.0.5"
+  }
+}
