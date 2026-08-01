@@ -2,6 +2,11 @@ name: Panel installers
 
 on:
   workflow_dispatch:
+    inputs:
+      release_tag:
+        description: 'Publish a public release under this tag (e.g. panel-v0.1.0); empty builds artifacts only'
+        required: false
+        default: ''
   push:
     branches: [main]
     paths:
@@ -40,3 +45,23 @@ jobs:
             groundwork-panel/dist-installers/*.dmg
             groundwork-panel/dist-installers/*.exe
           if-no-files-found: error
+
+  release:
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.release_tag != '' }}
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: installers
+          merge-multiple: true
+      - name: Create public release with the installers
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "${{ inputs.release_tag }}" installers/* \
+            --repo "$GITHUB_REPOSITORY" \
+            --title "Groundwork Panel ${{ inputs.release_tag }}" \
+            --notes "Early access preview of Groundwork Panel: every security console, one glance, keys never leave your machine. Unsigned builds; see the download page for first-open steps on Mac and Windows."
