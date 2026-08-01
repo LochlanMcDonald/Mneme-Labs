@@ -159,6 +159,7 @@ body {
 }
 .field input:focus { outline: 2px solid var(--accent-bright); outline-offset: 1px; }
 .setup-error { color: #d02757; font-size: 14px; }
+.setup .btn-danger { align-self: stretch; text-align: center; color: #d02757; }
 
 @media (max-width: 560px) {
   .panel { padding: 18px 14px 36px; }

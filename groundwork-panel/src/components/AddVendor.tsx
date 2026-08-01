@@ -5,10 +5,11 @@ import type { VendorDef } from '../types';
 interface Props {
   configured: string[];
   onSave: (id: string, creds: Record<string, string>, consoleUrl: string) => Promise<void>;
+  onRemove: (id: string) => Promise<void>;
   onBack: () => void;
 }
 
-export function AddVendor({ configured, onSave, onBack }: Props) {
+export function AddVendor({ configured, onSave, onRemove, onBack }: Props) {
   const [picked, setPicked] = useState<VendorDef | null>(null);
   const [creds, setCreds] = useState<Record<string, string>>({});
   const [consoleUrl, setConsoleUrl] = useState('');
@@ -31,7 +32,7 @@ export function AddVendor({ configured, onSave, onBack }: Props) {
             <button
               key={v.id}
               className={`picker-card tile-${v.accent}`}
-              disabled={!v.ready || configured.includes(v.id)}
+              disabled={!v.ready}
               onClick={() => {
                 setPicked(v);
                 setConsoleUrl(v.consoleUrl);
@@ -40,7 +41,7 @@ export function AddVendor({ configured, onSave, onBack }: Props) {
               <strong>{v.name}</strong>
               <span>{v.blurb}</span>
               {!v.ready && <em>Planned</em>}
-              {v.ready && configured.includes(v.id) && <em>Already added</em>}
+              {v.ready && configured.includes(v.id) && <em>Added · open to update or remove</em>}
             </button>
           ))}
         </div>
@@ -49,13 +50,20 @@ export function AddVendor({ configured, onSave, onBack }: Props) {
   }
 
   const missing = picked.fields.some((f) => !f.optional && !(creds[f.key] ?? '').trim());
+  const isUpdate = configured.includes(picked.id);
 
   return (
     <div className="setup">
       <button className="btn" onClick={() => setPicked(null)}>
         ← Choose a different console
       </button>
-      <h2>Connect {picked.name}</h2>
+      <h2>{isUpdate ? `Update ${picked.name}` : `Connect ${picked.name}`}</h2>
+      {isUpdate && (
+        <p className="setup-note">
+          Saved keys are never shown back, so enter the full credentials again to replace them.
+          Saving runs a fresh connection check; nothing changes until it passes.
+        </p>
+      )}
       {picked.fields.map((f) => (
         <label key={f.key} className="field">
           <span className="field-label">{f.label}</span>
@@ -88,6 +96,24 @@ export function AddVendor({ configured, onSave, onBack }: Props) {
       >
         {busy ? 'Checking the connection…' : 'Save and check'}
       </button>
+      {isUpdate && (
+        <button
+          className="btn btn-danger"
+          disabled={busy}
+          onClick={async () => {
+            setBusy(true);
+            setError('');
+            try {
+              await onRemove(picked.id);
+            } catch (e) {
+              setError(e instanceof Error ? e.message : 'Could not remove');
+              setBusy(false);
+            }
+          }}
+        >
+          Remove this console
+        </button>
+      )}
     </div>
   );
 }

@@ -126,12 +126,28 @@ export function App() {
     setView('board');
   };
 
+  const removeVendor = async (id: string) => {
+    const d = await api<{ vendors: VendorConfig[] }>('config', {
+      method: 'DELETE',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ id }),
+    });
+    setConfigs(d.vendors);
+    setResults((prev) => {
+      const next = { ...prev };
+      delete next[id];
+      return next;
+    });
+    setView('board');
+  };
+
   if (view === 'add') {
     return (
       <div className="panel">
         <AddVendor
           configured={(configs ?? []).map((c) => c.id)}
           onSave={saveVendor}
+          onRemove={removeVendor}
           onBack={() => setView('board')}
         />
       </div>

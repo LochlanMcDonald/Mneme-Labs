@@ -109,6 +109,15 @@ const server = createServer(async (req, res) => {
       return send(res, 200, { vendors: publicVendors(config), check });
     }
 
+    if (url.pathname === '/panel-api/config' && req.method === 'DELETE') {
+      const bodyData = await readJson(req);
+      const id = String(bodyData.id || '');
+      const config = await loadConfig();
+      config.vendors = (config.vendors ?? []).filter((v) => v.id !== id);
+      await saveConfig(config);
+      return send(res, 200, { vendors: publicVendors(config) });
+    }
+
     if (url.pathname === '/panel-api/poll' && req.method === 'POST') {
       const body = await readJson(req);
       const config = await loadConfig();
