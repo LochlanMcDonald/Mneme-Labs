@@ -30,7 +30,7 @@ export const VENDORS: VendorDef[] = [
       { key: 'clientSecret', label: 'Client secret', secret: true },
     ],
     accent: 'blueberry',
-    ready: false,
+    ready: true,
   },
   {
     id: 'crowdstrike',
@@ -60,7 +60,7 @@ export const VENDORS: VendorDef[] = [
       { key: 'apiToken', label: 'API token', secret: true },
     ],
     accent: 'tangerine',
-    ready: false,
+    ready: true,
   },
   {
     id: 'proofpoint',
@@ -72,7 +72,7 @@ export const VENDORS: VendorDef[] = [
       { key: 'secret', label: 'Secret', secret: true },
     ],
     accent: 'blueberry',
-    ready: false,
+    ready: true,
   },
   {
     id: 'gworkspace',
@@ -84,7 +84,7 @@ export const VENDORS: VendorDef[] = [
       { key: 'delegatedAdmin', label: 'Delegated admin email' },
     ],
     accent: 'lime',
-    ready: false,
+    ready: true,
   },
 ];
 

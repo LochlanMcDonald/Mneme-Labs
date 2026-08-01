@@ -8,7 +8,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "start": "node server.mjs"
+    "start": "node server.mjs",
+    "test": "node test/connectors.test.mjs"
   },
   "dependencies": {
     "react": "^18.3.1",

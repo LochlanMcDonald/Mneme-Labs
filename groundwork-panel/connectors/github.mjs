@@ -3,12 +3,10 @@
 // fine-grained read permissions on Dependabot, code scanning and secret
 // scanning alerts.
 
-const API = 'https://api.github.com';
-
-async function count(path, token) {
+async function count(api, path, token) {
   // per_page=1 plus the Link header's last page number gives the total
   // without paging through every alert.
-  const res = await fetch(`${API}${path}?state=open&per_page=1`, {
+  const res = await fetch(`${api}${path}?state=open&per_page=1`, {
     headers: {
       authorization: `Bearer ${token}`,
       accept: 'application/vnd.github+json',
@@ -28,6 +26,8 @@ async function count(path, token) {
 export async function poll(creds) {
   const owner = String(creds.org || '').trim();
   const token = String(creds.token || '').trim();
+  // Overridable for tests and GitHub Enterprise Server.
+  const api = String(creds.apiUrl || 'https://api.github.com').replace(/\/+$/, '');
   if (!owner || !token) throw new Error('GitHub needs an organization and a token');
 
   // Try org endpoints first; fall back per-feature for user accounts.
@@ -36,9 +36,9 @@ export async function poll(creds) {
   let code = null;
   let deps = null;
   for (const base of bases) {
-    if (secrets === null) secrets = await count(`${base}/secret-scanning/alerts`, token).catch(() => null);
-    if (code === null) code = await count(`${base}/code-scanning/alerts`, token).catch(() => null);
-    if (deps === null) deps = await count(`${base}/dependabot/alerts`, token).catch(() => null);
+    if (secrets === null) secrets = await count(api, `${base}/secret-scanning/alerts`, token).catch(() => null);
+    if (code === null) code = await count(api, `${base}/code-scanning/alerts`, token).catch(() => null);
+    if (deps === null) deps = await count(api, `${base}/dependabot/alerts`, token).catch(() => null);
   }
   if (secrets === null && code === null && deps === null) {
     throw new Error('GitHub token could not read any alert endpoints');
