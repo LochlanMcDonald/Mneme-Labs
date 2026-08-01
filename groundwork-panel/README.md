@@ -13,6 +13,16 @@ npm run build
 npm start        # http://localhost:7439
 ```
 
+## Desktop app
+
+The same runtime wrapped in Electron (`electron-main.mjs`); the window is
+just a view onto the localhost dashboard and console links open in the
+real browser. The "Panel installers" GitHub Actions workflow builds the
+installers on real Windows and macOS runners (NSIS .exe for Windows, .dmg
+for Intel and Apple Silicon Macs) and uploads them as artifacts. Builds
+are unsigned prototypes: expect the usual Gatekeeper / SmartScreen
+warnings until they are code-signed.
+
 With no consoles configured the board shows demo data so you can see the
 layout. Click "Add a console" to go live.
 

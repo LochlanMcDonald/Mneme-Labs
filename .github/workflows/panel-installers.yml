@@ -1,0 +1,42 @@
+name: Panel installers
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'groundwork-panel/**'
+      - '.github/workflows/panel-installers.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        working-directory: groundwork-panel
+    env:
+      # Unsigned prototype builds: skip code-signing discovery on macOS.
+      CSC_IDENTITY_AUTO_DISCOVERY: 'false'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci
+      - run: npm test
+      - run: npm run build
+      - run: npx electron-builder --publish never
+      - uses: actions/upload-artifact@v4
+        with:
+          name: groundwork-panel-${{ runner.os }}
+          path: |
+            groundwork-panel/dist-installers/*.dmg
+            groundwork-panel/dist-installers/*.exe
+          if-no-files-found: error

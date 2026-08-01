@@ -4,12 +4,16 @@
   "version": "0.1.0",
   "type": "module",
   "description": "One glance across every security console. Keys stay on your machine.",
-  "bin": { "groundwork-panel": "./server.mjs" },
+  "bin": {
+    "groundwork-panel": "./server.mjs"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
     "start": "node server.mjs",
-    "test": "node test/connectors.test.mjs"
+    "test": "node test/connectors.test.mjs",
+    "app": "electron .",
+    "package": "electron-builder --publish never"
   },
   "dependencies": {
     "react": "^18.3.1",
@@ -20,6 +24,48 @@
     "@types/react-dom": "^18.3.1",
     "@vitejs/plugin-react": "^4.3.4",
     "typescript": "^5.7.2",
-    "vite": "^6.0.5"
+    "vite": "^6.0.5",
+    "electron": "^33.2.1",
+    "electron-builder": "^25.1.8"
+  },
+  "main": "electron-main.mjs",
+  "build": {
+    "appId": "com.groundwork.panel",
+    "productName": "Groundwork Panel",
+    "directories": {
+      "output": "dist-installers",
+      "buildResources": "build"
+    },
+    "files": [
+      "dist/**",
+      "server.mjs",
+      "connectors/**",
+      "electron-main.mjs"
+    ],
+    "mac": {
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "x64",
+            "arm64"
+          ]
+        }
+      ],
+      "category": "public.app-category.utilities"
+    },
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    },
+    "nsis": {
+      "oneClick": true
+    }
   }
 }
