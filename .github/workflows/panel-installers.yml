@@ -47,21 +47,42 @@ jobs:
           if-no-files-found: error
 
   release:
-    if: ${{ github.event_name == 'workflow_dispatch' && inputs.release_tag != '' }}
+    # Releases are git-driven: groundwork-panel/RELEASE_TAG names the tag,
+    # and a release is cut when that tag does not exist yet. A manual
+    # dispatch with release_tag overrides the file.
     needs: build
     runs-on: ubuntu-latest
     permissions:
       contents: write
     steps:
-      - uses: actions/download-artifact@v4
-        with:
-          path: installers
-          merge-multiple: true
-      - name: Create public release with the installers
+      - uses: actions/checkout@v4
+      - name: Decide whether to release
+        id: gate
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release create "${{ inputs.release_tag }}" installers/* \
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ -n "${{ inputs.release_tag }}" ]; then
+            tag="${{ inputs.release_tag }}"
+          else
+            tag="$(tr -d '[:space:]' < groundwork-panel/RELEASE_TAG 2>/dev/null || true)"
+          fi
+          if [ -z "$tag" ] || gh release view "$tag" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            echo "go=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "go=true" >> "$GITHUB_OUTPUT"
+            echo "tag=$tag" >> "$GITHUB_OUTPUT"
+          fi
+      - if: steps.gate.outputs.go == 'true'
+        uses: actions/download-artifact@v4
+        with:
+          path: installers
+          merge-multiple: true
+      - if: steps.gate.outputs.go == 'true'
+        name: Create public release with the installers
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "${{ steps.gate.outputs.tag }}" installers/* \
             --repo "$GITHUB_REPOSITORY" \
-            --title "Groundwork Panel ${{ inputs.release_tag }}" \
+            --title "Groundwork Panel ${{ steps.gate.outputs.tag }}" \
             --notes "Early access preview of Groundwork Panel: every security console, one glance, keys never leave your machine. Unsigned builds; see the download page for first-open steps on Mac and Windows."
