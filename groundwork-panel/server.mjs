@@ -9,7 +9,7 @@ import { createServer } from 'node:http';
 import { readFile, writeFile, mkdir, chmod } from 'node:fs/promises';
 import { homedir } from 'node:os';
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const PORT = Number(process.env.PANEL_PORT || 7439);
 const HERE = path.dirname(fileURLToPath(import.meta.url));
@@ -153,7 +153,16 @@ const server = createServer(async (req, res) => {
   }
 });
 
-server.listen(PORT, '127.0.0.1', () => {
-  console.log(`Groundwork Panel running at http://localhost:${PORT}`);
-  console.log(`Config: ${CONFIG_FILE}`);
-});
+/** Start the local runtime. Exported so the desktop app can embed it. */
+export function startPanelServer(port = PORT) {
+  server.listen(port, '127.0.0.1', () => {
+    console.log(`Groundwork Panel running at http://localhost:${port}`);
+    console.log(`Config: ${CONFIG_FILE}`);
+  });
+  return server;
+}
+
+// Started directly (npm start / npx groundwork-panel): run immediately.
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+  startPanelServer();
+}
