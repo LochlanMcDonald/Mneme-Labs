@@ -72,11 +72,26 @@ jobs:
             echo "go=true" >> "$GITHUB_OUTPUT"
             echo "tag=$tag" >> "$GITHUB_OUTPUT"
           fi
-      - if: steps.gate.outputs.go == 'true'
-        uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v4
         with:
           path: installers
           merge-multiple: true
+      # Paid downloads are served from private blob storage under stable
+      # names; every run refreshes them when the secret is configured.
+      - name: Upload installers to private storage
+        env:
+          AZ_CONN: ${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}
+        run: |
+          if [ -z "$AZ_CONN" ]; then
+            echo "AZURE_STORAGE_CONNECTION_STRING not set; skipping private upload"
+            exit 0
+          fi
+          az storage container create -n panel --connection-string "$AZ_CONN" -o none
+          shopt -s nullglob
+          for f in installers/*-mac-arm64.dmg; do az storage blob upload --overwrite -f "$f" -c panel -n panel-mac-arm64.dmg --connection-string "$AZ_CONN" -o none; done
+          for f in installers/*-mac-x64.dmg; do az storage blob upload --overwrite -f "$f" -c panel -n panel-mac-x64.dmg --connection-string "$AZ_CONN" -o none; done
+          for f in installers/*-win-x64.exe; do az storage blob upload --overwrite -f "$f" -c panel -n panel-win-x64.exe --connection-string "$AZ_CONN" -o none; done
+          echo "uploaded installers to the panel container"
       - if: steps.gate.outputs.go == 'true'
         name: Create public release with the installers
         env:

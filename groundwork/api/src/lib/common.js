@@ -48,6 +48,17 @@ async function isPro(client, userId) {
   }
 }
 
+/** All entitlements for a user in one read: { pro, panel }. */
+async function entitlements(client, userId) {
+  try {
+    const entity = await client.getEntity('entitlement', userId);
+    return { pro: entity.pro === true, panel: entity.panel === true };
+  } catch (err) {
+    if (err && err.statusCode === 404) return { pro: false, panel: false };
+    throw err;
+  }
+}
+
 /**
  * Whether a user id is a Groundwork admin. Admins are listed in the
  * ADMIN_USER_IDS app setting (comma-separated SWA user ids). Find your own
@@ -61,4 +72,4 @@ function isAdmin(userId) {
   return ids.includes(userId);
 }
 
-module.exports = { tableClient, principalFrom, isPro, isAdmin };
+module.exports = { tableClient, principalFrom, isPro, entitlements, isAdmin };

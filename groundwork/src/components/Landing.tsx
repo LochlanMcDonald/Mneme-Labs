@@ -11,6 +11,7 @@ interface Props {
   onPrivacy: () => void;
   onAbout: () => void;
   onCoverage: () => void;
+  onPanel: () => void;
   auth: AuthState;
   sync: SyncStatus;
 }
@@ -47,6 +48,7 @@ export function Landing({
   onPrivacy,
   onAbout,
   onCoverage,
+  onPanel,
   auth,
   sync,
 }: Props) {
@@ -61,6 +63,9 @@ export function Landing({
           <div className="nav-links">
             <button className="nav-link" onClick={onCoverage}>
               What&apos;s covered
+            </button>
+            <button className="nav-link" onClick={onPanel}>
+              Panel
             </button>
             <button className="nav-link" onClick={onAbout}>
               About
@@ -177,6 +182,9 @@ export function Landing({
           <span className="footer-col-title">Product</span>
           <button className="link-btn" onClick={onCoverage}>
             What&apos;s covered
+          </button>
+          <button className="link-btn" onClick={onPanel}>
+            Groundwork Panel
           </button>
           <button className="link-btn" onClick={onHelp}>
             Help &amp; FAQs
