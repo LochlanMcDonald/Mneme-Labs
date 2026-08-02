@@ -195,6 +195,27 @@ export function Landing({
         </button>
       </section>
 
+      <section className="landing-panel">
+        <h2>Watch every console from one board.</h2>
+        <p className="landing-panel-sub">
+          Groundwork Panel is our desktop app for when your security tools
+          multiply. New alert counts from Defender, Sentinel, CrowdStrike and
+          more on one screen, one click into the right console, and your API
+          keys never leave your machine.
+        </p>
+        <img
+          className="panel-shot"
+          src="panel-board.webp"
+          width={1600}
+          height={950}
+          loading="lazy"
+          alt="The Groundwork Panel board: six console tiles showing new alert counts and severity chips"
+        />
+        <button className="btn btn-lg" onClick={onPanel}>
+          Meet Groundwork Panel
+        </button>
+      </section>
+
       <section className="landing-pro">
         <Upgrade auth={auth} />
       </section>

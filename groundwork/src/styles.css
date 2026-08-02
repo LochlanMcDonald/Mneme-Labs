@@ -588,6 +588,24 @@ a {
   margin: 0 0 8px;
 }
 
+/* Panel showcase on the landing page. */
+.landing-panel {
+  text-align: center;
+  margin-top: 68px;
+}
+.landing-panel h2 {
+  font-size: 28px;
+  margin-bottom: 8px;
+}
+.landing-panel-sub {
+  color: var(--text-dim);
+  max-width: 560px;
+  margin: 0 auto 26px;
+}
+.landing-panel .panel-shot {
+  margin-bottom: 26px;
+}
+
 /* ───────── Account ───────── */
 .account {
   display: flex;
