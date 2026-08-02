@@ -211,6 +211,9 @@ export function Dashboard({ store, onHome, onEditProfile, onHelp, onReport, onAd
             {stats.inProgress > 0 && <> · {stats.inProgress} in progress</>}
           </p>
           <div className="dash-actions">
+            <button className="btn" onClick={onHome}>
+              ← Home page
+            </button>
             <button className="btn" onClick={onEditProfile}>
               Edit answers
             </button>
