@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { AccountControls } from './Account';
 import { BrandMark } from './BrandMark';
 import { Upgrade } from './Upgrade';
@@ -52,6 +53,13 @@ export function Landing({
   auth,
   sync,
 }: Props) {
+  // Phone widths hide the inline links, so a menu button stands in.
+  const [menuOpen, setMenuOpen] = useState(false);
+  const go = (fn: () => void) => () => {
+    setMenuOpen(false);
+    fn();
+  };
+
   return (
     <div className="landing">
       <nav className="nav">
@@ -73,11 +81,35 @@ export function Landing({
             <button className="nav-link nav-link-wide" onClick={onHelp}>
               Help &amp; FAQs
             </button>
+            <button
+              className="btn nav-burger"
+              aria-label="Menu"
+              aria-expanded={menuOpen}
+              onClick={() => setMenuOpen((o) => !o)}
+            >
+              ☰
+            </button>
             <button className="btn btn-primary btn-small" onClick={onStart}>
               Get my plan
             </button>
           </div>
         </div>
+        {menuOpen && (
+          <div className="nav-menu">
+            <button className="nav-menu-link" onClick={go(onCoverage)}>
+              What&apos;s covered
+            </button>
+            <button className="nav-menu-link" onClick={go(onPanel)}>
+              Panel
+            </button>
+            <button className="nav-menu-link" onClick={go(onAbout)}>
+              About
+            </button>
+            <button className="nav-menu-link" onClick={go(onHelp)}>
+              Help &amp; FAQs
+            </button>
+          </div>
+        )}
       </nav>
 
       <header className="landing-hero hero-left">

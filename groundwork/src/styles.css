@@ -2116,9 +2116,55 @@ textarea:focus {
 
 /* Small screens: the nav keeps brand + About + CTA; everything else
    lives in the footer columns. */
+/* The mobile menu: hidden on desktop where the inline links show. */
+.nav-burger {
+  display: none;
+  padding: 8px 13px;
+  font-size: 17px;
+  line-height: 1;
+}
+.nav-menu {
+  display: none;
+}
+
 @media (max-width: 520px) {
   .nav-link {
     display: none;
+  }
+  .nav-burger {
+    display: inline-flex;
+  }
+  .nav-menu {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 12px;
+    right: 12px;
+    margin-top: 6px;
+    padding: 8px;
+    background: rgba(253, 254, 255, 0.97);
+    -webkit-backdrop-filter: var(--blur);
+    backdrop-filter: var(--blur);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    box-shadow: var(--lift-1);
+  }
+  .nav-menu-link {
+    font: inherit;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--ink);
+    text-align: left;
+    background: none;
+    border: none;
+    padding: 13px 14px;
+    border-radius: 12px;
+    cursor: pointer;
+  }
+  .nav-menu-link:active {
+    background: var(--accent-soft);
+    color: var(--accent-deep);
   }
   .nav-inner {
     padding: 11px 16px;
