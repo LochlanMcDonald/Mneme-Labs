@@ -97,7 +97,7 @@ export function Terms({ onBack }: Props) {
 
 export function Privacy({ onBack }: Props) {
   return (
-    <LegalShell title="Privacy Policy" updated="July 15, 2026" onBack={onBack}>
+    <LegalShell title="Privacy Policy" updated="August 2, 2026" onBack={onBack}>
       <h2>What we collect</h2>
       <p>
         If you use Groundwork without signing in, your answers and plan stay
@@ -124,9 +124,13 @@ export function Privacy({ onBack }: Props) {
 
       <h2>Cookies and analytics</h2>
       <p>
-        The app uses the session cookie required for sign-in and no
-        third-party advertising or tracking cookies. If we add product
-        analytics in the future, this policy will be updated first.
+        The app uses the session cookie required for sign-in. We also use
+        Google's conversion tag for one narrow purpose: counting, in
+        aggregate, when a visitor who arrived from one of our ads generates
+        a plan, so we know whether the advertising works. It is configured
+        with ad personalization signals turned off, and it never sees your
+        answers, your plan, or anything you type. There is no other
+        analytics or tracking on the site.
       </p>
 
       <h2>Retention and your rights</h2>
