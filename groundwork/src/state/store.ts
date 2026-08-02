@@ -9,6 +9,7 @@ import {
   shouldPurgeOnSignOut,
   type SyncStatus,
 } from './sync';
+import { reportPlanGenerated } from './track';
 import type { AppState, CompanyProfile, ItemState, ItemStatus, Plan } from '../types';
 
 const STORAGE_KEY = 'groundwork-state-v1';
@@ -190,7 +191,15 @@ export function useStore(): Store {
     [state.profile],
   );
 
+  // Tracks whether a plan already exists, so conversion counting fires only
+  // on a visitor's first plan and never on edits.
+  const hadProfileRef = useRef(state.profile !== null);
+  useEffect(() => {
+    hadProfileRef.current = state.profile !== null;
+  }, [state.profile]);
+
   const generate = useCallback((profile: CompanyProfile) => {
+    if (!hadProfileRef.current) reportPlanGenerated();
     const newPlan = buildPlan(profile);
     setState((prev) => {
       // Preserve progress on controls that survive a profile edit.
