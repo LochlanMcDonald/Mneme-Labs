@@ -145,6 +145,16 @@ export function Panel({ onBack, onStart, auth, me }: Props) {
       </header>
 
       <section className="content-section">
+        <img
+          className="panel-shot"
+          src="panel-board.webp"
+          width={1600}
+          height={950}
+          alt="The Groundwork Panel board: six console tiles showing new alert counts and severity chips, with a summary strip across the top"
+        />
+      </section>
+
+      <section className="content-section">
         <h2>Your keys never leave your machine.</h2>
         <p>
           Panel talks directly from your computer to each vendor's own API. Credentials are

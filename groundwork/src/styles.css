@@ -254,6 +254,19 @@ a {
   flex-shrink: 0;
   display: block;
 }
+/* The brand as a button (dashboard), leading back to the home page. */
+button.brand-link {
+  font: inherit;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+button.brand-link:hover {
+  color: var(--accent-deep);
+}
 
 /* ───────── Navigation ───────── */
 .nav {
@@ -586,6 +599,24 @@ a {
 .beyond-grid h3 {
   font-size: 17px;
   margin: 0 0 8px;
+}
+
+/* Panel showcase on the landing page. */
+.landing-panel {
+  text-align: center;
+  margin-top: 68px;
+}
+.landing-panel h2 {
+  font-size: 28px;
+  margin-bottom: 8px;
+}
+.landing-panel-sub {
+  color: var(--text-dim);
+  max-width: 560px;
+  margin: 0 auto 26px;
+}
+.landing-panel .panel-shot {
+  margin-bottom: 26px;
 }
 
 /* ───────── Account ───────── */
@@ -1538,6 +1569,14 @@ textarea:focus {
   align-items: flex-start;
   margin-top: 6px;
 }
+.panel-shot {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  box-shadow: 0 30px 60px -30px rgba(29, 78, 216, 0.45);
+}
 .coverage-count {
   font-size: 12px;
   font-weight: 700;
@@ -2108,9 +2147,55 @@ textarea:focus {
 
 /* Small screens: the nav keeps brand + About + CTA; everything else
    lives in the footer columns. */
+/* The mobile menu: hidden on desktop where the inline links show. */
+.nav-burger {
+  display: none;
+  padding: 8px 13px;
+  font-size: 17px;
+  line-height: 1;
+}
+.nav-menu {
+  display: none;
+}
+
 @media (max-width: 520px) {
   .nav-link {
     display: none;
+  }
+  .nav-burger {
+    display: inline-flex;
+  }
+  .nav-menu {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 12px;
+    right: 12px;
+    margin-top: 6px;
+    padding: 8px;
+    background: rgba(253, 254, 255, 0.97);
+    -webkit-backdrop-filter: var(--blur);
+    backdrop-filter: var(--blur);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    box-shadow: var(--lift-1);
+  }
+  .nav-menu-link {
+    font: inherit;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--ink);
+    text-align: left;
+    background: none;
+    border: none;
+    padding: 13px 14px;
+    border-radius: 12px;
+    cursor: pointer;
+  }
+  .nav-menu-link:active {
+    background: var(--accent-soft);
+    color: var(--accent-deep);
   }
   .nav-inner {
     padding: 11px 16px;

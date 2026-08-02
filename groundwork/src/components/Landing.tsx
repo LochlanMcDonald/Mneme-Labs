@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { AccountControls } from './Account';
 import { BrandMark } from './BrandMark';
 import { Upgrade } from './Upgrade';
@@ -12,6 +13,8 @@ interface Props {
   onAbout: () => void;
   onCoverage: () => void;
   onPanel: () => void;
+  /** Set when a saved plan exists; the CTAs open it instead of the wizard. */
+  onMyPlan: (() => void) | null;
   auth: AuthState;
   sync: SyncStatus;
 }
@@ -49,9 +52,17 @@ export function Landing({
   onAbout,
   onCoverage,
   onPanel,
+  onMyPlan,
   auth,
   sync,
 }: Props) {
+  // Phone widths hide the inline links, so a menu button stands in.
+  const [menuOpen, setMenuOpen] = useState(false);
+  const go = (fn: () => void) => () => {
+    setMenuOpen(false);
+    fn();
+  };
+
   return (
     <div className="landing">
       <nav className="nav">
@@ -73,11 +84,35 @@ export function Landing({
             <button className="nav-link nav-link-wide" onClick={onHelp}>
               Help &amp; FAQs
             </button>
-            <button className="btn btn-primary btn-small" onClick={onStart}>
-              Get my plan
+            <button
+              className="btn nav-burger"
+              aria-label="Menu"
+              aria-expanded={menuOpen}
+              onClick={() => setMenuOpen((o) => !o)}
+            >
+              ☰
+            </button>
+            <button className="btn btn-primary btn-small" onClick={onMyPlan ?? onStart}>
+              {onMyPlan ? 'My plan' : 'Get my plan'}
             </button>
           </div>
         </div>
+        {menuOpen && (
+          <div className="nav-menu">
+            <button className="nav-menu-link" onClick={go(onCoverage)}>
+              What&apos;s covered
+            </button>
+            <button className="nav-menu-link" onClick={go(onPanel)}>
+              Panel
+            </button>
+            <button className="nav-menu-link" onClick={go(onAbout)}>
+              About
+            </button>
+            <button className="nav-menu-link" onClick={go(onHelp)}>
+              Help &amp; FAQs
+            </button>
+          </div>
+        )}
       </nav>
 
       <header className="landing-hero hero-left">
@@ -95,8 +130,8 @@ export function Landing({
             plan, free. Sign in below to save it, and if you ever want a real
             security advisor to weigh in, you can.
           </p>
-          <button className="btn btn-primary btn-lg" onClick={onStart}>
-            Build my security plan
+          <button className="btn btn-primary btn-lg" onClick={onMyPlan ?? onStart}>
+            {onMyPlan ? 'Open my security plan' : 'Build my security plan'}
           </button>
           <div className="landing-account">
             <AccountControls auth={auth} sync={sync} />
@@ -160,6 +195,27 @@ export function Landing({
         </div>
         <button className="btn btn-lg" onClick={onHelp}>
           Browse incident help &amp; FAQs
+        </button>
+      </section>
+
+      <section className="landing-panel">
+        <h2>Watch every console from one board.</h2>
+        <p className="landing-panel-sub">
+          Groundwork Panel is our desktop app for when your security tools
+          multiply. New alert counts from Defender, Sentinel, CrowdStrike and
+          more on one screen, one click into the right console, and your API
+          keys never leave your machine.
+        </p>
+        <img
+          className="panel-shot"
+          src="panel-board.webp"
+          width={1600}
+          height={950}
+          loading="lazy"
+          alt="The Groundwork Panel board: six console tiles showing new alert counts and severity chips"
+        />
+        <button className="btn btn-lg" onClick={onPanel}>
+          Meet Groundwork Panel
         </button>
       </section>
 
