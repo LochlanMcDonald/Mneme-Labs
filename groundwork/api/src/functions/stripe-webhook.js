@@ -1,6 +1,11 @@
 const { app } = require('@azure/functions');
 const crypto = require('node:crypto');
 const { tableClient } = require('../lib/common');
+const {
+  classifyPurchase,
+  fetchSessionProductIds,
+  subscriptionIsPanel,
+} = require('../lib/purchases');
 
 // Reject events whose signed timestamp is older than this, to blunt replay.
 const TOLERANCE_SECONDS = 300;
@@ -59,6 +64,48 @@ async function grantPro(userId, email, context) {
   context.log(`Granted Pro to user ${userId}`);
 }
 
+async function grantPanel(userId, email, subscriptionId, context) {
+  const client = tableClient();
+  await client.createTable().catch(() => {});
+  await client.upsertEntity(
+    {
+      partitionKey: 'entitlement',
+      rowKey: userId,
+      panel: true,
+      // Kept so a later customer.subscription.deleted can find this row.
+      panelSubscriptionId: String(subscriptionId || ''),
+      source: 'stripe',
+      email: String(email || ''),
+      updatedAt: new Date().toISOString(),
+    },
+    'Merge',
+  );
+  context.log(`Granted Panel to user ${userId}`);
+}
+
+/** Revoke Panel from whichever user holds this subscription id. */
+async function revokePanel(subscriptionId, context) {
+  if (!subscriptionId) return;
+  const client = tableClient();
+  const safe = String(subscriptionId).replace(/'/g, "''");
+  const iter = client.listEntities({
+    queryOptions: { filter: `PartitionKey eq 'entitlement' and panelSubscriptionId eq '${safe}'` },
+  });
+  for await (const e of iter) {
+    await client.upsertEntity(
+      {
+        partitionKey: 'entitlement',
+        rowKey: e.rowKey,
+        panel: false,
+        panelSubscriptionId: '',
+        updatedAt: new Date().toISOString(),
+      },
+      'Merge',
+    );
+    context.log(`Revoked Panel from user ${e.rowKey} (subscription ${subscriptionId})`);
+  }
+}
+
 app.http('stripe-webhook', {
   methods: ['POST'],
   authLevel: 'anonymous',
@@ -83,10 +130,17 @@ app.http('stripe-webhook', {
       const userId = session.client_reference_id;
       const email = session.customer_details?.email || session.customer_email || '';
       if (userId) {
+        // Pro and Panel share this endpoint; the product decides the grant.
+        const productIds = await fetchSessionProductIds(session.id);
+        const kind = classifyPurchase(productIds, session.amount_total);
         try {
-          await grantPro(userId, email, context);
+          if (kind === 'panel') {
+            await grantPanel(userId, email, session.subscription, context);
+          } else {
+            await grantPro(userId, email, context);
+          }
         } catch (err) {
-          context.error('Failed to grant Pro', err);
+          context.error(`Failed to grant ${kind}`, err);
           // 500 so Stripe retries; the payment is real and we want the grant.
           return { status: 500, body: 'grant failed' };
         }
@@ -94,6 +148,18 @@ app.http('stripe-webhook', {
         // Paid without a linked account (e.g. link opened without the ID).
         // Ack the event; the manual flow covers matching by email.
         context.warn(`checkout.session.completed with no client_reference_id (email ${email})`);
+      }
+    }
+
+    if (event.type === 'customer.subscription.deleted') {
+      const subscription = event.data.object;
+      if (subscriptionIsPanel(subscription)) {
+        try {
+          await revokePanel(subscription.id, context);
+        } catch (err) {
+          context.error('Failed to revoke Panel', err);
+          return { status: 500, body: 'revoke failed' };
+        }
       }
     }
 

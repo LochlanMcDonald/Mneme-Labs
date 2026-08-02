@@ -1,11 +1,14 @@
+import { useState } from 'react';
 import { BrandMark } from './BrandMark';
+import { loginUrl, remoteLoginUrl, type AuthState } from '../state/auth';
+import { panelCheckoutUrl, panelDownloadUrl, type Me } from '../state/pro';
 
 interface Props {
   onBack: () => void;
   onStart: () => void;
+  auth: AuthState;
+  me: Me | null;
 }
-
-const RELEASE = 'https://github.com/LochlanMcDonald/Mneme-Labs/releases/download/panel-v0.1.0';
 
 const CONSOLES = [
   { name: 'Microsoft Defender', dot: '#2f6bff' },
@@ -16,12 +19,111 @@ const CONSOLES = [
   { name: 'GitHub', dot: '#8b5cf6' },
 ];
 
+const DOWNLOADS: { key: 'mac-arm64' | 'mac-x64' | 'win-x64'; label: string }[] = [
+  { key: 'mac-arm64', label: 'Mac, Apple silicon' },
+  { key: 'mac-x64', label: 'Mac, Intel' },
+  { key: 'win-x64', label: 'Windows' },
+];
+
+const PRICE = '$14.99';
+
+/** The subscribe / download area, keyed on account state. */
+function GetPanel({ auth, me }: { auth: AuthState; me: Me | null }) {
+  const [error, setError] = useState('');
+  const [busy, setBusy] = useState('');
+
+  const download = async (key: 'mac-arm64' | 'mac-x64' | 'win-x64') => {
+    setError('');
+    setBusy(key);
+    try {
+      window.location.assign(await panelDownloadUrl(key));
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Download failed');
+    } finally {
+      setBusy('');
+    }
+  };
+
+  if (auth.status === 'checking') {
+    return <p className="help-sub">Checking your account…</p>;
+  }
+
+  // Hosts without accounts (mirrors) send people to the account site.
+  if (auth.status === 'unavailable') {
+    const remote = remoteLoginUrl();
+    return (
+      <div className="panel-get">
+        <p>
+          Panel is {PRICE} a month. Sign in on the account site to subscribe and download.
+        </p>
+        {remote && (
+          <a className="btn btn-primary" href={remote}>
+            Sign in with Microsoft
+          </a>
+        )}
+      </div>
+    );
+  }
+
+  if (auth.status === 'signed-out') {
+    return (
+      <div className="panel-get">
+        <p>
+          Panel is {PRICE} a month. Sign in first so your subscription lands on your account,
+          then you can download for Mac and Windows.
+        </p>
+        <a className="btn btn-primary" href={loginUrl()}>
+          Sign in with Microsoft
+        </a>
+      </div>
+    );
+  }
+
+  if (me?.panel || me?.admin) {
+    return (
+      <div className="panel-get">
+        <p>Your Panel subscription is active. Download for your machine:</p>
+        <div className="panel-downloads">
+          {DOWNLOADS.map((d) => (
+            <button
+              key={d.key}
+              className="btn btn-primary"
+              disabled={busy !== ''}
+              onClick={() => download(d.key)}
+            >
+              {busy === d.key ? 'Preparing…' : d.label}
+            </button>
+          ))}
+        </div>
+        {error && <p className="advisor-error">{error}</p>}
+      </div>
+    );
+  }
+
+  const checkout = panelCheckoutUrl(me?.userId ?? '', me?.userDetails ?? '');
+  return (
+    <div className="panel-get">
+      <p>
+        Panel is {PRICE} a month, billed through Stripe, cancel anytime. After paying, come
+        back to this page and your downloads unlock within a minute.
+      </p>
+      {checkout ? (
+        <a className="btn btn-primary" href={checkout}>
+          Subscribe for {PRICE}/month
+        </a>
+      ) : (
+        <p className="help-sub">Subscriptions are not enabled on this copy of the site.</p>
+      )}
+    </div>
+  );
+}
+
 /**
  * Product page for Groundwork Panel, the downloadable console dashboard.
- * Download links point at the public GitHub release for the version named
- * in groundwork-panel/RELEASE_TAG.
+ * Downloads are issued by the account API as short-lived links, only to
+ * subscribers; installers themselves live in private storage.
  */
-export function Panel({ onBack, onStart }: Props) {
+export function Panel({ onBack, onStart, auth, me }: Props) {
   return (
     <div className="content-page">
       <button className="btn" onClick={onBack}>
@@ -63,24 +165,12 @@ export function Panel({ onBack, onStart }: Props) {
       </section>
 
       <section className="content-section">
-        <h2>Download the early access preview.</h2>
+        <h2>Get Panel.</h2>
         <p>
-          Free while in early access. Panel becomes its own subscription when it leaves
-          preview, and the consoles above all work today. It runs on Apple silicon and Intel
-          Macs and on Windows 10 and 11, and opens with demo data so you can look around
-          before adding any keys.
+          It runs on Apple silicon and Intel Macs and on Windows 10 and 11, and opens with
+          demo data so you can look around before adding any keys.
         </p>
-        <div className="panel-downloads">
-          <a className="btn btn-primary" href={`${RELEASE}/groundwork-panel-0.1.0-mac-arm64.dmg`}>
-            Mac, Apple silicon
-          </a>
-          <a className="btn btn-primary" href={`${RELEASE}/groundwork-panel-0.1.0-mac-x64.dmg`}>
-            Mac, Intel
-          </a>
-          <a className="btn btn-primary" href={`${RELEASE}/groundwork-panel-0.1.0-win-x64.exe`}>
-            Windows
-          </a>
-        </div>
+        <GetPanel auth={auth} me={me} />
       </section>
 
       <section className="content-section">

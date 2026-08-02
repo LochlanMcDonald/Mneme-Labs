@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@azure/data-tables": "^13.3.0",
-    "@azure/functions": "^4.6.0"
+    "@azure/functions": "^4.6.0",
+    "@azure/storage-blob": "^12.33.0"
   }
 }

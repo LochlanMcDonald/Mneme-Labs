@@ -1531,6 +1531,13 @@ textarea:focus {
   gap: 12px;
   margin-top: 18px;
 }
+.panel-get {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-items: flex-start;
+  margin-top: 6px;
+}
 .coverage-count {
   font-size: 12px;
   font-weight: 700;

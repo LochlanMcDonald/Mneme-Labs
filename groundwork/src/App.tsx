@@ -134,7 +134,9 @@ export default function App() {
       {view === 'admin' && <Admin store={store} onBack={goHome} />}
       {view === 'about' && <About onBack={goHome} onStart={() => setView('wizard')} />}
       {view === 'coverage' && <Coverage onBack={goHome} onStart={() => setView('wizard')} />}
-      {view === 'panel' && <Panel onBack={goHome} onStart={() => setView('wizard')} />}
+      {view === 'panel' && (
+        <Panel onBack={goHome} onStart={() => setView('wizard')} auth={store.auth} me={store.me} />
+      )}
       {view === 'terms' && <Terms onBack={goHome} />}
       {view === 'privacy' && <Privacy onBack={goHome} />}
     </div>

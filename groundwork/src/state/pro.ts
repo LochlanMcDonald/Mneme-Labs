@@ -4,6 +4,8 @@ export interface Me {
   userId: string;
   userDetails: string;
   pro: boolean;
+  /** Groundwork Panel subscription. */
+  panel: boolean;
   admin: boolean;
 }
 
@@ -77,8 +79,34 @@ export async function fetchMe(): Promise<Me | null> {
     userId: data.userId,
     userDetails: String(data.userDetails ?? ''),
     pro: data.pro === true,
+    panel: data.panel === true,
     admin: data.admin === true,
   };
+}
+
+/** Payment Link for the Panel subscription, baked in at build time. */
+export const PANEL_URL: string =
+  ((import.meta.env.VITE_PANEL_URL as string | undefined) ?? '').trim();
+
+/** Panel checkout for a specific signed-in user (same shape as Pro's). */
+export function panelCheckoutUrl(userId: string, email: string): string {
+  if (!PANEL_URL) return '';
+  const sep = PANEL_URL.includes('?') ? '&' : '?';
+  const params = new URLSearchParams({ client_reference_id: userId });
+  if (email) params.set('prefilled_email', email);
+  return `${PANEL_URL}${sep}${params.toString()}`;
+}
+
+/** Ask the account API for a short-lived installer download link. */
+export async function panelDownloadUrl(key: 'mac-arm64' | 'mac-x64' | 'win-x64'): Promise<string> {
+  const res = await fetch(`/api/me?panelDownload=${key}`, {
+    headers: { accept: 'application/json' },
+  });
+  const data = await res.json().catch(() => null);
+  if (!res.ok || typeof data?.url !== 'string') {
+    throw new Error(data?.error ?? `Could not get the download (${res.status})`);
+  }
+  return data.url;
 }
 
 export async function loadAdminOverview(): Promise<AdminOverview> {
