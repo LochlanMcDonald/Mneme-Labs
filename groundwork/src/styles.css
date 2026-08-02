@@ -1538,6 +1538,14 @@ textarea:focus {
   align-items: flex-start;
   margin-top: 6px;
 }
+.panel-shot {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  box-shadow: 0 30px 60px -30px rgba(29, 78, 216, 0.45);
+}
 .coverage-count {
   font-size: 12px;
   font-weight: 700;
