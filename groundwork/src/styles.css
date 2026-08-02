@@ -254,6 +254,19 @@ a {
   flex-shrink: 0;
   display: block;
 }
+/* The brand as a button (dashboard), leading back to the home page. */
+button.brand-link {
+  font: inherit;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+button.brand-link:hover {
+  color: var(--accent-deep);
+}
 
 /* ───────── Navigation ───────── */
 .nav {

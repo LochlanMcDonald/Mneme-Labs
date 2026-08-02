@@ -13,6 +13,8 @@ interface Props {
   onAbout: () => void;
   onCoverage: () => void;
   onPanel: () => void;
+  /** Set when a saved plan exists; the CTAs open it instead of the wizard. */
+  onMyPlan: (() => void) | null;
   auth: AuthState;
   sync: SyncStatus;
 }
@@ -50,6 +52,7 @@ export function Landing({
   onAbout,
   onCoverage,
   onPanel,
+  onMyPlan,
   auth,
   sync,
 }: Props) {
@@ -89,8 +92,8 @@ export function Landing({
             >
               ☰
             </button>
-            <button className="btn btn-primary btn-small" onClick={onStart}>
-              Get my plan
+            <button className="btn btn-primary btn-small" onClick={onMyPlan ?? onStart}>
+              {onMyPlan ? 'My plan' : 'Get my plan'}
             </button>
           </div>
         </div>
@@ -127,8 +130,8 @@ export function Landing({
             plan, free. Sign in below to save it, and if you ever want a real
             security advisor to weigh in, you can.
           </p>
-          <button className="btn btn-primary btn-lg" onClick={onStart}>
-            Build my security plan
+          <button className="btn btn-primary btn-lg" onClick={onMyPlan ?? onStart}>
+            {onMyPlan ? 'Open my security plan' : 'Build my security plan'}
           </button>
           <div className="landing-account">
             <AccountControls auth={auth} sync={sync} />

@@ -15,6 +15,8 @@ import {
 
 interface Props {
   store: Store;
+  /** Show the public home page (the plan stays saved). */
+  onHome: () => void;
   onEditProfile: () => void;
   onHelp: () => void;
   onReport: () => void;
@@ -147,7 +149,7 @@ function ItemCard({
   );
 }
 
-export function Dashboard({ store, onEditProfile, onHelp, onReport, onAdvisor, onAdmin }: Props) {
+export function Dashboard({ store, onHome, onEditProfile, onHelp, onReport, onAdvisor, onAdmin }: Props) {
   const { plan, profile, items } = store;
   const [expanded, setExpanded] = useState<string | null>(null);
   const [categoryFilter, setCategoryFilter] = useState<Category | 'all'>('all');
@@ -195,10 +197,14 @@ export function Dashboard({ store, onEditProfile, onHelp, onReport, onAdvisor, o
     <div className="dashboard">
       <header className="dash-header">
         <div>
-          <div className="brand small">
+          <button
+            className="brand small brand-link"
+            onClick={onHome}
+            title="Groundwork home page"
+          >
             <BrandMark className="brand-mark" />
             Groundwork
-          </div>
+          </button>
           <h2>{profile.companyName.trim() || 'Your security plan'}</h2>
           <p className="dash-sub">
             {stats.done} of {stats.total} controls done

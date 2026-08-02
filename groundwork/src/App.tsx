@@ -83,6 +83,7 @@ export default function App() {
       {view === 'landing' && (
         <Landing
           onStart={() => setView('wizard')}
+          onMyPlan={store.profile ? () => setView('dashboard') : null}
           onHelp={() => setView('help')}
           onTerms={() => setView('terms')}
           onPrivacy={() => setView('privacy')}
@@ -107,6 +108,7 @@ export default function App() {
         (store.profile ? (
           <Dashboard
             store={store}
+            onHome={() => setView('landing')}
             onEditProfile={() => setView('wizard')}
             onHelp={() => setView('help')}
             onReport={() => setView('report')}
@@ -116,6 +118,7 @@ export default function App() {
         ) : (
           <Landing
             onStart={() => setView('wizard')}
+            onMyPlan={null}
             onHelp={() => setView('help')}
             onTerms={() => setView('terms')}
             onPrivacy={() => setView('privacy')}
