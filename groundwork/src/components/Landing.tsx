@@ -21,7 +21,7 @@ interface Props {
 
 const STEPS = [
   {
-    title: 'Tell us about your startup',
+    title: 'Tell us about your company',
     body: 'Five minutes of plain questions. Nothing you need to google before you can answer.',
   },
   {
@@ -117,18 +117,15 @@ export function Landing({
 
       <header className="landing-hero hero-left">
         <div className="hero-copy">
-          <div className="hero-eyebrow">
-            <span className="hero-dot" />
-            For companies with no security team and no time to build one
-          </div>
           <h1>
-            Startup security, sorted.<br />
+            Security, sorted.<br />
             Without the hassle.
           </h1>
           <p className="lede">
             Answer a few quick questions about your company and get a security
-            plan, free. Sign in below to save it, and if you ever want a real
-            security advisor to weigh in, you can.
+            plan, free. Sign in to save it, get help from real security
+            advisors, and add Groundwork Panel to watch every security console
+            from one dashboard.
           </p>
           <button className="btn btn-primary btn-lg" onClick={onMyPlan ?? onStart}>
             {onMyPlan ? 'Open my security plan' : 'Build my security plan'}
