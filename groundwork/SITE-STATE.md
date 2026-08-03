@@ -25,7 +25,7 @@ git checkout -b restore <commit>
 
 ## Payments
 
-- Stripe Payment Link: `https://buy.stripe.com/eVqcN7a7h4VAe304Nw2Nq00`
+- Stripe Payment Link: `https://buy.stripe.com/6oU28t0wH5ZE6Aya7Q2Nq02`
   (build-time value of `VITE_UPGRADE_URL`; this is public by design).
 - Pro tier: 299 per year.
 - Checkout carries `client_reference_id` = the signed-in user id and prefills

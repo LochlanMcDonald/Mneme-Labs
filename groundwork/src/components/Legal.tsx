@@ -24,7 +24,7 @@ function LegalShell({ title, updated, onBack, children }: Props & { title: strin
 
 export function Terms({ onBack }: Props) {
   return (
-    <LegalShell title="Terms of Service" updated="July 15, 2026" onBack={onBack}>
+    <LegalShell title="Terms of Service" updated="August 2, 2026" onBack={onBack}>
       <h2>What Groundwork is</h2>
       <p>
         Groundwork helps startups plan and track their security work. The free
@@ -54,7 +54,7 @@ export function Terms({ onBack }: Props) {
 
       <h2>Groundwork Pro</h2>
       <p>
-        Pro is a paid subscription billed at $299 per year. It includes the
+        Pro is a paid subscription billed at $19.99 per month. It includes the
         personalized security report and advisor access. Advisors aim to
         respond within one business day; Pro is not an emergency hotline and
         response times are a target, not a guarantee. We may adjust pricing
