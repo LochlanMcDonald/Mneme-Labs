@@ -42,7 +42,7 @@ jobs:
           # enable the upgrade button. Set the UPGRADE_URL repository variable
           # to override (e.g. to swap the link) without a code change.
           # See groundwork/docs/pro-tier.md.
-          VITE_UPGRADE_URL: ${{ vars.UPGRADE_URL || 'https://buy.stripe.com/eVqcN7a7h4VAe304Nw2Nq00' }}
+          VITE_UPGRADE_URL: ${{ vars.UPGRADE_URL || 'https://buy.stripe.com/6oU28t0wH5ZE6Aya7Q2Nq02' }}
           # Stripe Payment Link for the Panel subscription; same override
           # pattern via the PANEL_URL repository variable.
           VITE_PANEL_URL: ${{ vars.PANEL_URL || 'https://buy.stripe.com/5kQ9AV2EP3Rwf7493M2Nq01' }}

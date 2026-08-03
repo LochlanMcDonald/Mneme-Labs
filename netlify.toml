@@ -12,4 +12,4 @@
   # The Netlify copy shows a sign-in button that hands users off here.
   VITE_ACCOUNT_URL = "https://www.groundwork-security.com/"
   # Stripe Payment Link for Groundwork Pro (kept in sync with the Azure build).
-  VITE_UPGRADE_URL = "https://buy.stripe.com/eVqcN7a7h4VAe304Nw2Nq00"
+  VITE_UPGRADE_URL = "https://buy.stripe.com/6oU28t0wH5ZE6Aya7Q2Nq02"
