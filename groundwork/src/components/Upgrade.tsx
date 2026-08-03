@@ -31,8 +31,8 @@ export function Upgrade({ auth }: { auth: AuthState }) {
         when security starts holding up deals.
       </p>
       <div className="upgrade-price">
-        <span className="upgrade-price-num">$299</span>
-        <span className="upgrade-price-per">per year</span>
+        <span className="upgrade-price-num">$19.99</span>
+        <span className="upgrade-price-per">per month</span>
       </div>
       <p className="upgrade-guarantee">14-day money-back guarantee.</p>
       <div className="upgrade-perks">
