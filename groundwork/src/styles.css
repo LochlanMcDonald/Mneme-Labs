@@ -601,6 +601,146 @@ button.brand-link:hover {
   margin: 0 0 8px;
 }
 
+/* Exposure check */
+.exposure-form {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+.exposure-form input {
+  flex: 1;
+  min-width: 220px;
+  font: inherit;
+  font-size: 16px;
+  padding: 13px 16px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--ink);
+}
+.exposure-form input:focus {
+  outline: 2px solid var(--accent-bright);
+  outline-offset: 1px;
+}
+.exposure-note {
+  color: var(--text-dim);
+  font-size: 13px;
+}
+.exposure-error {
+  color: #d02757;
+  font-size: 14.5px;
+  margin-bottom: 10px;
+}
+.exposure-verdict {
+  text-align: center;
+}
+.exposure-domain {
+  display: inline-block;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 14px;
+  color: var(--text-dim);
+  margin-bottom: 8px;
+}
+.exposure-verdict h2 {
+  font-size: 30px;
+  letter-spacing: -0.02em;
+}
+.verdict-critical h2 {
+  color: #d02757;
+}
+.verdict-high h2 {
+  color: #e86f1f;
+}
+.verdict-medium h2 {
+  color: #1d4ed8;
+}
+.verdict-good h2 {
+  color: #3c8f16;
+}
+.exposure-findings {
+  display: grid;
+  gap: 14px;
+}
+.exposure-finding {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--lift-1);
+  padding: 18px 20px;
+  background: var(--surface);
+  border-left: 4px solid var(--border);
+}
+.exposure-finding.sev-critical {
+  border-left-color: #ff5f8f;
+}
+.exposure-finding.sev-high {
+  border-left-color: #ff8b3d;
+}
+.exposure-finding.sev-medium {
+  border-left-color: #2f6bff;
+}
+.exposure-finding.sev-good {
+  border-left-color: #58b32c;
+}
+.exposure-finding-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.exposure-finding-head strong {
+  font-size: 16.5px;
+}
+.exposure-finding p {
+  color: var(--text-dim);
+  font-size: 15px;
+  line-height: 1.5;
+}
+.exposure-badge {
+  font-size: 11.5px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 999px;
+  color: #fff;
+}
+.exposure-badge.sev-critical {
+  background: linear-gradient(180deg, #ff5f8f, #e6336c);
+}
+.exposure-badge.sev-high {
+  background: linear-gradient(180deg, #ff8b3d, #e86f1f);
+}
+.exposure-badge.sev-medium {
+  background: linear-gradient(180deg, #5087ff, #1d4ed8);
+}
+.exposure-badge.sev-good {
+  background: linear-gradient(180deg, #6bc72f, #3c8f16);
+}
+.exposure-fix {
+  margin-top: 10px;
+  font-size: 13.5px !important;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  color: var(--ink) !important;
+  background: rgba(16, 31, 56, 0.05);
+  border-radius: 10px;
+  padding: 10px 12px;
+  overflow-x: auto;
+}
+.exposure-fix span {
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+  color: var(--accent-deep);
+  margin-right: 8px;
+}
+.exposure-cta {
+  text-align: center;
+}
+.exposure-cta h2 {
+  font-size: 24px;
+  margin-bottom: 8px;
+}
+
 /* Panel showcase on the landing page. */
 .landing-panel {
   text-align: center;

@@ -10,6 +10,7 @@ import { Privacy, Terms } from './components/Legal';
 import { About } from './components/About';
 import { Coverage } from './components/Coverage';
 import { Panel } from './components/Panel';
+import { Exposure } from './components/Exposure';
 import { useStore } from './state/store';
 
 type View =
@@ -24,7 +25,8 @@ type View =
   | 'privacy'
   | 'about'
   | 'coverage'
-  | 'panel';
+  | 'panel'
+  | 'exposure';
 
 /** Views that are directly linkable via the URL hash (#/terms etc.). */
 const HASH_VIEWS: Record<string, View> = {
@@ -34,6 +36,7 @@ const HASH_VIEWS: Record<string, View> = {
   '#/about': 'about',
   '#/coverage': 'coverage',
   '#/panel': 'panel',
+  '#/exposure': 'exposure',
 };
 
 function initialView(hasProfile: boolean): View {
@@ -90,6 +93,7 @@ export default function App() {
           onAbout={() => setView('about')}
           onCoverage={() => setView('coverage')}
           onPanel={() => setView('panel')}
+          onExposure={() => setView('exposure')}
           auth={store.auth}
           sync={store.sync}
         />
@@ -125,6 +129,7 @@ export default function App() {
             onAbout={() => setView('about')}
             onCoverage={() => setView('coverage')}
             onPanel={() => setView('panel')}
+          onExposure={() => setView('exposure')}
             auth={store.auth}
             sync={store.sync}
           />
@@ -140,6 +145,7 @@ export default function App() {
       {view === 'panel' && (
         <Panel onBack={goHome} onStart={() => setView('wizard')} auth={store.auth} me={store.me} />
       )}
+      {view === 'exposure' && <Exposure onBack={goHome} onStart={() => setView('wizard')} />}
       {view === 'terms' && <Terms onBack={goHome} />}
       {view === 'privacy' && <Privacy onBack={goHome} />}
     </div>
