@@ -6,7 +6,7 @@ interface Props {
   onStart: () => void;
 }
 
-type Severity = 'critical' | 'high' | 'medium' | 'good';
+type Severity = 'critical' | 'high' | 'medium' | 'good' | 'unknown';
 
 interface Finding {
   id: string;
@@ -28,6 +28,7 @@ const SEV_LABEL: Record<Severity, string> = {
   high: 'Weak',
   medium: 'Partial',
   good: 'Good',
+  unknown: 'Unknown',
 };
 
 /**
@@ -128,7 +129,13 @@ export function Exposure({ onBack, onStart }: Props) {
           </section>
 
           <section className="content-section exposure-cta">
-            <h2>Everything above is fixable, usually in an afternoon.</h2>
+            <h2>
+              {report.worst === 'critical' || report.worst === 'high' || report.worst === 'medium'
+                ? 'Everything above is fixable, usually in an afternoon.'
+                : report.worst === 'unknown'
+                  ? 'Run it again in a moment for a complete read.'
+                  : 'Your email domain is in good shape. Now the rest of it.'}
+            </h2>
             <p>
               A Groundwork plan turns this into an ordered checklist for your whole company, not
               just email, and tracks it as you go.

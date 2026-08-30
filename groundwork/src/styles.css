@@ -658,6 +658,9 @@ button.brand-link:hover {
 .verdict-good h2 {
   color: #3c8f16;
 }
+.verdict-unknown h2 {
+  color: var(--text-dim);
+}
 .exposure-findings {
   display: grid;
   gap: 14px;
@@ -681,6 +684,9 @@ button.brand-link:hover {
 }
 .exposure-finding.sev-good {
   border-left-color: #58b32c;
+}
+.exposure-finding.sev-unknown {
+  border-left-color: rgba(16, 31, 56, 0.25);
 }
 .exposure-finding-head {
   display: flex;
@@ -716,6 +722,9 @@ button.brand-link:hover {
 }
 .exposure-badge.sev-good {
   background: linear-gradient(180deg, #6bc72f, #3c8f16);
+}
+.exposure-badge.sev-unknown {
+  background: linear-gradient(180deg, #8598b4, #5a6b86);
 }
 .exposure-fix {
   margin-top: 10px;
