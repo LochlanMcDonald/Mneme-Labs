@@ -13,6 +13,7 @@ interface Props {
   onAbout: () => void;
   onCoverage: () => void;
   onPanel: () => void;
+  onExposure: () => void;
   /** Set when a saved plan exists; the CTAs open it instead of the wizard. */
   onMyPlan: (() => void) | null;
   auth: AuthState;
@@ -52,6 +53,7 @@ export function Landing({
   onAbout,
   onCoverage,
   onPanel,
+  onExposure,
   onMyPlan,
   auth,
   sync,
@@ -77,6 +79,9 @@ export function Landing({
             </button>
             <button className="nav-link" onClick={onPanel}>
               Panel
+            </button>
+            <button className="nav-link" onClick={onExposure}>
+              Exposure check
             </button>
             <button className="nav-link" onClick={onAbout}>
               About
@@ -104,6 +109,9 @@ export function Landing({
             </button>
             <button className="nav-menu-link" onClick={go(onPanel)}>
               Panel
+            </button>
+            <button className="nav-menu-link" onClick={go(onExposure)}>
+              Exposure check
             </button>
             <button className="nav-menu-link" onClick={go(onAbout)}>
               About
@@ -238,6 +246,9 @@ export function Landing({
           </button>
           <button className="link-btn" onClick={onPanel}>
             Groundwork Panel
+          </button>
+          <button className="link-btn" onClick={onExposure}>
+            Exposure check
           </button>
           <button className="link-btn" onClick={onHelp}>
             Help &amp; FAQs
