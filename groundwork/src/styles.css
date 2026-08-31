@@ -655,6 +655,9 @@ button.brand-link:hover {
 .verdict-medium h2 {
   color: #1d4ed8;
 }
+.verdict-low h2 {
+  color: #7a6a12;
+}
 .verdict-good h2 {
   color: #3c8f16;
 }
@@ -681,6 +684,9 @@ button.brand-link:hover {
 }
 .exposure-finding.sev-medium {
   border-left-color: #2f6bff;
+}
+.exposure-finding.sev-low {
+  border-left-color: #d8b326;
 }
 .exposure-finding.sev-good {
   border-left-color: #58b32c;
@@ -720,6 +726,9 @@ button.brand-link:hover {
 .exposure-badge.sev-medium {
   background: linear-gradient(180deg, #5087ff, #1d4ed8);
 }
+.exposure-badge.sev-low {
+  background: linear-gradient(180deg, #e6c53a, #b7960f);
+}
 .exposure-badge.sev-good {
   background: linear-gradient(180deg, #6bc72f, #3c8f16);
 }
@@ -741,6 +750,86 @@ button.brand-link:hover {
   font-weight: 800;
   color: var(--accent-deep);
   margin-right: 8px;
+}
+.exposure-section-head {
+  margin-bottom: 4px;
+}
+.exposure-section-head h3 {
+  font-size: 18px;
+  letter-spacing: -0.01em;
+  margin-bottom: 2px;
+}
+.exposure-section-head p {
+  color: var(--text-dim);
+  font-size: 14px;
+  line-height: 1.5;
+}
+.exposure-subdomains {
+  display: grid;
+  gap: 12px;
+}
+.exposure-host-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.exposure-host {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 13px;
+  color: var(--ink);
+  background: rgba(16, 31, 56, 0.05);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 5px 9px;
+  word-break: break-all;
+}
+.exposure-host.flagged {
+  color: #8a1a3f;
+  background: rgba(230, 51, 108, 0.08);
+  border-color: rgba(230, 51, 108, 0.35);
+  font-weight: 600;
+}
+.exposure-repos {
+  display: grid;
+  gap: 12px;
+}
+.exposure-repo-list {
+  display: grid;
+  gap: 8px;
+}
+.exposure-repo {
+  display: block;
+  text-decoration: none;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 12px;
+  background: var(--surface);
+  transition: border-color 0.15s ease;
+}
+.exposure-repo:hover {
+  border-color: var(--accent);
+}
+.exposure-repo-name {
+  display: block;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 13.5px;
+  color: var(--ink);
+  word-break: break-all;
+}
+.exposure-repo-desc {
+  display: block;
+  font-size: 13px;
+  color: var(--text-dim);
+  margin-top: 3px;
+  line-height: 1.45;
+}
+.exposure-repo.flagged {
+  border-color: rgba(230, 51, 108, 0.4);
+  background: rgba(230, 51, 108, 0.05);
+}
+.exposure-repo.flagged .exposure-repo-name {
+  color: #8a1a3f;
+  font-weight: 600;
 }
 .exposure-cta {
   text-align: center;
