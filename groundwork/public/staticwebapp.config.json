@@ -29,7 +29,8 @@
     }
   ],
   "mimeTypes": {
-    ".py": "text/plain"
+    ".py": "text/plain",
+    ".docx": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
   },
   "platform": {
     "apiRuntime": "node:20"
