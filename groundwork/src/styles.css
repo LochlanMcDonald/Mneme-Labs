@@ -850,6 +850,22 @@ button.brand-link:hover {
   border-bottom: 1px solid rgba(200, 110, 40, 0.25);
   box-shadow: 0 2px 10px rgba(120, 50, 0, 0.08);
   flex: none;
+  flex-wrap: wrap;
+  row-gap: 8px;
+}
+/* On phones, let the toolbar wrap to two rows so no button is cut off. */
+@media (max-width: 640px) {
+  .aerocall-bar {
+    gap: 8px;
+  }
+  .aerocall-tag {
+    display: none;
+  }
+  .aerocall-bar-right {
+    margin-left: 0;
+    width: 100%;
+    flex-wrap: wrap;
+  }
 }
 .aerocall-tag {
   font-size: 12px;
