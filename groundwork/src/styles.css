@@ -831,13 +831,14 @@ button.brand-link:hover {
   color: #8a1a3f;
   font-weight: 600;
 }
-/* AeroCall preview: full-viewport embed of the standalone tool. */
+/* AeroCall preview: matches AeroCall's own amber / glass look. */
 .aerocall-frame {
   position: fixed;
   inset: 0;
   display: flex;
   flex-direction: column;
-  background: #fff4e3;
+  background: linear-gradient(160deg, #fff4e3 0%, #ffdca6 55%, #ff9d3c 100%);
+  color: #4a2508;
   z-index: 50;
 }
 .aerocall-bar {
@@ -845,16 +846,17 @@ button.brand-link:hover {
   align-items: center;
   gap: 12px;
   padding: 8px 12px;
-  background: var(--surface);
-  border-bottom: 1px solid var(--border);
+  background: linear-gradient(180deg, rgba(255, 247, 235, 0.96), rgba(255, 234, 206, 0.92));
+  border-bottom: 1px solid rgba(200, 110, 40, 0.25);
+  box-shadow: 0 2px 10px rgba(120, 50, 0, 0.08);
   flex: none;
 }
 .aerocall-tag {
   font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.04em;
+  font-weight: 800;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--text-dim);
+  color: #a85a12;
 }
 .aerocall-tabs {
   display: flex;
@@ -867,15 +869,16 @@ button.brand-link:hover {
   font-weight: 700;
   padding: 6px 14px;
   border-radius: 999px;
-  border: 1px solid var(--border);
-  background: transparent;
-  color: var(--text-dim);
+  border: 1px solid rgba(200, 110, 40, 0.4);
+  background: rgba(255, 255, 255, 0.5);
+  color: #7a4a22;
   cursor: pointer;
 }
 .aerocall-tabbtn.active {
-  background: var(--accent);
-  border-color: var(--accent);
+  background: linear-gradient(180deg, #ff9d3c, #f06a00);
+  border-color: #e8600a;
   color: #fff;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.25);
 }
 .aerocall-bar-right {
   margin-left: auto;
@@ -890,26 +893,35 @@ button.brand-link:hover {
 .aerocall-guide {
   flex: 1;
   overflow-y: auto;
-  background: var(--bg);
 }
 .aerocall-guide-inner {
-  max-width: 760px;
-  margin: 0 auto;
-  padding: 28px 20px 80px;
+  max-width: 780px;
+  margin: 22px auto 64px;
+  padding: 26px 28px 56px;
+  color: #4a2508;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.82), rgba(255, 255, 255, 0.6));
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: 18px;
+  box-shadow: 0 14px 40px rgba(120, 50, 0, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 .aerocall-guide h1 {
   font-size: 28px;
   letter-spacing: -0.02em;
   margin-bottom: 8px;
+  color: #c2540a;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);
 }
 .aerocall-guide h2 {
   font-size: 19px;
   margin: 30px 0 8px;
   padding-top: 18px;
-  border-top: 1px solid var(--border);
+  color: #c2540a;
+  border-top: 1px solid rgba(200, 110, 40, 0.22);
 }
 .aerocall-lede {
-  color: var(--text-dim);
+  color: #7a4a22;
   font-size: 15px;
   line-height: 1.6;
   margin-bottom: 20px;
@@ -929,7 +941,8 @@ button.brand-link:hover {
 .aerocall-guide code {
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
   font-size: 12.5px;
-  background: rgba(16, 31, 56, 0.06);
+  color: #7a3a08;
+  background: rgba(200, 110, 40, 0.13);
   padding: 1px 5px;
   border-radius: 5px;
   word-break: break-word;
@@ -937,47 +950,55 @@ button.brand-link:hover {
 .aerocall-cmd {
   margin: 10px 0;
   padding: 12px 14px;
-  border-radius: 10px;
-  background: #14202f;
+  border-radius: 12px;
+  background: linear-gradient(180deg, #4a1a06, #301104);
+  border: 1px solid rgba(255, 180, 110, 0.35);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), inset 0 0 24px rgba(255, 120, 0, 0.12);
   overflow-x: auto;
 }
 .aerocall-cmd code {
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
   font-size: 13px;
-  color: #dbe7f5;
+  color: #ffe9d2;
   background: none;
   padding: 0;
   white-space: pre;
 }
 .aerocall-video {
   width: 100%;
-  border-radius: 12px;
-  border: 1px solid var(--border);
-  box-shadow: var(--lift-1);
-  background: #14202f;
+  border-radius: 14px;
+  border: 1px solid rgba(200, 110, 40, 0.35);
+  box-shadow: 0 12px 34px rgba(120, 50, 0, 0.28);
+  background: #301104;
   margin: 8px 0 6px;
 }
 .aerocall-caption {
-  color: var(--text-dim);
+  color: #7a4a22;
   font-size: 13px;
   margin: 0 0 16px;
 }
 .aerocall-guide .btn-primary {
   margin-bottom: 8px;
+  color: #fff;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(140, 30, 0, 0.5);
+  background: linear-gradient(180deg, #ffc9a8 0%, #ff7a3d 48%, #e8400a 52%, #ff6a2a 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5), 0 3px 10px rgba(120, 50, 0, 0.3);
 }
 .aerocall-callout {
   margin: 18px 0 4px;
   padding: 12px 16px;
   border-radius: 12px;
-  border: 1px solid rgba(230, 122, 51, 0.35);
-  background: rgba(230, 122, 51, 0.08);
+  border: 1px solid rgba(230, 120, 0, 0.4);
+  background: rgba(255, 165, 70, 0.16);
+  color: #5a2e00;
   font-size: 14px;
   line-height: 1.55;
 }
 .aerocall-callout.muted {
-  border-color: var(--border);
-  background: rgba(16, 31, 56, 0.03);
-  color: var(--text-dim);
+  border-color: rgba(200, 110, 40, 0.28);
+  background: rgba(255, 255, 255, 0.5);
+  color: #7a4a22;
 }
 .exposure-cta {
   text-align: center;

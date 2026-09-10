@@ -13,7 +13,7 @@ interface Props {
  * exception set in staticwebapp.config.json).
  */
 export function Aerocall({ onBack }: Props) {
-  const [tab, setTab] = useState<'guide' | 'preview'>('guide');
+  const [tab, setTab] = useState<'guide' | 'preview'>('preview');
 
   return (
     <div className="aerocall-frame">
@@ -24,16 +24,16 @@ export function Aerocall({ onBack }: Props) {
         <span className="aerocall-tag">AeroCall</span>
         <div className="aerocall-tabs">
           <button
+            className={`aerocall-tabbtn${tab === 'preview' ? ' active' : ''}`}
+            onClick={() => setTab('preview')}
+          >
+            Interface
+          </button>
+          <button
             className={`aerocall-tabbtn${tab === 'guide' ? ' active' : ''}`}
             onClick={() => setTab('guide')}
           >
             Quick start
-          </button>
-          <button
-            className={`aerocall-tabbtn${tab === 'preview' ? ' active' : ''}`}
-            onClick={() => setTab('preview')}
-          >
-            Live preview
           </button>
         </div>
         <div className="aerocall-bar-right">
@@ -81,8 +81,9 @@ function QuickStart({ onOpen }: { onOpen: () => void }) {
           Your browser cannot play this video.
         </video>
         <p className="aerocall-caption">
-          A 35-second tour: live proxy capture, request inspection, edit-and-resend with code
-          export, the token decoder, passive security findings, and Intruder.
+          A short run against a deliberately vulnerable test app: capture the traffic, tamper a live
+          request to reach another user’s data (IDOR), fuzz a login with Intruder, surface reflected
+          XSS and SQL-error findings, and decode a captured token.
         </p>
 
         <button className="btn btn-primary" onClick={onOpen}>
