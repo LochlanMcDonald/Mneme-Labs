@@ -50,7 +50,18 @@ export function Aerocall({ onBack }: Props) {
       </div>
 
       {tab === 'preview' ? (
-        <iframe title="AeroCall" src="/aerocall.html" />
+        <div className="aerocall-preview">
+          <video
+            className="aerocall-video aerocall-video-strip"
+            src="/aerocall-tour.mp4"
+            controls
+            playsInline
+            preload="metadata"
+          >
+            Your browser cannot play this video.
+          </video>
+          <iframe title="AeroCall" src="/aerocall.html" />
+        </div>
       ) : (
         <QuickStart onOpen={() => setTab('preview')} />
       )}
@@ -81,9 +92,9 @@ function QuickStart({ onOpen }: { onOpen: () => void }) {
           Your browser cannot play this video.
         </video>
         <p className="aerocall-caption">
-          A short run against a deliberately vulnerable test app: capture the traffic, tamper a live
-          request to reach another user’s data (IDOR), fuzz a login with Intruder, surface reflected
-          XSS and SQL-error findings, and decode a captured token.
+          A short run against a safe local copy of the Groundwork app: capture the traffic, tamper a
+          live request to reach the admin’s data (IDOR), fuzz a login with Intruder, surface
+          reflected XSS and SQL-error findings, and decode a captured token.
         </p>
 
         <button className="btn btn-primary" onClick={onOpen}>
