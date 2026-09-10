@@ -20,6 +20,9 @@ export function Aerocall({ onBack }: Props) {
         </button>
         <span className="aerocall-tag">AeroCall preview</span>
         <div className="aerocall-bar-right">
+          <a className="btn small" href="/AeroCallManual.docx" download="AeroCallManual.docx">
+            Manual
+          </a>
           <a className="btn small" href="/aerocall.py" target="_blank" rel="noreferrer">
             View source
           </a>
