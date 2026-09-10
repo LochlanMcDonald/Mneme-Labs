@@ -13,7 +13,7 @@ interface Props {
  * exception set in staticwebapp.config.json).
  */
 export function Aerocall({ onBack }: Props) {
-  const [tab, setTab] = useState<'guide' | 'preview'>('preview');
+  const [tab, setTab] = useState<'guide' | 'preview'>('guide');
 
   return (
     <div className="aerocall-frame">
@@ -24,16 +24,16 @@ export function Aerocall({ onBack }: Props) {
         <span className="aerocall-tag">AeroCall</span>
         <div className="aerocall-tabs">
           <button
-            className={`aerocall-tabbtn${tab === 'preview' ? ' active' : ''}`}
-            onClick={() => setTab('preview')}
-          >
-            Interface
-          </button>
-          <button
             className={`aerocall-tabbtn${tab === 'guide' ? ' active' : ''}`}
             onClick={() => setTab('guide')}
           >
             Quick start
+          </button>
+          <button
+            className={`aerocall-tabbtn${tab === 'preview' ? ' active' : ''}`}
+            onClick={() => setTab('preview')}
+          >
+            Interface
           </button>
         </div>
         <div className="aerocall-bar-right">
