@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#ff8f2e">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="AeroCall">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/favicon-192.png">
+<title>AeroCall</title>
+<style>
+:root{
+  --ink:#4a2508;
+  --ink-soft:#7a4a22;
+  --mono:ui-monospace,"Cascadia Code","SF Mono",Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+html,body{margin:0;min-height:100%}
+button,input,select,textarea,a{-webkit-tap-highlight-color:transparent}
+button,a{touch-action:manipulation}
+body{
+  font-family:"Segoe UI",Frutiger,"Frutiger LT Std","Myriad Pro","Trebuchet MS","Helvetica Neue",Arial,sans-serif;
+  font-size:14px;line-height:1.4;color:var(--ink);
+  min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased;
+}
+
+/* ---------- sky ---------- */
+.sky{position:fixed;inset:0;z-index:-1;overflow:hidden;
+  background:linear-gradient(180deg,#fff4e3 0%,#ffcf93 30%,#ff8f2e 68%,#d94f00 100%)}
+.streak{position:absolute;left:-30%;width:160%;height:150px;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.5),transparent);
+  filter:blur(16px);transform:rotate(-15deg)}
+.streak.s1{top:10%}
+.streak.s2{top:44%;height:90px;opacity:.55;transform:rotate(-11deg)}
+.glowspot{position:absolute;border-radius:50%;filter:blur(46px)}
+.g1{width:560px;height:560px;left:-160px;top:-180px;background:rgba(255,255,255,.6)}
+.g2{width:440px;height:440px;right:-140px;top:22%;background:rgba(255,224,190,.6)}
+.meadow{position:absolute;left:-15%;right:-15%;bottom:-25%;height:55%;
+  background:radial-gradient(ellipse at 50% 100%,rgba(255,214,80,.75),rgba(255,160,40,.35) 45%,transparent 72%)}
+.bubble{position:absolute;border-radius:50%;
+  background:radial-gradient(circle at 32% 28%,rgba(255,255,255,.95) 0%,rgba(255,255,255,.38) 20%,rgba(255,255,255,.06) 48%,rgba(255,255,255,.26) 78%,rgba(255,255,255,.62) 100%);
+  box-shadow:inset 0 0 14px rgba(255,255,255,.55),0 6px 18px rgba(120,50,0,.18);
+  animation:drift 16s ease-in-out infinite}
+.b1{width:92px;height:92px;left:7%;top:16%}
+.b2{width:48px;height:48px;left:24%;top:66%;animation-delay:-5s}
+.b3{width:130px;height:130px;right:10%;top:28%;animation-duration:23s}
+.b4{width:64px;height:64px;right:30%;top:74%;animation-delay:-9s;animation-duration:19s}
+.b5{width:34px;height:34px;left:56%;top:7%;animation-delay:-3s}
+.b6{width:80px;height:80px;left:62%;bottom:6%;animation-duration:26s}
+@keyframes drift{0%,100%{transform:translate(0,0)}50%{transform:translate(14px,-30px)}}
+@media (prefers-reduced-motion:reduce){.bubble{animation:none}}
+
+/* ---------- layout ---------- */
+.app{max-width:1280px;margin:0 auto;display:grid;gap:16px;grid-template-columns:1fr;
+  padding:max(16px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-right)) max(16px,env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-left))}
+.col{display:grid;gap:16px;align-content:start;min-width:0}
+@media (min-width:900px){
+  .app{grid-template-columns:1fr 1fr}
+  .topbar,.pause,.phone{grid-column:1/-1}
+}
+
+/* ---------- glass ---------- */
+.glass{position:relative;
+  background:linear-gradient(180deg,rgba(255,255,255,.58),rgba(255,255,255,.3));
+  border:1px solid rgba(255,255,255,.88);border-radius:16px;
+  box-shadow:0 10px 30px rgba(120,50,0,.28),inset 0 1px 0 rgba(255,255,255,.95),inset 0 -1px 0 rgba(120,50,0,.08);
+  backdrop-filter:blur(14px) saturate(140%);-webkit-backdrop-filter:blur(14px) saturate(140%);
+  overflow:hidden}
+.glass::before{content:"";position:absolute;left:0;right:0;top:0;height:58px;
+  background:linear-gradient(180deg,rgba(255,255,255,.5),rgba(255,255,255,0));
+  border-radius:16px 16px 0 0;pointer-events:none}
+.glass.pause{background:linear-gradient(180deg,rgba(255,226,222,.72),rgba(255,205,200,.45));border-color:rgba(255,240,238,.95)}
+.panel{padding:14px}
+.panel h2{font-size:15px;font-weight:600;margin:0 0 8px;position:relative}
+
+/* ---------- top bar ---------- */
+.topbar{padding:12px 16px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.logo{display:flex;align-items:center;gap:10px}
+.orb{width:36px;height:36px;border-radius:50%;position:relative;flex:none;
+  background:radial-gradient(circle at 35% 30%,#fff 0%,#ffd6a6 22%,#ff7a1a 62%,#b33d00 100%);
+  box-shadow:0 3px 8px rgba(90,30,0,.4),inset 0 -4px 8px rgba(0,0,0,.22)}
+.orb::after{content:"";position:absolute;left:7px;top:4px;width:16px;height:9px;border-radius:50%;
+  background:linear-gradient(180deg,rgba(255,255,255,.95),rgba(255,255,255,.1))}
+h1{font-size:22px;font-weight:600;margin:0;letter-spacing:.2px;
+  text-shadow:0 1px 0 rgba(255,255,255,.9),0 0 14px rgba(255,255,255,.7)}
+.tagline{margin:0;color:var(--ink-soft);font-size:13px}
+.actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-left:auto;position:relative}
+.hint{font-size:12px;color:var(--ink-soft)}
+kbd{font-family:inherit;font-size:11px;padding:1px 6px;border-radius:6px;border:1px solid rgba(255,255,255,.9);
+  background:linear-gradient(180deg,#fff,#ffe6cc);box-shadow:0 1px 0 rgba(120,50,0,.25)}
+.chip{display:inline-flex;align-items:center;gap:7px;padding:4px 11px;border-radius:999px;font-size:12px;font-weight:600;
+  background:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.95);
+  box-shadow:inset 0 1px 0 #fff,0 1px 3px rgba(120,50,0,.15);cursor:default}
+.dot{width:10px;height:10px;border-radius:50%;flex:none;
+  background:radial-gradient(circle at 35% 30%,#fff,#d9c3b0 40%,#8c7462);box-shadow:0 0 0 1px rgba(0,0,0,.15)}
+.dot.live{background:radial-gradient(circle at 35% 30%,#fff,#ffb870 30%,#f06a00);
+  box-shadow:0 0 9px rgba(255,140,30,.85),0 0 0 1px rgba(140,60,0,.4)}
+
+/* ---------- controls ---------- */
+input[type=text],input[type=url],select,textarea{
+  font:inherit;color:var(--ink);width:100%;min-width:0;
+  background:linear-gradient(180deg,rgba(255,255,255,.85),rgba(255,255,255,.97));
+  border:1px solid rgba(200,110,40,.5);border-radius:9px;padding:8px 10px;
+  box-shadow:inset 0 2px 4px rgba(120,50,0,.12),0 1px 0 rgba(255,255,255,.6);outline:none}
+input:focus,select:focus,textarea:focus{border-color:#ff8a2a;
+  box-shadow:0 0 0 3px rgba(255,150,60,.4),inset 0 2px 4px rgba(120,50,0,.12)}
+select{appearance:none;-webkit-appearance:none;padding-right:28px;cursor:pointer;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'><path d='M1 1l4 4 4-4' fill='none' stroke='%234a2508' stroke-width='1.6'/></svg>"),linear-gradient(180deg,rgba(255,255,255,.85),rgba(255,255,255,.97));
+  background-repeat:no-repeat,no-repeat;background-position:right 10px center,0 0;background-size:10px 6px,100% 100%}
+textarea{min-height:150px;resize:vertical;font-family:var(--mono);font-size:12.5px;line-height:1.5}
+.method{font-weight:700;letter-spacing:.3px}
+.method[data-m="GET"]{color:#c77800}
+.method[data-m="POST"]{color:#f06a00}
+.method[data-m="PUT"]{color:#b8410c}
+.method[data-m="PATCH"]{color:#e0a000}
+.method[data-m="DELETE"]{color:#d1261b}
+.method[data-m="HEAD"],.method[data-m="OPTIONS"]{color:#8c6b52}
+
+.btn{font:inherit;font-weight:600;cursor:pointer;padding:8px 16px;border-radius:10px;color:#fff;
+  text-shadow:0 1px 1px rgba(0,0,0,.35);border:1px solid rgba(140,60,0,.55);text-decoration:none;display:inline-block;
+  background:linear-gradient(180deg,#ffe9b0 0%,#ffc24d 48%,#f5a000 52%,#ffb62b 100%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.7),0 2px 6px rgba(120,50,0,.25);
+  transition:filter .12s,transform .05s;white-space:nowrap;line-height:normal}
+.btn:hover{filter:brightness(1.08)}
+.btn:active{transform:translateY(1px);filter:brightness(.95)}
+.btn:focus-visible{outline:3px solid rgba(255,255,255,.9);outline-offset:1px}
+.btn:disabled{filter:saturate(.4) brightness(1.05);cursor:default;transform:none}
+.btn.send{border-color:rgba(140,30,0,.6);padding:8px 24px;font-size:15px;
+  background:linear-gradient(180deg,#ffc9a8 0%,#ff7a3d 48%,#e8400a 52%,#ff6a2a 100%)}
+.btn.drop{border-color:rgba(120,30,30,.55);
+  background:linear-gradient(180deg,#ffd0cc 0%,#f2604f 48%,#d63b2a 52%,#ee6a55 100%)}
+.btn.toggle.on{border-color:rgba(120,30,30,.55);
+  background:linear-gradient(180deg,#ffd0cc 0%,#f2604f 48%,#d63b2a 52%,#ee6a55 100%)}
+.btn.small{padding:4px 10px;font-size:12px;border-radius:8px}
+
+.urlbar{display:grid;grid-template-columns:auto 1fr;gap:8px;position:relative}
+.urlbar .method{width:118px}
+.urlbar .send{grid-column:1/-1}
+@media (min-width:560px){
+  .urlbar{grid-template-columns:auto 1fr auto}
+  .urlbar .send{grid-column:auto}
+}
+
+/* tabs */
+.tabs{display:flex;gap:4px;margin:14px 0 10px;border-bottom:1px solid rgba(255,255,255,.75);align-items:flex-end}
+.tab{font:inherit;font-weight:600;font-size:13px;padding:6px 12px;border:1px solid transparent;border-bottom:none;
+  border-radius:10px 10px 0 0;background:transparent;color:var(--ink);cursor:pointer;opacity:.7}
+.tab:hover{opacity:1}
+.tab.active{opacity:1;background:linear-gradient(180deg,rgba(255,255,255,.95),rgba(255,255,255,.55));
+  border-color:rgba(255,255,255,.95);box-shadow:0 -2px 6px rgba(120,50,0,.1)}
+.tab:focus-visible{outline:2px solid #ff8a2a;outline-offset:-2px}
+.tabs .edit{margin-left:auto;margin-bottom:5px}
+.pane{display:none}
+.pane.active{display:block}
+
+/* key / value rows */
+.kv .row{display:grid;grid-template-columns:1fr 1fr auto;gap:6px;margin-bottom:6px;align-items:center}
+.x{width:28px;height:28px;border-radius:50%;border:1px solid rgba(120,30,30,.5);color:#fff;font-weight:700;
+  font-size:15px;line-height:1;cursor:pointer;padding:0;
+  background:linear-gradient(180deg,#ffb3ad,#f2604f 50%,#d63b2a 51%,#ee6a55);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.6),0 1px 4px rgba(0,0,0,.2)}
+.x:hover{filter:brightness(1.08)}
+.bodytools{display:flex;align-items:center;gap:12px;margin-bottom:8px;font-size:13px}
+.bodytools label{display:flex;align-items:center;gap:6px;cursor:pointer}
+.bodytools .btn{margin-left:auto}
+.note{font-size:12px;color:var(--ink-soft);margin-top:6px;position:relative}
+.warn-text{font-size:12px;color:#a02a00;margin-top:6px}
+.hidden{display:none!important}
+
+/* output panes (deep amber glass) */
+.out{margin:0;padding:12px;min-height:120px;max-height:440px;overflow:auto;
+  font-family:var(--mono);font-size:12.5px;line-height:1.5;white-space:pre-wrap;word-break:break-word;
+  color:#ffe9d2;
+  background:linear-gradient(180deg,rgba(70,26,6,.88),rgba(48,17,4,.93));
+  border:1px solid rgba(255,180,110,.4);border-radius:12px;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.18),inset 0 0 30px rgba(255,120,0,.16)}
+.out .key{color:#ffc27a}
+.out .str{color:#fff1d6}
+.out .num{color:#ffd84d}
+.out .bool{color:#ff9f6b}
+.out .null{color:#e0b8a0}
+
+.resphead,.codehead{display:flex;align-items:center;gap:10px;flex-wrap:wrap;position:relative}
+.resphead h2,.codehead h2{margin:0}
+.meta{display:flex;align-items:center;gap:10px;font-size:12px;color:var(--ink-soft);margin-left:auto}
+.subtitle{font-family:var(--mono);font-size:12px;color:var(--ink-soft);margin-top:6px;word-break:break-all;position:relative}
+.pill{padding:2px 10px;border-radius:999px;font-weight:700;font-size:12px;color:#fff;
+  text-shadow:0 1px 1px rgba(0,0,0,.3);border:1px solid rgba(0,0,0,.2);
+  background:linear-gradient(180deg,#c4b4a6,#8c7462 55%,#7a6555)}
+.pill.ok{background:linear-gradient(180deg,#a5ec78,#46b81e 55%,#3aa116);border-color:rgba(20,90,20,.5)}
+.pill.redir{background:linear-gradient(180deg,#ffe08a,#e0a000 55%,#c48c00);border-color:rgba(120,80,0,.5)}
+.pill.warn{background:linear-gradient(180deg,#ffb37a,#f06a00 55%,#d15a00);border-color:rgba(140,60,0,.5)}
+.pill.err{background:linear-gradient(180deg,#ffb3ad,#d63b2a 55%,#b92e1f);border-color:rgba(120,30,30,.5)}
+.tabs.small{margin:10px 0 8px}
+.tabs.small .tab{font-size:12px;padding:4px 10px}
+
+.seg{display:inline-flex;border:1px solid rgba(160,80,20,.5);border-radius:999px;overflow:hidden;
+  background:rgba(255,255,255,.55);box-shadow:inset 0 1px 2px rgba(120,50,0,.15)}
+.seg button{font:inherit;font-size:12px;font-weight:600;padding:5px 13px;border:0;background:transparent;
+  color:var(--ink);cursor:pointer}
+.seg button.active{color:#fff;text-shadow:0 1px 1px rgba(0,0,0,.3);
+  background:linear-gradient(180deg,#ffd9a8,#ff9d3c 48%,#f06a00 52%,#ff8a1f)}
+.seg button:focus-visible{outline:2px solid #ff8a2a;outline-offset:-2px}
+.codehead .btn{margin-left:auto}
+.codehead + .out{margin-top:10px}
+
+/* traffic */
+.traffic-head{display:flex;align-items:center;gap:8px;flex-wrap:wrap;position:relative}
+.traffic-head h2{margin:0}
+.traffic-head .count{font-size:12px;color:var(--ink-soft);white-space:nowrap}
+.traffic-head input{flex:1;min-width:150px;padding:5px 9px;font-size:13px}
+.flows{list-style:none;margin:10px 0 0;padding:0;max-height:420px;overflow:auto;position:relative}
+.flows li{display:grid;grid-template-columns:auto auto 1fr auto;gap:8px;align-items:center;padding:6px 8px;border-radius:9px;
+  cursor:pointer;background:rgba(255,255,255,.4);border:1px solid rgba(255,255,255,.8);margin-bottom:5px}
+.flows li:hover{background:rgba(255,255,255,.65)}
+.flows li.sel{background:linear-gradient(180deg,rgba(255,255,255,.95),rgba(255,232,210,.9));border-color:#ffb26b;
+  box-shadow:0 0 0 2px rgba(255,150,60,.35)}
+.flows li.mine{border-left:3px solid #f06a00}
+.flows .m{font-weight:700;font-size:11px;padding:2px 6px;border-radius:6px;color:#fff;background:#8c6b52;min-width:44px;text-align:center}
+.flows .m.GET{background:#c77800}.flows .m.POST{background:#f06a00}.flows .m.PUT{background:#b8410c}
+.flows .m.PATCH{background:#e0a000}.flows .m.DELETE{background:#d1261b}
+.flows .st{font-family:var(--mono);font-size:12px;font-weight:700;min-width:26px;text-align:right}
+.st.s2{color:#1f8f36}.st.s3{color:#c48c00}.st.s4{color:#f06a00}.st.s5,.st.s0{color:#cf2f26}
+.flows .u{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-family:var(--mono);font-size:12px;color:var(--ink-soft)}
+.flows .u b{font-weight:600;color:var(--ink)}
+.flows .sz{font-size:11px;color:var(--ink-soft);white-space:nowrap;text-align:right}
+.empty{margin-top:10px;padding:14px;border-radius:10px;border:1px dashed rgba(200,110,40,.5);color:var(--ink-soft);font-size:13px;position:relative}
+
+/* phone setup */
+.phone .lead{margin:0 0 10px;font-size:13px;color:var(--ink-soft);position:relative}
+.steps{display:grid;gap:12px;grid-template-columns:1fr;position:relative}
+@media (min-width:900px){.steps{grid-template-columns:repeat(3,1fr)}}
+.step{background:rgba(255,255,255,.45);border:1px solid rgba(255,255,255,.9);border-radius:12px;padding:12px;min-width:0}
+.step h3{font-size:14px;font-weight:600;margin:0 0 6px}
+.step .qr{width:150px;height:150px;display:block;margin:6px 0;border:6px solid #fff;border-radius:8px;background:#fff;
+  box-shadow:0 2px 8px rgba(120,50,0,.2)}
+.step .url{font-family:var(--mono);font-size:12px;word-break:break-all;margin:4px 0 6px}
+.step p{margin:6px 0 0;font-size:13px}
+.step code,.phone code{font-family:var(--mono);font-size:12px;background:rgba(255,255,255,.7);padding:1px 4px;border-radius:4px}
+
+/* phones and other small screens */
+@media (max-width:600px){
+  input[type=text],input[type=url],select,textarea{font-size:16px}   /* 16px keeps iOS from zooming into fields */
+  .btn{min-height:42px;padding:10px 16px}
+  .btn.small{min-height:36px;padding:6px 12px}
+  .x{width:34px;height:34px}
+  .tab{padding:9px 12px}
+  .flows li{padding:9px 8px}
+  .out{max-height:60vh}
+  .step .qr{width:180px;height:180px}
+}
+@media (hover:none) and (pointer:coarse){.hint{display:none}}
+
+/* interceptor */
+.icard{background:rgba(255,255,255,.5);border:1px solid rgba(255,255,255,.9);border-radius:12px;padding:10px;margin-top:10px;position:relative}
+.icard .h{font-family:var(--mono);font-size:12px;word-break:break-all;margin-bottom:6px;font-weight:600}
+.icard textarea{min-height:110px}
+.icard .row{display:flex;gap:8px;align-items:center;margin-top:8px;flex-wrap:wrap;font-size:13px}
+.icard label{display:flex;align-items:center;gap:6px;cursor:pointer;margin-left:auto}
+</style>
+</head>
+<body>
+
+<div class="sky" aria-hidden="true">
+  <div class="glowspot g1"></div><div class="glowspot g2"></div>
+  <div class="streak s1"></div><div class="streak s2"></div>
+  <div class="meadow"></div>
+  <div class="bubble b1"></div><div class="bubble b2"></div><div class="bubble b3"></div>
+  <div class="bubble b4"></div><div class="bubble b5"></div><div class="bubble b6"></div>
+</div>
+
+<main class="app">
+  <header class="glass topbar">
+    <div class="logo"><span class="orb"></span><h1>AeroCall</h1></div>
+    <p class="tagline">Quick API calls, live proxy traffic, and copy-paste Python or JavaScript.</p>
+    <div class="actions">
+      <span class="chip" id="proxychip"><span class="dot" id="proxydot"></span><span id="proxytext">connecting</span></span>
+      <button class="btn small toggle" id="intercept" type="button">Intercept: off</button>
+      <a class="btn small" id="calink" href="/ca">CA certificate</a>
+      <button class="btn small" id="phonebtn" type="button">Phone setup</button>
+      <span class="hint"><kbd>Ctrl</kbd>/<kbd>⌘</kbd> + <kbd>Enter</kbd> sends</span>
+    </div>
+  </header>
+
+  <section class="glass panel pause hidden" id="pause">
+    <h2>Paused requests</h2>
+    <div class="note">Browser requests stop here while Intercept is on. Edit the raw request, then forward or drop it.</div>
+    <div class="note" id="waiting">Waiting for the next request from your browser.</div>
+    <div id="ipile"></div>
+  </section>
+
+  <section class="glass panel phone hidden" id="phone">
+    <h2>Phone setup</h2>
+    <div id="phonebody"></div>
+  </section>
+
+  <section class="col">
+    <div class="glass panel">
+      <div class="urlbar">
+        <select id="method" class="method" aria-label="Method">
+          <option>GET</option><option>POST</option><option>PUT</option><option>PATCH</option>
+          <option>DELETE</option><option>HEAD</option><option>OPTIONS</option>
+        </select>
+        <input id="url" type="url" placeholder="https://api.example.com/things" value="https://jsonplaceholder.typicode.com/todos/1" aria-label="URL" autocomplete="off" spellcheck="false">
+        <button id="send" class="btn send" type="button">Send</button>
+      </div>
+
+      <div class="tabs" role="tablist">
+        <button class="tab active" data-tab="params" type="button">Query</button>
+        <button class="tab" data-tab="headers" type="button">Headers</button>
+        <button class="tab" data-tab="body" type="button">Body</button>
+      </div>
+
+      <div class="pane active" id="pane-params">
+        <div class="kv" id="params"></div>
+        <button class="btn small" data-add="params" type="button">Add parameter</button>
+      </div>
+      <div class="pane" id="pane-headers">
+        <div class="kv" id="headers"></div>
+        <button class="btn small" data-add="headers" type="button">Add header</button>
+      </div>
+      <div class="pane" id="pane-body">
+        <div class="bodytools">
+          <label><input type="checkbox" id="jsonmode" checked> Send as JSON</label>
+          <button class="btn small" id="prettify" type="button">Prettify</button>
+        </div>
+        <textarea id="body" placeholder="{&#10;  &quot;title&quot;: &quot;buy milk&quot;,&#10;  &quot;done&quot;: false,&#10;  &quot;tags&quot;: [&quot;errand&quot;, &quot;home&quot;]&#10;}" spellcheck="false"></textarea>
+        <div class="note hidden" id="bodynote">GET and HEAD requests are sent without a body.</div>
+        <div class="warn-text hidden" id="bodywarn">Body isn't valid JSON, so it will be sent exactly as typed.</div>
+      </div>
+    </div>
+
+    <div class="glass panel">
+      <div class="traffic-head">
+        <h2>Traffic</h2>
+        <span class="count" id="count">0 requests</span>
+        <input type="text" id="filter" placeholder="filter by host, path, method or status" spellcheck="false" autocomplete="off">
+        <button class="btn small" id="clear" type="button">Clear</button>
+      </div>
+      <ul class="flows" id="flows"></ul>
+      <div class="empty" id="empty">Calls you send will show up here.</div>
+    </div>
+  </section>
+
+  <section class="col">
+    <div class="glass panel">
+      <div class="resphead">
+        <h2>Response</h2>
+        <div class="meta"><span id="status" class="pill">idle</span><span id="time"></span><span id="size"></span></div>
+      </div>
+      <div class="subtitle" id="subtitle">Send a request, or pick one from Traffic.</div>
+      <div class="tabs small" role="tablist">
+        <button class="tab active" data-rtab="rbody" type="button">Body</button>
+        <button class="tab" data-rtab="rheaders" type="button">Headers</button>
+        <button class="tab" data-rtab="rreq" type="button">Request</button>
+        <button class="btn small edit" id="edit" type="button" disabled>Edit in builder</button>
+      </div>
+      <pre id="rbody" class="out">Press Send to see the response here.</pre>
+      <pre id="rheaders" class="out hidden"></pre>
+      <pre id="rreq" class="out hidden"></pre>
+    </div>
+
+    <div class="glass panel">
+      <div class="codehead">
+        <h2>Code</h2>
+        <div class="seg" role="tablist">
+          <button class="active" data-lang="python" type="button">Python</button>
+          <button data-lang="js" type="button">JavaScript</button>
+        </div>
+        <button class="btn small" id="copy" type="button">Copy</button>
+      </div>
+      <pre id="code" class="out"></pre>
+    </div>
+  </section>
+</main>
+
+<script>
+"use strict";
+// ===== pure helpers (no DOM) =====
+const NO_BODY = new Set(['GET', 'HEAD']);
+const METHODS = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'];
+const q = (s) => JSON.stringify(String(s)); // double-quoted string literal valid in JSON, JS and Python
+
+function normalizeUrl(raw) {
+  let s = (raw || '').trim();
+  if (!s) throw new Error('Enter a URL first.');
+  if (!/^[a-z][a-z0-9+.-]*:\/\//i.test(s)) s = 'https://' + s;
+  return new URL(s);
+}
+
+function buildUrl(raw, params) {
+  const u = normalizeUrl(raw);
+  for (const p of params) if (p.key) u.searchParams.append(p.key, p.value);
+  return u.toString();
+}
+
+// Turns form fields into the exact request that gets sent and code-generated.
+function describeRequest(f) {
+  const method = f.method;
+  const url = buildUrl(f.rawUrl, f.params);
+  const headers = {};
+  for (const h of f.headerRows) if (h.key) headers[h.key] = h.value;
+  const text = (f.bodyText || '').trim();
+  const body = (!NO_BODY.has(method) && text) ? text : null;
+  let parsed;
+  if (body !== null && f.jsonMode) {
+    try { parsed = JSON.parse(body); } catch (e) { /* not JSON, send raw */ }
+    if (!Object.keys(headers).some(k => k.toLowerCase() === 'content-type')) headers['Content-Type'] = 'application/json';
+  }
+  return { method, url, headers, body, parsed };
+}
+
+function pyLiteral(v, indent = 0) {
+  const pad = ' '.repeat(indent + 4), end = ' '.repeat(indent);
+  if (v === null) return 'None';
+  if (v === true) return 'True';
+  if (v === false) return 'False';
+  if (typeof v === 'number') return String(v);
+  if (typeof v === 'string') return q(v);
+  if (Array.isArray(v)) {
+    if (!v.length) return '[]';
+    return '[\n' + v.map(x => pad + pyLiteral(x, indent + 4)).join(',\n') + '\n' + end + ']';
+  }
+  const keys = Object.keys(v);
+  if (!keys.length) return '{}';
+  return '{\n' + keys.map(k => pad + q(k) + ': ' + pyLiteral(v[k], indent + 4)).join(',\n') + '\n' + end + '}';
+}
+
+function indentTail(s, n) {
+  const pad = ' '.repeat(n);
+  return s.split('\n').map((l, i) => (i ? pad + l : l)).join('\n');
+}
+
+function genPython(req, respJson) {
+  const L = ['import requests', '', 'url = ' + q(req.url)];
+  const hk = Object.keys(req.headers);
+  if (hk.length) {
+    L.push('headers = {');
+    for (const k of hk) L.push('    ' + q(k) + ': ' + q(req.headers[k]) + ',');
+    L.push('}');
+  }
+  let arg = '';
+  if (req.body !== null) {
+    if (req.parsed !== undefined) { L.push('payload = ' + pyLiteral(req.parsed)); arg = ', json=payload'; }
+    else { L.push('payload = ' + q(req.body)); arg = ', data=payload'; }
+  }
+  L.push('', 'response = requests.' + req.method.toLowerCase() + '(url' + (hk.length ? ', headers=headers' : '') + arg + ')');
+  L.push('print(response.status_code)');
+  L.push(respJson ? 'print(response.json())' : 'print(response.text)');
+  return L.join('\n');
+}
+
+function genJS(req, respJson) {
+  const L = [];
+  const hk = Object.keys(req.headers);
+  const opts = ['  method: ' + q(req.method) + ','];
+  if (hk.length) {
+    opts.push('  headers: {');
+    for (const k of hk) opts.push('    ' + q(k) + ': ' + q(req.headers[k]) + ',');
+    opts.push('  },');
+  }
+  if (req.body !== null) {
+    if (req.parsed !== undefined) opts.push('  body: JSON.stringify(' + indentTail(JSON.stringify(req.parsed, null, 2), 2) + '),');
+    else opts.push('  body: ' + q(req.body) + ',');
+  }
+  if (req.method === 'GET' && opts.length === 1) L.push('const response = await fetch(' + q(req.url) + ');');
+  else L.push('const response = await fetch(' + q(req.url) + ', {', ...opts, '});');
+  L.push('', respJson ? 'const data = await response.json();' : 'const data = await response.text();');
+  L.push('console.log(response.status, data);');
+  return L.join('\n');
+}
+
+const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+function highlightJSON(str) {
+  return esc(str).replace(/("(\\u[a-fA-F0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, (m) => {
+    let cls = 'num';
+    if (m[0] === '"') cls = /:$/.test(m) ? 'key' : 'str';
+    else if (m === 'true' || m === 'false') cls = 'bool';
+    else if (m === 'null') cls = 'null';
+    return '<span class="' + cls + '">' + m + '</span>';
+  });
+}
+
+function fmtBytes(n) {
+  if (n < 1024) return n + ' B';
+  if (n < 1048576) return (n / 1024).toFixed(1) + ' KB';
+  return (n / 1048576).toFixed(2) + ' MB';
+}
+
+function statusClass(s) { return 's' + String(s || 0)[0]; }
+
+function prettyIfJSON(text) {
+  try { return JSON.stringify(JSON.parse(text), null, 2); } catch (e) { return text; }
+}
+
+// ===== DOM =====
+const $ = (s) => document.querySelector(s);
+const els = {
+  method: $('#method'), url: $('#url'), send: $('#send'), body: $('#body'), jsonMode: $('#jsonmode'),
+  params: $('#params'), headers: $('#headers'), bodyNote: $('#bodynote'), bodyWarn: $('#bodywarn'),
+  status: $('#status'), time: $('#time'), size: $('#size'), subtitle: $('#subtitle'),
+  rbody: $('#rbody'), rheaders: $('#rheaders'), rreq: $('#rreq'), edit: $('#edit'),
+  code: $('#code'), copy: $('#copy'),
+  flows: $('#flows'), empty: $('#empty'), count: $('#count'), filter: $('#filter'), clear: $('#clear'),
+  proxyChip: $('#proxychip'), proxyDot: $('#proxydot'), proxyText: $('#proxytext'),
+  intercept: $('#intercept'), caLink: $('#calink'), pause: $('#pause'), waiting: $('#waiting'), ipile: $('#ipile'),
+  phoneBtn: $('#phonebtn'), phone: $('#phone'), phoneBody: $('#phonebody'),
+};
+const state = {
+  lang: 'python', respJson: true, backend: false, intercept: false,
+  flows: [], byId: {}, details: {}, lastId: 0, localId: 0, selected: null, current: null, filter: '',
+};
+const API = { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-AeroCall': '1' } };
+const post = (path, data) => fetch(path, Object.assign({ body: JSON.stringify(data || {}) }, API));
+
+// ----- builder -----
+function addRow(container, key = '', value = '') {
+  const row = document.createElement('div');
+  row.className = 'row';
+  row.innerHTML = '<input type="text" class="k" placeholder="key" spellcheck="false" autocomplete="off">' +
+                  '<input type="text" class="v" placeholder="value" spellcheck="false" autocomplete="off">' +
+                  '<button class="x" type="button" title="Remove" aria-label="Remove">×</button>';
+  row.querySelector('.k').value = key;
+  row.querySelector('.v').value = value;
+  container.appendChild(row);
+  return row;
+}
+function readRows(container) {
+  return [...container.querySelectorAll('.row')].map(r => ({
+    key: r.querySelector('.k').value.trim(), value: r.querySelector('.v').value,
+  }));
+}
+function fillRows(container, rows) {
+  container.innerHTML = '';
+  (rows && rows.length ? rows : [{ key: '', value: '' }]).forEach(r => addRow(container, r.key, r.value));
+}
+function formFields() {
+  return {
+    method: els.method.value, rawUrl: els.url.value, params: readRows(els.params),
+    headerRows: readRows(els.headers), bodyText: els.body.value, jsonMode: els.jsonMode.checked,
+  };
+}
+function syncBodyNotes() {
+  els.bodyNote.classList.toggle('hidden', !NO_BODY.has(els.method.value));
+  let bad = false;
+  if (els.jsonMode.checked && els.body.value.trim()) { try { JSON.parse(els.body.value); } catch (e) { bad = true; } }
+  els.bodyWarn.classList.toggle('hidden', !bad);
+}
+function updateCode() {
+  syncBodyNotes();
+  let req;
+  try { req = describeRequest(formFields()); }
+  catch (e) {
+    els.code.textContent = (state.lang === 'python' ? '# ' : '// ') + (e.message.includes('URL') ? 'That URL is not valid yet.' : e.message);
+    return;
+  }
+  els.code.textContent = state.lang === 'python' ? genPython(req, state.respJson) : genJS(req, state.respJson);
+}
+function paintMethod() { els.method.dataset.m = els.method.value; }
+
+function loadIntoBuilder(d) {
+  els.method.value = METHODS.includes(d.method) ? d.method : 'GET';
+  paintMethod();
+  els.url.value = d.url;
+  fillRows(els.params, []);
+  const skip = new Set(['host', 'content-length', 'connection', 'proxy-connection', 'keep-alive', 'transfer-encoding', 'accept-encoding']);
+  fillRows(els.headers, (d.req_headers || []).filter(([k]) => !skip.has(k.toLowerCase())).map(([k, v]) => ({ key: k, value: v })));
+  let bodyText = d.req_is_binary ? '' : (d.req_body_text || '');
+  if (bodyText.trim()) { try { bodyText = JSON.stringify(JSON.parse(bodyText), null, 2); } catch (e) { /* not JSON, keep as captured */ } }
+  els.body.value = bodyText;
+  const ct = ((d.req_headers || []).find(([k]) => k.toLowerCase() === 'content-type') || [])[1] || '';
+  els.jsonMode.checked = !els.body.value.trim() || /json/i.test(ct);
+  updateCode();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ----- traffic list -----
+function matches(f) {
+  if (!state.filter) return true;
+  const needle = state.filter.toLowerCase();
+  return (f.method + ' ' + f.url + ' ' + f.status + ' ' + (f.ctype || '')).toLowerCase().includes(needle);
+}
+function rowFor(f) {
+  const li = document.createElement('li');
+  li.dataset.id = f.id;
+  li.className = (f.source === 'proxy' ? '' : 'mine') + (state.selected === f.id ? ' sel' : '');
+  li.innerHTML = '<span class="m"></span><span class="st"></span><span class="u"><b></b><span></span></span><span class="sz"></span>';
+  const m = li.querySelector('.m'); m.textContent = f.method; if (/^[A-Za-z]+$/.test(f.method)) m.classList.add(f.method);
+  const st = li.querySelector('.st');
+  st.textContent = (f.error && !f.status) ? 'err' : (f.status || '·');
+  st.classList.add(statusClass(f.status));
+  li.querySelector('.u b').textContent = f.host;
+  li.querySelector('.u span').textContent = f.path;
+  li.querySelector('.sz').textContent = fmtBytes(f.length || 0) + (f.duration_ms != null ? '  ' + Math.round(f.duration_ms) + ' ms' : '');
+  li.title = f.url + (f.error ? '  [' + f.error + ']' : '');
+  li.addEventListener('click', () => select(f.id));
+  return li;
+}
+function addFlows(list) {
+  const nearBottom = els.flows.scrollTop + els.flows.clientHeight > els.flows.scrollHeight - 60;
+  for (const f of list) {
+    if (state.byId[f.id]) continue;
+    state.flows.push(f); state.byId[f.id] = f;
+    if (matches(f)) els.flows.appendChild(rowFor(f));
+  }
+  els.count.textContent = state.flows.length + (state.flows.length === 1 ? ' request' : ' requests');
+  els.empty.classList.toggle('hidden', state.flows.length > 0);
+  if (nearBottom) els.flows.scrollTop = els.flows.scrollHeight;
+}
+function renderList() {
+  els.flows.innerHTML = '';
+  for (const f of state.flows) if (matches(f)) els.flows.appendChild(rowFor(f));
+}
+function markSelected() {
+  [...els.flows.children].forEach(li => li.classList.toggle('sel', +li.dataset.id === state.selected));
+}
+async function select(id) {
+  state.selected = id;
+  markSelected();
+  let d = state.details[id];
+  if (!d && state.backend) {
+    try { const r = await fetch('/api/flow/' + id); if (!r.ok) return; d = await r.json(); } catch (e) { return; }
+    state.details[id] = d;
+  }
+  if (d) renderInspector(d);
+}
+
+// ----- inspector -----
+function renderInspector(d) {
+  state.current = d;
+  if (d.error && !d.status) { els.status.textContent = 'failed'; els.status.className = 'pill err'; }
+  else {
+    els.status.textContent = (d.status + ' ' + (d.reason || '')).trim();
+    els.status.className = 'pill ' + (d.status < 300 ? 'ok' : d.status < 400 ? 'redir' : d.status < 500 ? 'warn' : 'err');
+  }
+  els.time.textContent = d.duration_ms != null ? Math.round(d.duration_ms) + ' ms' : '';
+  els.size.textContent = d.resp_body_size != null ? fmtBytes(d.resp_body_size) : '';
+  els.subtitle.textContent = d.method + ' ' + d.url + (d.source === 'proxy' ? '' : '   (sent from the builder)');
+
+  if (d.error && !d.status) {
+    let msg = d.error;
+    if (/CERTIFICATE_VERIFY_FAILED/i.test(msg)) msg += '\n\nThe origin\'s certificate is not trusted. Restart with --insecure to skip verification for local or self-signed servers.';
+    els.rbody.textContent = msg;
+    state.respJson = false;
+  } else if (d.resp_is_binary) {
+    els.rbody.textContent = d.resp_body_text;
+    state.respJson = false;
+  } else {
+    const text = d.resp_body_text || '';
+    let parsed, isJson = false;
+    if (text.length < 400000) { try { parsed = JSON.parse(text); isJson = true; } catch (e) { /* plain text */ } }
+    if (isJson) els.rbody.innerHTML = highlightJSON(JSON.stringify(parsed, null, 2));
+    else els.rbody.textContent = text || '(empty body)';
+    state.respJson = isJson;
+  }
+  const rh = (d.resp_headers || []).map(([k, v]) => k + ': ' + v);
+  if (d.resp_encoding) rh.push('', '(body shown decoded from ' + d.resp_encoding + ')');
+  els.rheaders.textContent = rh.length ? rh.join('\n')
+    : (state.backend ? '(no headers)' : '(no headers exposed - browsers only reveal CORS-safelisted response headers)');
+  let rq = d.method + ' ' + (d.path || '/') + ' HTTP/1.1\n' + (d.req_headers || []).map(([k, v]) => k + ': ' + v).join('\n');
+  if (d.req_body_size) rq += '\n\n' + prettyIfJSON(d.req_body_text || '');
+  els.rreq.textContent = rq;
+  els.edit.disabled = false;
+  updateCode();
+}
+function showFailure(message) {
+  els.status.textContent = 'failed'; els.status.className = 'pill err';
+  els.time.textContent = ''; els.size.textContent = '';
+  els.rbody.textContent = message;
+}
+
+// ----- sending -----
+async function sendViaServer(req) {
+  const r = await post('/api/send', { method: req.method, url: req.url, headers: Object.entries(req.headers), body: req.body });
+  const d = await r.json();
+  if (!r.ok) throw new Error(d.error || ('server returned ' + r.status));
+  return d;
+}
+async function sendViaBrowser(req) {
+  const opts = { method: req.method, headers: req.headers };
+  if (req.body !== null) opts.body = req.body;
+  const t0 = performance.now();
+  const res = await fetch(req.url, opts);
+  const text = await res.text();
+  const ms = performance.now() - t0;
+  const u = new URL(req.url);
+  const rh = []; res.headers.forEach((v, k) => rh.push([k, v]));
+  const size = new TextEncoder().encode(text).length;
+  return {
+    id: ++state.localId, source: 'builder', method: req.method, scheme: u.protocol.replace(':', ''),
+    host: u.host, port: u.port, path: u.pathname + u.search, url: req.url,
+    status: res.status, reason: res.statusText, length: size, ctype: (res.headers.get('content-type') || '').split(';')[0],
+    duration_ms: ms, error: null,
+    req_headers: Object.entries(req.headers), req_body_text: req.body || '',
+    req_body_size: req.body ? new TextEncoder().encode(req.body).length : 0, req_is_binary: false,
+    resp_headers: rh, resp_body_text: text, resp_body_size: size, resp_is_binary: false, resp_encoding: '',
+  };
+}
+async function send() {
+  let req;
+  try { req = describeRequest(formFields()); }
+  catch (e) {
+    els.status.textContent = 'not sent'; els.status.className = 'pill warn';
+    els.time.textContent = ''; els.size.textContent = '';
+    els.rbody.textContent = e.message.includes('URL') ? 'That URL is not valid. Check it and try again.' : e.message;
+    return;
+  }
+  els.send.disabled = true; els.send.textContent = 'Sending';
+  try {
+    const d = state.backend ? await sendViaServer(req) : await sendViaBrowser(req);
+    state.details[d.id] = d;
+    if (state.backend) await pollFlows(); else addFlows([d]);
+    state.selected = d.id;
+    markSelected();
+    renderInspector(d);
+  } catch (err) {
+    showFailure(err.name + ': ' + err.message + '\n\n' + (state.backend
+      ? 'Could not reach the aerocall server. Is python3 aerocall.py still running?'
+      : 'If the URL is right, this is almost always CORS (the API does not allow calls from a web page) or a preview sandbox blocking network access. Run python3 aerocall.py and use its UI, or copy the code below and run it from a terminal.'));
+  } finally {
+    els.send.disabled = false; els.send.textContent = 'Send';
+  }
+}
+
+// ----- backend polling -----
+let polling = false;
+async function pollFlows() {
+  if (!state.backend || polling) return;
+  polling = true;
+  try {
+    const r = await fetch('/api/flows?after=' + state.lastId);
+    const d = await r.json();
+    if (d.flows && d.flows.length) { addFlows(d.flows); state.lastId = d.last; }
+  } catch (e) { /* server away; try again next tick */ }
+  finally { polling = false; }
+}
+function flowLoop() { pollFlows(); setTimeout(flowLoop, 1000); }
+
+// ----- interceptor -----
+function setIntercept(on) {
+  state.intercept = on;
+  els.intercept.textContent = on ? 'Intercept: on' : 'Intercept: off';
+  els.intercept.classList.toggle('on', on);
+  els.pause.classList.toggle('hidden', !on);
+  if (!on) els.ipile.innerHTML = '';
+}
+async function toggleIntercept() {
+  if (!state.backend) return;
+  try { const d = await (await post('/api/intercept/toggle', { on: !state.intercept })).json(); setIntercept(d.intercept); } catch (e) {}
+}
+async function queueLoop() {
+  if (state.backend && state.intercept) {
+    try { const d = await (await fetch('/api/intercept/queue')).json(); renderQueue(d.items || []); } catch (e) {}
+  }
+  setTimeout(queueLoop, 700);
+}
+function renderQueue(items) {
+  const have = new Set(items.map(i => String(i.id)));
+  [...els.ipile.children].forEach(c => { if (!have.has(c.dataset.id)) c.remove(); });
+  for (const it of items) {
+    if (els.ipile.querySelector('[data-id="' + it.id + '"]')) continue;
+    const card = document.createElement('div');
+    card.className = 'icard'; card.dataset.id = it.id;
+    card.innerHTML = '<div class="h"></div><textarea spellcheck="false"></textarea>' +
+      '<div class="row"><button class="btn small send" type="button">Forward</button>' +
+      '<button class="btn small drop" type="button">Drop</button>' +
+      '<label><input type="checkbox" class="fix" checked> Fix Content-Length</label></div>';
+    card.querySelector('.h').textContent = it.method + ' ' + it.url;
+    const ta = card.querySelector('textarea'); ta.value = it.text;
+    card.querySelector('.send').addEventListener('click', () => resolveItem(it.id, 'forward', ta.value, card.querySelector('.fix').checked));
+    card.querySelector('.drop').addEventListener('click', () => resolveItem(it.id, 'drop'));
+    els.ipile.appendChild(card);
+  }
+  els.waiting.classList.toggle('hidden', items.length > 0);
+}
+async function resolveItem(id, action, raw, fix) {
+  try { await post('/api/intercept/resolve', { id, action, raw, fix_length: fix }); } catch (e) {}
+  const c = els.ipile.querySelector('[data-id="' + id + '"]');
+  if (c) c.remove();
+  if (!els.ipile.children.length) els.waiting.classList.remove('hidden');
+}
+
+// ----- proxy status chip -----
+function setProxyChip(s) {
+  if (!s) {
+    els.proxyDot.className = 'dot';
+    els.proxyText.textContent = 'standalone page';
+    els.proxyChip.title = 'Run python3 aerocall.py to capture browser traffic and send calls without CORS limits.';
+    els.intercept.classList.add('hidden'); els.caLink.classList.add('hidden');
+    els.empty.textContent = 'Calls you send will show up here. Tap one to inspect it or load it back into the builder.';
+    return;
+  }
+  const phost = (s.proxy && s.proxy.host === '0.0.0.0') ? (s.lan_ip || 'this computer') : (s.proxy && s.proxy.host);
+  if (s.proxy) {
+    els.proxyDot.className = 'dot live';
+    els.proxyText.textContent = 'proxy ' + phost + ':' + s.proxy.port;
+    els.proxyChip.title = s.https_intercept
+      ? 'Point a browser at this proxy and trust the CA certificate to see its HTTPS traffic.'
+      : 'HTTPS is tunneled without decryption. pip install cryptography, then restart, to see HTTPS traffic.';
+    els.empty.textContent = 'Point a browser\'s (or phone\'s) HTTP and HTTPS proxy at ' + phost + ':' + s.proxy.port +
+      ' and its requests will stream in here. Calls you send from the builder land here too.';
+  } else {
+    els.proxyDot.className = 'dot';
+    els.proxyText.textContent = 'proxy off';
+    els.proxyChip.title = 'Started with --no-proxy. Sends still go through the server, so there are no CORS limits.';
+    els.intercept.classList.add('hidden');
+    els.empty.textContent = 'Calls you send will show up here. Tap one to inspect it or load it back into the builder.';
+  }
+  els.caLink.classList.toggle('hidden', !s.https_intercept);
+  const raw = [];
+  if (s.have_brotli === false) raw.push('brotli');
+  if (s.have_zstd === false) raw.push('zstd');
+  if (raw.length) els.proxyChip.title += ' Bodies compressed with ' + raw.join(' or ') + ' are shown raw (pip install brotli zstandard).';
+  if (s.insecure) els.proxyChip.title += ' Origin certificates are not being verified (--insecure).';
+}
+
+// ----- phone setup -----
+const escHtml = (s) => String(s).replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
+function renderPhone(s) {
+  if (!s.lan_ip) {
+    els.phoneBody.innerHTML = '<p class="lead">This server only listens on 127.0.0.1, so a phone can\'t reach it yet. ' +
+      'Restart it with <code>python3 aerocall.py --lan</code> on the same Wi-Fi as the phone and this panel fills in with ' +
+      'the addresses, QR codes and the steps for iPhone and Android.</p>';
+    return;
+  }
+  const ui = 'http://' + s.lan_ip + ':' + s.ui_port;
+  const qr = (t) => '<img class="qr" alt="QR code for ' + escHtml(t) + '" src="/api/qr?text=' + encodeURIComponent(t) + '">';
+  let proxyStep = '<h3>2. Route the phone through the proxy</h3>';
+  if (s.proxy) {
+    proxyStep += '<div class="url">' + escHtml(s.lan_ip + ':' + s.proxy.port) + '</div>' +
+      '<p><b>iPhone:</b> Settings › Wi‑Fi › the ⓘ next to your network › Configure Proxy › Manual › Server <code>' +
+      escHtml(s.lan_ip) + '</code>, Port <code>' + s.proxy.port + '</code> › Save.</p>' +
+      '<p><b>Android:</b> long-press the network › Modify › Advanced › Proxy: Manual › same host and port.</p>';
+  } else {
+    proxyStep += '<p>The proxy is off (started with --no-proxy). Restart without it to capture the phone\'s traffic.</p>';
+  }
+  let caStep = '<h3>3. Trust the certificate, so HTTPS can be read</h3>';
+  if (s.https_intercept) {
+    caStep += qr(ui + '/ca') + '<div class="url">' + escHtml(ui) + '/ca</div>' +
+      '<p><b>iPhone:</b> open that link in Safari and allow the profile, then Settings › Profile Downloaded › Install. ' +
+      'Then Settings › General › About › Certificate Trust Settings › switch on full trust for <b>aerocall Root CA</b>.</p>' +
+      '<p><b>Android:</b> download it, then Settings › Security › Encryption &amp; credentials › Install a certificate › CA certificate. ' +
+      'Chrome will trust it; many apps ignore user-installed CAs.</p>' +
+      '<p class="warn-text">While the proxy is set but the certificate isn\'t trusted yet, HTTPS on the phone fails. Remove the proxy setting when you\'re done.</p>';
+  } else {
+    caStep += '<p>HTTPS is being tunneled, not decrypted. <code>pip install cryptography</code> on this computer, restart, and this step fills in.</p>';
+  }
+  els.phoneBody.innerHTML =
+    '<p class="lead">The phone and this computer need to be on the same Wi‑Fi. Anyone on that network can reach this UI and proxy while --lan is on.</p>' +
+    '<div class="steps">' +
+    '<div class="step"><h3>1. Open AeroCall on the phone</h3>' + qr(ui) + '<div class="url">' + escHtml(ui) + '</div>' +
+    '<p>Scan it with the camera. On iPhone, Share › Add to Home Screen gives it an icon and a full-screen window.</p></div>' +
+    '<div class="step">' + proxyStep + '</div>' +
+    '<div class="step">' + caStep + '</div></div>';
+}
+
+// ----- copy -----
+async function copyCode() {
+  const text = els.code.textContent;
+  let ok = false;
+  try { await navigator.clipboard.writeText(text); ok = true; } catch (e) {}
+  if (!ok) {
+    const ta = document.createElement('textarea');
+    ta.value = text; ta.setAttribute('readonly', ''); ta.style.position = 'absolute'; ta.style.left = '-9999px';
+    document.body.appendChild(ta);
+    if (/ipad|iphone|ipod/i.test(navigator.userAgent)) {
+      const range = document.createRange(); range.selectNodeContents(ta);
+      const sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(range);
+      ta.setSelectionRange(0, text.length);
+    } else {
+      ta.select();
+    }
+    try { ok = document.execCommand('copy'); } catch (e) {}
+    ta.remove();
+  }
+  els.copy.textContent = ok ? 'Copied' : 'Copy failed';
+  setTimeout(() => { els.copy.textContent = 'Copy'; }, 1400);
+}
+
+// ----- wiring -----
+for (const kind of ['params', 'headers']) {
+  const c = els[kind];
+  c.addEventListener('input', updateCode);
+  c.addEventListener('click', (e) => {
+    if (!e.target.classList.contains('x')) return;
+    e.target.closest('.row').remove();
+    if (!c.querySelector('.row')) addRow(c);
+    updateCode();
+  });
+}
+document.querySelectorAll('[data-add]').forEach(b => b.addEventListener('click', () => {
+  addRow(els[b.dataset.add]).querySelector('.k').focus();
+}));
+document.querySelectorAll('[data-tab]').forEach(t => t.addEventListener('click', () => {
+  document.querySelectorAll('[data-tab]').forEach(x => x.classList.toggle('active', x === t));
+  document.querySelectorAll('.pane').forEach(p => p.classList.toggle('active', p.id === 'pane-' + t.dataset.tab));
+}));
+document.querySelectorAll('[data-rtab]').forEach(t => t.addEventListener('click', () => {
+  document.querySelectorAll('[data-rtab]').forEach(x => x.classList.toggle('active', x === t));
+  for (const id of ['rbody', 'rheaders', 'rreq']) els[id].classList.toggle('hidden', t.dataset.rtab !== id);
+}));
+document.querySelectorAll('[data-lang]').forEach(b => b.addEventListener('click', () => {
+  state.lang = b.dataset.lang;
+  document.querySelectorAll('[data-lang]').forEach(x => x.classList.toggle('active', x === b));
+  updateCode();
+}));
+els.method.addEventListener('change', () => { paintMethod(); updateCode(); });
+els.url.addEventListener('input', updateCode);
+els.url.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); send(); } });
+els.body.addEventListener('input', updateCode);
+els.jsonMode.addEventListener('change', updateCode);
+els.send.addEventListener('click', send);
+els.copy.addEventListener('click', copyCode);
+els.edit.addEventListener('click', () => { if (state.current) loadIntoBuilder(state.current); });
+els.filter.addEventListener('input', (e) => { state.filter = e.target.value; renderList(); });
+els.clear.addEventListener('click', async () => {
+  if (state.backend) { try { await post('/api/clear'); } catch (e) {} }
+  state.flows = []; state.byId = {}; state.details = {}; state.lastId = 0; state.selected = null;
+  els.flows.innerHTML = ''; els.count.textContent = '0 requests'; els.empty.classList.remove('hidden');
+});
+els.intercept.addEventListener('click', toggleIntercept);
+els.phoneBtn.addEventListener('click', () => {
+  els.phone.classList.toggle('hidden');
+  if (!els.phone.classList.contains('hidden')) els.phone.scrollIntoView({ behavior: 'smooth', block: 'start' });
+});
+$('#prettify').addEventListener('click', () => {
+  try { els.body.value = JSON.stringify(JSON.parse(els.body.value), null, 2); } catch (e) {}
+  updateCode();
+});
+document.addEventListener('keydown', (e) => {
+  if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') { e.preventDefault(); send(); }
+});
+
+// ----- init -----
+async function init() {
+  addRow(els.params);
+  addRow(els.headers);
+  paintMethod();
+  updateCode();
+  try {
+    const r = await fetch('/api/state', { cache: 'no-store' });
+    if (!r.ok) throw new Error('no backend');
+    const s = await r.json();
+    if (typeof s.https_intercept !== 'boolean') throw new Error('no backend');
+    state.backend = true;
+    setProxyChip(s);
+    setIntercept(!!s.intercept);
+    renderPhone(s);
+    els.phoneBtn.classList.remove('hidden');
+    flowLoop();
+    queueLoop();
+  } catch (e) {
+    state.backend = false;
+    setProxyChip(null);
+    els.phoneBtn.classList.add('hidden');
+  }
+}
+init();
+</script>
+</body>
+</html>
