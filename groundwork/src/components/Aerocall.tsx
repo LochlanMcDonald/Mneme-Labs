@@ -51,15 +51,6 @@ export function Aerocall({ onBack }: Props) {
 
       {tab === 'preview' ? (
         <div className="aerocall-preview">
-          <video
-            className="aerocall-video aerocall-video-strip"
-            src="/aerocall-tour.mp4"
-            controls
-            playsInline
-            preload="metadata"
-          >
-            Your browser cannot play this video.
-          </video>
           <iframe title="AeroCall" src="/aerocall.html" />
         </div>
       ) : (
