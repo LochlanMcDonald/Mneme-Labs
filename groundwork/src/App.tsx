@@ -39,7 +39,6 @@ const HASH_VIEWS: Record<string, View> = {
   '#/coverage': 'coverage',
   '#/panel': 'panel',
   '#/exposure': 'exposure',
-  // Unlisted: reachable only by typing #/aerocall. Not linked in any nav.
   '#/aerocall': 'aerocall',
 };
 
@@ -98,6 +97,7 @@ export default function App() {
           onCoverage={() => setView('coverage')}
           onPanel={() => setView('panel')}
           onExposure={() => setView('exposure')}
+          onAerocall={() => setView('aerocall')}
           auth={store.auth}
           sync={store.sync}
         />
@@ -133,7 +133,8 @@ export default function App() {
             onAbout={() => setView('about')}
             onCoverage={() => setView('coverage')}
             onPanel={() => setView('panel')}
-          onExposure={() => setView('exposure')}
+            onExposure={() => setView('exposure')}
+            onAerocall={() => setView('aerocall')}
             auth={store.auth}
             sync={store.sync}
           />

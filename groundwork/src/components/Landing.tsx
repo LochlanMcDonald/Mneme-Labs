@@ -14,6 +14,7 @@ interface Props {
   onCoverage: () => void;
   onPanel: () => void;
   onExposure: () => void;
+  onAerocall: () => void;
   /** Set when a saved plan exists; the CTAs open it instead of the wizard. */
   onMyPlan: (() => void) | null;
   auth: AuthState;
@@ -54,6 +55,7 @@ export function Landing({
   onCoverage,
   onPanel,
   onExposure,
+  onAerocall,
   onMyPlan,
   auth,
   sync,
@@ -82,6 +84,9 @@ export function Landing({
             </button>
             <button className="nav-link" onClick={onExposure}>
               Exposure check
+            </button>
+            <button className="nav-link" onClick={onAerocall}>
+              AeroCall
             </button>
             <button className="nav-link" onClick={onAbout}>
               About
@@ -112,6 +117,9 @@ export function Landing({
             </button>
             <button className="nav-menu-link" onClick={go(onExposure)}>
               Exposure check
+            </button>
+            <button className="nav-menu-link" onClick={go(onAerocall)}>
+              AeroCall
             </button>
             <button className="nav-menu-link" onClick={go(onAbout)}>
               About
@@ -224,6 +232,69 @@ export function Landing({
         </button>
       </section>
 
+      <section className="landing-aerocall">
+        <div className="ac-ad">
+          <div className="ac-ad-copy">
+            <span className="ac-ad-tag">Free tool</span>
+            <h2>Meet AeroCall</h2>
+            <p className="ac-ad-lede">
+              A hands-on web security kit in a single Python file. Watch live
+              traffic, pause and edit a request before it sends, fuzz an endpoint,
+              and copy any call straight out as Python or JavaScript. No install,
+              no account, nothing leaves your machine.
+            </p>
+            <ul className="ac-ad-points">
+              <li>Intercepting proxy for HTTP and HTTPS</li>
+              <li>Intercept, edit and replay any request</li>
+              <li>Passive findings, an Intruder, and a JWT decoder</li>
+            </ul>
+            <div className="ac-ad-actions">
+              <button className="btn btn-primary btn-lg" onClick={onAerocall}>
+                Open AeroCall
+              </button>
+              <a className="btn btn-lg" href="/aerocall.py" download="aerocall.py">
+                Download the .py
+              </a>
+            </div>
+            <p className="ac-ad-note">
+              Only point it at systems you own or are allowed to test.
+            </p>
+          </div>
+          <div className="ac-ad-art" aria-hidden="true">
+            <div className="ac-win">
+              <div className="ac-win-bar">
+                <span className="ac-dot" />
+                <span className="ac-dot" />
+                <span className="ac-dot" />
+                <span className="ac-win-title">AeroCall — Traffic</span>
+              </div>
+              <div className="ac-win-body">
+                <div className="ac-row">
+                  <span className="ac-verb ac-get">GET</span>
+                  <span className="ac-path">/api/user?id=1</span>
+                  <span className="ac-code ac-ok">200</span>
+                </div>
+                <div className="ac-row ac-row-sel">
+                  <span className="ac-verb ac-post">POST</span>
+                  <span className="ac-path">/api/login</span>
+                  <span className="ac-code ac-ok">200</span>
+                </div>
+                <div className="ac-row">
+                  <span className="ac-verb ac-get">GET</span>
+                  <span className="ac-path">/search?q=&lt;script&gt;</span>
+                  <span className="ac-code ac-warn">flag</span>
+                </div>
+                <div className="ac-snip">
+                  <span className="ac-snip-k">import</span> requests
+                  <br />
+                  r = requests.<span className="ac-snip-fn">post</span>(url, json=body)
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section className="landing-pro">
         <Upgrade auth={auth} />
       </section>
@@ -249,6 +320,9 @@ export function Landing({
           </button>
           <button className="link-btn" onClick={onExposure}>
             Exposure check
+          </button>
+          <button className="link-btn" onClick={onAerocall}>
+            AeroCall
           </button>
           <button className="link-btn" onClick={onHelp}>
             Help &amp; FAQs

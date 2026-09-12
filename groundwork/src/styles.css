@@ -601,6 +601,200 @@ button.brand-link:hover {
   margin: 0 0 8px;
 }
 
+/* ───────── AeroCall promo (landing) ───────── */
+.landing-aerocall {
+  margin-top: 68px;
+}
+.ac-ad {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 34px;
+  align-items: center;
+  padding: 34px 36px;
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(224, 122, 21, 0.28);
+  background: linear-gradient(
+      135deg,
+      rgba(255, 139, 61, 0.14),
+      rgba(255, 179, 71, 0.06) 42%,
+      rgba(255, 255, 255, 0.5)
+    ),
+    var(--surface);
+  box-shadow: var(--lift-2);
+}
+.ac-ad-tag {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 750;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  color: var(--amber);
+  background: var(--amber-soft);
+  border: 1px solid rgba(224, 122, 21, 0.3);
+  padding: 4px 11px;
+  border-radius: 999px;
+  margin-bottom: 14px;
+}
+.ac-ad-copy h2 {
+  font-size: 30px;
+  margin: 0 0 10px;
+}
+.ac-ad-lede {
+  color: var(--text-dim);
+  max-width: 520px;
+  margin: 0 0 16px;
+  line-height: 1.55;
+}
+.ac-ad-points {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 22px;
+  display: grid;
+  gap: 8px;
+}
+.ac-ad-points li {
+  position: relative;
+  padding-left: 24px;
+  color: var(--text);
+  font-size: 14.5px;
+}
+.ac-ad-points li::before {
+  content: '';
+  position: absolute;
+  left: 4px;
+  top: 7px;
+  width: 8px;
+  height: 8px;
+  border-radius: 3px;
+  background: var(--tangerine);
+  box-shadow: 0 0 0 3px rgba(255, 139, 61, 0.18);
+}
+.ac-ad-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.ac-ad-note {
+  margin: 16px 0 0;
+  font-size: 12.5px;
+  color: var(--text-faint);
+}
+
+/* Faux capture window */
+.ac-ad-art {
+  display: flex;
+  justify-content: center;
+}
+.ac-win {
+  width: 100%;
+  max-width: 400px;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid var(--border-strong);
+  background: #2a1608;
+  box-shadow: 0 24px 50px -26px rgba(80, 34, 4, 0.7);
+  font-family: 'SFMono-Regular', ui-monospace, Menlo, Consolas, monospace;
+}
+.ac-win-bar {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 13px;
+  background: linear-gradient(180deg, #3d220e, #33190a);
+  border-bottom: 1px solid rgba(255, 179, 71, 0.16);
+}
+.ac-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #7a5330;
+}
+.ac-dot:nth-child(1) {
+  background: #ff6b57;
+}
+.ac-dot:nth-child(2) {
+  background: #ffb43f;
+}
+.ac-dot:nth-child(3) {
+  background: #5fce6b;
+}
+.ac-win-title {
+  margin-left: 6px;
+  font-size: 12px;
+  color: #f0c79a;
+  font-weight: 600;
+}
+.ac-win-body {
+  padding: 12px 13px 15px;
+}
+.ac-row {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 7px 9px;
+  border-radius: 8px;
+  font-size: 12.5px;
+  color: #f4e3d0;
+}
+.ac-row-sel {
+  background: rgba(255, 139, 61, 0.16);
+  outline: 1px solid rgba(255, 179, 71, 0.4);
+}
+.ac-verb {
+  font-weight: 700;
+  font-size: 11px;
+  min-width: 38px;
+}
+.ac-get {
+  color: #7fd4ff;
+}
+.ac-post {
+  color: #ffb43f;
+}
+.ac-path {
+  flex: 1;
+  color: #f4e3d0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.ac-code {
+  font-weight: 700;
+  font-size: 11px;
+}
+.ac-ok {
+  color: #74e08a;
+}
+.ac-warn {
+  color: #ff8f6b;
+}
+.ac-snip {
+  margin-top: 11px;
+  padding: 11px 12px;
+  border-radius: 9px;
+  background: rgba(0, 0, 0, 0.32);
+  border: 1px solid rgba(255, 179, 71, 0.14);
+  font-size: 12px;
+  line-height: 1.7;
+  color: #e8d3ba;
+}
+.ac-snip-k {
+  color: #ff9d5c;
+}
+.ac-snip-fn {
+  color: #ffcf8a;
+}
+@media (max-width: 720px) {
+  .ac-ad {
+    grid-template-columns: 1fr;
+    padding: 26px 22px;
+    gap: 26px;
+  }
+  .ac-ad-art {
+    order: -1;
+  }
+}
+
 /* Exposure check */
 .exposure-form {
   display: flex;
