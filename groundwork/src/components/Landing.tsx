@@ -260,38 +260,6 @@ export function Landing({
               Only point it at systems you own or are allowed to test.
             </p>
           </div>
-          <div className="ac-ad-art" aria-hidden="true">
-            <div className="ac-win">
-              <div className="ac-win-bar">
-                <span className="ac-dot" />
-                <span className="ac-dot" />
-                <span className="ac-dot" />
-                <span className="ac-win-title">AeroCall — Traffic</span>
-              </div>
-              <div className="ac-win-body">
-                <div className="ac-row">
-                  <span className="ac-verb ac-get">GET</span>
-                  <span className="ac-path">/api/user?id=1</span>
-                  <span className="ac-code ac-ok">200</span>
-                </div>
-                <div className="ac-row ac-row-sel">
-                  <span className="ac-verb ac-post">POST</span>
-                  <span className="ac-path">/api/login</span>
-                  <span className="ac-code ac-ok">200</span>
-                </div>
-                <div className="ac-row">
-                  <span className="ac-verb ac-get">GET</span>
-                  <span className="ac-path">/search?q=&lt;script&gt;</span>
-                  <span className="ac-code ac-warn">flag</span>
-                </div>
-                <div className="ac-snip">
-                  <span className="ac-snip-k">import</span> requests
-                  <br />
-                  r = requests.<span className="ac-snip-fn">post</span>(url, json=body)
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </section>
 
