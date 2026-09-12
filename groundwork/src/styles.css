@@ -606,7 +606,11 @@ button.brand-link:hover {
   margin-top: 68px;
 }
 .ac-ad {
-  padding: 34px 38px;
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 34px;
+  align-items: center;
+  padding: 34px 36px;
   border-radius: var(--radius-lg);
   border: 1px solid rgba(224, 122, 21, 0.28);
   background: linear-gradient(
@@ -637,7 +641,7 @@ button.brand-link:hover {
 }
 .ac-ad-lede {
   color: var(--text-dim);
-  max-width: 640px;
+  max-width: 520px;
   margin: 0 0 16px;
   line-height: 1.55;
 }
@@ -675,9 +679,127 @@ button.brand-link:hover {
   font-size: 12.5px;
   color: var(--text-faint);
 }
+
+/* Capture window — the Groundwork run from the tour */
+.ac-ad-art {
+  display: flex;
+  justify-content: center;
+  min-width: 0;
+}
+.ac-win {
+  width: 100%;
+  max-width: 410px;
+  min-width: 0;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid var(--border-strong);
+  background: #2a1608;
+  box-shadow: 0 24px 50px -26px rgba(80, 34, 4, 0.7);
+  font-family: 'SFMono-Regular', ui-monospace, Menlo, Consolas, monospace;
+}
+.ac-win-bar {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 13px;
+  background: linear-gradient(180deg, #3d220e, #33190a);
+  border-bottom: 1px solid rgba(255, 179, 71, 0.16);
+}
+.ac-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #7a5330;
+}
+.ac-dot:nth-child(1) {
+  background: #ff6b57;
+}
+.ac-dot:nth-child(2) {
+  background: #ffb43f;
+}
+.ac-dot:nth-child(3) {
+  background: #5fce6b;
+}
+.ac-win-title {
+  margin-left: 6px;
+  font-size: 12px;
+  color: #f0c79a;
+  font-weight: 600;
+}
+.ac-win-body {
+  padding: 12px 13px 15px;
+}
+.ac-row {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 7px 9px;
+  border-radius: 8px;
+  font-size: 12.5px;
+  color: #f4e3d0;
+}
+.ac-row-sel {
+  background: rgba(255, 139, 61, 0.16);
+  outline: 1px solid rgba(255, 179, 71, 0.4);
+}
+.ac-verb {
+  font-weight: 700;
+  font-size: 11px;
+  min-width: 38px;
+}
+.ac-get {
+  color: #7fd4ff;
+}
+.ac-post {
+  color: #ffb43f;
+}
+.ac-path {
+  flex: 1;
+  color: #f4e3d0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.ac-code {
+  font-weight: 700;
+  font-size: 11px;
+}
+.ac-ok {
+  color: #74e08a;
+}
+.ac-warn {
+  color: #ff8f6b;
+}
+.ac-snip {
+  margin: 11px 0 0;
+  padding: 11px 13px;
+  border-radius: 9px;
+  background: rgba(0, 0, 0, 0.32);
+  border: 1px solid rgba(255, 179, 71, 0.14);
+  font-size: 12px;
+  line-height: 1.65;
+  color: #e8d3ba;
+  white-space: pre;
+  overflow-x: auto;
+}
+.ac-snip-cm {
+  color: #b07d4e;
+}
+.ac-snip-key {
+  color: #ffb43f;
+}
+.ac-snip-hit {
+  color: #ff8f6b;
+  font-weight: 700;
+}
 @media (max-width: 720px) {
   .ac-ad {
+    grid-template-columns: 1fr;
     padding: 26px 22px;
+    gap: 26px;
+  }
+  .ac-ad-art {
+    order: -1;
   }
 }
 
