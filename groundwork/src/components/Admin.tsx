@@ -3,8 +3,10 @@ import type { Store } from '../state/store';
 import {
   answerAssistRequest,
   loadAdminOverview,
+  loadAerocallStats,
   type AdminAssistRequest,
   type AdminStats,
+  type AerocallStats,
 } from '../state/pro';
 
 interface Props {
@@ -105,9 +107,48 @@ function UserStats({ stats }: { stats: AdminStats }) {
   );
 }
 
+function AerocallDownloads({ stats }: { stats: AerocallStats }) {
+  return (
+    <section className="help-section">
+      <h2>AeroCall downloads</h2>
+      <div className="coverage-stats">
+        <div className="coverage-stat">
+          <strong>{stats.downloads}</strong>
+          <span>downloads</span>
+        </div>
+        <div className="coverage-stat">
+          <strong>{stats.views}</strong>
+          <span>source views</span>
+        </div>
+        <div className="coverage-stat">
+          <strong>{stats.total}</strong>
+          <span>clicks total</span>
+        </div>
+      </div>
+      {stats.recent.length > 0 ? (
+        <>
+          <h3 className="admin-group">Recent ({stats.recent.length} shown)</h3>
+          {stats.recent.map((c, i) => (
+            <p key={i} className="admin-req-meta">
+              {c.mode === 'view' ? 'Viewed' : 'Downloaded'}
+              {' · '}
+              {String(c.ts).slice(0, 16).replace('T', ' ')}
+              {c.user ? ` · ${c.user}` : ''}
+              {c.ip ? ` · ${c.ip}` : ''}
+            </p>
+          ))}
+        </>
+      ) : (
+        <p className="help-sub">No downloads yet.</p>
+      )}
+    </section>
+  );
+}
+
 export function Admin({ store, onBack }: Props) {
   const [requests, setRequests] = useState<AdminAssistRequest[] | null>(null);
   const [stats, setStats] = useState<AdminStats | null>(null);
+  const [aerocall, setAerocall] = useState<AerocallStats | null>(null);
   const [error, setError] = useState('');
 
   useEffect(() => {
@@ -119,6 +160,11 @@ export function Admin({ store, onBack }: Props) {
         setStats(o.stats);
       })
       .catch((e) => !cancelled && setError(e instanceof Error ? e.message : 'Failed to load'));
+    // The download tally is a separate, non-critical read; a failure here
+    // must not blank the rest of the admin page.
+    loadAerocallStats()
+      .then((s) => !cancelled && setAerocall(s))
+      .catch(() => {});
     return () => {
       cancelled = true;
     };
@@ -152,6 +198,7 @@ export function Admin({ store, onBack }: Props) {
         ← Back
       </button>
       {stats && <UserStats stats={stats} />}
+      {aerocall && <AerocallDownloads stats={aerocall} />}
       <section className="help-section">
         <h2>Advisor requests</h2>
         {error && <p className="advisor-error">{error}</p>}

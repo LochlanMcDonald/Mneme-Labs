@@ -252,7 +252,7 @@ export function Landing({
               <button className="btn btn-primary btn-lg" onClick={onAerocall}>
                 Open AeroCall
               </button>
-              <a className="btn btn-lg" href="/aerocall.py" download="aerocall.py">
+              <a className="btn btn-lg" href="/api/aerocall?m=dl" download="aerocall.py">
                 Download the .py
               </a>
             </div>
