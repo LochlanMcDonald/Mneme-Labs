@@ -24,6 +24,10 @@
       "allowedRoles": ["anonymous"]
     },
     {
+      "route": "/api/aerocall",
+      "allowedRoles": ["anonymous"]
+    },
+    {
       "route": "/api/*",
       "allowedRoles": ["authenticated"]
     }

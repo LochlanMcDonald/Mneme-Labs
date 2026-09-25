@@ -40,10 +40,10 @@ export function Aerocall({ onBack }: Props) {
           <a className="btn small" href="/AeroCallManual.docx" download="AeroCallManual.docx">
             Manual
           </a>
-          <a className="btn small" href="/aerocall.py" target="_blank" rel="noreferrer">
+          <a className="btn small" href="/api/aerocall?m=view" target="_blank" rel="noreferrer">
             View source
           </a>
-          <a className="btn small" href="/aerocall.py" download="aerocall.py">
+          <a className="btn small" href="/api/aerocall?m=dl" download="aerocall.py">
             Download .py
           </a>
         </div>

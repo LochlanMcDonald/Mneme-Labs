@@ -119,6 +119,35 @@ export async function loadAdminOverview(): Promise<AdminOverview> {
   };
 }
 
+export interface AerocallClick {
+  ts: string;
+  ip: string;
+  ua: string;
+  ref: string;
+  mode: string;
+  user: string;
+}
+
+export interface AerocallStats {
+  downloads: number;
+  views: number;
+  total: number;
+  recent: AerocallClick[];
+}
+
+/** Admin-only: the AeroCall download tally and recent clicks. */
+export async function loadAerocallStats(): Promise<AerocallStats> {
+  const res = await fetch('/api/aerocall?stats=1', { headers: { accept: 'application/json' } });
+  if (!res.ok) throw new Error(`Failed to load download stats (${res.status})`);
+  const data = await res.json();
+  return {
+    downloads: Number(data?.downloads || 0),
+    views: Number(data?.views || 0),
+    total: Number(data?.total || 0),
+    recent: Array.isArray(data?.recent) ? data.recent : [],
+  };
+}
+
 export async function answerAssistRequest(id: string, answer: string): Promise<void> {
   const res = await fetch('/api/assist?scope=admin', {
     method: 'POST',
