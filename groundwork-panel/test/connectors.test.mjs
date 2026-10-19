@@ -70,10 +70,26 @@ async function testGithub() {
 
 // ----------------------------------------------------------- CrowdStrike
 async function testCrowdstrike() {
-  console.log('CrowdStrike Falcon (OAuth2 client-credentials, cached bearer)');
+  console.log('CrowdStrike Falcon (new + unassigned, collapsed to detection cards)');
   const { poll } = await import('../connectors/crowdstrike.mjs');
   let mints = 0;
-  const totals = { Critical: 1, High: 3, Medium: 2, Low: 7 };
+
+  // A fixture that makes the three behaviours visible at once: several alert
+  // records collapse into one card (aggA), assigned records are dropped
+  // (aggC entirely, and aggD's Critical record), and a card is badged at its
+  // highest surviving severity (aggA -> High).
+  const records = [
+    { composite_id: 'a1', aggregate_id: 'aggA', severity_name: 'High' },
+    { composite_id: 'a2', aggregate_id: 'aggA', severity_name: 'Low' },
+    { composite_id: 'a3', aggregate_id: 'aggA', severity_name: 'Medium' },
+    { composite_id: 'b1', aggregate_id: 'aggB', severity_name: 'Critical' },
+    { composite_id: 'b2', aggregate_id: 'aggB', severity_name: 'Critical' },
+    { composite_id: 'c1', aggregate_id: 'aggC', severity_name: 'High', assigned_to_name: 'Dana' },
+    { composite_id: 'd1', aggregate_id: 'aggD', severity_name: 'Medium' },
+    { composite_id: 'd2', aggregate_id: 'aggD', severity_name: 'Critical', assigned_to_uid: 'u-9' },
+    { composite_id: 'e1', aggregate_id: 'aggE', severity_name: 'Low' },
+  ];
+
   const { srv, url } = await listen(async (req, res) => {
     if (req.url === '/oauth2/token' && req.method === 'POST') {
       const p = new URLSearchParams(await body(req));
@@ -81,19 +97,34 @@ async function testCrowdstrike() {
       mints += 1;
       return json(res, 201, { access_token: `cs-tok-${mints}`, expires_in: 1799 });
     }
+    if (req.headers.authorization !== 'Bearer cs-tok-1') return json(res, 403, {});
+    // Query: ids of everything matching new + epp. Assert the filter is the
+    // untriaged-endpoint one, not a bare status filter.
     if (req.url.startsWith('/alerts/queries/alerts/v2')) {
-      if (req.headers.authorization !== 'Bearer cs-tok-1') return json(res, 403, {});
-      const filter = decodeURIComponent(new URL(req.url, url).searchParams.get('filter'));
-      const sev = filter.match(/severity_name:'(\w+)'/)?.[1];
-      return json(res, 200, { resources: [], meta: { pagination: { total: totals[sev] ?? 0 } } });
+      const filter = decodeURIComponent(new URL(req.url, url).searchParams.get('filter') || '');
+      if (!filter.includes("status:'new'") || !filter.includes("product:'epp'")) return json(res, 400, {});
+      return json(res, 200, {
+        resources: records.map((r) => r.composite_id),
+        meta: { pagination: { total: records.length } },
+      });
+    }
+    // Entities: hydrate the requested ids.
+    if (req.url.startsWith('/alerts/entities/alerts/v2') && req.method === 'POST') {
+      const ids = JSON.parse(await body(req)).composite_ids || [];
+      return json(res, 200, { resources: records.filter((r) => ids.includes(r.composite_id)) });
     }
     return json(res, 404, {});
   });
 
   const creds = { clientId: 'cs-id', clientSecret: 'cs-sec', baseUrl: url };
   const r1 = await poll(creds);
-  check('counts 13 across four severities', r1.total === 13, JSON.stringify(r1));
-  check('severity split is 1/3/2/7', JSON.stringify(r1.severities) === '{"critical":1,"high":3,"medium":2,"low":7}');
+  // 7 unassigned records collapse to 4 cards; counting records would say 7.
+  check('collapses 7 unassigned records to 4 detection cards', r1.total === 4, JSON.stringify(r1));
+  check(
+    'cards badged at highest surviving severity (crit1/high1/med1/low1)',
+    JSON.stringify(r1.severities) === '{"critical":1,"high":1,"medium":1,"low":1}',
+    JSON.stringify(r1.severities),
+  );
   await poll(creds);
   check('second poll reuses the cached token (1 mint)', mints === 1, `mints=${mints}`);
   let err = '';
@@ -191,20 +222,31 @@ async function testSentinel() {
 
 // --------------------------------------------------------- Proofpoint TRAP
 async function testProofpoint() {
-  console.log('Proofpoint TRAP (appliance API key header, open incidents)');
+  console.log('Proofpoint TRAP (appliance API key header, open + unassigned)');
   const { poll } = await import('../connectors/proofpoint.mjs');
+  // Mix of the forms TRAP uses for "nobody owns this" plus two owned ones.
+  const incidents = [
+    { id: 1, assignee: 'Unassigned' },
+    { id: 2, assignee: null },
+    { id: 3 },
+    { id: 4, assignee: 'dana' },
+    { id: 5, assignee: { name: 'sam' } },
+  ];
   const { srv, url } = await listen((req, res) => {
     if (req.headers.authorization !== 'trap-key-1') return json(res, 401, {});
     const u = new URL(req.url, url);
     if (u.pathname === '/api/incidents') {
       if (u.searchParams.get('state') !== 'open') return json(res, 400, {});
-      return json(res, 200, [{ id: 1 }, { id: 2 }, { id: 3 }]);
+      // TRAP rejects any call without created_after — enforce it here so the
+      // test fails if the connector ever stops sending it.
+      if (!u.searchParams.get('created_after')) return json(res, 400, { error: 'created_after is required' });
+      return json(res, 200, incidents);
     }
     return json(res, 404, {});
   });
 
   const r = await poll({ baseUrl: url, apiKey: 'trap-key-1' });
-  check('counts 3 open incidents', r.total === 3, JSON.stringify(r));
+  check('counts 3 open + unassigned (drops the 2 owned)', r.total === 3, JSON.stringify(r));
   check('open TRAP incidents surface as high', r.severities.high === 3);
   let err = '';
   await poll({ baseUrl: url, apiKey: 'wrong' }).catch((e) => (err = e.message));
