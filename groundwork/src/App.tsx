@@ -12,6 +12,7 @@ import { Coverage } from './components/Coverage';
 import { Panel } from './components/Panel';
 import { Exposure } from './components/Exposure';
 import { Aerocall } from './components/Aerocall';
+import { Contractors } from './components/Contractors';
 import { useStore } from './state/store';
 
 type View =
@@ -28,7 +29,8 @@ type View =
   | 'coverage'
   | 'panel'
   | 'exposure'
-  | 'aerocall';
+  | 'aerocall'
+  | 'contractors';
 
 /** Views that are directly linkable via the URL hash (#/terms etc.). */
 const HASH_VIEWS: Record<string, View> = {
@@ -40,6 +42,8 @@ const HASH_VIEWS: Record<string, View> = {
   '#/panel': 'panel',
   '#/exposure': 'exposure',
   '#/aerocall': 'aerocall',
+  // Unlisted: reachable only by typing #/contractors. Not linked in any nav.
+  '#/contractors': 'contractors',
 };
 
 function initialView(hasProfile: boolean): View {
@@ -152,6 +156,7 @@ export default function App() {
       )}
       {view === 'exposure' && <Exposure onBack={goHome} onStart={() => setView('wizard')} />}
       {view === 'aerocall' && <Aerocall onBack={goHome} />}
+      {view === 'contractors' && <Contractors onBack={goHome} onStart={() => setView('wizard')} />}
       {view === 'terms' && <Terms onBack={goHome} />}
       {view === 'privacy' && <Privacy onBack={goHome} />}
     </div>
