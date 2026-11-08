@@ -14,17 +14,31 @@
     },
     {
       "route": "/aerocall.html",
-      "headers": {
-        "X-Frame-Options": "SAMEORIGIN",
-        "Content-Security-Policy": "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src *; frame-ancestors 'self'; base-uri 'self'; form-action 'self'"
-      }
+      "redirect": "/",
+      "statusCode": 302
     },
     {
-      "route": "/api/scan",
-      "allowedRoles": ["anonymous"]
+      "route": "/aerocall.py",
+      "redirect": "/",
+      "statusCode": 302
+    },
+    {
+      "route": "/aerocall-tour.mp4",
+      "redirect": "/",
+      "statusCode": 302
+    },
+    {
+      "route": "/AeroCallManual.docx",
+      "redirect": "/",
+      "statusCode": 302
     },
     {
       "route": "/api/aerocall",
+      "redirect": "/",
+      "statusCode": 302
+    },
+    {
+      "route": "/api/scan",
       "allowedRoles": ["anonymous"]
     },
     {

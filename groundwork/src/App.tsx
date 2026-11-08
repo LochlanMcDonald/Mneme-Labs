@@ -11,7 +11,6 @@ import { About } from './components/About';
 import { Coverage } from './components/Coverage';
 import { Panel } from './components/Panel';
 import { Exposure } from './components/Exposure';
-import { Aerocall } from './components/Aerocall';
 import { Contractors } from './components/Contractors';
 import { useStore } from './state/store';
 
@@ -29,7 +28,6 @@ type View =
   | 'coverage'
   | 'panel'
   | 'exposure'
-  | 'aerocall'
   | 'contractors';
 
 /** Views that are directly linkable via the URL hash (#/terms etc.). */
@@ -41,7 +39,6 @@ const HASH_VIEWS: Record<string, View> = {
   '#/coverage': 'coverage',
   '#/panel': 'panel',
   '#/exposure': 'exposure',
-  '#/aerocall': 'aerocall',
   // Unlisted: reachable only by typing #/contractors. Not linked in any nav.
   '#/contractors': 'contractors',
 };
@@ -101,7 +98,6 @@ export default function App() {
           onCoverage={() => setView('coverage')}
           onPanel={() => setView('panel')}
           onExposure={() => setView('exposure')}
-          onAerocall={() => setView('aerocall')}
           auth={store.auth}
           sync={store.sync}
         />
@@ -138,7 +134,6 @@ export default function App() {
             onCoverage={() => setView('coverage')}
             onPanel={() => setView('panel')}
             onExposure={() => setView('exposure')}
-            onAerocall={() => setView('aerocall')}
             auth={store.auth}
             sync={store.sync}
           />
@@ -155,7 +150,6 @@ export default function App() {
         <Panel onBack={goHome} onStart={() => setView('wizard')} auth={store.auth} me={store.me} />
       )}
       {view === 'exposure' && <Exposure onBack={goHome} onStart={() => setView('wizard')} />}
-      {view === 'aerocall' && <Aerocall onBack={goHome} />}
       {view === 'contractors' && <Contractors onBack={goHome} onStart={() => setView('wizard')} />}
       {view === 'terms' && <Terms onBack={goHome} />}
       {view === 'privacy' && <Privacy onBack={goHome} />}
