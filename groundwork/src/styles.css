@@ -3098,3 +3098,15 @@ a.btn-primary,
   width: 13px;
   height: 13px;
 }
+
+/* AeroCall sign-in wall (registered users only) */
+.aerocall-gate {
+  text-align: center;
+  max-width: 560px;
+}
+.aerocall-gate h1 {
+  margin-bottom: 10px;
+}
+.aerocall-gate .btn {
+  margin-top: 6px;
+}

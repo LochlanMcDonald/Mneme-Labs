@@ -1,7 +1,72 @@
 import { useState } from 'react';
+import { remoteLoginUrl, type AuthState } from '../state/auth';
 
 interface Props {
   onBack: () => void;
+  auth: AuthState;
+}
+
+// Sign-in link that returns the user to this exact page (hash included) once
+// they are back from Entra.
+function aerocallLoginUrl(): string {
+  const here =
+    typeof window === 'undefined' ? '/#/aerocall' : window.location.pathname + window.location.hash;
+  return `/.auth/login/aad?post_login_redirect_uri=${encodeURIComponent(here)}`;
+}
+
+/**
+ * The sign-in wall shown to anyone who is not a registered, signed-in user.
+ * AeroCall is a real testing tool, so it is gated: the page, the embedded
+ * interface, the download and the manual are all registered-users-only
+ * (the static assets are additionally locked to the authenticated role in
+ * staticwebapp.config.json, so the gate cannot be skipped by URL).
+ */
+function AerocallGate({ onBack, auth }: { onBack: () => void; auth: AuthState }) {
+  const remote = remoteLoginUrl();
+  return (
+    <div className="aerocall-frame">
+      <div className="aerocall-bar">
+        <button className="btn small" onClick={onBack}>
+          ← Groundwork
+        </button>
+        <span className="aerocall-tag">AeroCall</span>
+      </div>
+      <div className="aerocall-guide">
+        <div className="aerocall-guide-inner aerocall-gate">
+          <h1>AeroCall is for registered users</h1>
+          {auth.status === 'checking' ? (
+            <p className="aerocall-lede">Checking your account…</p>
+          ) : auth.status === 'unavailable' ? (
+            <>
+              <p className="aerocall-lede">
+                Sign in to your Groundwork account to open AeroCall, download the script, and read
+                the manual.
+              </p>
+              {remote ? (
+                <a className="btn btn-primary btn-lg" href={remote}>
+                  Sign in with Microsoft
+                </a>
+              ) : (
+                <p className="aerocall-caption">
+                  Sign-in is not available on this copy of the site.
+                </p>
+              )}
+            </>
+          ) : (
+            <>
+              <p className="aerocall-lede">
+                Sign in to your Groundwork account to open AeroCall, download the script, and read
+                the manual. It is a real testing tool, so access is limited to registered users.
+              </p>
+              <a className="btn btn-primary btn-lg" href={aerocallLoginUrl()}>
+                Sign in with Microsoft
+              </a>
+            </>
+          )}
+        </div>
+      </div>
+    </div>
+  );
 }
 
 /**
@@ -10,10 +75,15 @@ interface Props {
  * that embeds the standalone AeroCall UI. AeroCall is a self-contained static
  * page, so the preview is a same-origin iframe (the site's global CSP and
  * X-Frame-Options otherwise block framing; /aerocall.html carries a scoped
- * exception set in staticwebapp.config.json).
+ * exception set in staticwebapp.config.json). Registered users only — a
+ * visitor who is not signed in gets the sign-in wall instead.
  */
-export function Aerocall({ onBack }: Props) {
+export function Aerocall({ onBack, auth }: Props) {
   const [tab, setTab] = useState<'guide' | 'preview'>('guide');
+
+  if (auth.status !== 'signed-in') {
+    return <AerocallGate onBack={onBack} auth={auth} />;
+  }
 
   return (
     <div className="aerocall-frame">
