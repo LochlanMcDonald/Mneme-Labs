@@ -14,10 +14,23 @@
     },
     {
       "route": "/aerocall.html",
+      "allowedRoles": ["authenticated"],
       "headers": {
         "X-Frame-Options": "SAMEORIGIN",
         "Content-Security-Policy": "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src *; frame-ancestors 'self'; base-uri 'self'; form-action 'self'"
       }
+    },
+    {
+      "route": "/aerocall.py",
+      "allowedRoles": ["authenticated"]
+    },
+    {
+      "route": "/aerocall-tour.mp4",
+      "allowedRoles": ["authenticated"]
+    },
+    {
+      "route": "/AeroCallManual.docx",
+      "allowedRoles": ["authenticated"]
     },
     {
       "route": "/api/scan",
@@ -25,7 +38,7 @@
     },
     {
       "route": "/api/aerocall",
-      "allowedRoles": ["anonymous"]
+      "allowedRoles": ["authenticated"]
     },
     {
       "route": "/api/*",

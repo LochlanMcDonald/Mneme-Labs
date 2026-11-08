@@ -2879,3 +2879,234 @@ a.btn-primary,
     text-align: center;
   }
 }
+
+/* ───────── Contractor scorecard (unlisted #/contractors) ───────── */
+.scorecard-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.scorecard-input {
+  width: 100%;
+  resize: vertical;
+  padding: 14px 16px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--surface-solid);
+  color: var(--text);
+  font: inherit;
+  font-size: 15px;
+  line-height: 1.6;
+}
+.scorecard-input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+.scorecard-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.scorecard-count {
+  font-size: 13px;
+  color: var(--text-faint);
+}
+
+/* Podium: strongest / weakest callouts */
+.scorecard-podium {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+.scorecard-podium-card {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  grid-template-areas:
+    'label label score'
+    'domain domain grade';
+  align-items: center;
+  gap: 4px 12px;
+  padding: 18px 20px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  box-shadow: var(--lift-1);
+}
+.scorecard-podium-card.best {
+  border-color: rgba(107, 199, 47, 0.5);
+  background: linear-gradient(180deg, rgba(107, 199, 47, 0.1), var(--surface));
+}
+.scorecard-podium-card.worst {
+  border-color: rgba(255, 95, 143, 0.5);
+  background: linear-gradient(180deg, rgba(255, 95, 143, 0.1), var(--surface));
+}
+.scorecard-podium-label {
+  grid-area: label;
+  font-size: 11.5px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+.scorecard-podium-domain {
+  grid-area: domain;
+  font-weight: 700;
+  font-size: 17px;
+  word-break: break-all;
+}
+.scorecard-podium-score {
+  grid-area: score;
+  font-size: 30px;
+  font-weight: 800;
+  line-height: 1;
+}
+.scorecard-podium-card .scorecard-grade {
+  grid-area: grade;
+  justify-self: end;
+}
+
+/* Grade chip */
+.scorecard-grade {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 30px;
+  height: 30px;
+  padding: 0 8px;
+  border-radius: 8px;
+  font-weight: 800;
+  font-size: 15px;
+  color: #fff;
+}
+.scorecard-grade.grade-good {
+  background: linear-gradient(180deg, #6bc72f, #3c8f16);
+}
+.scorecard-grade.grade-low {
+  background: linear-gradient(180deg, #e6c53a, #b7960f);
+}
+.scorecard-grade.grade-medium {
+  background: linear-gradient(180deg, #5087ff, #1d4ed8);
+}
+.scorecard-grade.grade-high {
+  background: linear-gradient(180deg, #ff8b3d, #e86f1f);
+}
+.scorecard-grade.grade-critical {
+  background: linear-gradient(180deg, #ff5f8f, #e6336c);
+}
+
+/* Comparison table */
+.scorecard-table-wrap {
+  overflow-x: auto;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+}
+.scorecard-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  background: var(--surface-solid);
+}
+.scorecard-table th,
+.scorecard-table td {
+  padding: 11px 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+.scorecard-table thead th {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--text-dim);
+  background: var(--surface-sunken);
+}
+.scorecard-table tbody tr:last-child td {
+  border-bottom: none;
+}
+.scorecard-table .rank-col {
+  width: 34px;
+  color: var(--text-faint);
+  font-weight: 700;
+}
+.scorecard-table .domain-cell {
+  font-weight: 650;
+  word-break: break-all;
+  white-space: normal;
+  min-width: 150px;
+}
+.scorecard-table .score-cell {
+  font-weight: 800;
+  font-size: 15px;
+}
+.scorecard-table .sec-col {
+  text-align: center;
+  width: 54px;
+}
+.scorecard-table .num-col {
+  text-align: right;
+}
+.scorecard-cell {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  vertical-align: middle;
+  background: var(--surface-sunken);
+}
+.scorecard-cell.sev-critical {
+  background: #e6336c;
+}
+.scorecard-cell.sev-high {
+  background: #e86f1f;
+}
+.scorecard-cell.sev-medium {
+  background: #2f6bff;
+}
+.scorecard-cell.sev-low {
+  background: #e6c53a;
+}
+.scorecard-cell.sev-good {
+  background: #4fa81f;
+}
+.scorecard-cell.sev-none {
+  background: var(--border);
+}
+.scorecard-flag {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #e6336c;
+}
+.scorecard-muted {
+  color: var(--text-faint);
+}
+.scorecard-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 14px;
+  font-size: 12.5px;
+  color: var(--text-dim);
+}
+.scorecard-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.scorecard-legend .scorecard-cell {
+  width: 13px;
+  height: 13px;
+}
+
+/* AeroCall sign-in wall (registered users only) */
+.aerocall-gate {
+  text-align: center;
+  max-width: 560px;
+}
+.aerocall-gate h1 {
+  margin-bottom: 10px;
+}
+.aerocall-gate .btn {
+  margin-top: 6px;
+}

@@ -12,6 +12,7 @@ import { Coverage } from './components/Coverage';
 import { Panel } from './components/Panel';
 import { Exposure } from './components/Exposure';
 import { Aerocall } from './components/Aerocall';
+import { Contractors } from './components/Contractors';
 import { useStore } from './state/store';
 
 type View =
@@ -28,7 +29,8 @@ type View =
   | 'coverage'
   | 'panel'
   | 'exposure'
-  | 'aerocall';
+  | 'aerocall'
+  | 'contractors';
 
 /** Views that are directly linkable via the URL hash (#/terms etc.). */
 const HASH_VIEWS: Record<string, View> = {
@@ -39,7 +41,11 @@ const HASH_VIEWS: Record<string, View> = {
   '#/coverage': 'coverage',
   '#/panel': 'panel',
   '#/exposure': 'exposure',
+  // Unlisted: reachable only by typing #/aerocall, and only usable once
+  // signed in (the component shows a sign-in wall to everyone else).
   '#/aerocall': 'aerocall',
+  // Unlisted: reachable only by typing #/contractors. Not linked in any nav.
+  '#/contractors': 'contractors',
 };
 
 function initialView(hasProfile: boolean): View {
@@ -97,7 +103,6 @@ export default function App() {
           onCoverage={() => setView('coverage')}
           onPanel={() => setView('panel')}
           onExposure={() => setView('exposure')}
-          onAerocall={() => setView('aerocall')}
           auth={store.auth}
           sync={store.sync}
         />
@@ -134,7 +139,6 @@ export default function App() {
             onCoverage={() => setView('coverage')}
             onPanel={() => setView('panel')}
             onExposure={() => setView('exposure')}
-            onAerocall={() => setView('aerocall')}
             auth={store.auth}
             sync={store.sync}
           />
@@ -151,7 +155,8 @@ export default function App() {
         <Panel onBack={goHome} onStart={() => setView('wizard')} auth={store.auth} me={store.me} />
       )}
       {view === 'exposure' && <Exposure onBack={goHome} onStart={() => setView('wizard')} />}
-      {view === 'aerocall' && <Aerocall onBack={goHome} />}
+      {view === 'aerocall' && <Aerocall onBack={goHome} auth={store.auth} />}
+      {view === 'contractors' && <Contractors onBack={goHome} onStart={() => setView('wizard')} />}
       {view === 'terms' && <Terms onBack={goHome} />}
       {view === 'privacy' && <Privacy onBack={goHome} />}
     </div>
